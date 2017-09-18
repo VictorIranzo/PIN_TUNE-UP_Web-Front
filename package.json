@@ -1,0 +1,21 @@
+{
+  "name": "tune-up-process-web-front",
+  "version": "0.0.0",
+  "description": "",
+  "main": "dist/tune_up_web_front.umd.js",
+  "module": "dist/tune_up_web_front.js",
+  "jsnext:main": "src/index.js",
+  "scripts": {
+    
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Starkie/TUNE-UP-Process-Web-Front.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Starkie/TUNE-UP-Process-Web-Front/issues"
+  },
+  "homepage": "https://github.com/Starkie/TUNE-UP-Process-Web-Front#readme"
+}

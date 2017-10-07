@@ -4,7 +4,7 @@ const NAMESPACE = 'tuneUp';
 const SEPARATOR = '#';
 
 @Injectable()
-export class TnModuleLoader {
+export class ModuleLoader {
   constructor(compiler: Compiler) {
     this.compiler = compiler;
   }

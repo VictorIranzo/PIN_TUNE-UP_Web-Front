@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule} from '@angular/forms';
-import {TnModuleLoaderProvider} from './loader';
+import {ModuleLoaderProvider} from './loader';
 import {RoutingModule} from './routing';
 import {HttpInterceptorsProvider} from './http';
 import {AppComponent} from './app.component';
@@ -18,7 +18,7 @@ const primengModules = [InputTextModule];
     RoutingModule
   ].concat(primengModules),
   declarations: [AppComponent],
-  providers: [TnModuleLoaderProvider, HttpInterceptorsProvider],
+  providers: [ModuleLoaderProvider, HttpInterceptorsProvider],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

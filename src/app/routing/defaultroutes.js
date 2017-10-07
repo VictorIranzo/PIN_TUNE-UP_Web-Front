@@ -1,19 +1,20 @@
 import {AuthGuard} from './guards';
+// import {SceneComponent} from '../components';
 
 const mainRoute = {
-    path: '',
-    canActivate: [AuthGuard],
-    canActivateChild: [AuthGuard],
-    canLoadChildren: [AuthGuard],
-    children: []
+  path: '',
+  // component: SceneComponent,
+  canActivate: [AuthGuard],
+  canActivateChild: [AuthGuard],
+  canLoadChildren: [AuthGuard],
+  children: []
 };
 const mainRedirectRoute = {
-    path: '**',
-    redirectTo: 'home',
-    pathMatch: 'full'
+  path: '**',
+  redirectTo: 'home',
+  pathMatch: 'full'
 };
 export const defaultRoutes = {
-    mainRoute,
-    mainRedirectRoute
+  mainRoute,
+  mainRedirectRoute
 };
-

@@ -1,7 +1,7 @@
 import {NgModuleFactoryLoader} from '@angular/core';
-import {TnModuleLoader} from './moduleloader';
+import {ModuleLoader} from './moduleloader';
 
-export const TnModuleLoaderProvider = {
+export const ModuleLoaderProvider = {
   provide: NgModuleFactoryLoader,
-  useClass: TnModuleLoader
+  useClass: ModuleLoader
 };

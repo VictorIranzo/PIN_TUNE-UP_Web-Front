@@ -12,43 +12,41 @@ import {moduleName, external, globals} from '@tune-up/build-utils';
 const pkg = require('./package.json');
 
 export default {
-    input: pkg['jsnext:main'],
-    output: {
-        file: pkg['main:min'],
-        format: 'umd'
-    },
-    sourcemap: true,
-    name: moduleName(pkg),
-    external,
-    globals,
-    plugins: [
-        replace({
-            exclude: 'node_modules/**',
-            ENVIRONMENT: JSON.stringify('production')
+  input: pkg['jsnext:main'],
+  output: {
+    file: pkg['main:min'],
+    format: 'umd'
+  },
+  sourcemap: true,
+  name: moduleName(pkg),
+  external,
+  globals,
+  plugins: [
+    replace({
+      exclude: 'node_modules/**',
+      ENVIRONMENT: JSON.stringify('production')
+    }),
+    postcss({
+      plugins: [
+        easyimport({
+          from: 'src/styles/styleguide'
         }),
-        postcss({
-            plugins: [
-                easyimport({
-                    from: 'src/styles/styleguide'
-                }),
-                cssnext(),
-                cssnano()
-            ]
-        }),
-        string({
-            include: '**/*.html'
-        }),
-        nodeResolve(),
-        commonjs({
-            include: 'node_modules/**'
-        }),
-        babel({
-            exclude: [
-                'node_modules/**'
-            ]
-        }),
-        uglify({
-            mangle: false
-        })
-    ]
+        cssnext(),
+        cssnano()
+      ]
+    }),
+    string({
+      include: '**/*.html'
+    }),
+    nodeResolve(),
+    commonjs({
+      include: 'node_modules/**'
+    }),
+    babel({
+      exclude: ['node_modules/**']
+    }),
+    uglify({
+      mangle: false
+    })
+  ]
 };

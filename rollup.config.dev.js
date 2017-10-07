@@ -6,19 +6,16 @@ import config from './rollup.config.nomin.js';
 const {plugins} = config;
 config.output = config.output[0];
 plugins[0] = replace({
-    exclude: 'node_modules/**',
-    ENVIRONMENT: JSON.stringify('development')
+  exclude: 'node_modules/**',
+  ENVIRONMENT: JSON.stringify('development')
 });
 plugins.unshift(
-    serve({
-        contentBase: '',
-        port: 8080
-    }),
-    livereload({
-        watch: [
-            'dist',
-            'src/**/dist'
-        ]
-    })
+  serve({
+    contentBase: '',
+    port: 8080
+  }),
+  livereload({
+    watch: ['dist', 'src/**/dist']
+  })
 );
 export default config;

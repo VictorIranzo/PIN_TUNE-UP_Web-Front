@@ -7,26 +7,17 @@ import {RoutingModule} from './routing';
 import {AppComponent} from './app.component';
 import {InputTextModule} from 'primeng/primeng';
 
-const primengModules = [
-    InputTextModule,
-];
-
+const primengModules = [InputTextModule];
 
 @NgModule({
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        FormsModule,
-        RoutingModule
-    ].concat(primengModules),
-    declarations: [
-        AppComponent
-    ],
-    providers: [
-        TnModuleLoaderProvider
-    ],
-    bootstrap: [
-        AppComponent
-    ]
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    RoutingModule
+  ].concat(primengModules),
+  declarations: [AppComponent],
+  providers: [TnModuleLoaderProvider],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}

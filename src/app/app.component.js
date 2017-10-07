@@ -3,7 +3,7 @@ import html from './app.html';
 // import './css/index.css';
 
 @Component({
-    selector: 'tn-app',
-    template: html
+  selector: 'tn-app',
+  template: html
 })
-export class AppComponent { }
+export class AppComponent {}

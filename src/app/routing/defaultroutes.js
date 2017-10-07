@@ -1,12 +1,10 @@
-// import {SceneComponent} from '../components';
 import {AuthGuard} from './guards';
 
 const mainRoute = {
     path: '',
-    // component: SceneComponent,
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
-    canLoad: [AuthGuard],
+    canLoadChildren: [AuthGuard],
     children: []
 };
 const mainRedirectRoute = {

@@ -27,7 +27,6 @@ export default {
             ENVIRONMENT: JSON.stringify('production')
         }),
         postcss({
-            // preprocessor: sassPreprocesor, dont need for the moment
             plugins: [
                 easyimport({
                     from: 'src/styles/styleguide'

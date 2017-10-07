@@ -41,11 +41,17 @@ class ConfigService {
         return Object.values(this._routes);
     }
     addRoutesWithAuth(childRoutes) {
-        this._routes.mainRoute &&
-            this._routes.mainRoute.children &&
-            childRoutes.map((route) =>
-                this._routes.mainRoute.children.push(route)
-            );
+        const mainRoute =  this._routes.mainRoute;
+            mainRoute && mainRoute.children &&
+            childRoutes.map((route) => {
+                route.canLoad = route.canLoad || [];
+                route.canLoad = [
+                    ...route.canLoad,
+                    ...mainRoute.canLoadChildren
+                ];
+                mainRoute.children.push(route);
+            }
+        );
     }
     get menuItems() {
         return this._menuItems;

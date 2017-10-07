@@ -229,6 +229,28 @@ var slicedToArray = function () {
   };
 }();
 
+
+
+
+
+
+
+
+
+
+
+
+
+var toConsumableArray = function (arr) {
+  if (Array.isArray(arr)) {
+    for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
+
+    return arr2;
+  } else {
+    return Array.from(arr);
+  }
+};
+
 var _dec$1;
 var _class$1;
 
@@ -305,7 +327,17 @@ var AuthGuard = (_dec$2 = Injectable(), _dec$2(_class$2 = function () {
     createClass(AuthGuard, [{
         key: 'canActivate',
         value: function canActivate() {
-            return false;
+            return true;
+        }
+    }, {
+        key: 'canLoad',
+        value: function canLoad() {
+            return true;
+        }
+    }, {
+        key: 'canActivateChild',
+        value: function canActivateChild() {
+            return true;
         }
     }]);
     return AuthGuard;
@@ -313,13 +345,11 @@ var AuthGuard = (_dec$2 = Injectable(), _dec$2(_class$2 = function () {
 
 // export * from './adminguard';
 
-// import {SceneComponent} from '../components';
 var mainRoute = {
     path: '',
-    // component: SceneComponent,
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
-    canLoad: [AuthGuard],
+    canLoadChildren: [AuthGuard],
     children: []
 };
 var mainRedirectRoute = {
@@ -3367,10 +3397,11 @@ var ConfigService = function () {
     }, {
         key: 'addRoutesWithAuth',
         value: function addRoutesWithAuth(childRoutes) {
-            var _this = this;
-
-            this._routes.mainRoute && this._routes.mainRoute.children && childRoutes.map(function (route) {
-                return _this._routes.mainRoute.children.push(route);
+            var mainRoute = this._routes.mainRoute;
+            mainRoute && mainRoute.children && childRoutes.map(function (route) {
+                route.canLoad = route.canLoad || [];
+                route.canLoad = [].concat(toConsumableArray(route.canLoad), toConsumableArray(mainRoute.canLoadChildren));
+                mainRoute.children.push(route);
             });
         }
     }, {

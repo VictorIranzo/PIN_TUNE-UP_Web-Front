@@ -1,8 +1,8 @@
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/router'), require('primeng/primeng')) :
-	typeof define === 'function' && define.amd ? define(['exports', '@angular/core', '@angular/router', 'primeng/primeng'], factory) :
-	(factory((global.tuneUp = global.tuneUp || {}, global.tuneUp.home = {}),global.tuneUp.ngVendor,global.tuneUp.ngVendor,global.tuneUp.primengVendor.__moduleExports));
-}(this, (function (exports,core,router,primeng) { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/router')) :
+	typeof define === 'function' && define.amd ? define(['exports', '@angular/core', '@angular/router'], factory) :
+	(factory((global.tuneUp = global.tuneUp || {}, global.tuneUp.home = {}),global.tuneUp.ngVendor,global.tuneUp.ngVendor));
+}(this, (function (exports,core,router) { 'use strict';
 
 function __$styleInject(css, returnValue) {
   if (typeof document === 'undefined') {
@@ -147,27 +147,35 @@ var classCallCheck = function (instance, Constructor) {
   }
 };
 
+var _dec$2;
+var _class$2;
+
+var HomeComponent = (_dec$2 = core.Component({
+    selector: 'tn-home',
+    template: html
+}), _dec$2(_class$2 = function HomeComponent() {
+    classCallCheck(this, HomeComponent);
+}) || _class$2);
+
 var _dec$1;
 var _class$1;
 
-var HomeComponent = (_dec$1 = core.Component({
-    selector: 'tn-home',
-    template: html
-}), _dec$1(_class$1 = function HomeComponent() {
-    classCallCheck(this, HomeComponent);
+var HomeRoutingModule = (_dec$1 = core.NgModule({
+    imports: [router.RouterModule.forChild([{ path: '', component: HomeComponent }])],
+    exports: [router.RouterModule]
+}), _dec$1(_class$1 = function HomeRoutingModule() {
+    classCallCheck(this, HomeRoutingModule);
 }) || _class$1);
 
 var _dec;
 var _class;
 
 var HomeModule = (_dec = core.NgModule({
-    imports: [router.RouterModule.forChild([{ path: '', component: HomeComponent }]), primeng.InputTextModule],
+    imports: [HomeRoutingModule],
     declarations: [HomeComponent]
 }), _dec(_class = function HomeModule() {
     classCallCheck(this, HomeModule);
 }) || _class);
-
-// export * from './home.config';
 
 exports.HomeModule = HomeModule;
 

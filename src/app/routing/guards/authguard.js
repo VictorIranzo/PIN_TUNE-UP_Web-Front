@@ -4,6 +4,12 @@ import {Injectable} from '@angular/core';
 export class AuthGuard {
     constructor(){}
     canActivate() {
-        return false;
+        return true;
+    }
+    canLoad(){
+        return true;
+    }
+    canActivateChild(){
+        return true;
     }
 }

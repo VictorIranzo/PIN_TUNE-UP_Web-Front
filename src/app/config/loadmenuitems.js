@@ -3,6 +3,7 @@ import {
     homeMenuItem
     
 } from '../modules/configs';
+
 configService.addMenuItems([
     homeMenuItem,
     

@@ -18,7 +18,6 @@ function __$styleInject(css, returnValue) {
 
 import { Component, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { InputTextModule } from 'primeng/primeng';
 
 var html = "<input type=\"text\" pInputText>\n";
 
@@ -145,27 +144,35 @@ var classCallCheck = function (instance, Constructor) {
   }
 };
 
+var _dec$2;
+var _class$2;
+
+var HomeComponent = (_dec$2 = Component({
+    selector: 'tn-home',
+    template: html
+}), _dec$2(_class$2 = function HomeComponent() {
+    classCallCheck(this, HomeComponent);
+}) || _class$2);
+
 var _dec$1;
 var _class$1;
 
-var HomeComponent = (_dec$1 = Component({
-    selector: 'tn-home',
-    template: html
-}), _dec$1(_class$1 = function HomeComponent() {
-    classCallCheck(this, HomeComponent);
+var HomeRoutingModule = (_dec$1 = NgModule({
+    imports: [RouterModule.forChild([{ path: '', component: HomeComponent }])],
+    exports: [RouterModule]
+}), _dec$1(_class$1 = function HomeRoutingModule() {
+    classCallCheck(this, HomeRoutingModule);
 }) || _class$1);
 
 var _dec;
 var _class;
 
 var HomeModule = (_dec = NgModule({
-    imports: [RouterModule.forChild([{ path: '', component: HomeComponent }]), InputTextModule],
+    imports: [HomeRoutingModule],
     declarations: [HomeComponent]
 }), _dec(_class = function HomeModule() {
     classCallCheck(this, HomeModule);
 }) || _class);
-
-// export * from './home.config';
 
 export { HomeModule };
 //# sourceMappingURL=tune-up.home.js.map

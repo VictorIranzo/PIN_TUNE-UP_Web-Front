@@ -17,13 +17,12 @@ function __$styleInject(css, returnValue) {
 }
 
 import { platformBrowserDynamic as platformBrowserDynamic$1 } from '@angular/platform-browser-dynamic';
-import { Component, NgModule, enableProdMode } from '@angular/core';
+import { Compiler, Component, Injectable, NgModule, NgModuleFactoryLoader, enableProdMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { InputTextModule } from 'primeng/primeng';
-
-var html = "<input type=\"text\" pInputText>\n";
 
 var asyncGenerator = function () {
   function AwaitValue(value) {
@@ -148,24 +147,3327 @@ var classCallCheck = function (instance, Constructor) {
   }
 };
 
+var createClass = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) defineProperties(Constructor, staticProps);
+    return Constructor;
+  };
+}();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var slicedToArray = function () {
+  function sliceIterator(arr, i) {
+    var _arr = [];
+    var _n = true;
+    var _d = false;
+    var _e = undefined;
+
+    try {
+      for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+        _arr.push(_s.value);
+
+        if (i && _arr.length === i) break;
+      }
+    } catch (err) {
+      _d = true;
+      _e = err;
+    } finally {
+      try {
+        if (!_n && _i["return"]) _i["return"]();
+      } finally {
+        if (_d) throw _e;
+      }
+    }
+
+    return _arr;
+  }
+
+  return function (arr, i) {
+    if (Array.isArray(arr)) {
+      return arr;
+    } else if (Symbol.iterator in Object(arr)) {
+      return sliceIterator(arr, i);
+    } else {
+      throw new TypeError("Invalid attempt to destructure non-iterable instance");
+    }
+  };
+}();
+
 var _dec$1;
 var _class$1;
 
+var NAMESPACE = 'tuneUp';
+var SEPARATOR = '#';
+
+var TnModuleLoader = (_dec$1 = Injectable(), _dec$1(_class$1 = function () {
+    function TnModuleLoader(compiler) {
+        classCallCheck(this, TnModuleLoader);
+
+        this.compiler = compiler;
+    }
+
+    createClass(TnModuleLoader, [{
+        key: 'load',
+        value: function load(path) {
+            var _this = this;
+
+            var _splitPath = this.splitPath(path),
+                modulePath = _splitPath.modulePath,
+                moduleNamespace = _splitPath.moduleNamespace,
+                moduleName = _splitPath.moduleName;
+
+            return new Promise(function (resolve, reject) {
+                var loadedModule = window[NAMESPACE] && window[NAMESPACE][moduleNamespace];
+                if (loadedModule) {
+                    resolve(loadedModule);
+                }
+                var script = document.createElement('script');
+                script.src = modulePath;
+                script.onload = function () {
+                    _this.compiler.compileModuleAsync(window[NAMESPACE][moduleNamespace][moduleName]).then(function (ngModule) {
+                        script.remove();
+                        resolve(ngModule);
+                    }).catch(function (error) {
+                        reject(error);
+                    });
+                };
+                script.onerror = function (error) {
+                    reject('Could not load ' + path);
+                };
+                document.head.appendChild(script);
+            });
+        }
+    }, {
+        key: 'splitPath',
+        value: function splitPath(path) {
+            var _path$split = path.split(SEPARATOR),
+                _path$split2 = slicedToArray(_path$split, 3),
+                modulePath = _path$split2[0],
+                moduleNamespace = _path$split2[1],
+                moduleName = _path$split2[2];
+
+            return { modulePath: modulePath, moduleNamespace: moduleNamespace, moduleName: moduleName };
+        }
+    }]);
+    return TnModuleLoader;
+}()) || _class$1);
+Reflect.defineMetadata('design:paramtypes', [Compiler], TnModuleLoader);
+
+var TnModuleLoaderProvider = {
+    provide: NgModuleFactoryLoader,
+    useClass: TnModuleLoader
+};
+
+var _dec$2;
+var _class$2;
+
+var AuthGuard = (_dec$2 = Injectable(), _dec$2(_class$2 = function () {
+    function AuthGuard() {
+        classCallCheck(this, AuthGuard);
+    }
+
+    createClass(AuthGuard, [{
+        key: 'canActivate',
+        value: function canActivate() {
+            return false;
+        }
+    }]);
+    return AuthGuard;
+}()) || _class$2);
+
+// export * from './adminguard';
+
+// import {SceneComponent} from '../components';
+var mainRoute = {
+    path: '',
+    // component: SceneComponent,
+    // canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
+    canLoad: [AuthGuard],
+    children: []
+};
+var mainRedirectRoute = {
+    path: '**',
+    redirectTo: 'home',
+    pathMatch: 'full'
+};
+var defaultRoutes = {
+    mainRoute: mainRoute,
+    mainRedirectRoute: mainRedirectRoute
+};
+
+function unwrapExports (x) {
+	return x && x.__esModule ? x['default'] : x;
+}
+
+function createCommonjsModule(fn, module) {
+	return module = { exports: {} }, fn(module, module.exports), module.exports;
+}
+
+var assertString_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = assertString;
+function assertString(input) {
+  var isString = typeof input === 'string' || input instanceof String;
+
+  if (!isString) {
+    throw new TypeError('This library (validator.js) validates strings only');
+  }
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(assertString_1);
+
+var toDate_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = toDate;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function toDate(date) {
+  (0, _assertString2.default)(date);
+  date = Date.parse(date);
+  return !isNaN(date) ? new Date(date) : null;
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(toDate_1);
+
+var toFloat_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = toFloat;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function toFloat(str) {
+  (0, _assertString2.default)(str);
+  return parseFloat(str);
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(toFloat_1);
+
+var toInt_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = toInt;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function toInt(str, radix) {
+  (0, _assertString2.default)(str);
+  return parseInt(str, radix || 10);
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(toInt_1);
+
+var toBoolean_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = toBoolean;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function toBoolean(str, strict) {
+  (0, _assertString2.default)(str);
+  if (strict) {
+    return str === '1' || str === 'true';
+  }
+  return str !== '0' && str !== 'false' && str !== '';
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(toBoolean_1);
+
+var equals_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = equals;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function equals(str, comparison) {
+  (0, _assertString2.default)(str);
+  return str === comparison;
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(equals_1);
+
+var toString_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+exports.default = toString;
+function toString(input) {
+  if ((typeof input === 'undefined' ? 'undefined' : _typeof(input)) === 'object' && input !== null) {
+    if (typeof input.toString === 'function') {
+      input = input.toString();
+    } else {
+      input = '[object Object]';
+    }
+  } else if (input === null || typeof input === 'undefined' || isNaN(input) && !input.length) {
+    input = '';
+  }
+  return String(input);
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(toString_1);
+
+var contains_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = contains;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+
+
+var _toString2 = _interopRequireDefault(toString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function contains(str, elem) {
+  (0, _assertString2.default)(str);
+  return str.indexOf((0, _toString2.default)(elem)) >= 0;
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(contains_1);
+
+var matches_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = matches;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function matches(str, pattern, modifiers) {
+  (0, _assertString2.default)(str);
+  if (Object.prototype.toString.call(pattern) !== '[object RegExp]') {
+    pattern = new RegExp(pattern, modifiers);
+  }
+  return pattern.test(str);
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(matches_1);
+
+var merge_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = merge;
+function merge() {
+  var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var defaults = arguments[1];
+
+  for (var key in defaults) {
+    if (typeof obj[key] === 'undefined') {
+      obj[key] = defaults[key];
+    }
+  }
+  return obj;
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(merge_1);
+
+var isByteLength_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+exports.default = isByteLength;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/* eslint-disable prefer-rest-params */
+function isByteLength(str, options) {
+  (0, _assertString2.default)(str);
+  var min = void 0;
+  var max = void 0;
+  if ((typeof options === 'undefined' ? 'undefined' : _typeof(options)) === 'object') {
+    min = options.min || 0;
+    max = options.max;
+  } else {
+    // backwards compatibility: isByteLength(str, min [, max])
+    min = arguments[1];
+    max = arguments[2];
+  }
+  var len = encodeURI(str).split(/%..|./).length - 1;
+  return len >= min && (typeof max === 'undefined' || len <= max);
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(isByteLength_1);
+
+var isFQDN = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isFDQN;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+
+
+var _merge2 = _interopRequireDefault(merge_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var default_fqdn_options = {
+  require_tld: true,
+  allow_underscores: false,
+  allow_trailing_dot: false
+};
+
+function isFDQN(str, options) {
+  (0, _assertString2.default)(str);
+  options = (0, _merge2.default)(options, default_fqdn_options);
+
+  /* Remove the optional trailing dot before checking validity */
+  if (options.allow_trailing_dot && str[str.length - 1] === '.') {
+    str = str.substring(0, str.length - 1);
+  }
+  var parts = str.split('.');
+  if (options.require_tld) {
+    var tld = parts.pop();
+    if (!parts.length || !/^([a-z\u00a1-\uffff]{2,}|xn[a-z0-9-]{2,})$/i.test(tld)) {
+      return false;
+    }
+    // disallow spaces
+    if (/[\s\u2002-\u200B\u202F\u205F\u3000\uFEFF\uDB40\uDC20]/.test(tld)) {
+      return false;
+    }
+  }
+  for (var part, i = 0; i < parts.length; i++) {
+    part = parts[i];
+    if (options.allow_underscores) {
+      part = part.replace(/_/g, '');
+    }
+    if (!/^[a-z\u00a1-\uffff0-9-]+$/i.test(part)) {
+      return false;
+    }
+    // disallow full-width chars
+    if (/[\uff01-\uff5e]/.test(part)) {
+      return false;
+    }
+    if (part[0] === '-' || part[part.length - 1] === '-') {
+      return false;
+    }
+  }
+  return true;
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(isFQDN);
+
+var isEmail_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isEmail;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+
+
+var _merge2 = _interopRequireDefault(merge_1);
+
+
+
+var _isByteLength2 = _interopRequireDefault(isByteLength_1);
+
+
+
+var _isFQDN2 = _interopRequireDefault(isFQDN);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var default_email_options = {
+  allow_display_name: false,
+  require_display_name: false,
+  allow_utf8_local_part: true,
+  require_tld: true
+};
+
+/* eslint-disable max-len */
+/* eslint-disable no-control-regex */
+var displayName = /^[a-z\d!#\$%&'\*\+\-\/=\?\^_`{\|}~\.\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+[a-z\d!#\$%&'\*\+\-\/=\?\^_`{\|}~\,\.\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF\s]*<(.+)>$/i;
+var emailUserPart = /^[a-z\d!#\$%&'\*\+\-\/=\?\^_`{\|}~]+$/i;
+var quotedEmailUser = /^([\s\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e]|(\\[\x01-\x09\x0b\x0c\x0d-\x7f]))*$/i;
+var emailUserUtf8Part = /^[a-z\d!#\$%&'\*\+\-\/=\?\^_`{\|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+$/i;
+var quotedEmailUserUtf8 = /^([\s\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|(\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*$/i;
+/* eslint-enable max-len */
+/* eslint-enable no-control-regex */
+
+function isEmail(str, options) {
+  (0, _assertString2.default)(str);
+  options = (0, _merge2.default)(options, default_email_options);
+
+  if (options.require_display_name || options.allow_display_name) {
+    var display_email = str.match(displayName);
+    if (display_email) {
+      str = display_email[1];
+    } else if (options.require_display_name) {
+      return false;
+    }
+  }
+
+  var parts = str.split('@');
+  var domain = parts.pop();
+  var user = parts.join('@');
+
+  var lower_domain = domain.toLowerCase();
+  if (lower_domain === 'gmail.com' || lower_domain === 'googlemail.com') {
+    user = user.replace(/\./g, '').toLowerCase();
+  }
+
+  if (!(0, _isByteLength2.default)(user, { max: 64 }) || !(0, _isByteLength2.default)(domain, { max: 254 })) {
+    return false;
+  }
+
+  if (!(0, _isFQDN2.default)(domain, { require_tld: options.require_tld })) {
+    return false;
+  }
+
+  if (user[0] === '"') {
+    user = user.slice(1, user.length - 1);
+    return options.allow_utf8_local_part ? quotedEmailUserUtf8.test(user) : quotedEmailUser.test(user);
+  }
+
+  var pattern = options.allow_utf8_local_part ? emailUserUtf8Part : emailUserPart;
+
+  var user_parts = user.split('.');
+  for (var i = 0; i < user_parts.length; i++) {
+    if (!pattern.test(user_parts[i])) {
+      return false;
+    }
+  }
+
+  return true;
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(isEmail_1);
+
+var isIP_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isIP;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ipv4Maybe = /^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/;
+var ipv6Block = /^[0-9A-F]{1,4}$/i;
+
+function isIP(str) {
+  var version = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+
+  (0, _assertString2.default)(str);
+  version = String(version);
+  if (!version) {
+    return isIP(str, 4) || isIP(str, 6);
+  } else if (version === '4') {
+    if (!ipv4Maybe.test(str)) {
+      return false;
+    }
+    var parts = str.split('.').sort(function (a, b) {
+      return a - b;
+    });
+    return parts[3] <= 255;
+  } else if (version === '6') {
+    var blocks = str.split(':');
+    var foundOmissionBlock = false; // marker to indicate ::
+
+    // At least some OS accept the last 32 bits of an IPv6 address
+    // (i.e. 2 of the blocks) in IPv4 notation, and RFC 3493 says
+    // that '::ffff:a.b.c.d' is valid for IPv4-mapped IPv6 addresses,
+    // and '::a.b.c.d' is deprecated, but also valid.
+    var foundIPv4TransitionBlock = isIP(blocks[blocks.length - 1], 4);
+    var expectedNumberOfBlocks = foundIPv4TransitionBlock ? 7 : 8;
+
+    if (blocks.length > expectedNumberOfBlocks) {
+      return false;
+    }
+    // initial or final ::
+    if (str === '::') {
+      return true;
+    } else if (str.substr(0, 2) === '::') {
+      blocks.shift();
+      blocks.shift();
+      foundOmissionBlock = true;
+    } else if (str.substr(str.length - 2) === '::') {
+      blocks.pop();
+      blocks.pop();
+      foundOmissionBlock = true;
+    }
+
+    for (var i = 0; i < blocks.length; ++i) {
+      // test for a :: which can not be at the string start/end
+      // since those cases have been handled above
+      if (blocks[i] === '' && i > 0 && i < blocks.length - 1) {
+        if (foundOmissionBlock) {
+          return false; // multiple :: in address
+        }
+        foundOmissionBlock = true;
+      } else if (foundIPv4TransitionBlock && i === blocks.length - 1) {
+        // it has been checked before that the last
+        // block is a valid IPv4 address
+      } else if (!ipv6Block.test(blocks[i])) {
+        return false;
+      }
+    }
+    if (foundOmissionBlock) {
+      return blocks.length >= 1;
+    }
+    return blocks.length === expectedNumberOfBlocks;
+  }
+  return false;
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(isIP_1);
+
+var isURL_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isURL;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+
+
+var _isFQDN2 = _interopRequireDefault(isFQDN);
+
+
+
+var _isIP2 = _interopRequireDefault(isIP_1);
+
+
+
+var _merge2 = _interopRequireDefault(merge_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var default_url_options = {
+  protocols: ['http', 'https', 'ftp'],
+  require_tld: true,
+  require_protocol: false,
+  require_host: true,
+  require_valid_protocol: true,
+  allow_underscores: false,
+  allow_trailing_dot: false,
+  allow_protocol_relative_urls: false
+};
+
+var wrapped_ipv6 = /^\[([^\]]+)\](?::([0-9]+))?$/;
+
+function isRegExp(obj) {
+  return Object.prototype.toString.call(obj) === '[object RegExp]';
+}
+
+function checkHost(host, matches) {
+  for (var i = 0; i < matches.length; i++) {
+    var match = matches[i];
+    if (host === match || isRegExp(match) && match.test(host)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function isURL(url, options) {
+  (0, _assertString2.default)(url);
+  if (!url || url.length >= 2083 || /[\s<>]/.test(url)) {
+    return false;
+  }
+  if (url.indexOf('mailto:') === 0) {
+    return false;
+  }
+  options = (0, _merge2.default)(options, default_url_options);
+  var protocol = void 0,
+      auth = void 0,
+      host = void 0,
+      hostname = void 0,
+      port = void 0,
+      port_str = void 0,
+      split = void 0,
+      ipv6 = void 0;
+
+  split = url.split('#');
+  url = split.shift();
+
+  split = url.split('?');
+  url = split.shift();
+
+  split = url.split('://');
+  if (split.length > 1) {
+    protocol = split.shift();
+    if (options.require_valid_protocol && options.protocols.indexOf(protocol) === -1) {
+      return false;
+    }
+  } else if (options.require_protocol) {
+    return false;
+  } else if (options.allow_protocol_relative_urls && url.substr(0, 2) === '//') {
+    split[0] = url.substr(2);
+  }
+  url = split.join('://');
+
+  if (url === '') {
+    return false;
+  }
+
+  split = url.split('/');
+  url = split.shift();
+
+  if (url === '' && !options.require_host) {
+    return true;
+  }
+
+  split = url.split('@');
+  if (split.length > 1) {
+    auth = split.shift();
+    if (auth.indexOf(':') >= 0 && auth.split(':').length > 2) {
+      return false;
+    }
+  }
+  hostname = split.join('@');
+
+  port_str = null;
+  ipv6 = null;
+  var ipv6_match = hostname.match(wrapped_ipv6);
+  if (ipv6_match) {
+    host = '';
+    ipv6 = ipv6_match[1];
+    port_str = ipv6_match[2] || null;
+  } else {
+    split = hostname.split(':');
+    host = split.shift();
+    if (split.length) {
+      port_str = split.join(':');
+    }
+  }
+
+  if (port_str !== null) {
+    port = parseInt(port_str, 10);
+    if (!/^[0-9]+$/.test(port_str) || port <= 0 || port > 65535) {
+      return false;
+    }
+  }
+
+  if (!(0, _isIP2.default)(host) && !(0, _isFQDN2.default)(host, options) && (!ipv6 || !(0, _isIP2.default)(ipv6, 6))) {
+    return false;
+  }
+
+  host = host || ipv6;
+
+  if (options.host_whitelist && !checkHost(host, options.host_whitelist)) {
+    return false;
+  }
+  if (options.host_blacklist && checkHost(host, options.host_blacklist)) {
+    return false;
+  }
+
+  return true;
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(isURL_1);
+
+var isMACAddress_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isMACAddress;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var macAddress = /^([0-9a-fA-F][0-9a-fA-F]:){5}([0-9a-fA-F][0-9a-fA-F])$/;
+
+function isMACAddress(str) {
+  (0, _assertString2.default)(str);
+  return macAddress.test(str);
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(isMACAddress_1);
+
+var isBoolean_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isBoolean;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function isBoolean(str) {
+  (0, _assertString2.default)(str);
+  return ['true', 'false', '1', '0'].indexOf(str) >= 0;
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(isBoolean_1);
+
+var alpha_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var alpha = exports.alpha = {
+  'en-US': /^[A-Z]+$/i,
+  'cs-CZ': /^[A-ZÁČĎÉĚÍŇÓŘŠŤÚŮÝŽ]+$/i,
+  'da-DK': /^[A-ZÆØÅ]+$/i,
+  'de-DE': /^[A-ZÄÖÜß]+$/i,
+  'es-ES': /^[A-ZÁÉÍÑÓÚÜ]+$/i,
+  'fr-FR': /^[A-ZÀÂÆÇÉÈÊËÏÎÔŒÙÛÜŸ]+$/i,
+  'it-IT': /^[A-ZÀÉÈÌÎÓÒÙ]+$/i,
+  'nb-NO': /^[A-ZÆØÅ]+$/i,
+  'nl-NL': /^[A-ZÁÉËÏÓÖÜÚ]+$/i,
+  'nn-NO': /^[A-ZÆØÅ]+$/i,
+  'hu-HU': /^[A-ZÁÉÍÓÖŐÚÜŰ]+$/i,
+  'pl-PL': /^[A-ZĄĆĘŚŁŃÓŻŹ]+$/i,
+  'pt-PT': /^[A-ZÃÁÀÂÇÉÊÍÕÓÔÚÜ]+$/i,
+  'ru-RU': /^[А-ЯЁ]+$/i,
+  'sr-RS@latin': /^[A-ZČĆŽŠĐ]+$/i,
+  'sr-RS': /^[А-ЯЂЈЉЊЋЏ]+$/i,
+  'sv-SE': /^[A-ZÅÄÖ]+$/i,
+  'tr-TR': /^[A-ZÇĞİıÖŞÜ]+$/i,
+  'uk-UA': /^[А-ЩЬЮЯЄIЇҐі]+$/i,
+  ar: /^[ءآأؤإئابةتثجحخدذرزسشصضطظعغفقكلمنهوىيًٌٍَُِّْٰ]+$/
+};
+
+var alphanumeric = exports.alphanumeric = {
+  'en-US': /^[0-9A-Z]+$/i,
+  'cs-CZ': /^[0-9A-ZÁČĎÉĚÍŇÓŘŠŤÚŮÝŽ]+$/i,
+  'da-DK': /^[0-9A-ZÆØÅ]+$/i,
+  'de-DE': /^[0-9A-ZÄÖÜß]+$/i,
+  'es-ES': /^[0-9A-ZÁÉÍÑÓÚÜ]+$/i,
+  'fr-FR': /^[0-9A-ZÀÂÆÇÉÈÊËÏÎÔŒÙÛÜŸ]+$/i,
+  'it-IT': /^[0-9A-ZÀÉÈÌÎÓÒÙ]+$/i,
+  'hu-HU': /^[0-9A-ZÁÉÍÓÖŐÚÜŰ]+$/i,
+  'nb-NO': /^[0-9A-ZÆØÅ]+$/i,
+  'nl-NL': /^[0-9A-ZÁÉËÏÓÖÜÚ]+$/i,
+  'nn-NO': /^[0-9A-ZÆØÅ]+$/i,
+  'pl-PL': /^[0-9A-ZĄĆĘŚŁŃÓŻŹ]+$/i,
+  'pt-PT': /^[0-9A-ZÃÁÀÂÇÉÊÍÕÓÔÚÜ]+$/i,
+  'ru-RU': /^[0-9А-ЯЁ]+$/i,
+  'sr-RS@latin': /^[0-9A-ZČĆŽŠĐ]+$/i,
+  'sr-RS': /^[0-9А-ЯЂЈЉЊЋЏ]+$/i,
+  'sv-SE': /^[0-9A-ZÅÄÖ]+$/i,
+  'tr-TR': /^[0-9A-ZÇĞİıÖŞÜ]+$/i,
+  'uk-UA': /^[0-9А-ЩЬЮЯЄIЇҐі]+$/i,
+  ar: /^[٠١٢٣٤٥٦٧٨٩0-9ءآأؤإئابةتثجحخدذرزسشصضطظعغفقكلمنهوىيًٌٍَُِّْٰ]+$/
+};
+
+var decimal = exports.decimal = {
+  'en-US': '.',
+  ar: '٫'
+};
+
+var englishLocales = exports.englishLocales = ['AU', 'GB', 'HK', 'IN', 'NZ', 'ZA', 'ZM'];
+
+for (var locale, i = 0; i < englishLocales.length; i++) {
+  locale = 'en-' + englishLocales[i];
+  alpha[locale] = alpha['en-US'];
+  alphanumeric[locale] = alphanumeric['en-US'];
+  decimal[locale] = decimal['en-US'];
+}
+
+// Source: http://www.localeplanet.com/java/
+var arabicLocales = exports.arabicLocales = ['AE', 'BH', 'DZ', 'EG', 'IQ', 'JO', 'KW', 'LB', 'LY', 'MA', 'QM', 'QA', 'SA', 'SD', 'SY', 'TN', 'YE'];
+
+for (var _locale, _i = 0; _i < arabicLocales.length; _i++) {
+  _locale = 'ar-' + arabicLocales[_i];
+  alpha[_locale] = alpha.ar;
+  alphanumeric[_locale] = alphanumeric.ar;
+  decimal[_locale] = decimal.ar;
+}
+
+// Source: https://en.wikipedia.org/wiki/Decimal_mark
+var dotDecimal = exports.dotDecimal = [];
+var commaDecimal = exports.commaDecimal = ['cs-CZ', 'da-DK', 'de-DE', 'es-ES', 'fr-FR', 'it-IT', 'hu-HU', 'nb-NO', 'nn-NO', 'nl-NL', 'pl-Pl', 'pt-PT', 'ru-RU', 'sr-RS@latin', 'sr-RS', 'sv-SE', 'tr-TR', 'uk-UA'];
+
+for (var _i2 = 0; _i2 < dotDecimal.length; _i2++) {
+  decimal[dotDecimal[_i2]] = decimal['en-US'];
+}
+
+for (var _i3 = 0; _i3 < commaDecimal.length; _i3++) {
+  decimal[commaDecimal[_i3]] = ',';
+}
+
+alpha['pt-BR'] = alpha['pt-PT'];
+alphanumeric['pt-BR'] = alphanumeric['pt-PT'];
+decimal['pt-BR'] = decimal['pt-PT'];
+});
+
+unwrapExports(alpha_1);
+
+var isAlpha_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isAlpha;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function isAlpha(str) {
+  var locale = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'en-US';
+
+  (0, _assertString2.default)(str);
+  if (locale in alpha_1.alpha) {
+    return alpha_1.alpha[locale].test(str);
+  }
+  throw new Error('Invalid locale \'' + locale + '\'');
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(isAlpha_1);
+
+var isAlphanumeric_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isAlphanumeric;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function isAlphanumeric(str) {
+  var locale = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'en-US';
+
+  (0, _assertString2.default)(str);
+  if (locale in alpha_1.alphanumeric) {
+    return alpha_1.alphanumeric[locale].test(str);
+  }
+  throw new Error('Invalid locale \'' + locale + '\'');
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(isAlphanumeric_1);
+
+var isNumeric_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isNumeric;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var numeric = /^[-+]?[0-9]+$/;
+
+function isNumeric(str) {
+  (0, _assertString2.default)(str);
+  return numeric.test(str);
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(isNumeric_1);
+
+var isInt_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isInt;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var int = /^(?:[-+]?(?:0|[1-9][0-9]*))$/;
+var intLeadingZeroes = /^[-+]?[0-9]+$/;
+
+function isInt(str, options) {
+  (0, _assertString2.default)(str);
+  options = options || {};
+
+  // Get the regex to use for testing, based on whether
+  // leading zeroes are allowed or not.
+  var regex = options.hasOwnProperty('allow_leading_zeroes') && !options.allow_leading_zeroes ? int : intLeadingZeroes;
+
+  // Check min/max/lt/gt
+  var minCheckPassed = !options.hasOwnProperty('min') || str >= options.min;
+  var maxCheckPassed = !options.hasOwnProperty('max') || str <= options.max;
+  var ltCheckPassed = !options.hasOwnProperty('lt') || str < options.lt;
+  var gtCheckPassed = !options.hasOwnProperty('gt') || str > options.gt;
+
+  return regex.test(str) && minCheckPassed && maxCheckPassed && ltCheckPassed && gtCheckPassed;
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(isInt_1);
+
+var isPort_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isPort;
+
+
+
+var _isInt2 = _interopRequireDefault(isInt_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function isPort(str) {
+  return (0, _isInt2.default)(str, { min: 0, max: 65535 });
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(isPort_1);
+
+var isLowercase_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isLowercase;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function isLowercase(str) {
+  (0, _assertString2.default)(str);
+  return str === str.toLowerCase();
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(isLowercase_1);
+
+var isUppercase_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isUppercase;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function isUppercase(str) {
+  (0, _assertString2.default)(str);
+  return str === str.toUpperCase();
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(isUppercase_1);
+
+var isAscii_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isAscii;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/* eslint-disable no-control-regex */
+var ascii = /^[\x00-\x7F]+$/;
+/* eslint-enable no-control-regex */
+
+function isAscii(str) {
+  (0, _assertString2.default)(str);
+  return ascii.test(str);
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(isAscii_1);
+
+var isFullWidth_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.fullWidth = undefined;
+exports.default = isFullWidth;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var fullWidth = exports.fullWidth = /[^\u0020-\u007E\uFF61-\uFF9F\uFFA0-\uFFDC\uFFE8-\uFFEE0-9a-zA-Z]/;
+
+function isFullWidth(str) {
+  (0, _assertString2.default)(str);
+  return fullWidth.test(str);
+}
+});
+
+unwrapExports(isFullWidth_1);
+
+var isHalfWidth_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.halfWidth = undefined;
+exports.default = isHalfWidth;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var halfWidth = exports.halfWidth = /[\u0020-\u007E\uFF61-\uFF9F\uFFA0-\uFFDC\uFFE8-\uFFEE0-9a-zA-Z]/;
+
+function isHalfWidth(str) {
+  (0, _assertString2.default)(str);
+  return halfWidth.test(str);
+}
+});
+
+unwrapExports(isHalfWidth_1);
+
+var isVariableWidth_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isVariableWidth;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+
+
+
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function isVariableWidth(str) {
+  (0, _assertString2.default)(str);
+  return isFullWidth_1.fullWidth.test(str) && isHalfWidth_1.halfWidth.test(str);
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(isVariableWidth_1);
+
+var isMultibyte_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isMultibyte;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/* eslint-disable no-control-regex */
+var multibyte = /[^\x00-\x7F]/;
+/* eslint-enable no-control-regex */
+
+function isMultibyte(str) {
+  (0, _assertString2.default)(str);
+  return multibyte.test(str);
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(isMultibyte_1);
+
+var isSurrogatePair_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isSurrogatePair;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var surrogatePair = /[\uD800-\uDBFF][\uDC00-\uDFFF]/;
+
+function isSurrogatePair(str) {
+  (0, _assertString2.default)(str);
+  return surrogatePair.test(str);
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(isSurrogatePair_1);
+
+var isFloat_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isFloat;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function isFloat(str, options) {
+  (0, _assertString2.default)(str);
+  options = options || {};
+  var float = new RegExp('^(?:[-+])?(?:[0-9]+)?(?:\\' + (options.locale ? alpha_1.decimal[options.locale] : '.') + '[0-9]*)?(?:[eE][\\+\\-]?(?:[0-9]+))?$');
+  if (str === '' || str === '.') {
+    return false;
+  }
+  return float.test(str) && (!options.hasOwnProperty('min') || str >= options.min) && (!options.hasOwnProperty('max') || str <= options.max) && (!options.hasOwnProperty('lt') || str < options.lt) && (!options.hasOwnProperty('gt') || str > options.gt);
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(isFloat_1);
+
+var isDecimal_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isDecimal;
+
+
+
+var _merge2 = _interopRequireDefault(merge_1);
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function decimalRegExp(options) {
+  var regExp = new RegExp('^[-+]?([0-9]+)?(\\' + alpha_1.decimal[options.locale] + '[0-9]{' + options.decimal_digits + '})' + (options.force_decimal ? '' : '?') + '$');
+  return regExp;
+}
+
+var default_decimal_options = {
+  force_decimal: false,
+  decimal_digits: '1,',
+  locale: 'en-US'
+};
+
+var blacklist = ['', '-', '+'];
+
+function isDecimal(str, options) {
+  (0, _assertString2.default)(str);
+  options = (0, _merge2.default)(options, default_decimal_options);
+  if (options.locale in alpha_1.decimal) {
+    return !blacklist.includes(str.replace(/ /g, '')) && decimalRegExp(options).test(str);
+  }
+  throw new Error('Invalid locale \'' + options.locale + '\'');
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(isDecimal_1);
+
+var isHexadecimal_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isHexadecimal;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var hexadecimal = /^[0-9A-F]+$/i;
+
+function isHexadecimal(str) {
+  (0, _assertString2.default)(str);
+  return hexadecimal.test(str);
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(isHexadecimal_1);
+
+var isDivisibleBy_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isDivisibleBy;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+
+
+var _toFloat2 = _interopRequireDefault(toFloat_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function isDivisibleBy(str, num) {
+  (0, _assertString2.default)(str);
+  return (0, _toFloat2.default)(str) % parseInt(num, 10) === 0;
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(isDivisibleBy_1);
+
+var isHexColor_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isHexColor;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var hexcolor = /^#?([0-9A-F]{3}|[0-9A-F]{6})$/i;
+
+function isHexColor(str) {
+  (0, _assertString2.default)(str);
+  return hexcolor.test(str);
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(isHexColor_1);
+
+var isISRC_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isISRC;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// see http://isrc.ifpi.org/en/isrc-standard/code-syntax
+var isrc = /^[A-Z]{2}[0-9A-Z]{3}\d{2}\d{5}$/;
+
+function isISRC(str) {
+  (0, _assertString2.default)(str);
+  return isrc.test(str);
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(isISRC_1);
+
+var isMD5_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isMD5;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var md5 = /^[a-f0-9]{32}$/;
+
+function isMD5(str) {
+  (0, _assertString2.default)(str);
+  return md5.test(str);
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(isMD5_1);
+
+var isHash_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isHash;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var lengths = {
+  md5: 32,
+  md4: 32,
+  sha1: 40,
+  sha256: 64,
+  sha384: 96,
+  sha512: 128,
+  ripemd128: 32,
+  ripemd160: 40,
+  tiger128: 32,
+  tiger160: 40,
+  tiger192: 48,
+  crc32: 8,
+  crc32b: 8
+};
+
+function isHash(str, algorithm) {
+  (0, _assertString2.default)(str);
+  var hash = new RegExp('^[a-f0-9]{' + lengths[algorithm] + '}$');
+  return hash.test(str);
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(isHash_1);
+
+var isJSON_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+exports.default = isJSON;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function isJSON(str) {
+  (0, _assertString2.default)(str);
+  try {
+    var obj = JSON.parse(str);
+    return !!obj && (typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) === 'object';
+  } catch (e) {/* ignore */}
+  return false;
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(isJSON_1);
+
+var isEmpty_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isEmpty;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function isEmpty(str) {
+  (0, _assertString2.default)(str);
+  return str.length === 0;
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(isEmpty_1);
+
+var isLength_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+exports.default = isLength;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/* eslint-disable prefer-rest-params */
+function isLength(str, options) {
+  (0, _assertString2.default)(str);
+  var min = void 0;
+  var max = void 0;
+  if ((typeof options === 'undefined' ? 'undefined' : _typeof(options)) === 'object') {
+    min = options.min || 0;
+    max = options.max;
+  } else {
+    // backwards compatibility: isLength(str, min [, max])
+    min = arguments[1];
+    max = arguments[2];
+  }
+  var surrogatePairs = str.match(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g) || [];
+  var len = str.length - surrogatePairs.length;
+  return len >= min && (typeof max === 'undefined' || len <= max);
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(isLength_1);
+
+var isUUID_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isUUID;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var uuid = {
+  3: /^[0-9A-F]{8}-[0-9A-F]{4}-3[0-9A-F]{3}-[0-9A-F]{4}-[0-9A-F]{12}$/i,
+  4: /^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i,
+  5: /^[0-9A-F]{8}-[0-9A-F]{4}-5[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i,
+  all: /^[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}$/i
+};
+
+function isUUID(str) {
+  var version = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'all';
+
+  (0, _assertString2.default)(str);
+  var pattern = uuid[version];
+  return pattern && pattern.test(str);
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(isUUID_1);
+
+var isMongoId_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isMongoId;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+
+
+var _isHexadecimal2 = _interopRequireDefault(isHexadecimal_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function isMongoId(str) {
+  (0, _assertString2.default)(str);
+  return (0, _isHexadecimal2.default)(str) && str.length === 24;
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(isMongoId_1);
+
+var isAfter_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isAfter;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+
+
+var _toDate2 = _interopRequireDefault(toDate_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function isAfter(str) {
+  var date = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : String(new Date());
+
+  (0, _assertString2.default)(str);
+  var comparison = (0, _toDate2.default)(date);
+  var original = (0, _toDate2.default)(str);
+  return !!(original && comparison && original > comparison);
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(isAfter_1);
+
+var isBefore_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isBefore;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+
+
+var _toDate2 = _interopRequireDefault(toDate_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function isBefore(str) {
+  var date = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : String(new Date());
+
+  (0, _assertString2.default)(str);
+  var comparison = (0, _toDate2.default)(date);
+  var original = (0, _toDate2.default)(str);
+  return !!(original && comparison && original < comparison);
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(isBefore_1);
+
+var isIn_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+exports.default = isIn;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+
+
+var _toString2 = _interopRequireDefault(toString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function isIn(str, options) {
+  (0, _assertString2.default)(str);
+  var i = void 0;
+  if (Object.prototype.toString.call(options) === '[object Array]') {
+    var array = [];
+    for (i in options) {
+      if ({}.hasOwnProperty.call(options, i)) {
+        array[i] = (0, _toString2.default)(options[i]);
+      }
+    }
+    return array.indexOf(str) >= 0;
+  } else if ((typeof options === 'undefined' ? 'undefined' : _typeof(options)) === 'object') {
+    return options.hasOwnProperty(str);
+  } else if (options && typeof options.indexOf === 'function') {
+    return options.indexOf(str) >= 0;
+  }
+  return false;
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(isIn_1);
+
+var isCreditCard_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isCreditCard;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/* eslint-disable max-len */
+var creditCard = /^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|(222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11}|62[0-9]{14})$/;
+/* eslint-enable max-len */
+
+function isCreditCard(str) {
+  (0, _assertString2.default)(str);
+  var sanitized = str.replace(/[- ]+/g, '');
+  if (!creditCard.test(sanitized)) {
+    return false;
+  }
+  var sum = 0;
+  var digit = void 0;
+  var tmpNum = void 0;
+  var shouldDouble = void 0;
+  for (var i = sanitized.length - 1; i >= 0; i--) {
+    digit = sanitized.substring(i, i + 1);
+    tmpNum = parseInt(digit, 10);
+    if (shouldDouble) {
+      tmpNum *= 2;
+      if (tmpNum >= 10) {
+        sum += tmpNum % 10 + 1;
+      } else {
+        sum += tmpNum;
+      }
+    } else {
+      sum += tmpNum;
+    }
+    shouldDouble = !shouldDouble;
+  }
+  return !!(sum % 10 === 0 ? sanitized : false);
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(isCreditCard_1);
+
+var isISIN_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isISIN;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var isin = /^[A-Z]{2}[0-9A-Z]{9}[0-9]$/;
+
+function isISIN(str) {
+  (0, _assertString2.default)(str);
+  if (!isin.test(str)) {
+    return false;
+  }
+
+  var checksumStr = str.replace(/[A-Z]/g, function (character) {
+    return parseInt(character, 36);
+  });
+
+  var sum = 0;
+  var digit = void 0;
+  var tmpNum = void 0;
+  var shouldDouble = true;
+  for (var i = checksumStr.length - 2; i >= 0; i--) {
+    digit = checksumStr.substring(i, i + 1);
+    tmpNum = parseInt(digit, 10);
+    if (shouldDouble) {
+      tmpNum *= 2;
+      if (tmpNum >= 10) {
+        sum += tmpNum + 1;
+      } else {
+        sum += tmpNum;
+      }
+    } else {
+      sum += tmpNum;
+    }
+    shouldDouble = !shouldDouble;
+  }
+
+  return parseInt(str.substr(str.length - 1), 10) === (10000 - sum) % 10;
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(isISIN_1);
+
+var isISBN_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isISBN;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var isbn10Maybe = /^(?:[0-9]{9}X|[0-9]{10})$/;
+var isbn13Maybe = /^(?:[0-9]{13})$/;
+var factor = [1, 3];
+
+function isISBN(str) {
+  var version = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+
+  (0, _assertString2.default)(str);
+  version = String(version);
+  if (!version) {
+    return isISBN(str, 10) || isISBN(str, 13);
+  }
+  var sanitized = str.replace(/[\s-]+/g, '');
+  var checksum = 0;
+  var i = void 0;
+  if (version === '10') {
+    if (!isbn10Maybe.test(sanitized)) {
+      return false;
+    }
+    for (i = 0; i < 9; i++) {
+      checksum += (i + 1) * sanitized.charAt(i);
+    }
+    if (sanitized.charAt(9) === 'X') {
+      checksum += 10 * 10;
+    } else {
+      checksum += 10 * sanitized.charAt(9);
+    }
+    if (checksum % 11 === 0) {
+      return !!sanitized;
+    }
+  } else if (version === '13') {
+    if (!isbn13Maybe.test(sanitized)) {
+      return false;
+    }
+    for (i = 0; i < 12; i++) {
+      checksum += factor[i % 2] * sanitized.charAt(i);
+    }
+    if (sanitized.charAt(12) - (10 - checksum % 10) % 10 === 0) {
+      return !!sanitized;
+    }
+  }
+  return false;
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(isISBN_1);
+
+var isISSN_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isISSN;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var issn = '^\\d{4}-?\\d{3}[\\dX]$';
+
+function isISSN(str) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+  (0, _assertString2.default)(str);
+  var testIssn = issn;
+  testIssn = options.require_hyphen ? testIssn.replace('?', '') : testIssn;
+  testIssn = options.case_sensitive ? new RegExp(testIssn) : new RegExp(testIssn, 'i');
+  if (!testIssn.test(str)) {
+    return false;
+  }
+  var issnDigits = str.replace('-', '');
+  var position = 8;
+  var checksum = 0;
+  var _iteratorNormalCompletion = true;
+  var _didIteratorError = false;
+  var _iteratorError = undefined;
+
+  try {
+    for (var _iterator = issnDigits[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+      var digit = _step.value;
+
+      var digitValue = digit.toUpperCase() === 'X' ? 10 : +digit;
+      checksum += digitValue * position;
+      --position;
+    }
+  } catch (err) {
+    _didIteratorError = true;
+    _iteratorError = err;
+  } finally {
+    try {
+      if (!_iteratorNormalCompletion && _iterator.return) {
+        _iterator.return();
+      }
+    } finally {
+      if (_didIteratorError) {
+        throw _iteratorError;
+      }
+    }
+  }
+
+  return checksum % 11 === 0;
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(isISSN_1);
+
+var isMobilePhone_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isMobilePhone;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/* eslint-disable max-len */
+var phones = {
+  'ar-AE': /^((\+?971)|0)?5[024568]\d{7}$/,
+  'ar-DZ': /^(\+?213|0)(5|6|7)\d{8}$/,
+  'ar-EG': /^((\+?20)|0)?1[012]\d{8}$/,
+  'ar-JO': /^(\+?962|0)?7[789]\d{7}$/,
+  'ar-SY': /^(!?(\+?963)|0)?9\d{8}$/,
+  'ar-SA': /^(!?(\+?966)|0)?5\d{8}$/,
+  'en-US': /^(\+?1)?[2-9]\d{2}[2-9](?!11)\d{6}$/,
+  'cs-CZ': /^(\+?420)? ?[1-9][0-9]{2} ?[0-9]{3} ?[0-9]{3}$/,
+  'sk-SK': /^(\+?421)? ?[1-9][0-9]{2} ?[0-9]{3} ?[0-9]{3}$/,
+  'de-DE': /^(\+?49[ \.\-])?([\(]{1}[0-9]{1,6}[\)])?([0-9 \.\-\/]{3,20})((x|ext|extension)[ ]?[0-9]{1,4})?$/,
+  'da-DK': /^(\+?45)?(\d{8})$/,
+  'el-GR': /^(\+?30)?(69\d{8})$/,
+  'en-AU': /^(\+?61|0)4\d{8}$/,
+  'en-GB': /^(\+?44|0)7\d{9}$/,
+  'en-HK': /^(\+?852\-?)?[456789]\d{3}\-?\d{4}$/,
+  'en-IN': /^(\+?91|0)?[789]\d{9}$/,
+  'en-KE': /^(\+?254|0)?[7]\d{8}$/,
+  'en-NG': /^(\+?234|0)?[789]\d{9}$/,
+  'en-NZ': /^(\+?64|0)2\d{7,9}$/,
+  'en-UG': /^(\+?256|0)?[7]\d{8}$/,
+  'en-RW': /^(\+?250|0)?[7]\d{8}$/,
+  'en-TZ': /^(\+?255|0)?[67]\d{8}$/,
+  'en-ZA': /^(\+?27|0)\d{9}$/,
+  'en-ZM': /^(\+?26)?09[567]\d{7}$/,
+  'es-ES': /^(\+?34)?(6\d{1}|7[1234])\d{7}$/,
+  'fi-FI': /^(\+?358|0)\s?(4(0|1|2|4|5|6)?|50)\s?(\d\s?){4,8}\d$/,
+  'fa-IR': /^(\+?98[\-\s]?|0)9[0-39]\d[\-\s]?\d{3}[\-\s]?\d{4}$/,
+  'fr-FR': /^(\+?33|0)[67]\d{8}$/,
+  'he-IL': /^(\+972|0)([23489]|5[0248]|77)[1-9]\d{6}/,
+  'hu-HU': /^(\+?36)(20|30|70)\d{7}$/,
+  'lt-LT': /^(\+370|8)\d{8}$/,
+  'id-ID': /^(\+?62|0[1-9])[\s|\d]+$/,
+  'it-IT': /^(\+?39)?\s?3\d{2} ?\d{6,7}$/,
+  'ko-KR': /^((\+?82)[ \-]?)?0?1([0|1|6|7|8|9]{1})[ \-]?\d{3,4}[ \-]?\d{4}$/,
+  'ja-JP': /^(\+?81|0)\d{1,4}[ \-]?\d{1,4}[ \-]?\d{4}$/,
+  'ms-MY': /^(\+?6?01){1}(([145]{1}(\-|\s)?\d{7,8})|([236789]{1}(\s|\-)?\d{7}))$/,
+  'nb-NO': /^(\+?47)?[49]\d{7}$/,
+  'nl-BE': /^(\+?32|0)4?\d{8}$/,
+  'nn-NO': /^(\+?47)?[49]\d{7}$/,
+  'pl-PL': /^(\+?48)? ?[5-8]\d ?\d{3} ?\d{2} ?\d{2}$/,
+  'pt-BR': /^(\+?55|0)\-?[1-9]{2}\-?[2-9]{1}\d{3,4}\-?\d{4}$/,
+  'pt-PT': /^(\+?351)?9[1236]\d{7}$/,
+  'ro-RO': /^(\+?4?0)\s?7\d{2}(\/|\s|\.|\-)?\d{3}(\s|\.|\-)?\d{3}$/,
+  'en-PK': /^((\+92)|(0092))-{0,1}\d{3}-{0,1}\d{7}$|^\d{11}$|^\d{4}-\d{7}$/,
+  'ru-RU': /^(\+?7|8)?9\d{9}$/,
+  'sr-RS': /^(\+3816|06)[- \d]{5,9}$/,
+  'tr-TR': /^(\+?90|0)?5\d{9}$/,
+  'uk-UA': /^(\+?38|8)?0\d{9}$/,
+  'vi-VN': /^(\+?84|0)?((1(2([0-9])|6([2-9])|88|99))|(9((?!5)[0-9])))([0-9]{7})$/,
+  'zh-CN': /^(\+?0?86\-?)?1[345789]\d{9}$/,
+  'zh-TW': /^(\+?886\-?|0)?9\d{8}$/
+};
+/* eslint-enable max-len */
+
+// aliases
+phones['en-CA'] = phones['en-US'];
+phones['fr-BE'] = phones['nl-BE'];
+phones['zh-HK'] = phones['en-HK'];
+
+function isMobilePhone(str, locale) {
+  (0, _assertString2.default)(str);
+  if (locale in phones) {
+    return phones[locale].test(str);
+  } else if (locale === 'any') {
+    for (var key in phones) {
+      if (phones.hasOwnProperty(key)) {
+        var phone = phones[key];
+        if (phone.test(str)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+  throw new Error('Invalid locale \'' + locale + '\'');
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(isMobilePhone_1);
+
+var isCurrency_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isCurrency;
+
+
+
+var _merge2 = _interopRequireDefault(merge_1);
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function currencyRegex(options) {
+  var decimal_digits = '\\d{' + options.digits_after_decimal[0] + '}';
+  options.digits_after_decimal.forEach(function (digit, index) {
+    if (index !== 0) decimal_digits = decimal_digits + '|\\d{' + digit + '}';
+  });
+  var symbol = '(\\' + options.symbol.replace(/\./g, '\\.') + ')' + (options.require_symbol ? '' : '?'),
+      negative = '-?',
+      whole_dollar_amount_without_sep = '[1-9]\\d*',
+      whole_dollar_amount_with_sep = '[1-9]\\d{0,2}(\\' + options.thousands_separator + '\\d{3})*',
+      valid_whole_dollar_amounts = ['0', whole_dollar_amount_without_sep, whole_dollar_amount_with_sep],
+      whole_dollar_amount = '(' + valid_whole_dollar_amounts.join('|') + ')?',
+      decimal_amount = '(\\' + options.decimal_separator + '(' + decimal_digits + '))' + (options.require_decimal ? '' : '?');
+  var pattern = whole_dollar_amount + (options.allow_decimal || options.require_decimal ? decimal_amount : '');
+
+  // default is negative sign before symbol, but there are two other options (besides parens)
+  if (options.allow_negatives && !options.parens_for_negatives) {
+    if (options.negative_sign_after_digits) {
+      pattern += negative;
+    } else if (options.negative_sign_before_digits) {
+      pattern = negative + pattern;
+    }
+  }
+
+  // South African Rand, for example, uses R 123 (space) and R-123 (no space)
+  if (options.allow_negative_sign_placeholder) {
+    pattern = '( (?!\\-))?' + pattern;
+  } else if (options.allow_space_after_symbol) {
+    pattern = ' ?' + pattern;
+  } else if (options.allow_space_after_digits) {
+    pattern += '( (?!$))?';
+  }
+
+  if (options.symbol_after_digits) {
+    pattern += symbol;
+  } else {
+    pattern = symbol + pattern;
+  }
+
+  if (options.allow_negatives) {
+    if (options.parens_for_negatives) {
+      pattern = '(\\(' + pattern + '\\)|' + pattern + ')';
+    } else if (!(options.negative_sign_before_digits || options.negative_sign_after_digits)) {
+      pattern = negative + pattern;
+    }
+  }
+
+  // ensure there's a dollar and/or decimal amount, and that
+  // it doesn't start with a space or a negative sign followed by a space
+  return new RegExp('^(?!-? )(?=.*\\d)' + pattern + '$');
+}
+
+var default_currency_options = {
+  symbol: '$',
+  require_symbol: false,
+  allow_space_after_symbol: false,
+  symbol_after_digits: false,
+  allow_negatives: true,
+  parens_for_negatives: false,
+  negative_sign_before_digits: false,
+  negative_sign_after_digits: false,
+  allow_negative_sign_placeholder: false,
+  thousands_separator: ',',
+  decimal_separator: '.',
+  allow_decimal: true,
+  require_decimal: false,
+  digits_after_decimal: [2],
+  allow_space_after_digits: false
+};
+
+function isCurrency(str, options) {
+  (0, _assertString2.default)(str);
+  options = (0, _merge2.default)(options, default_currency_options);
+  return currencyRegex(options).test(str);
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(isCurrency_1);
+
+var isISO8601_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isISO8601;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/* eslint-disable max-len */
+// from http://goo.gl/0ejHHW
+var iso8601 = /^([\+-]?\d{4}(?!\d{2}\b))((-?)((0[1-9]|1[0-2])(\3([12]\d|0[1-9]|3[01]))?|W([0-4]\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\d|[12]\d{2}|3([0-5]\d|6[1-6])))([T\s]((([01]\d|2[0-3])((:?)[0-5]\d)?|24:?00)([\.,]\d+(?!:))?)?(\17[0-5]\d([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3]):?([0-5]\d)?)?)?)?$/;
+/* eslint-enable max-len */
+
+function isISO8601(str) {
+  (0, _assertString2.default)(str);
+  return iso8601.test(str);
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(isISO8601_1);
+
+var isBase64_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isBase64;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var notBase64 = /[^A-Z0-9+\/=]/i;
+
+function isBase64(str) {
+  (0, _assertString2.default)(str);
+  var len = str.length;
+  if (!len || len % 4 !== 0 || notBase64.test(str)) {
+    return false;
+  }
+  var firstPaddingChar = str.indexOf('=');
+  return firstPaddingChar === -1 || firstPaddingChar === len - 1 || firstPaddingChar === len - 2 && str[len - 1] === '=';
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(isBase64_1);
+
+var isDataURI_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isDataURI;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var dataURI = /^\s*data:([a-z]+\/[a-z0-9\-\+]+(;[a-z\-]+=[a-z0-9\-]+)?)?(;base64)?,[a-z0-9!\$&',\(\)\*\+,;=\-\._~:@\/\?%\s]*\s*$/i; // eslint-disable-line max-len
+
+function isDataURI(str) {
+  (0, _assertString2.default)(str);
+  return dataURI.test(str);
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(isDataURI_1);
+
+var isLatLong = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = function (str) {
+  (0, _assertString2.default)(str);
+  if (!str.includes(',')) return false;
+  var pair = str.split(',');
+  return lat.test(pair[0]) && long.test(pair[1]);
+};
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var lat = /^\(?[+-]?(90(\.0+)?|[1-8]?\d(\.\d+)?)$/;
+var long = /^\s?[+-]?(180(\.0+)?|1[0-7]\d(\.\d+)?|\d{1,2}(\.\d+)?)\)?$/;
+
+module.exports = exports['default'];
+});
+
+unwrapExports(isLatLong);
+
+var isPostalCode = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.locales = undefined;
+
+exports.default = function (str, locale) {
+  (0, _assertString2.default)(str);
+  if (locale in patterns) {
+    return patterns[locale].test(str);
+  } else if (locale === 'any') {
+    for (var key in patterns) {
+      if (patterns.hasOwnProperty(key)) {
+        var pattern = patterns[key];
+        if (pattern.test(str)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+  throw new Error('Invalid locale \'' + locale + '\'');
+};
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// common patterns
+var threeDigit = /^\d{3}$/;
+var fourDigit = /^\d{4}$/;
+var fiveDigit = /^\d{5}$/;
+var sixDigit = /^\d{6}$/;
+
+var patterns = {
+  AT: fourDigit,
+  AU: sixDigit,
+  BE: fourDigit,
+  CA: /^[ABCEGHJKLMNPRSTVXY]\d[ABCEGHJ-NPRSTV-Z][\s\-]?\d[ABCEGHJ-NPRSTV-Z]\d$/i,
+  CH: fourDigit,
+  CZ: /^\d{3}\s?\d{2}$/,
+  DE: fiveDigit,
+  DK: fourDigit,
+  DZ: fiveDigit,
+  ES: fiveDigit,
+  FI: fiveDigit,
+  FR: /^\d{2}\s?\d{3}$/,
+  GB: /^(gir\s?0aa|[a-z]{1,2}\d[\da-z]?\s?(\d[a-z]{2})?)$/i,
+  GR: /^\d{3}\s?\d{2}$/,
+  IL: fiveDigit,
+  IN: sixDigit,
+  IS: threeDigit,
+  IT: fiveDigit,
+  JP: /^\d{3}\-\d{4}$/,
+  KE: fiveDigit,
+  LI: /^(948[5-9]|949[0-7])$/,
+  MX: fiveDigit,
+  NL: /^\d{4}\s?[a-z]{2}$/i,
+  NO: fourDigit,
+  PL: /^\d{2}\-\d{3}$/,
+  PT: /^\d{4}(\-\d{3})?$/,
+  RO: sixDigit,
+  RU: sixDigit,
+  SA: fiveDigit,
+  SE: /^\d{3}\s?\d{2}$/,
+  TW: /^\d{3}(\d{2})?$/,
+  US: /^\d{5}(-\d{4})?$/,
+  ZA: fourDigit,
+  ZM: fiveDigit
+};
+
+var locales = exports.locales = Object.keys(patterns);
+});
+
+unwrapExports(isPostalCode);
+
+var ltrim_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = ltrim;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function ltrim(str, chars) {
+  (0, _assertString2.default)(str);
+  var pattern = chars ? new RegExp('^[' + chars + ']+', 'g') : /^\s+/g;
+  return str.replace(pattern, '');
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(ltrim_1);
+
+var rtrim_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = rtrim;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function rtrim(str, chars) {
+  (0, _assertString2.default)(str);
+  var pattern = chars ? new RegExp('[' + chars + ']') : /\s/;
+
+  var idx = str.length - 1;
+  while (idx >= 0 && pattern.test(str[idx])) {
+    idx--;
+  }
+
+  return idx < str.length ? str.substr(0, idx + 1) : str;
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(rtrim_1);
+
+var trim_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = trim;
+
+
+
+var _rtrim2 = _interopRequireDefault(rtrim_1);
+
+
+
+var _ltrim2 = _interopRequireDefault(ltrim_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function trim(str, chars) {
+  return (0, _rtrim2.default)((0, _ltrim2.default)(str, chars), chars);
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(trim_1);
+
+var _escape = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = escape;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function escape(str) {
+  (0, _assertString2.default)(str);
+  return str.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\//g, '&#x2F;').replace(/\\/g, '&#x5C;').replace(/`/g, '&#96;');
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(_escape);
+
+var _unescape = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = unescape;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function unescape(str) {
+  (0, _assertString2.default)(str);
+  return str.replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#x27;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#x2F;/g, '/').replace(/&#x5C;/g, '\\').replace(/&#96;/g, '`');
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(_unescape);
+
+var blacklist_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = blacklist;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function blacklist(str, chars) {
+  (0, _assertString2.default)(str);
+  return str.replace(new RegExp('[' + chars + ']+', 'g'), '');
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(blacklist_1);
+
+var stripLow_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = stripLow;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+
+
+var _blacklist2 = _interopRequireDefault(blacklist_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function stripLow(str, keep_new_lines) {
+  (0, _assertString2.default)(str);
+  var chars = keep_new_lines ? '\\x00-\\x09\\x0B\\x0C\\x0E-\\x1F\\x7F' : '\\x00-\\x1F\\x7F';
+  return (0, _blacklist2.default)(str, chars);
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(stripLow_1);
+
+var whitelist_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = whitelist;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function whitelist(str, chars) {
+  (0, _assertString2.default)(str);
+  return str.replace(new RegExp('[^' + chars + ']+', 'g'), '');
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(whitelist_1);
+
+var isWhitelisted_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = isWhitelisted;
+
+
+
+var _assertString2 = _interopRequireDefault(assertString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function isWhitelisted(str, chars) {
+  (0, _assertString2.default)(str);
+  for (var i = str.length - 1; i >= 0; i--) {
+    if (chars.indexOf(str[i]) === -1) {
+      return false;
+    }
+  }
+  return true;
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(isWhitelisted_1);
+
+var normalizeEmail_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = normalizeEmail;
+
+
+
+var _merge2 = _interopRequireDefault(merge_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var default_normalize_email_options = {
+  // The following options apply to all email addresses
+  // Lowercases the local part of the email address.
+  // Please note this may violate RFC 5321 as per http://stackoverflow.com/a/9808332/192024).
+  // The domain is always lowercased, as per RFC 1035
+  all_lowercase: true,
+
+  // The following conversions are specific to GMail
+  // Lowercases the local part of the GMail address (known to be case-insensitive)
+  gmail_lowercase: true,
+  // Removes dots from the local part of the email address, as that's ignored by GMail
+  gmail_remove_dots: true,
+  // Removes the subaddress (e.g. "+foo") from the email address
+  gmail_remove_subaddress: true,
+  // Conversts the googlemail.com domain to gmail.com
+  gmail_convert_googlemaildotcom: true,
+
+  // The following conversions are specific to Outlook.com / Windows Live / Hotmail
+  // Lowercases the local part of the Outlook.com address (known to be case-insensitive)
+  outlookdotcom_lowercase: true,
+  // Removes the subaddress (e.g. "+foo") from the email address
+  outlookdotcom_remove_subaddress: true,
+
+  // The following conversions are specific to Yahoo
+  // Lowercases the local part of the Yahoo address (known to be case-insensitive)
+  yahoo_lowercase: true,
+  // Removes the subaddress (e.g. "-foo") from the email address
+  yahoo_remove_subaddress: true,
+
+  // The following conversions are specific to iCloud
+  // Lowercases the local part of the iCloud address (known to be case-insensitive)
+  icloud_lowercase: true,
+  // Removes the subaddress (e.g. "+foo") from the email address
+  icloud_remove_subaddress: true
+};
+
+// List of domains used by iCloud
+var icloud_domains = ['icloud.com', 'me.com'];
+
+// List of domains used by Outlook.com and its predecessors
+// This list is likely incomplete.
+// Partial reference:
+// https://blogs.office.com/2013/04/17/outlook-com-gets-two-step-verification-sign-in-by-alias-and-new-international-domains/
+var outlookdotcom_domains = ['hotmail.at', 'hotmail.be', 'hotmail.ca', 'hotmail.cl', 'hotmail.co.il', 'hotmail.co.nz', 'hotmail.co.th', 'hotmail.co.uk', 'hotmail.com', 'hotmail.com.ar', 'hotmail.com.au', 'hotmail.com.br', 'hotmail.com.gr', 'hotmail.com.mx', 'hotmail.com.pe', 'hotmail.com.tr', 'hotmail.com.vn', 'hotmail.cz', 'hotmail.de', 'hotmail.dk', 'hotmail.es', 'hotmail.fr', 'hotmail.hu', 'hotmail.id', 'hotmail.ie', 'hotmail.in', 'hotmail.it', 'hotmail.jp', 'hotmail.kr', 'hotmail.lv', 'hotmail.my', 'hotmail.ph', 'hotmail.pt', 'hotmail.sa', 'hotmail.sg', 'hotmail.sk', 'live.be', 'live.co.uk', 'live.com', 'live.com.ar', 'live.com.mx', 'live.de', 'live.es', 'live.eu', 'live.fr', 'live.it', 'live.nl', 'msn.com', 'outlook.at', 'outlook.be', 'outlook.cl', 'outlook.co.il', 'outlook.co.nz', 'outlook.co.th', 'outlook.com', 'outlook.com.ar', 'outlook.com.au', 'outlook.com.br', 'outlook.com.gr', 'outlook.com.pe', 'outlook.com.tr', 'outlook.com.vn', 'outlook.cz', 'outlook.de', 'outlook.dk', 'outlook.es', 'outlook.fr', 'outlook.hu', 'outlook.id', 'outlook.ie', 'outlook.in', 'outlook.it', 'outlook.jp', 'outlook.kr', 'outlook.lv', 'outlook.my', 'outlook.ph', 'outlook.pt', 'outlook.sa', 'outlook.sg', 'outlook.sk', 'passport.com'];
+
+// List of domains used by Yahoo Mail
+// This list is likely incomplete
+var yahoo_domains = ['rocketmail.com', 'yahoo.ca', 'yahoo.co.uk', 'yahoo.com', 'yahoo.de', 'yahoo.fr', 'yahoo.in', 'yahoo.it', 'ymail.com'];
+
+function normalizeEmail(email, options) {
+  options = (0, _merge2.default)(options, default_normalize_email_options);
+
+  var raw_parts = email.split('@');
+  var domain = raw_parts.pop();
+  var user = raw_parts.join('@');
+  var parts = [user, domain];
+
+  // The domain is always lowercased, as it's case-insensitive per RFC 1035
+  parts[1] = parts[1].toLowerCase();
+
+  if (parts[1] === 'gmail.com' || parts[1] === 'googlemail.com') {
+    // Address is GMail
+    if (options.gmail_remove_subaddress) {
+      parts[0] = parts[0].split('+')[0];
+    }
+    if (options.gmail_remove_dots) {
+      parts[0] = parts[0].replace(/\./g, '');
+    }
+    if (!parts[0].length) {
+      return false;
+    }
+    if (options.all_lowercase || options.gmail_lowercase) {
+      parts[0] = parts[0].toLowerCase();
+    }
+    parts[1] = options.gmail_convert_googlemaildotcom ? 'gmail.com' : parts[1];
+  } else if (~icloud_domains.indexOf(parts[1])) {
+    // Address is iCloud
+    if (options.icloud_remove_subaddress) {
+      parts[0] = parts[0].split('+')[0];
+    }
+    if (!parts[0].length) {
+      return false;
+    }
+    if (options.all_lowercase || options.icloud_lowercase) {
+      parts[0] = parts[0].toLowerCase();
+    }
+  } else if (~outlookdotcom_domains.indexOf(parts[1])) {
+    // Address is Outlook.com
+    if (options.outlookdotcom_remove_subaddress) {
+      parts[0] = parts[0].split('+')[0];
+    }
+    if (!parts[0].length) {
+      return false;
+    }
+    if (options.all_lowercase || options.outlookdotcom_lowercase) {
+      parts[0] = parts[0].toLowerCase();
+    }
+  } else if (~yahoo_domains.indexOf(parts[1])) {
+    // Address is Yahoo
+    if (options.yahoo_remove_subaddress) {
+      var components = parts[0].split('-');
+      parts[0] = components.length > 1 ? components.slice(0, -1).join('-') : components[0];
+    }
+    if (!parts[0].length) {
+      return false;
+    }
+    if (options.all_lowercase || options.yahoo_lowercase) {
+      parts[0] = parts[0].toLowerCase();
+    }
+  } else if (options.all_lowercase) {
+    // Any other address
+    parts[0] = parts[0].toLowerCase();
+  }
+  return parts.join('@');
+}
+module.exports = exports['default'];
+});
+
+unwrapExports(normalizeEmail_1);
+
+var validator_1 = createCommonjsModule(function (module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+
+
+var _toDate2 = _interopRequireDefault(toDate_1);
+
+
+
+var _toFloat2 = _interopRequireDefault(toFloat_1);
+
+
+
+var _toInt2 = _interopRequireDefault(toInt_1);
+
+
+
+var _toBoolean2 = _interopRequireDefault(toBoolean_1);
+
+
+
+var _equals2 = _interopRequireDefault(equals_1);
+
+
+
+var _contains2 = _interopRequireDefault(contains_1);
+
+
+
+var _matches2 = _interopRequireDefault(matches_1);
+
+
+
+var _isEmail2 = _interopRequireDefault(isEmail_1);
+
+
+
+var _isURL2 = _interopRequireDefault(isURL_1);
+
+
+
+var _isMACAddress2 = _interopRequireDefault(isMACAddress_1);
+
+
+
+var _isIP2 = _interopRequireDefault(isIP_1);
+
+
+
+var _isFQDN2 = _interopRequireDefault(isFQDN);
+
+
+
+var _isBoolean2 = _interopRequireDefault(isBoolean_1);
+
+
+
+var _isAlpha2 = _interopRequireDefault(isAlpha_1);
+
+
+
+var _isAlphanumeric2 = _interopRequireDefault(isAlphanumeric_1);
+
+
+
+var _isNumeric2 = _interopRequireDefault(isNumeric_1);
+
+
+
+var _isPort2 = _interopRequireDefault(isPort_1);
+
+
+
+var _isLowercase2 = _interopRequireDefault(isLowercase_1);
+
+
+
+var _isUppercase2 = _interopRequireDefault(isUppercase_1);
+
+
+
+var _isAscii2 = _interopRequireDefault(isAscii_1);
+
+
+
+var _isFullWidth2 = _interopRequireDefault(isFullWidth_1);
+
+
+
+var _isHalfWidth2 = _interopRequireDefault(isHalfWidth_1);
+
+
+
+var _isVariableWidth2 = _interopRequireDefault(isVariableWidth_1);
+
+
+
+var _isMultibyte2 = _interopRequireDefault(isMultibyte_1);
+
+
+
+var _isSurrogatePair2 = _interopRequireDefault(isSurrogatePair_1);
+
+
+
+var _isInt2 = _interopRequireDefault(isInt_1);
+
+
+
+var _isFloat2 = _interopRequireDefault(isFloat_1);
+
+
+
+var _isDecimal2 = _interopRequireDefault(isDecimal_1);
+
+
+
+var _isHexadecimal2 = _interopRequireDefault(isHexadecimal_1);
+
+
+
+var _isDivisibleBy2 = _interopRequireDefault(isDivisibleBy_1);
+
+
+
+var _isHexColor2 = _interopRequireDefault(isHexColor_1);
+
+
+
+var _isISRC2 = _interopRequireDefault(isISRC_1);
+
+
+
+var _isMD2 = _interopRequireDefault(isMD5_1);
+
+
+
+var _isHash2 = _interopRequireDefault(isHash_1);
+
+
+
+var _isJSON2 = _interopRequireDefault(isJSON_1);
+
+
+
+var _isEmpty2 = _interopRequireDefault(isEmpty_1);
+
+
+
+var _isLength2 = _interopRequireDefault(isLength_1);
+
+
+
+var _isByteLength2 = _interopRequireDefault(isByteLength_1);
+
+
+
+var _isUUID2 = _interopRequireDefault(isUUID_1);
+
+
+
+var _isMongoId2 = _interopRequireDefault(isMongoId_1);
+
+
+
+var _isAfter2 = _interopRequireDefault(isAfter_1);
+
+
+
+var _isBefore2 = _interopRequireDefault(isBefore_1);
+
+
+
+var _isIn2 = _interopRequireDefault(isIn_1);
+
+
+
+var _isCreditCard2 = _interopRequireDefault(isCreditCard_1);
+
+
+
+var _isISIN2 = _interopRequireDefault(isISIN_1);
+
+
+
+var _isISBN2 = _interopRequireDefault(isISBN_1);
+
+
+
+var _isISSN2 = _interopRequireDefault(isISSN_1);
+
+
+
+var _isMobilePhone2 = _interopRequireDefault(isMobilePhone_1);
+
+
+
+var _isCurrency2 = _interopRequireDefault(isCurrency_1);
+
+
+
+var _isISO2 = _interopRequireDefault(isISO8601_1);
+
+
+
+var _isBase2 = _interopRequireDefault(isBase64_1);
+
+
+
+var _isDataURI2 = _interopRequireDefault(isDataURI_1);
+
+
+
+var _isLatLong2 = _interopRequireDefault(isLatLong);
+
+
+
+var _isPostalCode2 = _interopRequireDefault(isPostalCode);
+
+
+
+var _ltrim2 = _interopRequireDefault(ltrim_1);
+
+
+
+var _rtrim2 = _interopRequireDefault(rtrim_1);
+
+
+
+var _trim2 = _interopRequireDefault(trim_1);
+
+
+
+var _escape2 = _interopRequireDefault(_escape);
+
+
+
+var _unescape2 = _interopRequireDefault(_unescape);
+
+
+
+var _stripLow2 = _interopRequireDefault(stripLow_1);
+
+
+
+var _whitelist2 = _interopRequireDefault(whitelist_1);
+
+
+
+var _blacklist2 = _interopRequireDefault(blacklist_1);
+
+
+
+var _isWhitelisted2 = _interopRequireDefault(isWhitelisted_1);
+
+
+
+var _normalizeEmail2 = _interopRequireDefault(normalizeEmail_1);
+
+
+
+var _toString2 = _interopRequireDefault(toString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var version = '9.0.0';
+
+var validator = {
+  version: version,
+  toDate: _toDate2.default,
+  toFloat: _toFloat2.default,
+  toInt: _toInt2.default,
+  toBoolean: _toBoolean2.default,
+  equals: _equals2.default,
+  contains: _contains2.default,
+  matches: _matches2.default,
+  isEmail: _isEmail2.default,
+  isURL: _isURL2.default,
+  isMACAddress: _isMACAddress2.default,
+  isIP: _isIP2.default,
+  isFQDN: _isFQDN2.default,
+  isBoolean: _isBoolean2.default,
+  isAlpha: _isAlpha2.default,
+  isAlphanumeric: _isAlphanumeric2.default,
+  isNumeric: _isNumeric2.default,
+  isPort: _isPort2.default,
+  isLowercase: _isLowercase2.default,
+  isUppercase: _isUppercase2.default,
+  isAscii: _isAscii2.default,
+  isFullWidth: _isFullWidth2.default,
+  isHalfWidth: _isHalfWidth2.default,
+  isVariableWidth: _isVariableWidth2.default,
+  isMultibyte: _isMultibyte2.default,
+  isSurrogatePair: _isSurrogatePair2.default,
+  isInt: _isInt2.default,
+  isFloat: _isFloat2.default,
+  isDecimal: _isDecimal2.default,
+  isHexadecimal: _isHexadecimal2.default,
+  isDivisibleBy: _isDivisibleBy2.default,
+  isHexColor: _isHexColor2.default,
+  isISRC: _isISRC2.default,
+  isMD5: _isMD2.default,
+  isHash: _isHash2.default,
+  isJSON: _isJSON2.default,
+  isEmpty: _isEmpty2.default,
+  isLength: _isLength2.default,
+  isByteLength: _isByteLength2.default,
+  isUUID: _isUUID2.default,
+  isMongoId: _isMongoId2.default,
+  isAfter: _isAfter2.default,
+  isBefore: _isBefore2.default,
+  isIn: _isIn2.default,
+  isCreditCard: _isCreditCard2.default,
+  isISIN: _isISIN2.default,
+  isISBN: _isISBN2.default,
+  isISSN: _isISSN2.default,
+  isMobilePhone: _isMobilePhone2.default,
+  isPostalCode: _isPostalCode2.default,
+  isCurrency: _isCurrency2.default,
+  isISO8601: _isISO2.default,
+  isBase64: _isBase2.default,
+  isDataURI: _isDataURI2.default,
+  isLatLong: _isLatLong2.default,
+  ltrim: _ltrim2.default,
+  rtrim: _rtrim2.default,
+  trim: _trim2.default,
+  escape: _escape2.default,
+  unescape: _unescape2.default,
+  stripLow: _stripLow2.default,
+  whitelist: _whitelist2.default,
+  blacklist: _blacklist2.default,
+  isWhitelisted: _isWhitelisted2.default,
+  normalizeEmail: _normalizeEmail2.default,
+  toString: _toString2.default
+};
+
+exports.default = validator;
+module.exports = exports['default'];
+});
+
+var validator = unwrapExports(validator_1);
+
+var defaultConfig = {
+    validators: validator,
+    validations: {},
+    routes: defaultRoutes,
+    menuItems: []
+};
+
+var ConfigService = function () {
+    function ConfigService() {
+        classCallCheck(this, ConfigService);
+
+        Object.assign(this, defaultConfig);
+    }
+
+    createClass(ConfigService, [{
+        key: 'init',
+        value: function init(configObject) {
+            Object.assign(this, configObject);
+        }
+    }, {
+        key: 'addValidators',
+        value: function addValidators(newValidators) {
+            this._validators = Object.assign(this._validators, newValidators);
+        }
+    }, {
+        key: 'addValidations',
+        value: function addValidations(newValidations) {
+            this._validations = Object.assign(this._validations, newValidations);
+        }
+    }, {
+        key: 'getRouteObjects',
+        value: function getRouteObjects() {
+            return Object.values(this._routes);
+        }
+    }, {
+        key: 'addRoutesWithAuth',
+        value: function addRoutesWithAuth(childRoutes) {
+            var _this = this;
+
+            this._routes.mainRoute && this._routes.mainRoute.children && childRoutes.map(function (route) {
+                return _this._routes.mainRoute.children.push(route);
+            });
+        }
+    }, {
+        key: 'addMenuItems',
+        value: function addMenuItems(newMenuItems) {
+            this._menuItems.concat(newMenuItems);
+        }
+    }, {
+        key: 'validators',
+        get: function get$$1() {
+            return this._validators;
+        },
+        set: function set$$1(value) {
+            this._validators = value;
+        }
+    }, {
+        key: 'validations',
+        get: function get$$1() {
+            return this._validations;
+        },
+        set: function set$$1(value) {
+            this._validations = value;
+        }
+    }, {
+        key: 'routes',
+        get: function get$$1() {
+            return this._routes;
+        },
+        set: function set$$1(value) {
+            this._routes = value;
+        }
+    }, {
+        key: 'menuItems',
+        get: function get$$1() {
+            return this._menuItems;
+        },
+        set: function set$$1(value) {
+            this._menuItems = value;
+        }
+    }]);
+    return ConfigService;
+}();
+
+var configService = new ConfigService();
+
+var homeRoute = {
+    path: 'home',
+    loadChildren: 'src/app/modules/home/dist/tune-up.home.umd.min.js#home#HomeModule'
+};
+var homeMenuItem = {
+    path: 'home',
+    text: 'Inicio',
+    icon: 'TODO',
+    adminOnly: false
+};
+
+configService.addMenuItems([homeMenuItem]);
+
+configService.addRoutesWithAuth([homeRoute]);
+
+var _dec$3;
+var _class$3;
+
+var RoutingModule = (_dec$3 = NgModule({
+    imports: [RouterModule.forRoot(configService.getRouteObjects(), {
+        useHash: true,
+        enableTracing: "production" !== 'production'
+    })],
+    exports: [RouterModule],
+    providers: [AuthGuard]
+}), _dec$3(_class$3 = function RoutingModule() {
+    classCallCheck(this, RoutingModule);
+}) || _class$3);
+
+var html = "<input type=\"text\" pInputText>\n<p>APP COMPONENT</p>\n<br>\n<p>CURRENT ROUTE</p>\n<router-outlet></router-outlet>";
+
+var _dec$4;
+var _class$4;
+
 // import './css/index.css';
 
-var AppComponent = (_dec$1 = Component({
+var AppComponent = (_dec$4 = Component({
     selector: 'tn-app',
     template: html
-}), _dec$1(_class$1 = function AppComponent() {
+}), _dec$4(_class$4 = function AppComponent() {
     classCallCheck(this, AppComponent);
-}) || _class$1);
+}) || _class$4);
 
 var _dec;
 var _class;
 
+var primengModules = [InputTextModule];
+
 var AppModule = (_dec = NgModule({
-    imports: [BrowserModule, BrowserAnimationsModule, FormsModule, InputTextModule],
+    imports: [BrowserModule, BrowserAnimationsModule, FormsModule, RoutingModule].concat(primengModules),
     declarations: [AppComponent],
+    providers: [TnModuleLoaderProvider],
     bootstrap: [AppComponent]
 }), _dec(_class = function AppModule() {
     classCallCheck(this, AppModule);
@@ -175,6 +3477,4 @@ var AppModule = (_dec = NgModule({
     enableProdMode();
 }
 platformBrowserDynamic$1().bootstrapModule(AppModule);
-
-__$styleInject("@charset \"UTF-8\";.ui-widget,.ui-widget *{-webkit-box-sizing:border-box;box-sizing:border-box}.ui-helper-hidden{display:none}.ui-helper-hidden-accessible{border:0;clip:rect(0 0 0 0);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px}.ui-helper-hidden-accessible input,.ui-helper-hidden-accessible select{-webkit-transform:scale(0);transform:scale(0)}.ui-helper-reset{margin:0;padding:0;border:0;outline:0;line-height:1.3;text-decoration:none;font-size:100%;list-style:none}.ui-helper-clearfix:after,.ui-helper-clearfix:before{content:\"\";display:table}.ui-helper-clearfix:after{clear:both}.ui-helper-clearfix{zoom:1}.ui-helper-zfix{width:100%;height:100%;top:0;left:0;position:absolute;opacity:0;filter:Alpha(Opacity=0)}.ui-state-disabled,.ui-state-disabled a{cursor:default!important}.ui-icon{display:block;text-indent:-99999px;overflow:hidden;background-repeat:no-repeat}.ui-widget-overlay{position:absolute;top:0;left:0;width:100%;height:100%}.ui-resizable{position:relative}.ui-resizable-handle{position:absolute;font-size:.1px;display:block}.ui-resizable-autohide .ui-resizable-handle,.ui-resizable-disabled .ui-resizable-handle{display:none}.ui-resizable-n{cursor:n-resize;height:7px;width:100%;top:-5px;left:0}.ui-resizable-s{cursor:s-resize;height:7px;width:100%;bottom:-5px;left:0}.ui-resizable-e{cursor:e-resize;width:7px;right:-5px;top:0;height:100%}.ui-resizable-w{cursor:w-resize;width:7px;left:-5px;top:0;height:100%}.ui-resizable-se{cursor:se-resize;width:12px;height:12px;right:1px;bottom:1px}.ui-resizable-sw{cursor:sw-resize;width:9px;height:9px;left:-5px;bottom:-5px}.ui-resizable-nw{cursor:nw-resize;width:9px;height:9px;left:-5px;top:-5px}.ui-resizable-ne{cursor:ne-resize;width:9px;height:9px;right:-5px;top:-5px}.ui-shadow{-webkit-box-shadow:0 1px 3px 0 rgba(0,0,0,.3);box-shadow:0 1px 3px 0 rgba(0,0,0,.3)}.ui-unselectable-text{-webkit-user-select:none;-moz-user-select:none;-o-user-select:none;-ms-user-select:none;user-select:none}.ui-scrollbar-measure{width:100px;height:100px;overflow:scroll;position:absolute;top:-9999px}.ui-overflow-hidden{overflow:hidden}::-webkit-input-placeholder{color:#898989}:-moz-placeholder,::-moz-placeholder{color:#898989;opacity:1}:-ms-input-placeholder,::-ms-input-placeholder{color:#898989}.ui-placeholder{color:#898989}.ui-accordion{width:100%}.ui-accordion .ui-accordion-header{cursor:pointer;position:relative;margin-top:1px;zoom:1}.ui-accordion .ui-accordion-header a{display:block;padding:.5em .5em .5em 2em}.ui-accordion .ui-accordion-header>.fa{position:absolute;left:.5em;top:50%;margin-top:-.5em}.ui-accordion .ui-accordion-content{padding:1em;border-top:0;overflow:visible;zoom:1}.ui-accordion .ui-accordion-header.ui-state-disabled,.ui-accordion .ui-accordion-header.ui-state-disabled a{cursor:default}.ui-accordion-content-wrapper-overflown{overflow:hidden}.ui-rtl .ui-accordion .ui-accordion-header a{padding:.5em 2em .5em .5em}.ui-rtl .ui-accordion .ui-accordion-header>.fa{left:auto;right:.5em}.ui-rtl .ui-accordion .ui-accordion-header>.fa-caret-right:before{content:\"\\f0d9\"}.ui-blockui{position:absolute;top:0;left:0;width:100%;height:100%}.ui-blockui-document{position:fixed}.ui-autocomplete{width:auto;zoom:1;cursor:pointer;-webkit-box-shadow:none;box-shadow:none;position:relative;display:inline-block}.ui-autocomplete .ui-autocomplete-dropdown{height:100%;width:2em;margin-right:0;vertical-align:top}.ui-autocomplete .ui-autocomplete-input{padding-right:1.5em}.ui-autocomplete-loader{position:absolute;right:.25em;top:50%;margin-top:-.5em}.ui-autocomplete-query{font-weight:700}.ui-autocomplete-panel{position:absolute;overflow:auto}.ui-autocomplete-panel .ui-autocomplete-list{padding:.4em;border:0 none}.ui-autocomplete-panel .ui-autocomplete-list-item{border:0 none;cursor:pointer;font-weight:400;margin:1px 0;padding:.186em .313em;text-align:left}.ui-autocomplete .ui-button-icon-only,.ui-autocomplete .ui-button-icon-only:enabled:active,.ui-autocomplete .ui-button-icon-only:enabled:focus,.ui-autocomplete .ui-button-icon-only:enabled:hover{border-left:0 none}.ui-autocomplete-multiple-container{display:inline-block;vertical-align:middle}.ui-autocomplete-multiple-container.ui-inputtext{clear:left;cursor:text;list-style-type:none;margin:0;overflow:hidden;padding:0 1.5em 0 .25em}.ui-autocomplete-token{cursor:default;display:inline-block;vertical-align:middle;overflow:hidden;padding:.125em .5em;white-space:nowrap;position:relative;margin-right:.125em;border:0 none;font-size:.9em}.ui-autocomplete-token-label{display:block;margin-right:2em}.ui-autocomplete-token-icon{margin-top:-.5em;position:absolute;right:.2em;top:50%;cursor:pointer}.ui-autocomplete-input-token{display:inline-block;vertical-align:middle;list-style-type:none;margin:0 0 0 .125em;padding:.25em .25em .25em 0}.ui-autocomplete-input-token input{border:0 none;width:10em;outline:medium none;background-color:transparent;margin:0;padding:0;-webkit-box-shadow:none;box-shadow:none;border-radius:0}.ui-autocomplete-dd .ui-autocomplete-loader{right:2.25em}.ui-autocomplete-dd .ui-autocomplete-multiple-container.ui-corner-all,.ui-autocomplete-dd input.ui-corner-all{border-top-right-radius:0;border-bottom-right-radius:0}.ui-autocomplete-dd .ui-autocomplete-dropdown.ui-corner-all{border-top-left-radius:0;border-bottom-left-radius:0}.ui-fluid .ui-autocomplete,.ui-fluid .ui-autocomplete-input{width:100%}.ui-fluid .ui-autocomplete.ui-autocomplete-dd .ui-autocomplete-input,.ui-fluid .ui-autocomplete.ui-autocomplete-dd .ui-autocomplete-multiple-container{width:calc(100% - 2em)}.ui-fluid .ui-autocomplete .ui-autocomplete-dropdown.ui-button{width:2em}.ui-breadcrumb{margin:0;padding:0;padding:.3em}.ui-breadcrumb ul{margin:0;padding:0}.ui-breadcrumb ul li{display:inline-block;vertical-align:middle}.ui-breadcrumb ul li .ui-menuitem-link{text-decoration:none}.ui-button{display:inline-block;position:relative;padding:0;margin-right:.1em;text-decoration:none!important;cursor:pointer;text-align:center;zoom:1;overflow:visible}.ui-button-icon-only{width:2em}.ui-button .ui-button-text{display:block;line-height:normal}.ui-button-text-only .ui-button-text{padding:.25em 1em}.ui-button-icon-only .ui-button-text{padding:.25em;text-indent:-9999999px}.ui-button-text-icon-left .ui-button-text{padding:.25em 1em .25em 2.1em}.ui-button-text-icon-right .ui-button-text{padding:.25em 2.1em .25em 1em}.ui-button-icon-only .fa,.ui-button-text-icon-left .fa,.ui-button-text-icon-right .fa{position:absolute;top:50%;margin-top:-.5em}.ui-button-icon-only .fa{top:50%;left:50%;margin-top:-.5em;margin-left:-.6em}.ui-button-icon-left{left:.5em}.ui-button-icon-right{right:.5em}.ui-buttonset .ui-button{margin-left:0;margin-right:0}button.ui-button::-moz-focus-inner{border:0;padding:0}.ui-fluid .ui-button{width:100%;box-sizing:border-box;-webkit-box-sizing:border-box;-moz-box-sizing:border-box}.ui-fluid .ui-button-text-icon-left .ui-button-text,.ui-fluid .ui-button-text-icon-right .ui-button-text{padding-left:1em;padding-right:1em}.ui-fluid .ui-buttonset,.ui-fluid .ui-buttonset.ui-buttonset-1 .ui-button{width:100%}.ui-fluid .ui-buttonset.ui-buttonset-2 .ui-button{width:50%}.ui-fluid .ui-buttonset.ui-buttonset-3 .ui-button{width:33.3%}.ui-fluid .ui-buttonset.ui-buttonset-4 .ui-button{width:25%}.ui-fluid .ui-buttonset.ui-buttonset-5 .ui-button{width:20%}.ui-fluid .ui-buttonset.ui-buttonset-6 .ui-button{width:16.6%}@media (max-width:640px){.ui-fluid .ui-buttonset.ui-buttonset-1 .ui-button,.ui-fluid .ui-buttonset.ui-buttonset-2 .ui-button,.ui-fluid .ui-buttonset.ui-buttonset-3 .ui-button,.ui-fluid .ui-buttonset.ui-buttonset-4 .ui-button,.ui-fluid .ui-buttonset.ui-buttonset-5 .ui-button,.ui-fluid .ui-buttonset.ui-buttonset-6 .ui-button{width:100%}}.ui-button.ui-button-secondary.ui-state-default,.ui-splitbutton.ui-button-secondary .ui-button.ui-state-default{background-color:#fff;border-color:#ccc;color:#373a3c}.ui-button.ui-button-secondary:enabled:hover,.ui-button.ui-button-secondary:focus,.ui-splitbutton.ui-button-secondary .ui-button:enabled:hover,.ui-splitbutton.ui-button-secondary .ui-button:focus{background-color:#f2f2f2;border-color:#ccc;color:#373a3c}.ui-button.ui-button-secondary:enabled:active,.ui-splitbutton.ui-button-secondary .ui-button:enabled:active{background-color:#e6e6e6;border-color:#ccc;color:#373a3c}.ui-button.ui-button-success.ui-state-default,.ui-splitbutton.ui-button-success .ui-button.ui-state-default{background-color:#5cb85c;border-color:#5cb85c;color:#fff}.ui-button.ui-button-success:enabled:hover,.ui-button.ui-button-success:focus,.ui-splitbutton.ui-button-success .ui-button:enabled:hover,.ui-splitbutton.ui-button-success .ui-button:focus{background-color:#4cae4c;border-color:#5cb85c}.ui-button.ui-button-success:enabled:active,.ui-splitbutton.ui-button-success .ui-button:enabled:active{background-color:#449d44;border-color:#5cb85c}.ui-button.ui-button-info.ui-state-default,.ui-splitbutton.ui-button-info .ui-button.ui-state-default{background-color:#5bc0de;border-color:#5bc0de;color:#fff}.ui-button.ui-button-info:enabled:hover,.ui-button.ui-button-info:focus,.ui-splitbutton.ui-button-info .ui-button:enabled:hover,.ui-splitbutton.ui-button-info .ui-button:focus{background-color:#46b8da;border-color:#5bc0de}.ui-button.ui-button-info:enabled:active,.ui-splitbutton.ui-button-info .ui-button:enabled:active{background-color:#31b0d5;border-color:#5bc0de}.ui-button.ui-button-warning.ui-state-default,.ui-splitbutton.ui-button-warning .ui-button.ui-state-default{background-color:#f0ad4e;border-color:#f0ad4e;color:#fff}.ui-button.ui-button-warning:enabled:hover,.ui-button.ui-button-warning:focus,.ui-splitbutton.ui-button-warning .ui-button:enabled:hover,.ui-splitbutton.ui-button-warning .ui-button:focus{background-color:#eea236;border-color:#f0ad4e}.ui-button.ui-button-warning:enabled:active,.ui-splitbutton.ui-button-warning .ui-button:enabled:active{background-color:#ec971f;border-color:#f0ad4e}.ui-button.ui-button-danger.ui-state-default,.ui-splitbutton.ui-button-danger .ui-button.ui-state-default{background-color:#d9534f;border-color:#d9534f;color:#fff}.ui-button.ui-button-danger:enabled:hover,.ui-button.ui-button-danger:focus,.ui-splitbutton.ui-button-danger .ui-button:enabled:hover,.ui-splitbutton.ui-button-danger .ui-button:focus{background-color:#d43f3a;border-color:#d9534f}.ui-button.ui-button-danger:enabled:active,.ui-splitbutton.ui-button-danger .ui-button:enabled:active{background-color:#c9302c;border-color:#d9534f}.ui-calendar{position:relative;display:inline-block}.ui-calendar .ui-calendar-button{position:absolute;height:100%;border-top-left-radius:0;border-bottom-left-radius:0;width:2em;border-left:0 none}.ui-calendar .ui-calendar-button:enabled:hover,.ui-calendar .ui-calendar-button:focus{border-left:0 none}.ui-fluid .ui-calendar{width:100%}.ui-fluid .ui-calendar-button{width:2em}.ui-fluid .ui-datepicker-buttonbar button{width:auto}.ui-fluid .ui-calendar.ui-calendar-w-btn .ui-inputtext{width:calc(100% - 2em)}.ui-datepicker{width:17em;padding:.2em;display:none;position:absolute}.ui-datepicker.ui-datepicker-inline{display:inline-block;position:static}.ui-datepicker .ui-datepicker-header{position:relative;padding:.2em 0}.ui-datepicker .ui-datepicker-next,.ui-datepicker .ui-datepicker-prev{position:absolute;top:.125em;width:1.8em;height:1.8em}.ui-datepicker .ui-datepicker-prev{left:.125em}.ui-datepicker .ui-datepicker-next{right:.125em}.ui-datepicker .ui-datepicker-next span,.ui-datepicker .ui-datepicker-prev span{display:block;position:absolute;left:50%;top:50%;margin-top:-.5em}.ui-datepicker .ui-datepicker-prev span{margin-left:-.25em}.ui-datepicker .ui-datepicker-next span{margin-left:-.125em}.ui-datepicker .ui-datepicker-title{margin:0 2.3em;line-height:1.8em;text-align:center}.ui-datepicker .ui-datepicker-title select{font-size:1em;margin:.125em 0;vertical-align:middle}.ui-datepicker select.ui-datepicker-month{width:55%}.ui-datepicker select.ui-datepicker-year{width:35%}.ui-datepicker select.ui-datepicker-month{margin-right:.25em}.ui-datepicker table{width:100%;font-size:.9em;border-collapse:collapse;margin:0 0 .4em}.ui-datepicker th{padding:.7em .3em;text-align:center;font-weight:700;border:0}.ui-datepicker td{border:0;padding:.125em}.ui-datepicker td a,.ui-datepicker td span{display:block;padding:.2em;text-align:right;text-decoration:none}.ui-datepicker .ui-datepicker-buttonpane{background-image:none;margin:.7em 0 0;padding:0 .2em;border-left:0;border-right:0;border-bottom:0}.ui-datepicker .ui-datepicker-buttonpane button{float:right;margin:.5em .2em .4em;cursor:pointer;padding:.2em .6em .3em;width:auto;overflow:visible}.ui-datepicker .ui-datepicker-buttonpane button.ui-datepicker-current{float:left}.ui-datepicker.ui-datepicker-multi{width:auto}.ui-datepicker-multi .ui-datepicker-group{float:left}.ui-datepicker-multi .ui-datepicker-group table{width:95%;margin:0 auto .4em}.ui-datepicker-multi-2 .ui-datepicker-group{width:50%}.ui-datepicker-multi-3 .ui-datepicker-group{width:33.3%}.ui-datepicker-multi-4 .ui-datepicker-group{width:25%}.ui-datepicker-multi .ui-datepicker-group-last .ui-datepicker-header,.ui-datepicker-multi .ui-datepicker-group-middle .ui-datepicker-header{border-left-width:0}.ui-datepicker-multi .ui-datepicker-buttonpane{clear:left}.ui-datepicker-row-break{clear:both;width:100%;font-size:0}.ui-datepicker .ui-datepicker-buttonbar{border-left:0 none;border-right:0 none;border-bottom:0 none;padding:.2em}.ui-datepicker .ui-datepicker-buttonbar>.ui-g>div:last-child{text-align:right}.ui-datepicker .ui-datepicker-buttonbar>.ui-g>div{padding:0}.ui-calendar.ui-calendar-w-btn input{border-top-right-radius:0;border-bottom-right-radius:0}.ui-timepicker{text-align:center;padding:.5em 0}.ui-timepicker>div{display:inline-block;margin-left:.5em;min-width:1.5em}.ui-timepicker>.ui-minute-picker,.ui-timepicker>.ui-second-picker{margin-left:0}.ui-timepicker>.ui-separator{margin-left:0;min-width:.75em}.ui-timepicker>.ui-separator a{visibility:hidden}.ui-timepicker>div a{display:block;opacity:.7;filter:Alpha(Opacity=70)}.ui-timepicker>div a:hover{display:block;opacity:1;filter:Alpha(Opacity=100)}.ui-carousel{position:relative;padding:.063em}.ui-carousel .ui-carousel-viewport .ui-carousel-items{list-style:none outside none;margin:0;padding:0;position:relative;width:32000px;left:0}.ui-carousel .ui-carousel-viewport .ui-carousel-items .ui-carousel-item{margin:1px;padding:0;float:left;-webkit-box-sizing:border-box;box-sizing:border-box}.ui-carousel .ui-carousel-viewport{overflow:hidden;position:relative;border:0}.ui-carousel .ui-carousel-footer{margin:1px 1px 0;padding:.5em;overflow:hidden}.ui-carousel .ui-carousel-header{margin:0 1px;overflow:hidden;padding:.625em}.ui-carousel .ui-carousel-header .ui-carousel-header-title{display:inline-block;overflow:hidden}.ui-carousel .ui-carousel-dropdown,.ui-carousel .ui-carousel-mobiledropdown{float:right;margin:0 .625em;background-image:none}.ui-carousel .ui-carousel-dropdown option,.ui-carousel .ui-carousel-mobiledropdown option{background-image:none;border:0 none;box-shadow:none;-moz-box-shadow:none;-webkit-box-shadow:none}.ui-carousel .ui-carousel-button{float:right;margin:.125em}.ui-carousel .ui-carousel-page-link{float:left;margin:0 .125em;text-decoration:none}.ui-carousel .ui-carousel-button,.ui-carousel .ui-carousel-page-link{cursor:pointer}.ui-carousel .ui-carousel-page-links{margin:0 .5em;margin-top:.125em;float:right}.ui-carousel .ui-carousel-mobiledropdown{display:none}.ui-chkbox{display:inline-block;cursor:pointer;vertical-align:middle;margin-right:.25em}.ui-chkbox .ui-chkbox-box{width:1.125em;height:1.125em;line-height:1.125em;border-radius:2px;text-align:center}.ui-chkbox .ui-chkbox-icon{display:block}.ui-chkbox-label{vertical-align:middle}.ui-chips>ul.ui-inputtext{clear:left;cursor:text;list-style-type:none;margin:0;overflow:hidden;padding:0 .25em}.ui-chips-token{cursor:default;display:inline-block;vertical-align:middle;overflow:hidden;padding:.125em .5em;white-space:nowrap;position:relative;margin-right:.125em;border:0 none;font-size:.9em}.ui-chips-token .ui-chips-token-label{display:block;margin-right:2em}.ui-chips>.ui-state-disabled .ui-chips-token-label{margin-right:0}.ui-chips-token .ui-chips-token-icon{margin-top:-.5em;position:absolute;right:.2em;top:50%;cursor:pointer}.ui-chips-input-token{display:inline-block;vertical-align:middle;list-style-type:none;margin:0 0 0 .125em;padding:.25em .25em .25em 0}.ui-chips-input-token input{border:0 none;width:10em;outline:medium none;background-color:transparent;margin:0;padding:0;-webkit-box-shadow:none;box-shadow:none;border-radius:0}.ui-colorpicker{display:inline-block}.ui-colorpicker-dragging{cursor:pointer}.ui-colorpicker-overlay{position:relative}.ui-colorpicker-panel{position:relative;width:193px;height:166px;background-color:#323232;border-color:#191919}.ui-colorpicker-overlay-panel{display:none;position:absolute}.ui-colorpicker-preview{width:2em;cursor:pointer}.ui-colorpicker-panel .ui-colorpicker-content{position:relative}.ui-colorpicker-panel .ui-colorpicker-color-selector{width:150px;height:150px;top:8px;left:8px;position:absolute}.ui-colorpicker-panel .ui-colorpicker-color{width:150px;height:150px;background:transparent url(images/color.png) no-repeat 0 0}.ui-colorpicker-panel .ui-colorpicker-color-handle{position:absolute;top:0;left:150px;border-radius:100%;width:10px;height:10px;border:1px solid #fff;margin:-5px 0 0 -5px;cursor:pointer}.ui-colorpicker-panel .ui-colorpicker-hue{background:transparent url(images/hue.png) no-repeat 0 0;width:17px;height:150px;top:8px;left:167px;position:absolute;opacity:.85}.ui-colorpicker-panel .ui-colorpicker-hue-handle{position:absolute;top:150px;left:0;width:21px;margin-left:-2px;margin-top:-5px;height:10px;border:2px solid #fff;opacity:.85;cursor:pointer}.ui-colorpicker-panel.ui-state-disabled .ui-colorpicker-color-handle,.ui-colorpicker-panel.ui-state-disabled .ui-colorpicker-hue-handle{opacity:.5}.ui-datagrid .ui-paginator{text-align:center;border-top:0 none}.ui-datagrid-column{padding:.25em}.ui-datagrid-content-empty{padding:.25em .625em}.ui-datagrid .ui-datagrid-footer,.ui-datagrid .ui-datagrid-header{text-align:center;padding:.5em .75em}.ui-datagrid .ui-datagrid-header{border-bottom:0 none}.ui-datagrid .ui-datagrid-footer{border-top:0 none}.ui-datagrid .ui-paginator-top{border-bottom:0 none}.ui-datagrid .ui-paginator-bottom{border-top:0 none}.ui-datalist .ui-datalist-footer,.ui-datalist .ui-datalist-header{text-align:center;padding:.5em .75em}.ui-datalist .ui-datalist-header{border-bottom:0 none}.ui-datalist .ui-datalist-footer,.ui-datalist .ui-paginator{border-top:0 none}.ui-datalist .ui-datalist-data{margin:0;padding:0}.ui-datalist .ui-datalist-data>li{list-style-type:none}.ui-datalist .ui-datalist-emptymessage{padding:.5em .75em}.ui-datalist.ui-datalist-scrollable .ui-datalist-content{overflow:auto}.ui-datascroller .ui-datascroller-header{text-align:center;padding:.5em .75em;border-bottom:0 none}.ui-datascroller .ui-datascroller-footer{text-align:center;padding:.25em .625em;border-top:0 none}.ui-datascroller .ui-datascroller-content{padding:.25em .625em}.ui-datascroller-inline .ui-datascroller-content{overflow:auto}.ui-datascroller .ui-datascroller-list{list-style-type:none;margin:0;padding:0}.ui-datatable{position:relative}.ui-datatable table{border-collapse:collapse;width:100%;table-layout:fixed}.ui-datatable .ui-datatable-caption,.ui-datatable .ui-datatable-footer,.ui-datatable .ui-datatable-header{text-align:center;padding:.5em .75em;-webkit-box-sizing:border-box;box-sizing:border-box}.ui-datatable .ui-datatable-caption,.ui-datatable .ui-datatable-header{border-bottom:0 none}.ui-datatable .ui-datatable-footer{border-top:0 none}.ui-datatable tfoot td,.ui-datatable thead th{text-align:center}.ui-datatable thead tr{border-width:0}.ui-datatable .ui-datatable-data>tr>td,.ui-datatable .ui-datatable-tfoot>tr>td,.ui-datatable .ui-datatable-thead>tr>th{border-color:inherit;-webkit-box-sizing:border-box;box-sizing:border-box;padding:.25em .5em;border-width:1px;border-style:solid}.ui-datatable.ui-datatable-resizable .ui-datatable-data>tr>td,.ui-datatable.ui-datatable-resizable .ui-datatable-tfoot>tr>td,.ui-datatable.ui-datatable-resizable .ui-datatable-thead>tr>th{overflow:hidden}.ui-datatable .ui-datatable-tfoot>tr>td,.ui-datatable .ui-datatable-thead>tr>th{font-weight:400}.ui-datatable tbody{outline:0}.ui-datatable .ui-sortable-column{cursor:pointer}.ui-datatable .ui-sortable-column-icon{display:inline-block;margin-left:.125em}.ui-datatable tr.ui-state-highlight{cursor:pointer}.ui-datatable-scrollable-body{overflow:auto}.ui-datatable-scrollable-header{overflow:hidden}.ui-datatable-scrollable .ui-datatable-scrollable-footer,.ui-datatable-scrollable .ui-datatable-scrollable-header{position:relative;border:0 none}.ui-datatable-scrollable .ui-datatable-scrollable-header td{font-weight:400}.ui-datatable .ui-datatable-scrollable-body{min-height:0}.ui-datatable .ui-datatable-data tr.ui-state-highlight,.ui-datatable .ui-datatable-data tr.ui-state-hover{border-color:inherit;font-weight:inherit;cursor:pointer}.ui-datatable .ui-datatable-data tr.ui-rowgroup-header td a,.ui-datatable .ui-datatable-data tr.ui-rowgroup-header td span.ui-rowgroup-header-name{display:inline-block;vertical-align:middle}.ui-datatable-scrollable-theadclone,.ui-datatable-scrollable-theadclone tr{height:0}.ui-datatable-scrollable-theadclone th.ui-state-default{height:0;border-bottom-width:0;border-top-width:0;padding-top:0;padding-bottom:0;outline:0 none}.ui-datatable-scrollable-theadclone th span.ui-column-title{display:block;height:0}.ui-datatable .ui-paginator{padding:.125em}.ui-datatable .ui-paginator-top{border-bottom-width:0}.ui-datatable .ui-paginator-bottom{border-top-width:0}.ui-datatable-rtl{direction:rtl}.ui-datatable-rtl.ui-datatable tfoot td,.ui-datatable-rtl.ui-datatable thead th{text-align:right}.ui-row-toggler{cursor:pointer}.ui-datatable .ui-column-resizer{display:block;position:absolute!important;top:0;right:0;margin:0;width:.5em;height:100%;padding:0;cursor:col-resize;border:1px solid transparent}.ui-datatable .ui-column-resizer-helper{width:1px;position:absolute;z-index:3;display:none}.ui-datatable-resizable{padding-bottom:1px;overflow:auto}.ui-datatable-resizable tbody td,.ui-datatable-resizable tfoot td,.ui-datatable-resizable thead th{white-space:nowrap}.ui-datatable-resizable th.ui-resizable-column{background-clip:padding-box;position:relative}.ui-datatable-reflow .ui-datatable-data td .ui-column-title{display:none}.ui-datatable .ui-column-filter{display:block;width:100%;-webkit-box-sizing:border-box;box-sizing:border-box;margin-top:.25em}.ui-datatable .ui-editable-column input{width:100%;outline:0}.ui-datatable .ui-datatable-data>tr>td.ui-editable-column{padding:.5em}.ui-datatable .ui-editable-column>.ui-cell-editor{display:none}.ui-datatable .ui-datatable-data>tr>td.ui-editable-column.ui-cell-editing{padding:1px}.ui-datatable .ui-editable-column.ui-cell-editing>.ui-cell-editor{display:block}.ui-datatable .ui-editable-column.ui-cell-editing>.ui-cell-data{display:none}.ui-datatable-stacked tfoot td,.ui-datatable-stacked thead th{display:none!important}.ui-datatable.ui-datatable-stacked .ui-datatable-data>tr>td{text-align:left;display:block;border:0 none;width:100%;-webkit-box-sizing:border-box;box-sizing:border-box;float:left;clear:left}.ui-datatable.ui-datatable-stacked .ui-datatable-data.ui-widget-content{border:0 none}.ui-datatable-stacked .ui-datatable-data tr.ui-widget-content{border-left:0 none;border-right:0 none}.ui-datatable-stacked .ui-datatable-data td .ui-column-title{padding:.4em;min-width:30%;display:inline-block;margin:-.4em 1em -.4em -.4em;font-weight:700}.ui-datatable .ui-selection-column .ui-chkbox,.ui-datatable .ui-selection-column .ui-radiobutton{margin:0;display:block}.ui-datatable .ui-selection-column .ui-chkbox-box,.ui-datatable .ui-selection-column .ui-radiobutton-box{display:block;-webkit-box-sizing:border-box;box-sizing:border-box;margin:0}.ui-datatable-scrollable-wrapper{position:relative}.ui-datatable-frozen-view .ui-datatable-scrollable-body{overflow:hidden}.ui-datatable-unfrozen-view{position:absolute;top:0}.ui-datatable .ui-datatable-load-status{width:100%;height:100%;top:0;left:0}.ui-datatable .ui-datatable-virtual-table{position:absolute;top:0;left:0}.ui-datatable .ui-datatable-loading{position:absolute;width:100%;height:100%;-ms-filter:\"progid:DXImageTransform.Microsoft.Alpha(Opacity=10)\";opacity:.1;z-index:1}.ui-datatable .ui-datatable-loading-content{position:absolute;left:50%;top:25%;z-index:2}@media (max-width:35em){.ui-datatable-reflow tfoot td,.ui-datatable-reflow thead th{display:none!important}.ui-datatable-reflow .ui-datatable-data>tr>td{text-align:left;display:block;border:0 none;width:100%!important;-webkit-box-sizing:border-box;box-sizing:border-box;float:left;clear:left}.ui-datatable-reflow .ui-datatable-data.ui-widget-content{border:0 none}.ui-datatable-reflow .ui-datatable-data tr.ui-widget-content{border-left:0 none;border-right:0 none}.ui-datatable-reflow .ui-datatable-data td .ui-column-title{padding:.4em;min-width:30%;display:inline-block;margin:-.4em 1em -.4em -.4em;font-weight:700}.ui-datatable-reflow.ui-datatable-scrollable .ui-datatable-scrollable-body colgroup{display:block}}.ui-dialog{position:fixed;padding:0}.ui-dialog .ui-dialog-content,.ui-dialog .ui-dialog-titlebar{padding:.5em .75em;position:relative;border:0}.ui-dialog .ui-dialog-content{background:none;overflow:auto;zoom:1}.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset{float:right}.ui-dialog .ui-dialog-buttonpane button{margin:.5em .4em .5em 0;cursor:pointer;float:right}.ui-dialog .ui-resizable-se{width:14px;height:14px;right:3px;bottom:3px}.ui-draggable .ui-dialog-titlebar{cursor:move}.ui-dialog .ui-dialog-titlebar-icon{text-decoration:none}.ui-dialog .ui-dialog-titlebar-close{float:right;padding:.125em;cursor:pointer;border:1px solid transparent}.ui-dialog .ui-dialog-titlebar-close span{display:block;margin:0}.ui-dialog-footer{padding:1em;border-width:1px 0 0;text-align:right}.ui-dialog-mask{position:fixed;width:100%;height:100%}.ui-confirmdialog{width:30em}.ui-confirmdialog.ui-dialog .ui-dialog-content{padding:1em 2em}.ui-confirmdialog .ui-dialog-content .fa{font-size:1.5em;vertical-align:middle;margin-right:.5em}.ui-confirmdialog .ui-dialog-content .ui-confirmdialog-message{vertical-align:middle}.ui-fluid .ui-dialog-footer .ui-button{width:auto}.ui-rtl .ui-dialog .ui-dialog-titlebar-close{float:left}.ui-rtl .ui-dialog .ui-dialog-buttonpane button{text-align:right}@media screen and (max-width:40em){.ui-confirmdialog{width:90%}}.ui-dropdown{display:inline-block;position:relative;cursor:pointer;vertical-align:middle}.ui-dropdown .ui-dropdown-trigger{border-right:none;border-top:none;border-bottom:none;cursor:pointer;width:1.5em;height:100%;position:absolute;right:0;top:0;padding:0 .25em}.ui-dropdown .ui-dropdown-trigger .fa{margin-top:.3em;margin-left:-.125em}.ui-dropdown .ui-dropdown-label{display:block;border:none;white-space:nowrap;overflow:hidden;font-weight:400;width:100%;padding-right:1.5em}.ui-dropdown .ui-dropdown-item-empty,.ui-dropdown .ui-dropdown-label-empty{text-indent:-9999px}.ui-dropdown.ui-state-disabled .ui-dropdown-label,.ui-dropdown.ui-state-disabled .ui-dropdown-trigger{cursor:default}.ui-dropdown label.ui-dropdown-label{cursor:pointer}.ui-dropdown input.ui-dropdown-label{cursor:default}.ui-dropdown .ui-dropdown-panel{min-width:100%}.ui-dropdown-panel{position:absolute;height:auto}.ui-dropdown-panel .ui-dropdown-items-wrapper{overflow:auto}.ui-dropdown-panel .ui-dropdown-item{font-weight:400;border:0 none;cursor:pointer;margin:1px 0;padding:.125em .25em;text-align:left}.ui-dropdown-panel .ui-dropdown-item-group{font-weight:700}.ui-dropdown-panel .ui-dropdown-list{padding:.4em;border:0 none}.ui-dropdown-panel .ui-dropdown-filter{width:100%;-webkit-box-sizing:border-box;box-sizing:border-box;padding-right:1.5em}.ui-dropdown-panel .ui-dropdown-filter-container{position:relative;margin:0;padding:.4em;display:inline-block}.ui-dropdown-panel .ui-dropdown-filter-container .fa{position:absolute;top:.8em;right:1em}.ui-fluid .ui-dropdown{width:100%}.ui-fieldset,.ui-fieldset .ui-fieldset-legend{padding:.6em 1em}.ui-fieldset-toggleable .ui-fieldset-legend{padding:.5em 1em .5em .5em;cursor:pointer;white-space:nowrap}.ui-fieldset .ui-fieldset-toggler{margin-right:.1em;display:inline-block;vertical-align:middle}.ui-fieldset .ui-fieldset-content-wrapper-overflown{overflow:hidden}.ui-fileupload-buttonbar .ui-fileupload-choose.ui-state-disabled input{cursor:default}.ui-fileupload-buttonbar{padding:.5em;border-bottom:0 none}.ui-fileupload-buttonbar .ui-button{vertical-align:middle;margin-right:.25em}.ui-fileupload-content{padding:1em;position:relative;-webkit-transition:border-color .3s;transition:border-color .3s}.ui-fileupload-content.ui-fileupload-highlight{border-color:#156090}.ui-fileupload-files img{border:none}.ui-fileupload-files{display:table}.ui-fileupload-row{display:table-row}.ui-fileupload-row>div{display:table-cell;padding:.5em 1em;vertical-align:middle}.ui-fileupload-content .ui-progressbar{width:100%;position:absolute;top:1px;left:0;height:.25em;border:0 none}.ui-fileupload-content .ui-progressbar-value{border-radius:0;border:0 none}.ui-fileupload-choose{position:relative;overflow:hidden}.ui-fileupload-choose input[type=file]{position:absolute;top:0;right:0;margin:0;opacity:0;min-height:100%;font-size:100px;text-align:right;filter:alpha(opacity=0);direction:ltr;cursor:pointer}.ui-fileupload-choose.ui-fileupload-choose-selected input[type=file]{display:none}.ui-fluid .ui-fileupload .ui-button{width:auto}.ui-fluid .ui-fileupload-content .ui-button-icon-only{width:2em}.ui-galleria{overflow:hidden;visibility:hidden;position:relative}.ui-galleria-panel-wrapper{position:relative;padding:0;margin:0}.ui-galleria-panel{-webkit-filter:inherit;filter:inherit;position:absolute;top:0;left:0;list-style-type:none}.ui-galleria-filmstrip-wrapper{overflow:hidden;margin:.25em auto;position:relative}.ui-galleria-filmstrip{list-style:none outside none;margin:0;padding:0;width:2340px;z-index:4;position:absolute;top:0;left:0}.ui-galleria-frame{float:left;margin-right:5px;opacity:.3;cursor:pointer}.ui-galleria-frame-active{opacity:1}.ui-galleria-frame-content{overflow:hidden}.ui-galleria-nav-next,.ui-galleria-nav-prev{cursor:pointer;position:absolute}.ui-galleria-nav-prev{left:5px}.ui-galleria-nav-next{right:5px}.ui-galleria-caption{position:absolute;left:1px;background-color:rgba(0,0,0,.5);display:none;color:#ededed;padding:.2em 1em}.ui-galleria-caption h4{color:#ededed}.ui-galleria-panel-content{padding:1em 1.4em}.ui-grid{clear:both;padding:0;margin:0}.ui-grid:after,.ui-grid:before{content:\"\";display:table}.ui-grid:after{clear:both}.ui-grid .ui-grid-row{display:-webkit-box;display:-ms-flexbox;display:flex;clear:both}.ui-grid-row:after{clear:both;content:\"\";display:table}.ui-grid-col-1,.ui-grid-col-2,.ui-grid-col-3,.ui-grid-col-4,.ui-grid-col-5,.ui-grid-col-6,.ui-grid-col-7,.ui-grid-col-8,.ui-grid-col-9,.ui-grid-col-10,.ui-grid-col-11,.ui-grid-col-12{float:left;-webkit-box-sizing:border-box;box-sizing:border-box}.ui-grid-col-1{width:8.33333%}.ui-grid-col-2{width:16.66666%}.ui-grid-col-3{width:25%}.ui-grid-col-4{width:33.33333%}.ui-grid-col-5{width:41.66666%}.ui-grid-col-6{width:50%}.ui-grid-col-7{width:58.33333%}.ui-grid-col-8{width:66.66666%}.ui-grid-col-9{width:75%}.ui-grid-col-10{width:83.33333%}.ui-grid-col-11{width:91.66666%}.ui-grid-col-12{width:100%}@media (min-width:480px){.ui-grid-fixed{width:480px}}@media (min-width:768px){.ui-grid-fixed{width:768px}}@media (min-width:960px){.ui-grid-fixed{width:960px}}@media (min-width:1024px){.ui-grid-fixed{width:1024px}}.ui-grid.ui-grid-pad>.ui-grid-row>div{padding:.25em .5em}@media (max-width:640px){.ui-grid-responsive .ui-grid-row{display:block}.ui-grid-responsive .ui-grid-col-1,.ui-grid-responsive .ui-grid-col-2,.ui-grid-responsive .ui-grid-col-3,.ui-grid-responsive .ui-grid-col-4,.ui-grid-responsive .ui-grid-col-5,.ui-grid-responsive .ui-grid-col-6,.ui-grid-responsive .ui-grid-col-7,.ui-grid-responsive .ui-grid-col-8,.ui-grid-responsive .ui-grid-col-9,.ui-grid-responsive .ui-grid-col-10,.ui-grid-responsive .ui-grid-col-11,.ui-grid-responsive .ui-grid-col-12{width:100%;float:none}}.ui-g{display:-webkit-box;display:-ms-flexbox;display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap}.ui-g:after{clear:both;content:\"\";display:table}.ui-g-1,.ui-g-2,.ui-g-3,.ui-g-4,.ui-g-5,.ui-g-6,.ui-g-7,.ui-g-8,.ui-g-9,.ui-g-10,.ui-g-11,.ui-g-12{float:left;-webkit-box-sizing:border-box;box-sizing:border-box;padding:.5em}.ui-g-1{width:8.3333%}.ui-g-2{width:16.6667%}.ui-g-3{width:25%}.ui-g-4{width:33.3333%}.ui-g-5{width:41.6667%}.ui-g-6{width:50%}.ui-g-7{width:58.3333%}.ui-g-8{width:66.6667%}.ui-g-9{width:75%}.ui-g-10{width:83.3333%}.ui-g-11{width:91.6667%}.ui-g-12{width:100%}.ui-g-offset-12{margin-left:100%}.ui-g-offset-11{margin-left:91.66666667%}.ui-g-offset-10{margin-left:83.33333333%}.ui-g-offset-9{margin-left:75%}.ui-g-offset-8{margin-left:66.66666667%}.ui-g-offset-7{margin-left:58.33333333%}.ui-g-offset-6{margin-left:50%}.ui-g-offset-5{margin-left:41.66666667%}.ui-g-offset-4{margin-left:33.33333333%}.ui-g-offset-3{margin-left:25%}.ui-g-offset-2{margin-left:16.66666667%}.ui-g-offset-1{margin-left:8.33333333%}.ui-g-offset-0{margin-left:0}@media screen and (max-width:40em){.ui-sm-1,.ui-sm-2,.ui-sm-3,.ui-sm-4,.ui-sm-5,.ui-sm-6,.ui-sm-7,.ui-sm-8,.ui-sm-9,.ui-sm-10,.ui-sm-11,.ui-sm-12{padding:.5em}.ui-sm-1{width:8.3333%}.ui-sm-2{width:16.6667%}.ui-sm-3{width:25%}.ui-sm-4{width:33.3333%}.ui-sm-5{width:41.6667%}.ui-sm-6{width:50%}.ui-sm-7{width:58.3333%}.ui-sm-8{width:66.6667%}.ui-sm-9{width:75%}.ui-sm-10{width:83.3333%}.ui-sm-11{width:91.6667%}.ui-sm-12{width:100%}.ui-sm-offset-12{margin-left:100%}.ui-sm-offset-11{margin-left:91.66666667%}.ui-sm-offset-10{margin-left:83.33333333%}.ui-sm-offset-9{margin-left:75%}.ui-sm-offset-8{margin-left:66.66666667%}.ui-sm-offset-7{margin-left:58.33333333%}.ui-sm-offset-6{margin-left:50%}.ui-sm-offset-5{margin-left:41.66666667%}.ui-sm-offset-4{margin-left:33.33333333%}.ui-sm-offset-3{margin-left:25%}.ui-sm-offset-2{margin-left:16.66666667%}.ui-sm-offset-1{margin-left:8.33333333%}.ui-sm-offset-0{margin-left:0}}@media screen and (min-width:40.063em){.ui-md-1,.ui-md-2,.ui-md-3,.ui-md-4,.ui-md-5,.ui-md-6,.ui-md-7,.ui-md-8,.ui-md-9,.ui-md-10,.ui-md-11,.ui-md-12{padding:.5em}.ui-md-1{width:8.3333%}.ui-md-2{width:16.6667%}.ui-md-3{width:25%}.ui-md-4{width:33.3333%}.ui-md-5{width:41.6667%}.ui-md-6{width:50%}.ui-md-7{width:58.3333%}.ui-md-8{width:66.6667%}.ui-md-9{width:75%}.ui-md-10{width:83.3333%}.ui-md-11{width:91.6667%}.ui-md-12{width:100%}.ui-md-offset-12{margin-left:100%}.ui-md-offset-11{margin-left:91.66666667%}.ui-md-offset-10{margin-left:83.33333333%}.ui-md-offset-9{margin-left:75%}.ui-md-offset-8{margin-left:66.66666667%}.ui-md-offset-7{margin-left:58.33333333%}.ui-md-offset-6{margin-left:50%}.ui-md-offset-5{margin-left:41.66666667%}.ui-md-offset-4{margin-left:33.33333333%}.ui-md-offset-3{margin-left:25%}.ui-md-offset-2{margin-left:16.66666667%}.ui-md-offset-1{margin-left:8.33333333%}.ui-md-offset-0{margin-left:0}}@media screen and (min-width:64.063em){.ui-lg-1,.ui-lg-2,.ui-lg-3,.ui-lg-4,.ui-lg-5,.ui-lg-6,.ui-lg-7,.ui-lg-8,.ui-lg-9,.ui-lg-10,.ui-lg-11,.ui-lg-12{padding:.5em}.ui-lg-1{width:8.3333%}.ui-lg-2{width:16.6667%}.ui-lg-3{width:25%}.ui-lg-4{width:33.3333%}.ui-lg-5{width:41.6667%}.ui-lg-6{width:50%}.ui-lg-7{width:58.3333%}.ui-lg-8{width:66.6667%}.ui-lg-9{width:75%}.ui-lg-10{width:83.3333%}.ui-lg-11{width:91.6667%}.ui-lg-12{width:100%}.ui-lg-offset-12{margin-left:100%}.ui-lg-offset-11{margin-left:91.66666667%}.ui-lg-offset-10{margin-left:83.33333333%}.ui-lg-offset-9{margin-left:75%}.ui-lg-offset-8{margin-left:66.66666667%}.ui-lg-offset-7{margin-left:58.33333333%}.ui-lg-offset-6{margin-left:50%}.ui-lg-offset-5{margin-left:41.66666667%}.ui-lg-offset-4{margin-left:33.33333333%}.ui-lg-offset-3{margin-left:25%}.ui-lg-offset-2{margin-left:16.66666667%}.ui-lg-offset-1{margin-left:8.33333333%}.ui-lg-offset-0{margin-left:0}}@media screen and (min-width:90.063em){.ui-xl-1,.ui-xl-2,.ui-xl-3,.ui-xl-4,.ui-xl-5,.ui-xl-6,.ui-xl-7,.ui-xl-8,.ui-xl-9,.ui-xl-10,.ui-xl-11,.ui-xl-12{padding:.5em}.ui-xl-1{width:8.3333%}.ui-xl-2{width:16.6667%}.ui-xl-3{width:25%}.ui-xl-4{width:33.3333%}.ui-xl-5{width:41.6667%}.ui-xl-6{width:50%}.ui-xl-7{width:58.3333%}.ui-xl-8{width:66.6667%}.ui-xl-9{width:75%}.ui-xl-10{width:83.3333%}.ui-xl-11{width:91.6667%}.ui-xl-12{width:100%}.ui-xl-offset-12{margin-left:100%}.ui-xl-offset-11{margin-left:91.66666667%}.ui-xl-offset-10{margin-left:83.33333333%}.ui-xl-offset-9{margin-left:75%}.ui-xl-offset-8{margin-left:66.66666667%}.ui-xl-offset-7{margin-left:58.33333333%}.ui-xl-offset-6{margin-left:50%}.ui-xl-offset-5{margin-left:41.66666667%}.ui-xl-offset-4{margin-left:33.33333333%}.ui-xl-offset-3{margin-left:25%}.ui-xl-offset-2{margin-left:16.66666667%}.ui-xl-offset-1{margin-left:8.33333333%}.ui-xl-offset-0{margin-left:0}}.ui-g-nopad{padding:0}.ui-growl{position:fixed;top:20px;right:20px;width:20em}.ui-growl-item-container{position:relative;margin:0 0 10px;opacity:.95;filter:alpha(opacity=95)}.ui-growl-item{position:relative;display:block;padding:.5em 1em}.ui-growl-item p{padding:0;margin:0}.ui-growl-icon-close{position:absolute;top:4px;right:4px;cursor:pointer}.ui-growl-title{font-weight:700;padding:0 0 .5em;display:block}.ui-growl-image{position:absolute;display:inline-block;left:.5em;top:.25em;padding:0}.ui-growl-message{padding:0 0 .25em;margin-left:2.5em}.ui-growl-message p{font-weight:400}.ui-inplace .ui-inplace-display{display:inline;cursor:pointer;border:0 none;padding:.25em;font-weight:400}.ui-inplace .ui-inplace-content{display:inline}.ui-inputswitch{padding:0;position:relative;cursor:pointer;height:1.5em}.ui-inputswitch,.ui-inputswitch .ui-inputswitch-off,.ui-inputswitch .ui-inputswitch-on{display:inline-block;overflow:hidden;-ms-user-select:none;user-select:none;-moz-user-select:none;-khtml-user-select:none;-webkit-user-select:none}.ui-inputswitch .ui-inputswitch-off,.ui-inputswitch .ui-inputswitch-on{white-space:nowrap;position:absolute;top:0;width:auto;font-weight:700;height:100%;line-height:1.5em}.ui-inputswitch .ui-inputswitch-on{left:0;border:0 none}.ui-inputswitch .ui-inputswitch-off{right:0;text-align:right}.ui-inputswitch .ui-inputswitch-off span,.ui-inputswitch .ui-inputswitch-on span{display:inline-block;text-align:center;height:100%;line-height:inherit}.ui-inputswitch .ui-inputswitch-handle{display:block;width:0;position:absolute;top:0;left:0;height:100%;border-top:0 none;border-bottom:0 none}.ui-inputtext{margin:0;outline:medium none;padding:.25em}.ui-inputtext,.ui-widget-content .ui-inputtext,.ui-widget-header .ui-inputtext{font-weight:400}.ui-fluid .ui-inputtext{width:100%;box-sizing:border-box;-webkit-box-sizing:border-box;-moz-box-sizing:border-box}.ui-inputgroup{display:-webkit-box;display:-ms-flexbox;display:flex}.ui-inputgroup .ui-inputgroup-addon{display:inline-block;text-align:center;min-width:1.5em;padding:.25em;border-width:1px;border-style:solid}.ui-inputgroup .ui-inputgroup-addon+.ui-inputgroup-addon{border-left:0 none}.ui-inputgroup .ui-inputtext{padding-left:.5em}.ui-inputgroup .ui-inputtext:not(:first-child){border-top-left-radius:0;border-bottom-left-radius:0;border-left:0 none}.ui-inputgroup .ui-inputtext:not(:last-child){border-top-right-radius:0;border-bottom-right-radius:0;border-right:0 none}.ui-inputgroup .ui-button{margin-right:0;border-radius:0}.ui-fluid .ui-inputgroup .ui-button{width:auto}.ui-fluid .ui-inputgroup .ui-inputtext{-webkit-box-flex:1;-ms-flex:1 1 auto;flex:1 1 auto;width:1%}.ui-inputgroup .ui-chkbox,.ui-inputgroup .ui-radiobutton{margin-right:0;vertical-align:bottom}.ui-float-label{display:block;position:relative}.ui-float-label label{font-weight:400;position:absolute;pointer-events:none;left:.25em;top:50%;margin-top:-.5em;transition:all .3s ease;-moz-transition:.3s ease all;-webkit-transition:all .3s ease;color:#898989;line-height:1}.ui-float-label .ui-inputwrapper-filled~label,.ui-float-label .ui-inputwrapper-focus~label,.ui-float-label input.ui-state-filled~label,.ui-float-label input:focus~label{top:-.75em;font-size:12px}.ui-float-label .input:-webkit-autofill~label{top:-20px;font-size:12px}.ui-inputtextarea-resizable{overflow:hidden;resize:none}.ui-fluid .ui-inputtextarea{width:100%}.ui-lightbox{position:fixed}.ui-lightbox-content-wrapper{position:relative}.ui-lightbox-content{position:relative;margin:0;padding:0;background-color:#000}.ui-lightbox-nav-left,.ui-lightbox-nav-right{position:absolute;top:50%;cursor:pointer}.ui-lightbox-nav-left{left:0}.ui-lightbox-nav-right{right:0}.ui-lightbox-loading .ui-lightbox-content{background:url(images/loading.gif) #000 50% no-repeat}.ui-lightbox-caption{padding:.2em .4em;display:none}.ui-lightbox-caption-text{margin:.3em 0 .1em;float:left}.ui-lightbox-close{float:right;margin:0;padding:.125em}.ui-lightbox-close.ui-state-hover{padding:0}.ui-lightbox-nav-left,.ui-lightbox-nav-right{opacity:.5}.ui-lightbox-nav-left:hover,.ui-lightbox-nav-right:hover{opacity:1}.ui-listbox{padding:.25em;width:10em}.ui-listbox .ui-listbox-list-wrapper{overflow:auto}.ui-listbox .ui-listbox-list{list-style-type:none;margin:0;padding:0}.ui-listbox .ui-listbox-item{padding:.25em;border:0 none;cursor:pointer;font-weight:400;margin-bottom:1px}.ui-listbox .ui-listbox-item>span{vertical-align:middle}.ui-listbox .ui-listbox-item:last-child{margin-bottom:0}.ui-listbox.ui-state-disabled .ui-listbox-item{cursor:default}.ui-listbox-header{margin-bottom:.3em;padding:.125em .2em;position:relative}.ui-listbox-header .ui-chkbox{display:inline-block;vertical-align:middle;cursor:pointer}.ui-listbox-header .ui-listbox-filter-container{display:inline-block;vertical-align:middle;position:relative;width:100%}.ui-listbox-header.ui-listbox-header-w-checkbox .ui-listbox-filter-container{width:calc(100% - 2em)}.ui-listbox-header .ui-listbox-filter-container .fa{position:absolute;top:.25em;left:.25em}.ui-listbox-header .ui-inputtext{padding:.125em .125em .125em 1.25em;width:100%}.ui-listbox-footer{padding:.125em .2em}.ui-menu{width:12.5em;padding:.25em;position:relative}.ui-menu-separator{border-width:1px 0 0}.ui-menu.ui-menu-dynamic{position:absolute;display:none;z-index:5}.ui-menu-list{position:static}.ui-menu .ui-menu-list .ui-menuitem{border:none}.ui-menu .ui-menu-list .ui-widget-header{clear:both;float:left;width:100%;margin:.125em 0;padding:.25em .5em}.ui-menu .ui-menuitem,.ui-menu .ui-menuitem-parent{width:100%;clear:both;margin:.125em 0;padding:0}.ui-menu .ui-menuitem-link{display:block;width:100%;text-decoration:none;font-weight:400;border:1px solid transparent;line-height:1em;padding:.25em;cursor:pointer}.ui-menu .ui-menuitem-link .ui-menuitem-icon{display:inline-block;vertical-align:middle}.ui-menu .ui-menuitem-text{vertical-align:middle}.ui-menu .ui-widget-header h1,.ui-menu .ui-widget-header h2,.ui-menu .ui-widget-header h3,.ui-menu .ui-widget-header h4,.ui-menu .ui-widget-header h5,.ui-menu .ui-widget-header h6{font-size:1em;margin:0 auto}.ui-menu .ui-menu-parent .ui-menu-child{display:none;width:12.5em;padding:.25em;position:absolute;margin:0;text-decoration:none;list-style:none}.ui-menu .ui-menu-parent{position:relative}.ui-menu .ui-menu-parent .ui-submenu-icon{float:right;margin-right:-.25em}.ui-menubutton{padding:0}.ui-menubutton .ui-button{margin:0}.ui-menu.ui-menubar .ui-menubar-root-list>li>a>.ui-submenu-icon{float:none}.ui-menubar{width:auto}.ui-menubar .ui-menubar-root-list{list-style:none;padding:0;margin:0}.ui-menubar .ui-menubar-root-list>.ui-menuitem{display:inline-block;width:auto}.ui-menubar:not(.ui-megamenu-vertical) .ui-menubar-root-list>.ui-menu-separator{display:inline-block;border-width:0 0 0 1px;width:1px;text-indent:-9999999px}.ui-menubar:not(.ui-megamenu-vertical) .ui-menubar-root-list>.ui-menu-separator:before{content:\"ui-menu-separator\"}.ui-menubar .ui-menu-child .ui-menuitem{width:100%}.ui-menubar .ui-menuitem.ui-menuitem-custom{float:right;margin-top:.25em}.ui-menubar .ui-menubar-options{float:right}.ui-slidemenu .ui-slidemenu-wrapper{position:relative}.ui-slidemenu .ui-slidemenu-content{overflow-x:hidden;overflow-y:auto;position:relative}.ui-slidemenu .ui-menu-list{position:absolute;top:0}.ui-slidemenu .ui-menu-parent{position:static}.ui-slidemenu .ui-menu-child{-webkit-box-shadow:none;box-shadow:none;border:0 none;background:none repeat scroll 0 0 transparent}.ui-slidemenu-backward{position:absolute;bottom:0;width:100%;padding:.2em;cursor:pointer;display:none}.ui-slidemenu-backward .fa,.ui-slidemenu-backward span{vertical-align:middle}.ui-slidemenu .ui-slidemenuitem-active>.ui-submenu>ul{display:block!important}.ui-megamenu .ui-g{-ms-flex-wrap:nowrap;flex-wrap:nowrap}.ui-megamenu .ui-megamenu-panel.ui-menu-child{width:auto}.ui-megamenu-vertical,.ui-megamenu .ui-megamenu-panel .ui-menu-list{width:12.5em}.ui-megamenu-vertical .ui-menu-list .ui-menuitem,.ui-megamenu-vertical .ui-menuitem-link{width:100%;-webkit-box-sizing:border-box;box-sizing:border-box}.ui-megamenu-vertical>.ui-menubar-root-list>.ui-menuitem>.ui-menuitem-link>.ui-submenu-icon{float:right}.ui-panelmenu{width:auto}.ui-panelmenu .ui-panelmenu-panel{padding:0;margin:0}.ui-panelmenu .ui-panelmenu-header{cursor:pointer;position:relative;margin:-1px 0 0;zoom:1}.ui-panelmenu .ui-panelmenu-header a{display:block;padding:.25em .5em;text-decoration:none}.ui-panelmenu .fa{width:1em;text-align:center;vertical-align:middle;margin-right:.25em}.ui-panelmenu .ui-menuitem-text{margin-left:.125em}.ui-panelmenu span{vertical-align:middle}.ui-panelmenu .ui-panelmenu-content{padding:.2em 0;border-top:0;overflow:auto;zoom:1;outline:none;margin-bottom:1px}.ui-panelmenu .ui-panelmenu-content .ui-menu-parent{overflow:hidden}.ui-panelmenu .ui-panelmenu-content-wrapper{-webkit-box-sizing:border-box;box-sizing:border-box}.ui-panelmenu .ui-panelmenu-content-wrapper-overflown{overflow:hidden}.ui-panelmenu .ui-panelmenu-header.ui-state-disabled,.ui-panelmenu .ui-panelmenu-header.ui-state-disabled a{cursor:default}.ui-panelmenu .ui-menu-list{position:static}.ui-panelmenu .ui-menuitem{margin:1px 0;padding:0}.ui-panelmenu .ui-menu-separator{width:95%;margin:0 auto}.ui-panelmenu .ui-menuitem-link{display:block;text-decoration:none;font-weight:400;border:1px solid transparent;line-height:1em;cursor:pointer;position:relative;padding:.25em .5em}.ui-panelmenu .ui-menu-parent .ui-menu-list{margin-left:1.5em}.ui-menuitem-active>.ui-megamenu-panel,.ui-menuitem-active>.ui-submenu>ul{display:block!important}.ui-menuitem-outline{outline:1px dotted;z-index:1}.ui-fluid .ui-menu{width:100%}.ui-messages{border:1px solid;margin:.5em 0;padding:1em 1em 1em .5em;display:none;position:relative}.ui-messages-icon{display:inline-block;padding:0;vertical-align:middle}.ui-messages-summary{font-weight:700;margin-left:.25em}.ui-messages-detail{margin-left:.25em}.ui-messages-success{color:#fff;background-color:#4caf50;border-color:#4caf50}.ui-messages-info{color:#fff;background-color:#2196f3;border-color:#2196f3}.ui-messages-warn{color:#fff;background-color:#ffb300;border-color:#ffb300}.ui-messages-error{color:#fff;background-color:#f44336;border-color:#f44336}.ui-messages ul{margin:0;padding:0;list-style-type:none;display:inline-block;vertical-align:middle}.ui-messages.ui-messages-noicon ul{margin:0 1.5em 0 0}.ui-messages .ui-messages-close{color:#fff;cursor:pointer;position:absolute;top:5px;right:5px}.ui-message{border:1px solid;margin:0 .25em;padding:.125em .25em}.ui-multiselect{display:inline-block;position:relative;width:auto;cursor:pointer}.ui-multiselect .ui-multiselect-trigger{border-right:none;border-top:none;border-bottom:none;cursor:pointer;width:1.5em;height:100%;position:absolute;right:0;top:0;padding:0 .25em}.ui-multiselect .ui-multiselect-trigger .fa{margin-top:.4em;margin-left:-.125em}.ui-multiselect .ui-multiselect-label-container{overflow:hidden}.ui-multiselect .ui-multiselect-label{display:block;padding:.25em 2em .25em .25em;width:auto;border:none;cursor:pointer;text-overflow:ellipsis;overflow:hidden}.ui-multiselect.ui-state-disabled .ui-multiselect-label,.ui-multiselect.ui-state-disabled .ui-multiselect-trigger{cursor:auto}.ui-multiselect-panel{padding:.2em;position:absolute;min-width:12em}.ui-multiselect .ui-multiselect-panel{min-width:100%;display:none}.ui-multiselect-panel .ui-multiselect-items-wrapper{overflow:auto;position:relative;padding:.2em 0}.ui-multiselect-panel .ui-multiselect-list{border:0 none}.ui-multiselect-panel .ui-multiselect-item{border:0 none;cursor:pointer;font-weight:400;margin:1px 0;padding:.125em .25em;text-align:left;white-space:nowrap;display:block;position:relative}.ui-multiselect-panel .ui-multiselect-item .ui-chkbox,.ui-multiselect-panel .ui-multiselect-item label{display:inline-block;vertical-align:middle}.ui-multiselect-header{margin-bottom:.3em;padding:.25em;position:relative;text-align:left}.ui-multiselect-header .ui-chkbox{display:inline-block;vertical-align:middle;cursor:pointer}.ui-multiselect-header .ui-multiselect-filter-container{position:relative;display:inline-block;vertical-align:middle;width:65%}.ui-multiselect-header.ui-multiselect-header-no-toggleall .ui-multiselect-filter-container{width:85%}.ui-multiselect-header .ui-multiselect-filter-container .fa{position:absolute;top:.25em;left:.125em}.ui-multiselect-header .ui-inputtext{padding:.125em .125em .125em 1.25em;width:100%}.ui-multiselect-header .ui-multiselect-close{position:absolute;right:.375em;top:.375em;display:block;font-size:1em;border:0 none}.ui-multiselect-header a.ui-multiselect-all,.ui-multiselect-header a.ui-multiselect-none{float:left;margin-right:10px;display:block}.ui-multiselect-header .ui-multiselect-close.ui-state-hover{padding:0}.ui-fluid .ui-multiselect{width:100%;-webkit-box-sizing:border-box;box-sizing:border-box}.ui-orderlist{display:table}.ui-orderlist .ui-orderlist-controls{height:12.5em;padding:0 .25em;vertical-align:middle;display:table-cell}.ui-orderlist .ui-orderlist-controls .ui-button{display:block;margin-bottom:.25em}.ui-orderlist .ui-orderlist-container{display:table-cell;vertical-align:top}.ui-orderlist .ui-orderlist-list{list-style-type:none;margin:0;padding:0;overflow:auto;height:12.5em;width:12.5em}.ui-orderlist .ui-orderlist-caption{text-align:center;padding:.5em .75em;border-bottom:0 none}.ui-orderlist .ui-orderlist-list .ui-orderlist-item{margin:1px;padding:.125em;cursor:pointer;border:0 none;font-weight:inherit}.ui-orderlist .ui-orderlist-filter-container{position:relative;width:100%;padding:.5em .6em;border-bottom:0 none}.ui-orderlist .ui-orderlist-filter-container .ui-inputtext{text-indent:1.1em;width:100%}.ui-orderlist .ui-orderlist-filter-container .fa{position:absolute;top:50%;left:1em;margin-top:-.6em}.ui-orderlist.ui-state-disabled .ui-button,.ui-orderlist.ui-state-disabled .ui-orderlist-item{cursor:default}.ui-orderlist.ui-state-disabled .ui-orderlist-list{overflow:hidden}.ui-orderlist.ui-orderlist-responsive{width:100%}.ui-orderlist.ui-orderlist-responsive .ui-orderlist-controls{width:16.66666%;padding-right:.5em}.ui-orderlist.ui-orderlist-responsive .ui-orderlist-list-container{width:83.33333%}.ui-orderlist.ui-orderlist-responsive .ui-orderlist-caption,.ui-orderlist.ui-orderlist-responsive .ui-orderlist-controls>.ui-button,.ui-orderlist.ui-orderlist-responsive .ui-orderlist-list{width:100%}.ui-orderlist .ui-orderlist-droppoint{height:6px;list-style-type:none}@media (max-width:40em){.ui-orderlist.ui-orderlist-responsive .ui-orderlist-controls{text-align:center;width:100%;display:inline-block;height:auto}.ui-orderlist.ui-orderlist-responsive .ui-orderlist-controls .ui-button{display:inline;width:20%;display:inline-block}.ui-orderlist.ui-orderlist-responsive .ui-orderlist-list-container{width:100%}}.ui-organizationchart .ui-organizationchart-table{border-spacing:0;border-collapse:separate}.ui-organizationchart .ui-organizationchart-table>tr>td{text-align:center;vertical-align:top;padding:0;padding:0 .75em}.ui-organizationchart .ui-organizationchart-node-content{padding:.5em .75em;display:inline-block;position:relative}.ui-organizationchart .ui-organizationchart-node-content .ui-node-toggler{position:absolute;bottom:-9px;margin-left:-8px;z-index:2;left:50%}.ui-organizationchart .ui-organizationchart-line-down{margin:0 auto;height:20px;width:1px;float:none}.ui-organizationchart .ui-organizationchart-line-left,.ui-organizationchart .ui-organizationchart-line-right{float:none;border-radius:0}.ui-organizationchart .ui-organizationchart-node-content.ui-organizationchart-selectable-node{cursor:pointer}.ui-overlaypanel{padding:0;margin:0;position:absolute}.ui-overlaypanel-content{padding:.5em 1em}.ui-overlaypanel-close{position:absolute;top:-.5em;right:-.5em;border-radius:100%}.ui-paginator{margin:0;text-align:center;padding:.125em}.ui-paginator .ui-paginator-top{border-bottom:0 none}.ui-paginator .ui-paginator-bottom{border-top:0 none}.ui-paginator .ui-paginator-current,.ui-paginator .ui-paginator-first,.ui-paginator .ui-paginator-last,.ui-paginator .ui-paginator-next,.ui-paginator .ui-paginator-page,.ui-paginator .ui-paginator-pages,.ui-paginator .ui-paginator-prev{display:inline-block;padding:.125em .375em;zoom:1;margin-left:.063em;margin-right:.063em;text-decoration:none}.ui-paginator .ui-paginator-first,.ui-paginator .ui-paginator-last,.ui-paginator .ui-paginator-next,.ui-paginator .ui-paginator-page,.ui-paginator .ui-paginator-prev{cursor:pointer}.ui-paginator .ui-paginator-current,.ui-paginator .ui-paginator-rpp-options{margin-left:1em;margin-right:1em;background-image:none}.ui-paginator .ui-paginator-jtp-select option,.ui-paginator .ui-paginator-rpp-options option{background-image:none;border:0 none;box-shadow:none;-moz-box-shadow:none;-webkit-box-shadow:none}.ui-paginator a.ui-state-disabled{outline:0 none}.ui-panel{padding:.2em}.ui-panel .ui-panel-titlebar{padding:.5em .75em}.ui-panel .ui-panel-titlebar-icon{float:right;cursor:pointer;margin-left:.2em;margin-top:-.1em}.ui-panel .ui-panel-content{border:0;background:none;padding:.5em .75em}.ui-panel .ui-panel-footer{border-width:1px 0 0;padding:.25em .5em;text-align:left}.ui-panel-content-wrapper-overflown{overflow:hidden}.ui-password-panel{padding:.25em .5em;width:10em;margin-top:2px}.ui-password-panel .ui-password-meter{height:10px;background:transparent url(images/password-meter.png) no-repeat 0 0;padding:0;margin:0}.ui-password-info{margin-top:.25em}.ui-password-panel-overlay{position:absolute}.ui-picklist>div{float:left}.ui-picklist .ui-picklist-buttons{height:12.5em;padding:0 .25em}.ui-picklist .ui-picklist-list{list-style-type:none;margin:0;padding:0;overflow:auto;height:12.5em;width:12.5em}.ui-picklist .ui-picklist-list li{margin:1px;padding:.125em}.ui-picklist .ui-button{display:block;margin-bottom:.25em}.ui-picklist .ui-button-text-icon-left{width:100%}.ui-picklist .ui-picklist-item{cursor:pointer;border:0 none;font-weight:inherit}.ui-picklist .ui-picklist-caption{text-align:center;padding:.5em .75em;border-bottom:0 none}.ui-picklist table{width:100%;border-collapse:collapse}.ui-picklist .ui-picklist-filter-container{position:relative;width:100%;padding:.5em .6em;border-bottom:0 none}.ui-picklist .ui-picklist-filter-container .ui-picklist-filter{text-indent:1.1em;width:100%}.ui-picklist .ui-picklist-filter-container .fa{position:absolute;top:50%;left:1em;margin-top:-.6em}.ui-picklist{display:table}.ui-picklist>div{float:none;display:table-cell;vertical-align:top}.ui-picklist .ui-picklist-buttons{vertical-align:middle}.ui-picklist.ui-picklist-vertical{display:table}.ui-picklist.ui-picklist-vertical>div{float:none;display:table-row;vertical-align:top}.ui-picklist.ui-picklist-vertical .ui-picklist-buttons{text-align:center;height:auto}.ui-picklist.ui-picklist-vertical .ui-picklist-buttons .ui-button{display:inline-block}.ui-picklist.ui-picklist-vertical .ui-button{margin-top:.25em}.ui-picklist-outline{outline:1px dotted #000;z-index:1}.ui-picklist .ui-picklist-droppoint{height:6px;list-style-type:none}.ui-picklist .ui-picklist-list .ui-picklist-droppoint-empty{height:100%;list-style-type:none}.ui-picklist-list.ui-picklist-source,.ui-picklist-list.ui-picklist-target{outline:none}.ui-picklist.ui-picklist-responsive *{-webkit-box-sizing:border-box;box-sizing:border-box}.ui-picklist.ui-picklist-responsive{width:100%}.ui-picklist.ui-picklist-responsive .ui-picklist-listwrapper{width:35%}.ui-picklist.ui-picklist-responsive .ui-picklist-listwrapper.ui-picklist-listwrapper-nocontrols{width:45%}.ui-picklist.ui-picklist-responsive .ui-picklist-buttons{width:10%}.ui-picklist.ui-picklist-responsive .ui-picklist-buttons button{width:100%}.ui-picklist.ui-picklist-responsive .ui-picklist-list{width:auto}@media (max-width:40em){.ui-picklist.ui-picklist-responsive{display:block}.ui-picklist.ui-picklist-responsive>div{display:block;width:100%!important}.ui-picklist.ui-picklist-responsive .ui-picklist-buttons{text-align:center;height:auto;padding:.4em 0}.ui-picklist.ui-picklist-responsive .ui-picklist-buttons button{display:inline;width:20%;margin-bottom:0}.ui-picklist.ui-picklist-responsive .ui-picklist-source-controls.ui-picklist-buttons{padding-bottom:.4em}.ui-picklist.ui-picklist-responsive .ui-picklist-target-controls.ui-picklist-buttons{padding-top:.4em}.ui-picklist.ui-picklist-responsive .ui-picklist-buttons .fa-angle-right:before{content:\"\\f107\"}.ui-picklist.ui-picklist-responsive .ui-picklist-buttons .fa-angle-double-right:before{content:\"\\f103\"}.ui-picklist.ui-picklist-responsive .ui-picklist-buttons .fa-angle-left:before{content:\"\\f106\"}.ui-picklist.ui-picklist-responsive .ui-picklist-buttons .fa-angle-double-left:before{content:\"\\f102\"}}.ui-progressbar{height:1.2em;text-align:left;position:relative}.ui-progressbar .ui-progressbar-value{height:100%;width:0;position:absolute;display:none;border:0 none}.ui-progressbar .ui-progressbar-value-animate{-webkit-transition:width 1s ease-in-out;transition:width 1s ease-in-out}.ui-progressbar .ui-progressbar-label{text-align:center;height:100%;width:100%;position:absolute;display:none;font-weight:700}.ui-radiobutton{display:inline-block;cursor:pointer;vertical-align:middle;margin-right:.25em}.ui-radiobutton-box{width:1.125em;height:1.125em;line-height:1.125em;border-radius:100%;text-align:center}.ui-radiobutton-icon{display:block;font-size:.5em;line-height:inherit;margin-top:-1px}.ui-radiobutton,.ui-radiobutton-label{vertical-align:middle}.ui-fluid .fc .ui-button{width:auto}.ui-selectbutton{display:inline-block}.ui-selectbutton.ui-state-error{padding:0}.ui-selectbutton .ui-button.ui-state-focus{outline:none}.ui-slider{position:relative;text-align:left}.ui-slider .ui-slider-handle{position:absolute;width:1.2em;height:1.2em;cursor:default;-ms-touch-action:none;touch-action:none;z-index:1}.ui-slider .ui-slider-handle.ui-slider-handle-active{z-index:2}.ui-slider .ui-slider-range{position:absolute;font-size:.7em;display:block;border:0;background-position:0 0}.ui-slider-horizontal{height:.8em}.ui-slider-horizontal .ui-slider-handle{top:-.25em;margin-left:-.6em}.ui-slider-horizontal .ui-slider-range{top:0;height:100%}.ui-slider-horizontal .ui-slider-range-min{left:0}.ui-slider-horizontal .ui-slider-range-max{right:0}.ui-slider-vertical{width:.8em;height:100px}.ui-slider-vertical .ui-slider-handle{left:-.25em;margin-left:0;margin-bottom:-.6em}.ui-slider-vertical .ui-slider-range{left:0;width:100%}.ui-slider-vertical .ui-slider-range-min{bottom:0}.ui-slider-vertical .ui-slider-range-max{top:0}.ui-slider-animate .ui-slider-handle{-webkit-transition:left .3s;transition:left .3s}.ui-spinner{display:inline-block;overflow:visible;padding:0;position:relative;vertical-align:middle}.ui-spinner-input{vertical-align:middle;padding-right:1.5em}.ui-spinner-button{cursor:default;display:block;height:50%;margin:0;overflow:hidden;padding:0;position:absolute;right:0;text-align:center;vertical-align:middle;width:1.5em}.ui-spinner .fa{position:absolute;top:50%;left:50%;margin-top:-.5em;margin-left:-.5em;width:1em}.ui-spinner-up{top:0}.ui-spinner-down{bottom:0}.ui-fluid .ui-spinner{width:100%}.ui-fluid .ui-spinner .ui-spinner-input{padding-right:2em;width:100%}.ui-fluid .ui-spinner .ui-spinner-button{width:1.5em}.ui-fluid .ui-spinner .ui-spinner-button .fa{left:.7em}.ui-splitbutton{position:relative;display:inline-block;zoom:1}.ui-splitbutton .ui-button.ui-splitbutton-menubutton{width:2em}.ui-splitbutton.ui-state-disabled button{cursor:default}.ui-fluid .ui-splitbutton{width:100%;box-sizing:border-box;-webkit-box-sizing:border-box;-moz-box-sizing:border-box}.ui-fluid .ui-splitbutton .ui-button:first-child{width:calc(100% - 2em)}.ui-fluid .ui-splitbutton .ui-button.ui-splitbutton-menubutton{width:2em;box-sizing:border-box;-webkit-box-sizing:border-box;-moz-box-sizing:border-box}.ui-steps ul{list-style-type:none;padding:0;margin:0}.ui-steps .ui-steps-item{float:left;-webkit-box-sizing:border-box;box-sizing:border-box;cursor:pointer}.ui-steps.ui-steps-readonly .ui-steps-item{cursor:auto}.ui-steps .ui-steps-item .ui-menuitem-link{text-decoration:none;display:block;padding:1em;position:relative;text-align:center}.ui-steps .ui-steps-item.ui-state-disabled .ui-menuitem-link,.ui-steps .ui-steps-item.ui-state-highlight .ui-menuitem-link{cursor:default}.ui-steps .ui-steps-number{font-size:200%;display:block}.ui-steps .ui-steps-title{display:block;white-space:nowrap}@media (max-width:40em){.ui-steps .ui-steps-item .ui-menuitem-link{padding:.5em}.ui-steps .ui-steps-item .ui-steps-title{display:none}}.ui-tabmenu .ui-tabmenu-nav{margin:0;padding:.25em .5em 0 .25em}.ui-tabmenu .ui-tabmenu-nav .ui-tabmenuitem{list-style:none;float:left;position:relative;margin:0 .2em 1px 0;padding:0;white-space:nowrap;display:block;border-bottom:0;top:1px}.ui-tabmenu .ui-tabmenu-nav .ui-tabmenuitem a{float:left;padding:.5em 1em;text-decoration:none}.ui-tabmenu .ui-tabmenu-nav a{padding:.5em 1em}.ui-tabmenu .ui-tabmenu-nav .ui-tabmenuitem .ui-icon{float:left}.ui-tabmenu .ui-tabmenu-nav .ui-tabmenuitem.ui-state-disabled a{cursor:default}.ui-tabview{padding:.25em}.ui-tabview .ui-tabview-nav{margin:0}.ui-tabview .ui-tabview-nav li{list-style:none;float:left;position:relative;margin:0 .125em 1px 0;padding:0;white-space:nowrap}.ui-tabview .ui-tabview-nav li a{float:left;padding:.5em 1em;text-decoration:none}.ui-tabview .ui-tabview-nav li.ui-state-disabled a,.ui-tabview .ui-tabview-nav li.ui-state-processing a,.ui-tabview .ui-tabview-nav li.ui-tabview-selected a{cursor:text}.ui-tabview.ui-tabview-collapsible .ui-tabview-nav li.ui-tabview-selected a,.ui-tabview .ui-tabview-nav li a{cursor:pointer}.ui-tabview .ui-tabview-panel{border-width:0;padding:1em;background:none}.ui-tabview .ui-tabview-nav li{display:block}.ui-tabview .ui-tabview-nav li .ui-tabview-left-icon,.ui-tabview .ui-tabview-nav li .ui-tabview-right-icon,.ui-tabview .ui-tabview-nav li .ui-tabview-title{vertical-align:middle}.ui-tabview .ui-tabview-nav li .ui-tabview-close{margin:.5em .3em 0 0;cursor:pointer}.ui-tabview.ui-tabview-top>.ui-tabview-nav li{border-bottom:0;top:1px}.ui-tabview.ui-tabview-top>.ui-tabview-nav{padding:.2em .2em 0}.ui-tabview.ui-tabview-bottom>.ui-tabview-nav{padding:0 .2em .2em}.ui-tabview.ui-tabview-bottom>.ui-tabview-nav li{border-top:0}.ui-tabview-left:after,.ui-tabview-right:after{clear:both;content:\".\";display:block;height:0;visibility:hidden}.ui-tabview-left>.ui-tabview-nav{float:left;width:25%;height:300px;background-image:none;padding-top:1px}.ui-tabview-left>.ui-tabview-panels{float:right;width:75%}.ui-tabview.ui-tabview-left>.ui-tabview-nav li,.ui-tabview.ui-tabview-right>.ui-tabview-nav li{display:block;float:right;white-space:normal;width:99%}.ui-tabview.ui-tabview-left>.ui-tabview-nav li{margin:0 0 1px;border-right:0 none}.ui-tabview.ui-tabview-right>.ui-tabview-nav{float:right;width:25%;height:300px;background-image:none;padding-top:1px}.ui-tabview.ui-tabview-right>.ui-tabview-panels{float:left;width:75%}.ui-tabview.ui-tabview-right>.ui-tabview-nav li{margin:0 0 1px;border-left:0 none}.ui-rtl .ui-tabview .ui-tabview-nav li{float:right}.ui-terminal{height:18em;overflow:auto;padding:.25em}.ui-terminal-input{border:0 none;background-color:transparent;color:inherit;padding:0;margin:0 0 0 .125em;width:75%;outline:none;vertical-align:baseline}.ui-terminal-command{margin-left:.125em;-moz-margin-start:.125em}.ui-terminal-input::-ms-clear{display:none}.ui-toolbar{padding:.25em .5em}.ui-toolbar-group-left{float:left}.ui-toolbar-group-right{float:right}.ui-tooltip{position:absolute;display:none;padding:.25em .5em;max-width:12.5em}.ui-tooltip.ui-tooltip-left,.ui-tooltip.ui-tooltip-right{padding:0 .25em}.ui-tooltip.ui-tooltip-bottom,.ui-tooltip.ui-tooltip-top{padding:.25em 0}.ui-tooltip .ui-tooltip-text{padding:.125em .5em;background-color:#4c4c4c;color:#fff;white-space:pre-line}.ui-tooltip-arrow{position:absolute;width:0;height:0;border-color:transparent;border-style:solid}.ui-tooltip-right .ui-tooltip-arrow{top:50%;left:0;margin-top:-.25em;border-width:.25em .25em .25em 0;border-right-color:#4c4c4c}.ui-tooltip-left .ui-tooltip-arrow{top:50%;right:0;margin-top:-.25em;border-width:.25em 0 .25em .25em;border-left-color:#4c4c4c}.ui-tooltip.ui-tooltip-top{padding:.25em 0}.ui-tooltip-top .ui-tooltip-arrow{bottom:0;left:50%;margin-left:-.25em;border-width:.25em .25em 0;border-top-color:#4c4c4c}.ui-tooltip-bottom .ui-tooltip-arrow{top:0;left:50%;margin-left:-.25em;border-width:0 .25em .25em;border-bottom-color:#4c4c4c}.ui-tree{width:18em}.ui-tree .ui-treenode-selectable.ui-treenode-content{cursor:pointer}.ui-tree .ui-tree-container{height:100%;margin:0;overflow:auto;padding:.25em;white-space:nowrap}.ui-tree .ui-treenode-children{margin:0;padding:0 0 0 1em}.ui-tree .ui-treenode{background-attachment:scroll;background-color:transparent;background-image:none;background-position:0 0;background-repeat:repeat-y;list-style:none outside none;margin:0;padding:.125em 0 0}.ui-tree .ui-treenode-droppoint{height:4px;list-style-type:none}.ui-tree .ui-treenode-droppoint-active{border:0 none}.ui-tree .ui-tree-toggler{cursor:pointer}.ui-tree .ui-tree-toggler,.ui-tree .ui-treenode-icon,.ui-tree .ui-treenode-label{display:inline-block;vertical-align:middle}.ui-tree .ui-treenode-label{padding:0 .25em}.ui-tree .ui-treenode-label.ui-state-highlight,.ui-tree .ui-treenode-label.ui-state-hover{font-weight:400;border:0 none}.ui-tree .ui-treenode.ui-treenode-leaf>.ui-treenode-content>.ui-tree-toggler{visibility:hidden}.ui-tree .ui-chkbox-box{cursor:pointer}.ui-tree .ui-chkbox{display:inline-block;vertical-align:middle}.ui-tree .ui-chkbox .ui-chkbox-icon{margin-left:1px}.ui-fluid .ui-tree{width:100%}.ui-tree-horizontal{width:auto;padding:.5em 0;overflow:auto}.ui-tree.ui-tree-horizontal table,.ui-tree.ui-tree-horizontal td,.ui-tree.ui-tree-horizontal tr{border-collapse:collapse;margin:0;padding:0;vertical-align:middle}.ui-tree.ui-tree-horizontal .ui-tree-toggler{vertical-align:middle;margin:0}.ui-tree-horizontal .ui-treenode-content{font-weight:400;padding:.4em 1em .4em .2em}.ui-tree.ui-tree-horizontal .ui-tree-node-label{margin:0}.ui-tree-horizontal .ui-treenode-parent .ui-treenode-content{font-weight:400;white-space:nowrap}.ui-tree.ui-tree-horizontal .ui-treenode{background:url(images/line.gif) repeat-x scroll 50% transparent;padding:.25em 2.5em}.ui-tree.ui-tree-horizontal .ui-treenode.ui-treenode-collapsed,.ui-tree.ui-tree-horizontal .ui-treenode.ui-treenode-leaf{padding-right:0}.ui-tree.ui-tree-horizontal .ui-treenode-children{padding:0;margin:0}.ui-tree.ui-tree-horizontal .ui-treenode-connector{width:1px}.ui-tree.ui-tree-horizontal .ui-treenode-connector-table{height:100%;width:1px}.ui-tree.ui-tree-horizontal .ui-treenode-connector-line{background:url(images/line.gif) repeat-y scroll 0 0 transparent;width:1px}.ui-tree.ui-tree-horizontal table{height:0}.ui-tree.ui-tree-horizontal .ui-chkbox{vertical-align:bottom;margin-right:.25em}.ui-tree.ui-tree-loading{position:relative;min-height:4em}.ui-tree .ui-tree-loading-mask{position:absolute;width:100%;height:100%;-ms-filter:\"progid:DXImageTransform.Microsoft.Alpha(Opacity=10)\";opacity:.1;z-index:1}.ui-tree .ui-tree-loading-content{position:absolute;left:50%;top:50%;z-index:2;margin-top:-1em;margin-left:-1em}.ui-treetable{position:relative}.ui-treetable table{border-collapse:collapse;width:100%;table-layout:fixed}.ui-treetable .ui-treetable-footer,.ui-treetable .ui-treetable-header{text-align:center;padding:.5em .75em}.ui-treetable .ui-treetable-header{border-bottom:0 none}.ui-treetable .ui-treetable-footer{border-top:0 none}.ui-treetable tfoot td,.ui-treetable th{text-align:center}.ui-treetable tbody td,.ui-treetable tfoot td,.ui-treetable thead th{padding:.25em .5em;overflow:hidden;white-space:nowrap;border-width:1px;border-style:solid}.ui-treetable tbody td{border-color:inherit}.ui-treetable tbody td:first-child span{vertical-align:middle}.ui-treetable .ui-treetable-toggler{vertical-align:middle;cursor:pointer;text-decoration:none}.ui-treetable .ui-treetable-checkbox{margin-right:.5em}.ui-treetable .ui-treetable-checkbox .ui-chkbox-icon{margin-left:1px}.ui-treetable .ui-treetable-row.ui-treetable-row-selectable{cursor:pointer}.ui-treetable .ui-treetable-row.ui-state-highlight{border:0 none}.ui-treetable tr.ui-state-hover{border-color:inherit;font-weight:inherit}.ui-treetable .ui-treetable-indent{width:1em;height:1em;float:left}.ui-treetable .ui-column-resizer{display:block;position:absolute!important;top:0;right:0;margin:0;width:.5em;height:100%;padding:0;cursor:col-resize;border:1px solid transparent}.ui-treetable .ui-column-resizer-helper{width:1px;position:absolute;z-index:3;display:none}.ui-treetable-resizable{padding-bottom:1px;overflow:auto}.ui-treetable-resizable tbody td,.ui-treetable-resizable tfoot td,.ui-treetable-resizable thead th{white-space:nowrap}.ui-treetable-resizable th.ui-resizable-column{background-clip:padding-box;position:relative}.ui-treetable td.ui-treetable-child-table-container{padding:0;border:0 none}.ui-treetable .ui-treetable-row{display:table-row;border-bottom:0 transparent}.ui-treetable tbody .ui-treetable-row td{border:0 none}.ui-treetable tbody .ui-treetable-row td input{outline:0 none}.ui-widget,.ui-widget button,.ui-widget input,.ui-widget select,.ui-widget textarea{font-family:Segoe UI,Arial,sans-serif;font-size:1em}.ui-widget :active{outline:none}.ui-widget-content{border:1px solid #323232;background:#000;color:#ccc}.ui-widget-content a{color:#ccc}.ui-widget-header{border:1px solid #323232;background:#333;color:#ccc;font-weight:700}.ui-widget-header a{color:#ccc}.ui-widget-overlay{background:#666;opacity:.5;filter:Alpha(Opacity=50)}.ui-state-default{border:1px solid #666;background:#555;color:#eee}.ui-state-default a{color:#eee}.ui-state-active{border-color:#ffaf0f;background:#f58400;color:#fff}.ui-state-active a{color:#fff}.ui-state-highlight{border-color:#ccc;background:#eee;color:#2e7db2}.ui-state-highlight a{color:#2e7db2}.ui-state-focus{border-color:#59b4d4;background:#0078a3;color:#fff}.ui-state-focus a{color:#fff}.ui-state-error{border-color:#ffb73d;background:#ffb73d;color:#111}.ui-state-error a{color:#111}.ui-state-disabled,.ui-widget:disabled{opacity:.35;filter:Alpha(Opacity=35);background-image:none;cursor:default!important}.ui-state-disabled *,.ui-widget:disabled *{cursor:default!important}.ui-inputtext{background:#fff;color:#333}.ui-inputtext:enabled:hover{border-color:#59b4d4}.ui-inputtext.ui-state-focus,.ui-inputtext:focus{outline:0 none;border-color:#59b4d4;-webkit-box-shadow:0 0 5px #59b4d4;box-shadow:0 0 5px #59b4d4}.ui-inputgroup .ui-inputgroup-addon{border-color:#666;background-color:gray;color:#fff}.ui-inputgroup .ui-inputgroup-addon:first-child{border-top-left-radius:6px;border-bottom-left-radius:6px}.ui-inputgroup .ui-inputgroup-addon:last-child{border-top-right-radius:6px;border-bottom-right-radius:6px}.ui-inputgroup .ui-button:first-child{border-top-left-radius:6px;border-bottom-left-radius:6px}.ui-inputgroup .ui-button:last-child{border-top-right-radius:6px;border-bottom-right-radius:6px}.ui-float-label input.ng-dirty.ng-invalid~label{color:#111}.ui-autocomplete .ui-autocomplete-multiple-container:not(.ui-state-disabled).ui-state-focus,.ui-autocomplete .ui-autocomplete-multiple-container:not(.ui-state-disabled):hover,.ui-chips>ul:not(.ui-state-disabled).ui-state-focus,.ui-chips>ul:not(.ui-state-disabled):hover{border-color:#59b4d4}.ui-button:enabled:hover,.ui-button:focus,.ui-fileupload-choose:not(.ui-state-disabled):hover{outline:0 none;border-color:#59b4d4;background:#0078a3;color:#fff}.ui-button:enabled:hover a,.ui-button:focus a,.ui-fileupload-choose:not(.ui-state-disabled):hover a{color:#fff}.ui-button:enabled:active,.ui-fileupload-choose:not(.ui-state-disabled):active{border-color:#ffaf0f;background:#f58400;color:#fff}.ui-chkbox-box:not(.ui-state-disabled):not(.ui-state-active):hover{border-color:#59b4d4;background:#0078a3;color:#fff}.ui-chkbox-box:not(.ui-state-disabled):not(.ui-state-active):hover a{color:#fff}.ui-radiobutton-box:not(.ui-state-disabled):not(.ui-state-active):hover{border-color:#59b4d4;background:#0078a3;color:#fff}.ui-radiobutton-box:not(.ui-state-disabled):not(.ui-state-active):hover a{color:#fff}.ui-dropdown:not(.ui-state-disabled):hover{border-color:#59b4d4;background:#0078a3;color:#fff}.ui-dropdown:not(.ui-state-disabled):hover a{color:#fff}.ui-dropdown-panel .ui-dropdown-item:not(.ui-state-highlight):hover{border-color:#59b4d4;background:#0078a3;color:#fff}.ui-dropdown-panel .ui-dropdown-item:not(.ui-state-highlight):hover a{color:#fff}.ui-listbox .ui-listbox-header .ui-listbox-filter-container .fa{color:#333}.ui-listbox:not(.ui-state-disabled) .ui-listbox-item:not(.ui-state-highlight):hover{border-color:#59b4d4;background:#0078a3;color:#fff}.ui-listbox:not(.ui-state-disabled) .ui-listbox-item:not(.ui-state-highlight):hover a{color:#fff}.ui-listbox.ui-state-disabled .ui-chkbox-box:not(.ui-state-active):hover{border-color:#666;background:#555;color:#eee}.ui-multiselect:not(.ui-state-disabled):hover{border-color:#59b4d4;background:#0078a3;color:#fff}.ui-multiselect:not(.ui-state-disabled):hover a{color:#fff}.ui-multiselect-panel .ui-multiselect-item:not(.ui-state-highlight):hover{border-color:#59b4d4;background:#0078a3;color:#fff}.ui-multiselect-panel .ui-multiselect-item:not(.ui-state-highlight):hover a{color:#fff}.ui-multiselect-panel .ui-multiselect-close{color:#ccc}.ui-multiselect-panel .ui-multiselect-filter-container .fa{color:#333}.ui-spinner:not(.ui-state-disabled) .ui-spinner-button:enabled:hover{border-color:#59b4d4;background:#0078a3;color:#fff}.ui-spinner:not(.ui-state-disabled) .ui-spinner-button:enabled:hover a{color:#fff}.ui-spinner:not(.ui-state-disabled) .ui-spinner-button:enabled:active{border-color:#ffaf0f;background:#f58400;color:#fff}.ui-selectbutton .ui-button:not(.ui-state-disabled):not(.ui-state-active):hover{border-color:#59b4d4;background:#0078a3;color:#fff}.ui-selectbutton .ui-button:not(.ui-state-disabled):not(.ui-state-active):hover a{color:#fff}.ui-togglebutton:not(.ui-state-disabled):not(.ui-state-active):hover{border-color:#59b4d4;background:#0078a3;color:#fff}.ui-togglebutton:not(.ui-state-disabled):not(.ui-state-active):hover a{color:#fff}.ui-paginator a:not(.ui-state-disabled):not(.ui-state-active):hover{border-color:#59b4d4;background:#0078a3;color:#fff}.ui-paginator a:not(.ui-state-disabled):not(.ui-state-active):hover a{color:#fff}.ui-paginator a{color:#eee}.ui-datatable .ui-rowgroup-header a{color:#ccc}.ui-datatable .ui-sortable-column:not(.ui-state-active):hover{background:#0078a3;color:#fff}.ui-datatable .ui-row-toggler{color:#ccc}.ui-datatable tbody.ui-datatable-hoverable-rows>tr.ui-widget-content:not(.ui-state-highlight):hover{cursor:pointer;background:#0078a3;color:#fff}.ui-orderlist .ui-orderlist-item:not(.ui-state-highlight):hover{border-color:#59b4d4;background:#0078a3;color:#fff}.ui-orderlist .ui-orderlist-item:not(.ui-state-highlight):hover a{color:#fff}.ui-picklist .ui-picklist-item:not(.ui-state-highlight):hover{border-color:#59b4d4;background:#0078a3;color:#fff}.ui-picklist .ui-picklist-item:not(.ui-state-highlight):hover a{color:#fff}.ui-picklist .ui-picklist-droppoint-highlight{border-color:#ccc;background:#eee;color:#c9c9c9}.ui-picklist .ui-picklist-droppoint-highlight a{color:#c9c9c9}.ui-picklist .ui-picklist-highlight{border-color:#ccc;color:#c9c9c9}.ui-picklist .ui-picklist-highlight a{color:#c9c9c9}.ui-tree.ui-treenode-dragover{border-color:#ccc}.ui-tree .ui-treenode-content.ui-treenode-selectable .ui-treenode-label:not(.ui-state-highlight):hover{border-color:#59b4d4;background:#0078a3;color:#fff}.ui-tree .ui-treenode-content.ui-treenode-selectable .ui-treenode-label:not(.ui-state-highlight):hover a{color:#fff}.ui-tree .ui-treenode-content.ui-treenode-dragover{background:#f58400;color:#fff}.ui-tree.ui-tree-horizontal .ui-treenode-content.ui-treenode-selectable .ui-treenode-label:not(.ui-state-highlight):hover{background-color:inherit;color:inherit}.ui-tree.ui-tree-horizontal .ui-treenode-content.ui-treenode-selectable:not(.ui-state-highlight):hover{border-color:#59b4d4;background:#0078a3;color:#fff}.ui-tree.ui-tree-horizontal .ui-treenode-content.ui-treenode-selectable:not(.ui-state-highlight):hover a{color:#fff}.ui-treetable .ui-treetable-row.ui-treetable-row-selectable:not(.ui-state-highlight):hover{background:#0078a3;color:#fff}.ui-organizationchart .ui-organizationchart-node-content.ui-organizationchart-selectable-node:not(.ui-state-highlight):hover{border-color:#59b4d4;background:#0078a3;color:#fff}.ui-organizationchart .ui-organizationchart-node-content.ui-organizationchart-selectable-node:not(.ui-state-highlight):hover a{color:#fff}.ui-accordion .ui-accordion-header:not(.ui-state-active):not(.ui-state-disabled):hover{border-color:#59b4d4;background:#0078a3;color:#fff}.ui-accordion .ui-accordion-header:not(.ui-state-active):not(.ui-state-disabled):hover a{color:#fff}.ui-fieldset.ui-fieldset-toggleable .ui-fieldset-legend:hover{border-color:#59b4d4;background:#0078a3;color:#fff}.ui-fieldset.ui-fieldset-toggleable .ui-fieldset-legend:hover a{color:#fff}.ui-panel .ui-panel-titlebar .ui-panel-titlebar-icon:hover{border-color:#59b4d4;background:#0078a3;color:#fff}.ui-panel .ui-panel-titlebar .ui-panel-titlebar-icon:hover a{color:#fff}.ui-tabview .ui-tabview-nav li:not(.ui-state-active):not(.ui-state-disabled):hover{border-color:#59b4d4;background:#0078a3;color:#fff}.ui-tabview .ui-tabview-nav li:not(.ui-state-active):not(.ui-state-disabled):hover a{color:#fff}.ui-dialog .ui-dialog-titlebar-icon{color:#ccc}.ui-dialog .ui-dialog-titlebar-icon:hover{border-color:#59b4d4;background:#0078a3;color:#fff}.ui-dialog .ui-dialog-titlebar-icon:hover a{color:#fff}.ui-overlaypanel .ui-overlaypanel-close:hover{border-color:#59b4d4;background:#0078a3;color:#fff}.ui-overlaypanel .ui-overlaypanel-close:hover a{color:#fff}.ui-inplace .ui-inplace-display:hover{border-color:#59b4d4;background:#0078a3;color:#fff}.ui-inplace .ui-inplace-display:hover a{color:#fff}.ui-breadcrumb a,.ui-menu .ui-menuitem .ui-menuitem-link{color:#ccc}.ui-menu .ui-menuitem .ui-menuitem-link:hover{border-color:#59b4d4;background:#0078a3;color:#fff;border-color:transparent}.ui-menu .ui-menuitem .ui-menuitem-link:hover a{color:#fff}.ui-menu .ui-menuitem.ui-menuitem-active>.ui-menuitem-link{border-color:#59b4d4;background:#0078a3;color:#fff;border-color:transparent}.ui-menu .ui-menuitem.ui-menuitem-active>.ui-menuitem-link a{color:#fff}.ui-tabmenu .ui-tabmenu-nav li:not(.ui-state-active):hover{border-color:#59b4d4;background:#0078a3;color:#fff}.ui-tabmenu .ui-tabmenu-nav li:not(.ui-state-active):hover a{color:#fff}.ui-steps .ui-steps-item:not(.ui-state-highlight):not(.ui-state-disabled):hover{border-color:#59b4d4;background:#0078a3;color:#fff}.ui-steps .ui-steps-item:not(.ui-state-highlight):not(.ui-state-disabled):hover a{color:#fff}.ui-panelmenu .ui-panelmenu-header:not(.ui-state-active):hover{border-color:#59b4d4;background:#0078a3;color:#fff;border-color:#666}.ui-panelmenu .ui-panelmenu-header.ui-state-active a,.ui-panelmenu .ui-panelmenu-header:not(.ui-state-active):hover a{color:#fff}.ui-panelmenu .ui-panelmenu-content .ui-menuitem-link{color:#ccc}.ui-panelmenu .ui-panelmenu-content .ui-menuitem-link:hover{border-color:#59b4d4;background:#0078a3;color:#fff;border-color:transparent}.ui-panelmenu .ui-panelmenu-content .ui-menuitem-link:hover a{color:#fff}.ui-datepicker .ui-datepicker-header a{color:#ccc}.ui-datepicker .ui-datepicker-header a:hover{border-color:#59b4d4;background:#0078a3;color:#fff}.ui-datepicker .ui-datepicker-header a:hover a{color:#fff}.ui-datepicker .ui-datepicker-calendar td:not(.ui-state-disabled) a:hover{border-color:#59b4d4;background:#0078a3;color:#fff}.ui-datepicker .ui-datepicker-calendar td:not(.ui-state-disabled) a:hover a{color:#fff}.fc .fc-toolbar .fc-prev-button .ui-icon-circle-triangle-w{margin-top:.3em;background:none!important;display:inline-block;font:normal normal normal 14px/1 FontAwesome;font-size:inherit;text-rendering:auto;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-indent:0!important;text-align:center}.fc .fc-toolbar .fc-prev-button .ui-icon-circle-triangle-w:before{content:\"\"}.fc .fc-toolbar .fc-next-button .ui-icon-circle-triangle-e{margin-top:.3em;background:none!important;display:inline-block;font:normal normal normal 14px/1 FontAwesome;font-size:inherit;text-rendering:auto;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-indent:0!important;text-align:center}.fc .fc-toolbar .fc-next-button .ui-icon-circle-triangle-e:before{content:\"\"}.ui-rating a{color:#333}.ui-organizationchart .ui-organizationchart-line-down{background-color:#191919}.ui-organizationchart .ui-organizationchart-line-left{border-right:1px solid #191919}.ui-organizationchart .ui-organizationchart-line-top{border-top:1px solid #191919}.ui-organizationchart .ui-organizationchart-node-content{border-color:#191919}.ui-organizationchart .ui-organizationchart-node-content .ui-node-toggler{color:#191919}.ui-inputtext.ng-dirty.ng-invalid,p-autocomplete.ng-dirty.ng-invalid>.ui-autocomplete>.ui-inputtext,p-calendar.ng-dirty.ng-invalid>.ui-inputtext,p-checkbox.ng-dirty.ng-invalid .ui-chkbox-box,p-chips.ng-dirty.ng-invalid>.ui-inputtext,p-dropdown.ng-dirty.ng-invalid>.ui-dropdown,p-inputmask.ng-dirty.ng-invalid>.ui-inputtext,p-inputswitch.ng-dirty.ng-invalid .ui-inputswitch,p-listbox.ng-dirty.ng-invalid .ui-inputtext,p-multiselect.ng-dirty.ng-invalid>.ui-multiselect,p-radiobutton.ng-dirty.ng-invalid .ui-radiobutton-box,p-selectbutton.ng-dirty.ng-invalid .ui-button,p-spinner.ng-dirty.ng-invalid>.ui-inputtext,p-togglebutton.ng-dirty.ng-invalid .ui-button{border-bottom-color:#ffb73d}.ui-corner-tl{border-top-left-radius:6px}.ui-corner-tr{border-top-right-radius:6px}.ui-corner-bl{border-bottom-left-radius:6px}.ui-corner-br{border-bottom-right-radius:6px}.ui-corner-top{border-top-left-radius:6px;border-top-right-radius:6px}.ui-corner-bottom{border-bottom-left-radius:6px;border-bottom-right-radius:6px}.ui-corner-right{border-top-right-radius:6px;border-bottom-right-radius:6px}.ui-corner-left{border-top-left-radius:6px;border-bottom-left-radius:6px}.ui-corner-all{border-radius:6px}", undefined);
 //# sourceMappingURL=tune-up.core.js.map

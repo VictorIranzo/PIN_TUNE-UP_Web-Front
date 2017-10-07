@@ -1,56 +1,59 @@
 import {defaultConfig} from './defaultconfig';
 
-class ConfigService{
-    constructor(){
-        Object.assign(this,defaultConfig);
+class ConfigService {
+    constructor() {
+        Object.assign(this, defaultConfig);
     }
-    init(configObject){
-        Object.assign(this,configObject);
+    init(configObject) {
+        Object.assign(this, configObject);
     }
-    get validators(){
+    get validators() {
         return this._validators;
     }
-    set validators(value){
+    set validators(value) {
         this._validators = value;
     }
-    addValidators(newValidators){
+    addValidators(newValidators) {
         this._validators = Object.assign(
             this._validators,
             newValidators
         );
     }
-    get validations(){
+    get validations() {
         return this._validations;
     }
-    set validations(value){
+    set validations(value) {
         this._validations = value;
     }
-    addValidations(newValidations){
+    addValidations(newValidations) {
         this._validations = Object.assign(
             this._validations,
             newValidations
         );
     }
-    get routes(){
+    get routes() {
         return this._routes;
     }
-    set routes(value){
+    set routes(value) {
         this._routes = value;
     }
-    getRouteObjects(){
+    getRouteObjects() {
         return Object.values(this._routes);
     }
-    addRoutesWithAuth(childRoutes){
-        this._routes.mainRoute && 
-        this._routes.mainRoute.children.concat(childRoutes);
+    addRoutesWithAuth(childRoutes) {
+        this._routes.mainRoute &&
+            this._routes.mainRoute.children &&
+            childRoutes.map((route) =>
+                this._routes.mainRoute.children.push(route)
+            );
     }
-    get menuItems(){
+    get menuItems() {
         return this._menuItems;
     }
-    set menuItems(value){
+    set menuItems(value) {
         this._menuItems = value;
     }
-    addMenuItems(newMenuItems){
+    addMenuItems(newMenuItems) {
         this._menuItems.concat(newMenuItems);
     }
 }

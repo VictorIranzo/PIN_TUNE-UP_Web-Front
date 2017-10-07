@@ -5,7 +5,7 @@ import {FormsModule} from '@angular/forms';
 import {TnModuleLoaderProvider} from './loader';
 import {RoutingModule} from './routing';
 import {AppComponent} from './app.component';
-import {InputTextModule} from './primeng/primeng';
+import {InputTextModule} from 'primeng/primeng';
 
 const primengModules = [
     InputTextModule,

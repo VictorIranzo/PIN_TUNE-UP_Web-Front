@@ -1,10 +1,12 @@
-import {AppComponent} from '../../app.component';
+// import {SceneComponent} from '../components';
 import {AuthGuard} from './guards';
 
 const mainRoute = {
     path: '',
-    component: AppComponent,
-    canActivate: [AuthGuard],
+    // component: SceneComponent,
+    // canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
+    canLoad: [AuthGuard],
     children: []
 };
 const mainRedirectRoute = {
@@ -12,7 +14,7 @@ const mainRedirectRoute = {
     redirectTo: 'home',
     pathMatch: 'full'
 };
-export default {
+export const defaultRoutes = {
     mainRoute,
     mainRedirectRoute
 };

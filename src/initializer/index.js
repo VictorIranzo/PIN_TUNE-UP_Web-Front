@@ -1,2 +1,0 @@
-import './loadmenuitems';
-import './loadroutes';

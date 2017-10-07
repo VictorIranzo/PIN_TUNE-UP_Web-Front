@@ -5,7 +5,7 @@
   "main": "dist/tune-up.home.umd.js",
   "main:min": "dist/tune-up.home.umd.min.js",
   "module": "dist/tune-up.home.js",
-  "jsnext:main": "src/home.module.js",
+  "jsnext:main": "src/index.js",
   "scripts": {
     "build": "rollup -c rollup.config.js",
     "build:nomin": "rollup -c rollup.config.nomin.js",

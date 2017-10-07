@@ -48,6 +48,8 @@ export default {
                 'node_modules/**'
             ]
         }),
-        uglify()
+        uglify({
+            mangle: false
+        })
     ]
 };

@@ -9,16 +9,16 @@ export class TnModuleLoader {
         this.compiler = compiler;
     }
     load(path) {
-        let {modulePath, moduleName} = this.splitPath(path);
+        let {modulePath,moduleNamespace, moduleName} = this.splitPath(path);
         return new Promise((resolve, reject) => {
-            let loadedModule = window[NAMESPACE] && window[NAMESPACE][moduleName];
+            let loadedModule = window[NAMESPACE] && window[NAMESPACE][moduleNamespace];
             if (loadedModule) {
                 resolve(loadedModule);
             }
             let script = document.createElement('script');
             script.src = modulePath;
             script.onload = () => {
-                this.compiler.compileModuleAsync(window[NAMESPACE][moduleName]).then((ngModule) => {
+                this.compiler.compileModuleAsync(window[NAMESPACE][moduleNamespace][moduleName]).then((ngModule) => {
                     script.remove();
                     resolve(ngModule);
                 }).catch((error) => {
@@ -32,7 +32,7 @@ export class TnModuleLoader {
         });
     }
     splitPath(path) {
-        let [modulePath, moduleName] = path.split(SEPARATOR);
-        return {modulePath, moduleName};
+        let [modulePath,moduleNamespace,moduleName] = path.split(SEPARATOR);
+        return {modulePath,moduleNamespace,moduleName};
     }
 }

@@ -1,10 +1,4 @@
 import {configService} from './configservice';
-import {
-    homeRoute
+import {homeRoute} from '../modules/configs';
 
-} from '../modules/configs';
-
-configService.addRoutesWithAuth([
-    homeRoute,
-    
-]);
+configService.addRoutesWithAuth([homeRoute]);

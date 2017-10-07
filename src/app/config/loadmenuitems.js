@@ -1,10 +1,4 @@
 import {configService} from './configservice';
-import {
-    homeMenuItem
-    
-} from '../modules/configs';
+import {homeMenuItem} from '../modules/configs';
 
-configService.addMenuItems([
-    homeMenuItem,
-    
-]);
+configService.addMenuItems([homeMenuItem]);

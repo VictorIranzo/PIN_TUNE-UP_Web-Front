@@ -4,6 +4,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule} from '@angular/forms';
 import {TnModuleLoaderProvider} from './loader';
 import {RoutingModule} from './routing';
+import {HttpInterceptorsProvider} from './http';
 import {AppComponent} from './app.component';
 import {InputTextModule} from 'primeng/primeng';
 
@@ -17,7 +18,7 @@ const primengModules = [InputTextModule];
     RoutingModule
   ].concat(primengModules),
   declarations: [AppComponent],
-  providers: [TnModuleLoaderProvider],
+  providers: [TnModuleLoaderProvider, HttpInterceptorsProvider],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

@@ -5,6 +5,7 @@ import {FormsModule} from '@angular/forms';
 import {ModuleLoaderProvider} from './loader';
 import {RoutingModule} from './routing';
 import {HttpInterceptorsProvider} from './http';
+import {Rule} from './validation';
 import {AppComponent} from './app.component';
 import {InputTextModule} from 'primeng/primeng';
 
@@ -17,7 +18,7 @@ const primengModules = [InputTextModule];
     FormsModule,
     RoutingModule
   ].concat(primengModules),
-  declarations: [AppComponent],
+  declarations: [AppComponent, Rule],
   providers: [ModuleLoaderProvider, HttpInterceptorsProvider],
   bootstrap: [AppComponent]
 })

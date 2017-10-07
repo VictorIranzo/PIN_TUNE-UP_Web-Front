@@ -28,10 +28,13 @@
   "homepage": "https://github.com/Starkie/TUNE-UP-Process-Web-Front#readme",
   "dependencies": {
     "@tune-up/ng-vendor": "file:lib/ng-vendor",
-    "primeng": "^4.2.1"
+    "@tune-up/primeng-vendor": "file:lib/primeng-vendor",
+    "angular2-moment": "^1.7.0",
+    "font-awesome": "^4.7.0",
+    "validator": "^9.0.0"
   },
   "devDependencies": {
-    "@tune-up/modulename": "file:lib/modulename",
+    "@tune-up/build-utils": "file:lib/build-utils",
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.0.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
@@ -44,7 +47,6 @@
     "eslint-plugin-prettier": "^2.2.0",
     "http-server": "^0.10.0",
     "json-server": "^0.12.0",
-    "node-sass": "^4.5.3",
     "npm-run-all": "^4.1.1",
     "postcss-cssnext": "^3.0.2",
     "postcss-easy-import": "^3.0.0",

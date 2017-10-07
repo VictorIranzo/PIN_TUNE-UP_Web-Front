@@ -6,6 +6,4 @@ import html from './app.html';
     selector: 'tn-app',
     template: html
 })
-export class AppComponent {
-
-}
+export class AppComponent { }

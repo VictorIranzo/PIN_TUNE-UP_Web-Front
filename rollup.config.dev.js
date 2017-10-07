@@ -15,7 +15,10 @@ plugins.unshift(
         port: 8080
     }),
     livereload({
-         watch: 'dist'
+        watch: [
+            'dist',
+            'src/**/dist'
+        ]
     })
 );
 export default config;

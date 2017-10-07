@@ -1,6 +1,6 @@
 {
   "name": "@tune-up/ng-vendor",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "dist/tune-up.ng-vendor.umd.js",
   "main:min": "dist/tune-up.ng-vendor.umd.min.js",
@@ -15,7 +15,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@tune-up/modulename": "file:../modulename",
+    "@tune-up/build-utils": "file:../build-utils",
     "babel-cli": "^6.26.0",
     "babel-preset-es2015-rollup": "^3.0.0",
     "npm-run-all": "^4.1.1",

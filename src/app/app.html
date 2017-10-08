@@ -1,5 +1,8 @@
-<input type="text" pInputText>
-<p>APP COMPONENT</p>
-<br>
+<form #frm="ngForm" (ngSubmit)="onSubmit()">
+    <input type="text" [(ngModel)]="foo.email" rule="foo.email" name="email" pInputText>    
+    <input type="password" [(ngModel)]="foo.password" rule="foo.password" name="password" pInputText>        
+    <button type="submit">Submit</button>    
+</form>
+
 <p>CURRENT ROUTE</p>
 <router-outlet></router-outlet>

@@ -46,7 +46,12 @@ export default {
       exclude: ['node_modules/**']
     }),
     uglify({
-      mangle: false
+      mangle: {
+        keep_fnames: true
+      },
+      compress: {
+        keep_fnames: true
+      }
     })
   ]
 };

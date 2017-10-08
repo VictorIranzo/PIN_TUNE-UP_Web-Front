@@ -1,6 +1,9 @@
 export const customValidators = {
-  startsWithHello: function(value) {
+  startsWithHello: function (value) {
     return value.indexOf('hello') === 0;
+  },
+  passwordDifferentFromEmail: function (value, email) {
+    return value !== email;
   }
 };
 export const myValidations = {
@@ -20,6 +23,14 @@ export const myValidations = {
       {
         startsWithHello: {
           message: 'email must start with "hello"'
+        }
+      }
+    ],
+    password: [
+      {
+        passwordDifferentFromEmail: {
+          message: 'password must be different from email',
+          arguments: [['email']]
         }
       }
     ]

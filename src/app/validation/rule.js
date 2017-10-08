@@ -7,6 +7,9 @@ const NG_VALIDATORS_PROVIDER = {
   useExisting: forwardRef(() => Rule),
   multi: true
 };
+// TODO: commented code is to trigger validation of field A that depends on field
+// B when field B is updated, find a mechanism so subscribers are not duplicated
+// when we need to use this (not atm)
 
 @Directive({
   selector: '[rule][ngModel]',
@@ -14,32 +17,38 @@ const NG_VALIDATORS_PROVIDER = {
 })
 export class Rule {
   @Input('rule') path = null;
+  // @Input('name') name = null;
 
   ngOnInit() {
-    // if (!this.path) {
-    //   // Prevent breack due to not yet initialized path.
-    //   return;
-    // }
     this.validationFunctions = this._getValidationFunctions();
   }
   validate(control) {
-    // if (!this.path) {
-    //   // Prevent breack due to not yet initialized path.
-    //   return;
-    // }
     let errors = Validators.compose(this.validationFunctions)(control);
     return errors;
   }
   _getValidationFunctions() {
     return this._getValidations().map(validationObj => {
-      let {func, args, msg} = this._getValidationParams(validationObj);
-      return this._createValidatorFunction(args, func, msg);
+      let {func, args, modelArgs, msg} = this._getValidationParams(
+        validationObj
+      );
+      return this._createValidatorFunction(args, func, modelArgs, msg);
     });
   }
-  _createValidatorFunction(args, func, msg) {
+  _createValidatorFunction(args, func, modelArgs, msg) {
+    // const checkControl = function (control) {
+    //   control.updateValueAndValidity();
+    // };
     return control => {
       let scope = {};
-      let thisArgs = [control.value || ''].concat(args);
+      let modelValues = [];
+      modelArgs.map(modelArg => {
+        const formControl = control.parent.controls[modelArg];
+        modelValues.push(formControl.value || '');
+        // formControl.valueChanges.subscribe(checkControl(control));
+      });
+      let thisArgs = [control.value || ''];
+      thisArgs = thisArgs.concat(args);
+      thisArgs = thisArgs.concat(modelValues);
       return func.apply(scope, thisArgs) ? null : {[func.name]: msg};
     };
   }
@@ -56,7 +65,8 @@ export class Rule {
     let validators = configService.validators;
     return {
       func: validators[validationName],
-      args: allArgs.filter(c => c !== MODEL_KEYWORD),
+      args: allArgs.filter(c => !Array.isArray(c)),
+      modelArgs: allArgs.filter(c => Array.isArray(c)).map(c => c[0]),
       msg: validation.message || configService.defaultValidationError
     };
   }

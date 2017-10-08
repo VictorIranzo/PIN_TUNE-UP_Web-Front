@@ -7,9 +7,6 @@ const NG_VALIDATORS_PROVIDER = {
   useExisting: forwardRef(() => Rule),
   multi: true
 };
-// TODO: commented code is to trigger validation of field A that depends on field
-// B when field B is updated, find a mechanism so subscribers are not duplicated
-// when we need to use this (not atm)
 
 @Directive({
   selector: '[rule][ngModel]',
@@ -17,8 +14,9 @@ const NG_VALIDATORS_PROVIDER = {
 })
 export class Rule {
   @Input('rule') path = null;
-  // @Input('name') name = null;
-
+  constructor() {
+    this._subscribersCache = [];
+  }
   ngOnInit() {
     this.validationFunctions = this._getValidationFunctions();
   }
@@ -35,20 +33,12 @@ export class Rule {
     });
   }
   _createValidatorFunction(args, func, modelArgs, msg) {
-    // const checkControl = function (control) {
-    //   control.updateValueAndValidity();
-    // };
     return control => {
       let scope = {};
-      let modelValues = [];
-      modelArgs.map(modelArg => {
-        const formControl = control.parent.controls[modelArg];
-        modelValues.push(formControl.value || '');
-        // formControl.valueChanges.subscribe(checkControl(control));
-      });
-      let thisArgs = [control.value || ''];
-      thisArgs = thisArgs.concat(args);
-      thisArgs = thisArgs.concat(modelValues);
+      let modelValues = modelArgs[0]
+        ? this._handleModelValues(modelArgs, control)
+        : [];
+      let thisArgs = [control.value || '', ...args, ...modelValues];
       return func.apply(scope, thisArgs) ? null : {[func.name]: msg};
     };
   }
@@ -70,7 +60,27 @@ export class Rule {
       msg: validation.message || configService.defaultValidationError
     };
   }
+  _getCheckControlFunction() {
+    return function(control) {
+      control.updateValueAndValidity();
+    };
+  }
+  _subscribeOnValueChanges(modelArg, control) {
+    if (!this._subscribersCache.includes(modelArg)) {
+      const checkControl = this._getCheckControlFunction();
+      const target = control.parent.controls[modelArg].valueChanges;
+      this._subscribersCache.push(modelArg);
+      target.subscribe(() => checkControl(control));
+    }
+  }
   _getValidatonName(validationObj) {
     return Object.keys(validationObj)[0];
+  }
+  _handleModelValues(modelArgs, control) {
+    return modelArgs.map(modelArg => {
+      const modelArgValue = control.parent.controls[modelArg].value || '';
+      this._subscribeOnValueChanges(modelArg, control);
+      return modelArgValue;
+    });
   }
 }

@@ -3621,13 +3621,12 @@ var Rule = (_dec$5 = core.Directive({
     classCallCheck(this, Rule);
 
     _initDefineProp(this, 'path', _descriptor, this);
+
+    this._subscribersCache = [];
   }
 
   createClass(Rule, [{
     key: 'ngOnInit',
-
-    // @Input('name') name = null;
-
     value: function ngOnInit() {
       this.validationFunctions = this._getValidationFunctions();
     }
@@ -3655,20 +3654,12 @@ var Rule = (_dec$5 = core.Directive({
   }, {
     key: '_createValidatorFunction',
     value: function _createValidatorFunction(args, func, modelArgs, msg) {
-      // const checkControl = function (control) {
-      //   control.updateValueAndValidity();
-      // };
+      var _this2 = this;
+
       return function (control) {
         var scope = {};
-        var modelValues = [];
-        modelArgs.map(function (modelArg) {
-          var formControl = control.parent.controls[modelArg];
-          modelValues.push(formControl.value || '');
-          // formControl.valueChanges.subscribe(checkControl(control));
-        });
-        var thisArgs = [control.value || ''];
-        thisArgs = thisArgs.concat(args);
-        thisArgs = thisArgs.concat(modelValues);
+        var modelValues = modelArgs[0] ? _this2._handleModelValues(modelArgs, control) : [];
+        var thisArgs = [control.value || ''].concat(toConsumableArray(args), toConsumableArray(modelValues));
         return func.apply(scope, thisArgs) ? null : defineProperty({}, func.name, msg);
       };
     }
@@ -3701,9 +3692,39 @@ var Rule = (_dec$5 = core.Directive({
       };
     }
   }, {
+    key: '_getCheckControlFunction',
+    value: function _getCheckControlFunction() {
+      return function (control) {
+        control.updateValueAndValidity();
+      };
+    }
+  }, {
+    key: '_subscribeOnValueChanges',
+    value: function _subscribeOnValueChanges(modelArg, control) {
+      if (!this._subscribersCache.includes(modelArg)) {
+        var checkControl = this._getCheckControlFunction();
+        var target = control.parent.controls[modelArg].valueChanges;
+        this._subscribersCache.push(modelArg);
+        target.subscribe(function () {
+          return checkControl(control);
+        });
+      }
+    }
+  }, {
     key: '_getValidatonName',
     value: function _getValidatonName(validationObj) {
       return Object.keys(validationObj)[0];
+    }
+  }, {
+    key: '_handleModelValues',
+    value: function _handleModelValues(modelArgs, control) {
+      var _this3 = this;
+
+      return modelArgs.map(function (modelArg) {
+        var modelArgValue = control.parent.controls[modelArg].value || '';
+        _this3._subscribeOnValueChanges(modelArg, control);
+        return modelArgValue;
+      });
     }
   }]);
   return Rule;

@@ -13,5 +13,5 @@ export class AppComponent {
   @ViewChild('frm') form;
   onSubmit = () => {
     console.log(this);
-  }
+  };
 }

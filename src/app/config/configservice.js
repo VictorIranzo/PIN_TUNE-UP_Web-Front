@@ -51,7 +51,7 @@ class ConfigService {
     this._menuItems = value;
   }
   addMenuItems(newMenuItems) {
-    this._menuItems.concat(newMenuItems);
+    this._menuItems = this._menuItems.concat(newMenuItems);
   }
 }
 export const configService = new ConfigService();

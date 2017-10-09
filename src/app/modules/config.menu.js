@@ -1,1 +1,1 @@
-export * from './home/home.menu';
+export * from './example/example.menu';

@@ -1,14 +1,10 @@
 import {NgModule} from '@angular/core';
-import {RouterModule} from '@angular/router';
 import {HomeRoutingModule} from './home.routing';
 import {HomeComponent} from './home.component';
+import {TuneUpCoreModule} from '@tune-up/core';
 
 @NgModule({
-    imports: [
-        HomeRoutingModule
-    ],
-    declarations:[
-        HomeComponent
-    ]
+  imports: [TuneUpCoreModule, HomeRoutingModule],
+  declarations: [HomeComponent]
 })
 export class HomeModule {}

@@ -1,0 +1,5 @@
+<ng-container *ngIf="control.dirty && !control.valid">
+  <div *ngFor="let error of getErrors()" class="ui-messages ui-messages-error ui-corner-all">
+    <i class="fa fa-close"></i> {{error}}
+  </div>
+</ng-container>

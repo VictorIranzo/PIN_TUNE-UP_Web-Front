@@ -1,8 +1,8 @@
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/router')) :
-	typeof define === 'function' && define.amd ? define(['exports', '@angular/core', '@angular/router'], factory) :
-	(factory((global.tuneUp = global.tuneUp || {}, global.tuneUp.home = {}),global.tuneUp.ngVendor,global.tuneUp.ngVendor));
-}(this, (function (exports,core,router) { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/router'), require('@tune-up/core')) :
+	typeof define === 'function' && define.amd ? define(['exports', '@angular/core', '@angular/router', '@tune-up/core'], factory) :
+	(factory((global.tuneUp = global.tuneUp || {}, global.tuneUp.home = {}),global.tuneUp.ngVendor.ngCore,global.tuneUp.ngVendor.ngRouter,global.tuneUp.app));
+}(this, (function (exports,core,router,core$1) { 'use strict';
 
 function __$styleInject(css, returnValue) {
   if (typeof document === 'undefined') {
@@ -171,10 +171,10 @@ var _dec;
 var _class;
 
 var HomeModule = (_dec = core.NgModule({
-    imports: [HomeRoutingModule],
-    declarations: [HomeComponent]
+  imports: [core$1.TuneUpCoreModule, HomeRoutingModule],
+  declarations: [HomeComponent]
 }), _dec(_class = function HomeModule() {
-    classCallCheck(this, HomeModule);
+  classCallCheck(this, HomeModule);
 }) || _class);
 
 exports.HomeModule = HomeModule;

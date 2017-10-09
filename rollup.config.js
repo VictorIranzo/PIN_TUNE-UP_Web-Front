@@ -29,7 +29,9 @@ export default {
     }),
     postcss({
       plugins: [
-        easyimport(),
+        easyimport({
+          path: 'src/styles'
+        }),
         url({
           url: 'inline'
         }),

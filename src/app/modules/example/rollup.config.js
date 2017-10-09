@@ -1,3 +1,7 @@
+/**
+ * copy-paste in every new module inside modules folder
+ * if not in modules folder relative paths will break
+ */
 import uglify from 'rollup-plugin-uglify';
 import babel from 'rollup-plugin-babel';
 import commonjs from 'rollup-plugin-commonjs';
@@ -22,12 +26,15 @@ export default {
   globals,
   plugins: [
     postcss({
-      // preprocessor: sassPreprocesor, dont need for the moment
       plugins: [
         easyimport({
-          from: '../../../styles/styleguide'
+          path: '../../../styles'
         }),
-        cssnext(),
+        cssnext({
+          features: {
+            autoprefixer: false
+          }
+        }),
         cssnano()
       ]
     }),
@@ -51,3 +58,5 @@ export default {
     })
   ]
 };
+
+// FOR COPY-PASTE

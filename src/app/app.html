@@ -1,13 +1,2 @@
-<form class="vertical" #frm="ngForm" (ngSubmit)="onSubmit()">
-  <input class="form--input one" type="text" [(ngModel)]="foo.email" rule="foo.email" name="email" #emailCtrl="ngModel" pInputText>
-  <tn-error [control]="emailCtrl"></tn-error>
-  <input class="form--input one" type="password" [(ngModel)]="foo.password" rule="foo.password" name="password" pInputText>
-  <div class="horizontal">
-    <div class="one"></div>
-    <button class="none" pButton type="submit" label="Submit"></button>
-  </div>
-</form>
-
 <h1>Current route</h1>
 <router-outlet></router-outlet>
-<input type="text" >

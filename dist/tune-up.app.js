@@ -17,7 +17,7 @@ function __$styleInject(css, returnValue) {
 }
 
 import { platformBrowserDynamic as platformBrowserDynamic$1 } from '@angular/platform-browser-dynamic';
-import { Compiler, Component, Directive, Injectable, Input, NgModule, NgModuleFactoryLoader, ViewChild, enableProdMode, forwardRef } from '@angular/core';
+import { Compiler, Component, Directive, Injectable, Input, NgModule, NgModuleFactoryLoader, enableProdMode, forwardRef } from '@angular/core';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ButtonModule, InputTextModule } from 'primeng/primeng';
 import { FormsModule, NG_VALIDATORS, Validators } from '@angular/forms';
@@ -3698,8 +3698,8 @@ var appRoutes = {
 };
 
 var homeRoute = {
-  path: 'home',
-  loadChildren: 'src/app/modules/home/dist/tune-up.home.umd.min.js#home#HomeModule'
+  path: 'example',
+  loadChildren: 'src/app/modules/example/dist/tune-up.example.umd.min.js#example#ExampleModule'
 };
 
 
@@ -3709,9 +3709,9 @@ var childRoutes = Object.freeze({
 });
 
 var homeMenuItem = {
-  path: 'home',
-  text: 'Inicio',
-  icon: 'TODO',
+  path: 'example',
+  text: 'Ejemplo',
+  icon: 'af-example', // id del icono de awesome-font
   adminOnly: false
 };
 
@@ -3721,55 +3721,11 @@ var menuItems = Object.freeze({
 	homeMenuItem: homeMenuItem
 });
 
-// JUST AN EXAMPLE
-var validations = {
-  foo: {
-    email: [{
-      isEmail: {
-        message: 'must be a valid email'
-      }
-    }, {
-      contains: {
-        message: 'must contain .es',
-        arguments: ['.es']
-      }
-    }, {
-      startsWithHello: {
-        message: 'email must start with "hello"'
-      }
-    }],
-    password: [{
-      passwordDifferentFromEmail: {
-        message: 'password must be different from email',
-        arguments: [['email']]
-      }
-    }]
-  }
-};
-
-// JUST AN EXAMPLE
-
-var validators = {
-  startsWithHello: function startsWithHello(value) {
-    return value.indexOf('hello') === 0;
-  },
-  passwordDifferentFromEmail: function passwordDifferentFromEmail(value, email) {
-    return value !== email;
-  }
-};
-
 configService.init({
   routes: appRoutes,
-  menuItems: Object.values(menuItems),
-  validators: validators,
-  validations: validations
+  menuItems: Object.values(menuItems)
 });
 configService.addRoutesWithAuth(Object.values(childRoutes));
-
-// import './loadmenuitems';
-// import './loadroutes';
-// import './loadvalidations';
-// import './loadvalidators';
 
 var _dec$2$1;
 var _class$2$1;
@@ -3786,78 +3742,19 @@ var RoutingModule = (_dec$2$1 = NgModule({
   classCallCheck$1(this, RoutingModule);
 }) || _class$2$1);
 
-var html$1 = "<form class=\"vertical\" #frm=\"ngForm\" (ngSubmit)=\"onSubmit()\">\n  <input class=\"form--input one\" type=\"text\" [(ngModel)]=\"foo.email\" rule=\"foo.email\" name=\"email\" #emailCtrl=\"ngModel\" pInputText>\n  <tn-error [control]=\"emailCtrl\"></tn-error>\n  <input class=\"form--input one\" type=\"password\" [(ngModel)]=\"foo.password\" rule=\"foo.password\" name=\"password\" pInputText>\n  <div class=\"horizontal\">\n    <div class=\"one\"></div>\n    <button class=\"none\" pButton type=\"submit\" label=\"Submit\"></button>\n  </div>\n</form>\n\n<h1>Current route</h1>\n<router-outlet></router-outlet>\n<input type=\"text\" >\n";
+var html$1 = "<h1>Current route</h1>\n<router-outlet></router-outlet>\n";
 
-__$styleInject(".none{flex:none}.one{flex:1}.two{flex:2}.three{flex:3}.four{flex:4}.five{flex:5}.six{flex:6}.seven{flex:7}.eight{flex:8}.nine{flex:9}.ten{flex:10}.eleven{flex:11}.twelve{flex:12}.flex,.horizontal,.vertical{display:flex}.horizontal{flex-direction:row}.vertical{flex-direction:column}.wrap{flex-wrap:wrap}.form--input{margin:16px}",undefined);
+__$styleInject(".none{flex:none}.one{flex:1}.two{flex:2}.three{flex:3}.four{flex:4}.five{flex:5}.six{flex:6}.seven{flex:7}.eight{flex:8}.nine{flex:9}.ten{flex:10}.eleven{flex:11}.twelve{flex:12}.flex,.horizontal,.vertical{display:flex}.horizontal{flex-direction:row}.vertical{flex-direction:column}.wrap{flex-wrap:wrap}",undefined);
 
 var _dec$3$1;
-var _dec2$1$1;
 var _class$3$1;
-var _class2$1$1;
-var _descriptor$1$1;
-
-function _initDefineProp$1$1(target, property, descriptor, context) {
-  if (!descriptor) return;
-  Object.defineProperty(target, property, {
-    enumerable: descriptor.enumerable,
-    configurable: descriptor.configurable,
-    writable: descriptor.writable,
-    value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
-  });
-}
-
-function _applyDecoratedDescriptor$1$1(target, property, decorators, descriptor, context) {
-  var desc = {};
-  Object['ke' + 'ys'](descriptor).forEach(function (key) {
-    desc[key] = descriptor[key];
-  });
-  desc.enumerable = !!desc.enumerable;
-  desc.configurable = !!desc.configurable;
-
-  if ('value' in desc || desc.initializer) {
-    desc.writable = true;
-  }
-
-  desc = decorators.slice().reverse().reduce(function (desc, decorator) {
-    return decorator(target, property, desc) || desc;
-  }, desc);
-
-  if (context && desc.initializer !== void 0) {
-    desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
-    desc.initializer = undefined;
-  }
-
-  if (desc.initializer === void 0) {
-    Object['define' + 'Property'](target, property, desc);
-    desc = null;
-  }
-
-  return desc;
-}
 
 var AppComponent = (_dec$3$1 = Component({
   selector: 'tn-app',
   template: html$1
-}), _dec2$1$1 = ViewChild('frm'), _dec$3$1(_class$3$1 = (_class2$1$1 = function AppComponent() {
-  var _this = this;
-
+}), _dec$3$1(_class$3$1 = function AppComponent() {
   classCallCheck$1(this, AppComponent);
-  this.foo = {
-    email: undefined,
-    password: undefined
-  };
-
-  _initDefineProp$1$1(this, 'form', _descriptor$1$1, this);
-
-  this.onSubmit = function () {
-    console.log(_this);
-  };
-}, (_descriptor$1$1 = _applyDecoratedDescriptor$1$1(_class2$1$1.prototype, 'form', [_dec2$1$1], {
-  enumerable: true,
-  initializer: function initializer() {
-    return this.form;
-  }
-})), _class2$1$1)) || _class$3$1);
+}) || _class$3$1);
 
 var _dec$1$1;
 var _class$1$1;

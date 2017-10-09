@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component} from '@angular/core';
 import html from './app.html';
 import './css/app.css';
 
@@ -6,13 +6,4 @@ import './css/app.css';
   selector: 'tn-app',
   template: html
 })
-export class AppComponent {
-  foo = {
-    email: undefined,
-    password: undefined
-  };
-  @ViewChild('frm') form;
-  onSubmit = () => {
-    console.log(this);
-  };
-}
+export class AppComponent {}

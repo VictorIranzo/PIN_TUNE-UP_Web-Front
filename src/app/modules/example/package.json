@@ -1,4 +1,5 @@
 {
+  "this-is-a-json-comment":"copy this file, whitout this coment, in every new module, replacing all references to example with the name of your module",
   "name": "@tune-up/example",
   "version": "0.0.0",
   "description": "",

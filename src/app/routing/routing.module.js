@@ -1,7 +1,7 @@
 import {RouterModule} from '@angular/router';
 import {NgModule} from '@angular/core';
-import {AuthGuard} from './guards';
-import {configService} from '../config';
+// import {AuthGuard} from './guards';
+import {configService} from '@tune-up/core';
 
 @NgModule({
   imports: [
@@ -10,7 +10,7 @@ import {configService} from '../config';
       enableTracing: ENVIRONMENT !== 'production'
     })
   ],
-  exports: [RouterModule],
-  providers: [AuthGuard]
+  exports: [RouterModule]
+  // providers: [AuthGuard]
 })
 export class RoutingModule {}

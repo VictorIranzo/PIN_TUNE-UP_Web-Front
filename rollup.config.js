@@ -5,10 +5,11 @@ import nodeResolve from 'rollup-plugin-node-resolve';
 import postcss from 'rollup-plugin-postcss';
 import cssnext from 'postcss-cssnext';
 import easyimport from 'postcss-easy-import';
+import url from 'postcss-url';
 import cssnano from 'cssnano';
 import string from 'rollup-plugin-string';
 import replace from 'rollup-plugin-replace';
-import {moduleName, external, globals} from '@tune-up/build-utils';
+import {moduleName, appExternal, appGlobals} from '@tune-up/build-utils';
 const pkg = require('./package.json');
 
 export default {
@@ -19,8 +20,8 @@ export default {
   },
   sourcemap: true,
   name: moduleName(pkg),
-  external,
-  globals,
+  external: appExternal,
+  globals: appGlobals,
   plugins: [
     replace({
       exclude: 'node_modules/**',
@@ -28,10 +29,15 @@ export default {
     }),
     postcss({
       plugins: [
-        easyimport({
-          from: 'src/styles/styleguide'
+        easyimport(),
+        url({
+          url: 'inline'
         }),
-        cssnext(),
+        cssnext({
+          features: {
+            autoprefixer: false
+          }
+        }),
         cssnano()
       ]
     }),
@@ -40,10 +46,11 @@ export default {
     }),
     nodeResolve(),
     commonjs({
-      include: 'node_modules/**'
+      include: 'node_modules/**',
+      exclude: 'node_modules/@tune-up/**'
     }),
     babel({
-      exclude: ['node_modules/**']
+      exclude: ['node_modules/**', '**/*.css']
     }),
     uglify({
       mangle: {

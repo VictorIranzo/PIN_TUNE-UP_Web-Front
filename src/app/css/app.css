@@ -1,0 +1,7 @@
+@import '../../styles/layout';
+@import '../../styles/styleguide';
+
+
+.form--input{
+  margin: var(--margin-medium)
+}

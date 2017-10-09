@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/tune-up.ng-vendor.umd.js",
   "main:min": "dist/tune-up.ng-vendor.umd.min.js",
-  "jsnext:main": "src/index.js",
+  "jsnext:main": "src/vendor.js",
   "module": "dist/tune-up.ng-vendor.js",
   "scripts": {
     "build": "rollup -c rollup.config.js",

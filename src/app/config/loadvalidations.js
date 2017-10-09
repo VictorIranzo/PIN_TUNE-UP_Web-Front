@@ -1,4 +1,4 @@
-import {configService} from './configservice';
-import {myValidations} from '../validation/example';
+import {configService} from '@tune-up/core';
+import {myValidations} from '../app.validations';
 
 configService.addValidations(myValidations);

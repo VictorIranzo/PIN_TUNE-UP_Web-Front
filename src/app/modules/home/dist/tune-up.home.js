@@ -18,6 +18,7 @@ function __$styleInject(css, returnValue) {
 
 import { Component, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { TuneUpCoreModule } from '@tune-up/core';
 
 var html = "<input type=\"text\" pInputText>\n";
 
@@ -168,10 +169,10 @@ var _dec;
 var _class;
 
 var HomeModule = (_dec = NgModule({
-    imports: [HomeRoutingModule],
-    declarations: [HomeComponent]
+  imports: [TuneUpCoreModule, HomeRoutingModule],
+  declarations: [HomeComponent]
 }), _dec(_class = function HomeModule() {
-    classCallCheck(this, HomeModule);
+  classCallCheck(this, HomeModule);
 }) || _class);
 
 export { HomeModule };

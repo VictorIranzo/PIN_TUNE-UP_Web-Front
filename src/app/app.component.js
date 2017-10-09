@@ -1,6 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
 import html from './app.html';
-// import './css/index.css';
+import './css/app.css';
 
 @Component({
   selector: 'tn-app',
@@ -8,7 +8,8 @@ import html from './app.html';
 })
 export class AppComponent {
   foo = {
-    email: undefined
+    email: undefined,
+    password: undefined
   };
   @ViewChild('frm') form;
   onSubmit = () => {

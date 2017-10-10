@@ -8,8 +8,8 @@
  * it as an arrow function.
  */
 import {Component, ViewChild} from '@angular/core';
-import html from './example.html';
-import './css/example.css';
+import html from './example.component.html';
+import './example.component.css';
 
 @Component({
   selector: 'tn-example',

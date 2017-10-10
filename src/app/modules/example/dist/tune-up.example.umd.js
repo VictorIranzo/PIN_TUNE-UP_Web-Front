@@ -1,7 +1,7 @@
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@tune-up/core'), require('@angular/core'), require('@angular/router')) :
 	typeof define === 'function' && define.amd ? define(['exports', '@tune-up/core', '@angular/core', '@angular/router'], factory) :
-	(factory((global.tuneUp = global.tuneUp || {}, global.tuneUp.example = {}),global.tuneUp.app,global.tuneUp.ngVendor.ngCore,global.tuneUp.ngVendor.ngRouter));
+	(factory((global.tuneUp = global.tuneUp || {}, global.tuneUp.example = {}),global.tuneUp.app,global.tuneUp.vendor.ngCore,global.tuneUp.vendor.ngRouter));
 }(this, (function (exports,core,core$1,router) { 'use strict';
 
 function __$styleInject(css, returnValue) {

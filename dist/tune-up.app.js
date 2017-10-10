@@ -8639,9 +8639,9 @@ var TuneUpCoreModule = (_dec$5 = NgModule({
     classCallCheck(this, TuneUpCoreModule);
 }) || _class$5);
 
-var html$1 = "<div class=\"vertical\">\n  <tn-appbar class=\"tn-scene-appbar\"></tn-appbar>\n  <div class=\"horizontal\">\n    <tn-menu class=\"tn-scene-menu\"></tn-menu>\n    <tn-content class=\"tn-scene-content\"></tn-content>\n  </div>\n</div>\n";
+var html$1 = "<div class=\"vertical\">\n  <tn-appbar class=\"tn-scene-appbar\"></tn-appbar>\n  <div class=\"horizontal\">\n    <tn-menu class=\"tn-scene-menu\"></tn-menu>\n    <tn-content class=\"tn-scene-content\"></tn-content>\n    fdkkokfokbpo\n  </div>\n</div>\n";
 
-__$styleInject(".tn-scene-appbar{background-color:#20272a;display:block;padding:0;height:70px;box-sizing:border-box;position:fixed;top:0;left:0;width:100%;z-index:1;box-shadow:0 2px 5px 0 rgba(0,0,0,.3)}.tn-scene-menu{position:fixed;left:0;top:70px;height:100%;background-color:#fff;overflow:hidden;width:270px;box-shadow:0 0 5px 0 rgba(0,0,0,.3)}.tn-scene-content{margin-left:270px;padding-top:70px;background-color:#fff;width:-webkit-fill-available;height:-webkit-fill-available}",undefined);
+__$styleInject(".tn-scene-appbar{background-color:#20272a;display:block;padding:0;height:70px;box-sizing:border-box;position:fixed;top:0;left:0;width:100%;z-index:1;box-shadow:0 2px 5px 0 rgba(0,0,0,.3)}.tn-scene-menu{position:fixed;left:0;top:70px;overflow:hidden;width:270px;box-shadow:0 0 5px 0 rgba(0,0,0,.3)}.tn-scene-content,.tn-scene-menu{height:100%;background-color:#fff}.tn-scene-content{margin-left:270px;padding-top:70px;width:100%}",undefined);
 
 var _dec$1$1;
 var _class$1$1;

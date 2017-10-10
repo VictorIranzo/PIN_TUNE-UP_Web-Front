@@ -1,3 +1,4 @@
+(function(l, i, v, e) { v = l.createElement(i); v.async = 1; v.src = '//' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; e = l.getElementsByTagName(i)[0]; e.parentNode.insertBefore(v, e)})(document, 'script');
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/platform-browser-dynamic'), require('@angular/core'), require('@angular/common/http'), require('@tune-up/vendor'), require('@angular/forms'), require('@angular/common'), require('@angular/platform-browser'), require('@angular/platform-browser/animations'), require('@angular/router')) :
 	typeof define === 'function' && define.amd ? define(['exports', '@angular/platform-browser-dynamic', '@angular/core', '@angular/common/http', '@tune-up/vendor', '@angular/forms', '@angular/common', '@angular/platform-browser', '@angular/platform-browser/animations', '@angular/router'], factory) :
@@ -8639,7 +8640,7 @@ var TuneUpCoreModule = (_dec$5 = core_1.NgModule({
 
 var html$1 = "<div class=\"vertical\">\n  <tn-appbar class=\"tn-scene-appbar\"></tn-appbar>\n  <div class=\"horizontal\">\n    <tn-menu class=\"tn-scene-menu\"></tn-menu>\n    <tn-content class=\"tn-scene-content\"></tn-content>\n  </div>\n</div>\n";
 
-__$styleInject(".tn-scene-appbar{background-color:#20272a;display:block;padding:0;height:70px;box-sizing:border-box;position:fixed;top:0;left:0;width:100%;z-index:1;box-shadow:0 2px 5px 0 rgba(0,0,0,.3)}.tn-scene-menu{position:fixed;left:0;top:70px;height:100%;background-color:#fff;overflow:hidden;width:270px;box-shadow:0 0 5px 0 rgba(0,0,0,.3)}.tn-scene-content{margin-left:270px;padding-top:70px;background-color:#fff;width:-webkit-fill-available;height:-webkit-fill-available}",undefined);
+__$styleInject(".tn-scene-appbar{background-color:#20272a;display:block;padding:0;height:70px;box-sizing:border-box;position:fixed;top:0;left:0;width:100%;z-index:1;box-shadow:0 2px 5px 0 rgba(0,0,0,.3)}.tn-scene-menu{position:fixed;left:0;top:70px;overflow:hidden;width:270px;box-shadow:0 0 5px 0 rgba(0,0,0,.3)}.tn-scene-content,.tn-scene-menu{height:100%;background-color:#fff}.tn-scene-content{margin-left:270px;padding-top:70px;width:100%}",undefined);
 
 var _dec$1$1;
 var _class$1$1;
@@ -8753,11 +8754,10 @@ configService.addRoutesWithAuth(Object.values(childRoutes));
 var _dec$6;
 var _class$6;
 
-// import {AuthGuard} from './guards';
 var RoutingModule = (_dec$6 = core_1.NgModule({
   imports: [router.RouterModule.forRoot(configService.getRouteObjects(), {
     useHash: true,
-    enableTracing: "production" !== 'production'
+    enableTracing: "development" !== 'production'
   })],
   exports: [router.RouterModule]
   // providers: [AuthGuard]
@@ -8791,9 +8791,6 @@ var AppModule = (_dec$5$1 = core_1.NgModule({
   classCallCheck$1(this, AppModule);
 }) || _class$5$1);
 
-{
-  core_1.enableProdMode();
-}
 platformBrowserDynamic.platformBrowserDynamic().bootstrapModule(AppModule);
 
 exports.configService = configService;

@@ -8637,12 +8637,56 @@ var TuneUpCoreModule = (_dec$5 = core_1.NgModule({
     classCallCheck(this, TuneUpCoreModule);
 }) || _class$5);
 
-// import {AuthGuard} from './guards';
-// import {SceneComponent} from '../components';
+var html$1 = "<div class=\"vertical\">\n  <tn-appbar class=\"tn-scene-appbar\"></tn-appbar>\n  <div class=\"horizontal\">\n    <tn-menu class=\"tn-scene-menu\"></tn-menu>\n    <tn-content class=\"tn-scene-content\"></tn-content>\n  </div>\n</div>\n";
 
+__$styleInject(".tn-scene-appbar{background-color:#20272a;display:block;padding:0;height:70px;box-sizing:border-box;position:fixed;top:0;left:0;width:100%;z-index:1;box-shadow:0 2px 5px 0 rgba(0,0,0,.3)}.tn-scene-menu{position:fixed;left:0;top:70px;height:100%;background-color:#fff;overflow:hidden;width:270px;box-shadow:0 0 5px 0 rgba(0,0,0,.3)}.tn-scene-content{margin-left:270px;padding-top:70px;background-color:#fff;width:-webkit-fill-available;height:-webkit-fill-available}",undefined);
+
+var _dec$1$1;
+var _class$1$1;
+
+var SceneComponent = (_dec$1$1 = core_1.Component({
+  selector: 'tn-scene',
+  template: html$1
+}), _dec$1$1(_class$1$1 = function SceneComponent() {
+  classCallCheck$1(this, SceneComponent);
+}) || _class$1$1);
+
+var _dec$2$1;
+var _class$2$1;
+
+var AppbarComponent = (_dec$2$1 = core_1.Component({
+  template: '<div>Appbar</div>',
+  selector: 'tn-appbar'
+}), _dec$2$1(_class$2$1 = function AppbarComponent() {
+  classCallCheck$1(this, AppbarComponent);
+}) || _class$2$1);
+
+var html$2 = "<router-outlet></router-outlet>\n";
+
+var _dec$3$1;
+var _class$3$1;
+
+var ContentComponent = (_dec$3$1 = core_1.Component({
+  selector: 'tn-content',
+  template: html$2
+}), _dec$3$1(_class$3$1 = function ContentComponent() {
+  classCallCheck$1(this, ContentComponent);
+}) || _class$3$1);
+
+var _dec$4$1;
+var _class$4$1;
+
+var MenuComponent = (_dec$4$1 = core_1.Component({
+  template: '<div>MENU</div>',
+  selector: 'tn-menu'
+}), _dec$4$1(_class$4$1 = function MenuComponent() {
+  classCallCheck$1(this, MenuComponent);
+}) || _class$4$1);
+
+// import {AuthGuard} from './guards';
 var mainRoute = {
   path: '',
-  // component: SceneComponent,
+  component: SceneComponent,
   // canActivate: [AuthGuard],
   // canActivateChild: [AuthGuard],
   // canLoadChildren: [AuthGuard],
@@ -8706,46 +8750,46 @@ configService.init({
 });
 configService.addRoutesWithAuth(Object.values(childRoutes));
 
-var _dec$2$1;
-var _class$2$1;
+var _dec$6;
+var _class$6;
 
 // import {AuthGuard} from './guards';
-var RoutingModule = (_dec$2$1 = core_1.NgModule({
+var RoutingModule = (_dec$6 = core_1.NgModule({
   imports: [router.RouterModule.forRoot(configService.getRouteObjects(), {
     useHash: true,
     enableTracing: "production" !== 'production'
   })],
   exports: [router.RouterModule]
   // providers: [AuthGuard]
-}), _dec$2$1(_class$2$1 = function RoutingModule() {
+}), _dec$6(_class$6 = function RoutingModule() {
   classCallCheck$1(this, RoutingModule);
-}) || _class$2$1);
+}) || _class$6);
 
-var html$1 = "<h1>Current route</h1>\n<router-outlet></router-outlet>\n";
+var html$3 = "<router-outlet></router-outlet>\n";
 
 __$styleInject(".none{flex:none}.one{flex:1}.two{flex:2}.three{flex:3}.four{flex:4}.five{flex:5}.six{flex:6}.seven{flex:7}.eight{flex:8}.nine{flex:9}.ten{flex:10}.eleven{flex:11}.twelve{flex:12}.flex,.horizontal,.vertical{display:flex}.horizontal{flex-direction:row}.vertical{flex-direction:column}.wrap{flex-wrap:wrap}body{margin:0;min-height:100%;padding:0;overflow-x:hidden;overflow-y:auto;font-family:Roboto,Trebuchet MS,Arial,Helvetica,sans-serif;font-weight:400;color:#404c51;-webkit-font-smoothing:antialiased;font-size:1em}",undefined);
 
-var _dec$3$1;
-var _class$3$1;
+var _dec$7;
+var _class$7;
 
-var AppComponent = (_dec$3$1 = core_1.Component({
+var AppComponent = (_dec$7 = core_1.Component({
   selector: 'tn-app',
-  template: html$1
-}), _dec$3$1(_class$3$1 = function AppComponent() {
+  template: html$3
+}), _dec$7(_class$7 = function AppComponent() {
   classCallCheck$1(this, AppComponent);
-}) || _class$3$1);
+}) || _class$7);
 
-var _dec$1$1;
-var _class$1$1;
+var _dec$5$1;
+var _class$5$1;
 
-var AppModule = (_dec$1$1 = core_1.NgModule({
+var AppModule = (_dec$5$1 = core_1.NgModule({
   imports: [TuneUpCoreModule, platformBrowser.BrowserModule, animations.BrowserAnimationsModule, RoutingModule],
-  declarations: [AppComponent],
+  declarations: [AppComponent, SceneComponent, AppbarComponent, MenuComponent, ContentComponent],
   providers: [ModuleLoaderProvider, APIInterceptorProvider],
   bootstrap: [AppComponent]
-}), _dec$1$1(_class$1$1 = function AppModule() {
+}), _dec$5$1(_class$5$1 = function AppModule() {
   classCallCheck$1(this, AppModule);
-}) || _class$1$1);
+}) || _class$5$1);
 
 {
   core_1.enableProdMode();

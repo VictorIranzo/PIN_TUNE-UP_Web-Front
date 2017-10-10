@@ -8,6 +8,7 @@ import {
   TuneUpCoreModule
 } from '@tune-up/core';
 import {AppComponent} from './app.component';
+import {SceneComponent} from './components';
 
 @NgModule({
   imports: [
@@ -16,7 +17,7 @@ import {AppComponent} from './app.component';
     BrowserAnimationsModule,
     RoutingModule
   ],
-  declarations: [AppComponent],
+  declarations: [AppComponent, SceneComponent],
   providers: [ModuleLoaderProvider, APIInterceptorProvider],
   bootstrap: [AppComponent]
 })

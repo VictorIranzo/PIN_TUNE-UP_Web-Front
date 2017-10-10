@@ -1,9 +1,9 @@
 // import {AuthGuard} from './guards';
-// import {SceneComponent} from '../components';
+import {SceneComponent} from './components';
 
 const mainRoute = {
   path: '',
-  // component: SceneComponent,
+  component: SceneComponent,
   // canActivate: [AuthGuard],
   // canActivateChild: [AuthGuard],
   // canLoadChildren: [AuthGuard],

@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
-import html from './app.html';
-import './css/app.css';
+import html from './app.component.html';
+import './app.component.css';
 
 @Component({
   selector: 'tn-app',

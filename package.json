@@ -28,8 +28,7 @@
   "homepage": "https://github.com/Starkie/TUNE-UP-Process-Web-Front#readme",
   "dependencies": {
     "@tune-up/core": "file:lib/core",
-    "@tune-up/ng-vendor": "file:lib/ng-vendor",
-    "@tune-up/primeng-vendor": "file:lib/primeng-vendor"
+    "@tune-up/vendor": "file:lib/vendor"
   },
   "devDependencies": {
     "@tune-up/build-utils": "file:lib/build-utils",

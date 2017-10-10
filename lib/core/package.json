@@ -18,6 +18,8 @@
   },
   "author": "",
   "dependencies": {
+    "@tune-up/vendor": "file:../vendor",
+    "angular2-moment": "^1.7.0",
     "validator": "^9.0.0"
   },
   "devDependencies": {

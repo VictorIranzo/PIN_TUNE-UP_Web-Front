@@ -22,9 +22,9 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { primengExports } from '@tune-up/vendor';
 import { FormsModule, NG_VALIDATORS, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Router, RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterModule } from '@angular/router';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
   return typeof obj;
@@ -158,6 +158,24 @@ var classCallCheck$1 = function (instance, Constructor) {
     throw new TypeError("Cannot call a class as a function");
   }
 };
+
+var createClass$1 = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) defineProperties(Constructor, staticProps);
+    return Constructor;
+  };
+}();
 
 var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -8629,7 +8647,9 @@ var MomentModule = moment_module.MomentModule;
 var _dec$5;
 var _class$5;
 
-var SHARED = [CommonModule, FormsModule, HttpClientModule, PrimengModule, MomentModule];
+var SHARED = [CommonModule, FormsModule,
+//HttpClientModule,
+PrimengModule, MomentModule];
 
 var TuneUpCoreModule = (_dec$5 = NgModule({
     imports: [].concat(SHARED),
@@ -8639,59 +8659,122 @@ var TuneUpCoreModule = (_dec$5 = NgModule({
     classCallCheck(this, TuneUpCoreModule);
 }) || _class$5);
 
-var html$1 = "<div class=\"vertical\">\n  <tn-appbar class=\"tn-scene-appbar\"></tn-appbar>\n  <div class=\"horizontal\">\n    <tn-menu class=\"tn-scene-menu\"></tn-menu>\n    <tn-content class=\"tn-scene-content\"></tn-content>\n  </div>\n</div>\n";
+var _dec$2$1;
+var _class$2$1;
 
-__$styleInject(".tn-scene-appbar{background-color:#20272a;display:block;padding:0;height:70px;box-sizing:border-box;position:fixed;top:0;left:0;width:100%;z-index:1;box-shadow:0 2px 5px 0 rgba(0,0,0,.3)}.tn-scene-menu{position:fixed;left:0;top:70px;height:100%;background-color:#fff;overflow:hidden;width:270px;box-shadow:0 0 5px 0 rgba(0,0,0,.3)}.tn-scene-content{margin-left:270px;padding-top:70px;background-color:#fff;width:-webkit-fill-available;height:-webkit-fill-available}",undefined);
+var TOKEN_KEY = 'tnToken';
+
+var AuthService = (_dec$2$1 = Injectable(), _dec$2$1(_class$2$1 = function () {
+  function AuthService() {
+    classCallCheck$1(this, AuthService);
+  }
+
+  createClass$1(AuthService, [{
+    key: 'getToken',
+    value: function getToken() {
+      return sessionStorage.getItem(TOKEN_KEY);
+    }
+  }, {
+    key: 'setToken',
+    value: function setToken(token) {
+      sessionStorage.setItem(TOKEN_KEY, token);
+    }
+  }]);
+  return AuthService;
+}()) || _class$2$1);
 
 var _dec$1$1;
 var _class$1$1;
 
-var SceneComponent = (_dec$1$1 = Component({
-  selector: 'tn-scene',
-  template: html$1
-}), _dec$1$1(_class$1$1 = function SceneComponent() {
-  classCallCheck$1(this, SceneComponent);
-}) || _class$1$1);
+var AuthGuard = (_dec$1$1 = Injectable(), _dec$1$1(_class$1$1 = function () {
+  function AuthGuard(router$$1, authService) {
+    classCallCheck$1(this, AuthGuard);
 
-var _dec$2$1;
-var _class$2$1;
+    this._router = router$$1;
+    this._authService = authService;
+  }
 
-var AppbarComponent = (_dec$2$1 = Component({
-  template: '<div>Appbar</div>',
-  selector: 'tn-appbar'
-}), _dec$2$1(_class$2$1 = function AppbarComponent() {
-  classCallCheck$1(this, AppbarComponent);
-}) || _class$2$1);
+  createClass$1(AuthGuard, [{
+    key: '_checkAndRedirect',
+    value: function _checkAndRedirect(route, state) {
+      if (this._authService.getToken()) {
+        return true;
+      }
+      this._router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+      return false;
+    }
+  }, {
+    key: 'canActivate',
+    value: function canActivate(route, state) {
+      return this._checkAndRedirect(route, state);
+    }
+  }, {
+    key: 'canActivateChild',
+    value: function canActivateChild(route, state) {
+      return this._checkAndRedirect(route, state);
+    }
+  }, {
+    key: 'canLoadChildren',
+    value: function canLoadChildren(route, state) {
+      return this._checkAndRedirect(route, state);
+    }
+  }]);
+  return AuthGuard;
+}()) || _class$1$1);
+Reflect.defineMetadata('design:paramtypes', [Router, AuthService], AuthGuard);
 
-var html$2 = "<router-outlet></router-outlet>\n";
+var html$1 = "<div class=\"vertical\">\n  <tn-appbar class=\"tn-scene-appbar\"></tn-appbar>\n  <div class=\"horizontal\">\n    <tn-menu class=\"tn-scene-menu\"></tn-menu>\n    <tn-content class=\"tn-scene-content\"></tn-content>\n  </div>\n</div>\n";
+
+__$styleInject(".tn-scene-appbar{background-color:#20272a;display:block;padding:0;height:70px;box-sizing:border-box;position:fixed;top:0;left:0;width:100%;z-index:1;box-shadow:0 2px 5px 0 rgba(0,0,0,.3)}.tn-scene-menu{position:fixed;left:0;top:70px;overflow:hidden;width:270px;box-shadow:0 0 5px 0 rgba(0,0,0,.3)}.tn-scene-content,.tn-scene-menu{height:100%;background-color:#fff}.tn-scene-content{margin-left:270px;padding-top:70px;width:100%}",undefined);
 
 var _dec$3$1;
 var _class$3$1;
 
-var ContentComponent = (_dec$3$1 = Component({
-  selector: 'tn-content',
-  template: html$2
-}), _dec$3$1(_class$3$1 = function ContentComponent() {
-  classCallCheck$1(this, ContentComponent);
+var SceneComponent = (_dec$3$1 = Component({
+  selector: 'tn-scene',
+  template: html$1
+}), _dec$3$1(_class$3$1 = function SceneComponent() {
+  classCallCheck$1(this, SceneComponent);
 }) || _class$3$1);
 
 var _dec$4$1;
 var _class$4$1;
 
-var MenuComponent = (_dec$4$1 = Component({
-  template: '<div>MENU</div>',
-  selector: 'tn-menu'
-}), _dec$4$1(_class$4$1 = function MenuComponent() {
-  classCallCheck$1(this, MenuComponent);
+var AppbarComponent = (_dec$4$1 = Component({
+  template: '<div>Appbar</div>',
+  selector: 'tn-appbar'
+}), _dec$4$1(_class$4$1 = function AppbarComponent() {
+  classCallCheck$1(this, AppbarComponent);
 }) || _class$4$1);
 
-// import {AuthGuard} from './guards';
+var html$2 = "<router-outlet></router-outlet>\n";
+
+var _dec$5$1;
+var _class$5$1;
+
+var ContentComponent = (_dec$5$1 = Component({
+  selector: 'tn-content',
+  template: html$2
+}), _dec$5$1(_class$5$1 = function ContentComponent() {
+  classCallCheck$1(this, ContentComponent);
+}) || _class$5$1);
+
+var _dec$6;
+var _class$6;
+
+var MenuComponent = (_dec$6 = Component({
+  template: '<div>MENU</div>',
+  selector: 'tn-menu'
+}), _dec$6(_class$6 = function MenuComponent() {
+  classCallCheck$1(this, MenuComponent);
+}) || _class$6);
+
 var mainRoute = {
   path: '',
   component: SceneComponent,
-  // canActivate: [AuthGuard],
-  // canActivateChild: [AuthGuard],
-  // canLoadChildren: [AuthGuard],
+  canActivate: [AuthGuard],
+  canActivateChild: [AuthGuard],
+  canLoadChildren: [AuthGuard],
   children: []
 };
 var mainRedirectRoute = {
@@ -8699,9 +8782,16 @@ var mainRedirectRoute = {
   redirectTo: 'home',
   pathMatch: 'full'
 };
+
+var loginRoute = {
+  path: 'login',
+  loadChildren: 'src/app/modules/login/dist/tune-up.login.umd.min.js#login#LoginModule'
+};
+
 var appRoutes = {
   mainRoute: mainRoute,
-  mainRedirectRoute: mainRedirectRoute
+  mainRedirectRoute: mainRedirectRoute,
+  loginRoute: loginRoute
 };
 
 /**
@@ -8752,51 +8842,50 @@ configService.init({
 });
 configService.addRoutesWithAuth(Object.values(childRoutes));
 
-var _dec$6;
-var _class$6;
+var _dec$8;
+var _class$8;
 
-// import {AuthGuard} from './guards';
-var RoutingModule = (_dec$6 = NgModule({
+var RoutingModule = (_dec$8 = NgModule({
   imports: [RouterModule.forRoot(configService.getRouteObjects(), {
     useHash: true,
     enableTracing: "production" !== 'production'
   })],
-  exports: [RouterModule]
-  // providers: [AuthGuard]
-}), _dec$6(_class$6 = function RoutingModule() {
+  exports: [RouterModule],
+  providers: [AuthGuard]
+}), _dec$8(_class$8 = function RoutingModule() {
   classCallCheck$1(this, RoutingModule);
-}) || _class$6);
+}) || _class$8);
 
 var html$3 = "<router-outlet></router-outlet>\n";
 
 __$styleInject(".none{flex:none}.one{flex:1}.two{flex:2}.three{flex:3}.four{flex:4}.five{flex:5}.six{flex:6}.seven{flex:7}.eight{flex:8}.nine{flex:9}.ten{flex:10}.eleven{flex:11}.twelve{flex:12}.flex,.horizontal,.vertical{display:flex}.horizontal{flex-direction:row}.vertical{flex-direction:column}.wrap{flex-wrap:wrap}body{margin:0;min-height:100%;padding:0;overflow-x:hidden;overflow-y:auto;font-family:Roboto,Trebuchet MS,Arial,Helvetica,sans-serif;font-weight:400;color:#404c51;-webkit-font-smoothing:antialiased;font-size:1em}",undefined);
 
+var _dec$9;
+var _class$9;
+
+var AppComponent = (_dec$9 = Component({
+  selector: 'tn-app',
+  template: html$3
+}), _dec$9(_class$9 = function AppComponent() {
+  classCallCheck$1(this, AppComponent);
+}) || _class$9);
+
 var _dec$7;
 var _class$7;
 
-var AppComponent = (_dec$7 = Component({
-  selector: 'tn-app',
-  template: html$3
-}), _dec$7(_class$7 = function AppComponent() {
-  classCallCheck$1(this, AppComponent);
-}) || _class$7);
-
-var _dec$5$1;
-var _class$5$1;
-
-var AppModule = (_dec$5$1 = NgModule({
-  imports: [TuneUpCoreModule, BrowserModule, BrowserAnimationsModule, RoutingModule],
+var AppModule = (_dec$7 = NgModule({
+  imports: [TuneUpCoreModule, BrowserModule, BrowserAnimationsModule, HttpClientModule, RoutingModule],
   declarations: [AppComponent, SceneComponent, AppbarComponent, MenuComponent, ContentComponent],
-  providers: [ModuleLoaderProvider, APIInterceptorProvider],
+  providers: [ModuleLoaderProvider, APIInterceptorProvider, AuthService],
   bootstrap: [AppComponent]
-}), _dec$5$1(_class$5$1 = function AppModule() {
+}), _dec$7(_class$7 = function AppModule() {
   classCallCheck$1(this, AppModule);
-}) || _class$5$1);
+}) || _class$7);
 
 {
   enableProdMode();
 }
 platformBrowserDynamic$1().bootstrapModule(AppModule);
 
-export { configService, APIInterceptorProvider, ModuleLoaderProvider, PrimengModule, ErrorComponent, Rule, TuneUpCoreModule };
+export { configService, APIInterceptorProvider, ModuleLoaderProvider, PrimengModule, ErrorComponent, Rule, TuneUpCoreModule, AppModule, AuthService };
 //# sourceMappingURL=tune-up.app.js.map

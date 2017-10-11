@@ -9,7 +9,7 @@ import url from 'postcss-url';
 import cssnano from 'cssnano';
 import string from 'rollup-plugin-string';
 import replace from 'rollup-plugin-replace';
-import {moduleName, appExternal, appGlobals} from '@tune-up/build-utils';
+import {moduleName, vendorGlobals} from '@tune-up/build-utils';
 const pkg = require('./package.json');
 
 export default {
@@ -20,8 +20,8 @@ export default {
   },
   sourcemap: true,
   name: moduleName(pkg),
-  external: appExternal,
-  globals: appGlobals,
+  external: Object.keys(vendorGlobals),
+  globals: vendorGlobals,
   plugins: [
     replace({
       exclude: 'node_modules/**',

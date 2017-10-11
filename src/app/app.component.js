@@ -6,4 +6,4 @@ import './app.component.css';
   selector: 'tn-app',
   template: html
 })
-export class AppComponent {}
+export class AppComponent { }

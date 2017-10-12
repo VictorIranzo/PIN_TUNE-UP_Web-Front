@@ -1,6 +1,6 @@
 {
   "name": "@tune-up/core",
-  "version": "0.0.0",
+  "version": "0.0.4",
   "description": "Tune-UP Web Angular 4 core",
   "main": "dist/tune-up.core.umd.js",
   "main:min": "dist/tune-up.core.umd.min.js",
@@ -20,10 +20,11 @@
   "dependencies": {
     "@tune-up/vendor": "file:../vendor",
     "angular2-moment": "^1.7.0",
+    "rxjs": "^5.4.3",
     "validator": "^9.0.0"
   },
   "devDependencies": {
-    "@tune-up/build-utils": "file../build-utils",
+    "@tune-up/build-utils": "file:../build-utils",
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.0.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",

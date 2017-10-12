@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
-import {AuthService} from '../../services';
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services';
 
 @Injectable()
 export class AuthGuard {
@@ -12,7 +12,8 @@ export class AuthGuard {
     if (this._authService.getToken()) {
       return true;
     }
-    this._router.navigate(['/login'], {queryParams: {returnUrl: state.url}});
+    let returnUrl = state && state.url;
+    this._router.navigate(['/login'], {queryParams: {returnUrl}});
     return false;
   }
   canActivate(route, state) {
@@ -22,6 +23,9 @@ export class AuthGuard {
     return this._checkAndRedirect(route, state);
   }
   canLoadChildren(route, state) {
+    return this._checkAndRedirect(route, state);
+  }
+  canLoad(route, state) {
     return this._checkAndRedirect(route, state);
   }
 }

@@ -1,10 +1,31 @@
-<form class="vertical" #frm="ngForm" (ngSubmit)="login()">
-  <input type="text" [(ngModel)]="model.email" rule="login.email" name="email" #emailCtrl="ngModel" (focusout)="onEmailFocusLost()" pInputText>
-  <tn-error [control]="emailCtrl"></tn-error>
-  <input type="password" [(ngModel)]="model.password" name="password" pInputText>
-  <tn-site-selector [sites]="sites" *ngIf="showSelector()" (onSiteSelected)="setIdSitio($event)"></tn-site-selector>
-  <div class="horizontal">
-    <div class="one"></div>
-    <button class="none" pButton type="submit" label="Login"></button>
-  </div>
-</form>
+<div class="tn-login-background">
+  <form class="vertical tn-login-form" #frm="ngForm" (ngSubmit)="frm.valid && login()">
+    <img class="tn-login--header" src="./assets/logo.png">
+    <div class="tn-login-form-wrapper">
+     
+      <div class="tn-login-form-inputgroup">
+        <span class="ui-float-label">
+          <input class="tn-login-form-inputgroup--input" type="text" [(ngModel)]="model.email" rule="login.email" name="email" #emailCtrl="ngModel" (focusout)="onEmailFocusLost()"
+          pInputText>
+          <label>Email *</label>
+        </span>
+        <tn-validation-error [control]="emailCtrl"></tn-validation-error>
+      </div>
+
+      <div class="tn-login-form-inputgroup">
+        <span class="ui-float-label">
+          <input class="tn-login-form-inputgroup--input" type="password" [(ngModel)]="model.password" rule="login.password" name="password" #passwordCtrl="ngModel" pInputText>
+          <label>Contraseña *</label>
+        </span>
+        <tn-validation-error [control]="passwordCtrl"></tn-validation-error>
+      </div>
+
+      <div class="horizontal">
+        <div class="one tn-login-form--siteselector">
+          <tn-site-selector [sites]="sites" *ngIf="showSelector()" (onSiteSelected)="setIdSitio($event)"></tn-site-selector>
+        </div>
+        <button class="none tn-login-form--submitbtn" pButton type="submit" label="Login"></button>
+      </div>
+    </div>
+  </form>
+</div>

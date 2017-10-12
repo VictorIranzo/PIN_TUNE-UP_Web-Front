@@ -3,7 +3,7 @@ import livereload from 'rollup-plugin-livereload';
 import replace from 'rollup-plugin-replace';
 import config from './rollup.config.nomin.js';
 
-const {plugins} = config;
+const { plugins } = config;
 config.output = config.output[0];
 plugins[0] = replace({
   exclude: 'node_modules/**',
@@ -12,10 +12,11 @@ plugins[0] = replace({
 plugins.unshift(
   serve({
     contentBase: '',
-    port: 8080
+    port: 8080,
+    open: true
   }),
   livereload({
-    watch: ['dist', 'src/**/dist']
+    watch: ['dist', 'src/app/modules/**/dist/**']
   })
 );
 export default config;

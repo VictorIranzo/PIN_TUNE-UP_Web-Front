@@ -7,8 +7,10 @@
  * 
  * ADD THE EXPORTS TO modules/config.routing
  */
+const min = ENVIRONMENT === 'production' ? '.min' : '';
+
 export const homeRoute = {
   path: 'example',
   loadChildren:
-    'src/app/modules/example/dist/tune-up.example.umd.min.js#example#ExampleModule'
+    `src/app/modules/example/dist/tune-up.example.umd${min}.js#example#ExampleModule`
 };

@@ -1,0 +1,11 @@
+<p-sidebar [(visible)] = "visibleSidebar"  [basZIndex] = "10000">
+  <li *ngFor = "let item of items" (click)="selectItem(item)">
+   <tn-menuitem>
+     [text] = "item.text"
+     [path] = "item.path"
+     [icon] = "item.icon"
+     [adminOnly] = "item.adminOnly"
+    </tn-menuitem>
+  </li>
+</p-sidebar>
+

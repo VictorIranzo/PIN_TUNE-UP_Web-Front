@@ -5,4 +5,34 @@ import html from './menu.component.html';
   selector: 'tn-menu',
   template: html
 })
-export class MenuComponent {}
+export class MenuComponent {
+  visibleSidebar;
+  items = [
+    {
+      path: 'comunicaciones',
+      text: 'Comunicaciones',
+      icon: 'fa fa-bandcamp',
+      adminOnly: false
+    },
+    {
+      path: 'comunicaciones',
+      text: 'Comunicaciones',
+      icon: 'fa fa-bandcamp',
+      adminOnly: false
+    },
+    {
+      path: 'comunicaciones',
+      text: 'Comunicaciones',
+      icon: 'fa fa-bandcamp',
+      adminOnly: false
+    },
+    {
+      path: 'comunicaciones',
+      text: 'Comunicaciones',
+      icon: 'fa fa-bandcamp',
+      adminOnly: false
+    }
+  ];
+
+  constructor() {}
+}

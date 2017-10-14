@@ -16,7 +16,8 @@ import {
   SceneComponent,
   AppbarComponent,
   MenuComponent,
-  ContentComponent
+  ContentComponent,
+  MenuItemComponent
 } from './components';
 
 @NgModule({
@@ -32,7 +33,8 @@ import {
     SceneComponent,
     AppbarComponent,
     MenuComponent,
-    ContentComponent
+    ContentComponent,
+    MenuItemComponent
   ],
   providers: [
     ModuleLoaderProvider,

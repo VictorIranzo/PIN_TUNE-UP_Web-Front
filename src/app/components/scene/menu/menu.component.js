@@ -1,7 +1,8 @@
 import {Component} from '@angular/core';
+import html from './menu.component.html';
 
 @Component({
-  template: '<div>MENU</div>',
-  selector: 'tn-menu'
+  selector: 'tn-menu',
+  template: html
 })
 export class MenuComponent {}

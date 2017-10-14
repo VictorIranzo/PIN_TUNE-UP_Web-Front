@@ -1,7 +1,5 @@
-:root{
-  --tn-scene-appbar--height: 70px;
-  --tn-scene-menu--width: 270px;
-}
+@import url("./scene.variables.css");
+
 .tn-scene-appbar {
   background-color: #20272a;
   display: block;

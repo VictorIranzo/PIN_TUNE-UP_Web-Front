@@ -1,4 +1,3 @@
-(function(l, i, v, e) { v = l.createElement(i); v.async = 1; v.src = '//' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; e = l.getElementsByTagName(i)[0]; e.parentNode.insertBefore(v, e)})(document, 'script');
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/platform-browser-dynamic'), require('@angular/core'), require('@angular/common/http'), require('@tune-up/vendor'), require('@angular/forms'), require('@angular/common'), require('@angular/platform-browser'), require('@angular/platform-browser/animations'), require('@angular/router')) :
 	typeof define === 'function' && define.amd ? define(['exports', '@angular/platform-browser-dynamic', '@angular/core', '@angular/common/http', '@tune-up/vendor', '@angular/forms', '@angular/common', '@angular/platform-browser', '@angular/platform-browser/animations', '@angular/router'], factory) :
@@ -157,6 +156,24 @@ var classCallCheck$1 = function (instance, Constructor) {
     throw new TypeError("Cannot call a class as a function");
   }
 };
+
+var createClass$1 = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) defineProperties(Constructor, staticProps);
+    return Constructor;
+  };
+}();
 
 var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -8652,24 +8669,42 @@ var SceneComponent = (_dec$1$1 = core_1.Component({
   classCallCheck$1(this, SceneComponent);
 }) || _class$1$1);
 
+var html$2 = "<div class=\"horizontal menu-bar\">\n    <div *ngIf=\"show\">\n            <button pButton type=\"button\" (click)=\"onHideMenuBarClick()\" icon=\"fa-caret-square-o-left\" iconPos=\"left\"></button>                \n    </div>\n    <div *ngIf=\"!show\">\n            <button pButton type=\"button\" (click)=\"onShowMenuBarClick()\" icon=\"fa-caret-square-o-right\" iconPos=\"left\"></button>                \n    </div>\n</div>";
+
 var _dec$2$1;
 var _class$2$1;
 
 var AppbarComponent = (_dec$2$1 = core_1.Component({
-  template: '<div>Appbar</div>',
-  selector: 'tn-appbar'
-}), _dec$2$1(_class$2$1 = function AppbarComponent() {
-  classCallCheck$1(this, AppbarComponent);
-}) || _class$2$1);
+  selector: 'tn-appbar',
+  template: html$2
+}), _dec$2$1(_class$2$1 = function () {
+  function AppbarComponent() {
+    classCallCheck$1(this, AppbarComponent);
+    this.show = true;
+  }
 
-var html$2 = "<router-outlet></router-outlet>\n";
+  createClass$1(AppbarComponent, [{
+    key: 'onHideMenuBarClick',
+    value: function onHideMenuBarClick() {
+      this.show = false;
+    }
+  }, {
+    key: 'onShowMenuBarClick',
+    value: function onShowMenuBarClick() {
+      this.show = true;
+    }
+  }]);
+  return AppbarComponent;
+}()) || _class$2$1);
+
+var html$3 = "<router-outlet></router-outlet>\n";
 
 var _dec$3$1;
 var _class$3$1;
 
 var ContentComponent = (_dec$3$1 = core_1.Component({
   selector: 'tn-content',
-  template: html$2
+  template: html$3
 }), _dec$3$1(_class$3$1 = function ContentComponent() {
   classCallCheck$1(this, ContentComponent);
 }) || _class$3$1);
@@ -8754,10 +8789,11 @@ configService.addRoutesWithAuth(Object.values(childRoutes));
 var _dec$6;
 var _class$6;
 
+// import {AuthGuard} from './guards';
 var RoutingModule = (_dec$6 = core_1.NgModule({
   imports: [router.RouterModule.forRoot(configService.getRouteObjects(), {
     useHash: true,
-    enableTracing: "development" !== 'production'
+    enableTracing: "production" !== 'production'
   })],
   exports: [router.RouterModule]
   // providers: [AuthGuard]
@@ -8765,7 +8801,7 @@ var RoutingModule = (_dec$6 = core_1.NgModule({
   classCallCheck$1(this, RoutingModule);
 }) || _class$6);
 
-var html$3 = "<router-outlet></router-outlet>\n";
+var html$4 = "<router-outlet></router-outlet>\n";
 
 __$styleInject(".none{flex:none}.one{flex:1}.two{flex:2}.three{flex:3}.four{flex:4}.five{flex:5}.six{flex:6}.seven{flex:7}.eight{flex:8}.nine{flex:9}.ten{flex:10}.eleven{flex:11}.twelve{flex:12}.flex,.horizontal,.vertical{display:flex}.horizontal{flex-direction:row}.vertical{flex-direction:column}.wrap{flex-wrap:wrap}body{margin:0;min-height:100%;padding:0;overflow-x:hidden;overflow-y:auto;font-family:Roboto,Trebuchet MS,Arial,Helvetica,sans-serif;font-weight:400;color:#404c51;-webkit-font-smoothing:antialiased;font-size:1em}",undefined);
 
@@ -8774,7 +8810,7 @@ var _class$7;
 
 var AppComponent = (_dec$7 = core_1.Component({
   selector: 'tn-app',
-  template: html$3
+  template: html$4
 }), _dec$7(_class$7 = function AppComponent() {
   classCallCheck$1(this, AppComponent);
 }) || _class$7);
@@ -8791,6 +8827,9 @@ var AppModule = (_dec$5$1 = core_1.NgModule({
   classCallCheck$1(this, AppModule);
 }) || _class$5$1);
 
+{
+  core_1.enableProdMode();
+}
 platformBrowserDynamic.platformBrowserDynamic().bootstrapModule(AppModule);
 
 exports.configService = configService;

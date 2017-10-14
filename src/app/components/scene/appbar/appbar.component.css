@@ -1,3 +1,11 @@
+:root{
+    --tn-scene-appbar--visibility: visible;
+  }
+
 .tn-scene-appbar--button {
     align-self: center;
+}
+
+.tn-scene-appbar--menubar {
+    visibility: var(--tn-scene-appbar--visibility);
 }

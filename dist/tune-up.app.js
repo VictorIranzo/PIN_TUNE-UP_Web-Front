@@ -159,6 +159,24 @@ var classCallCheck$1 = function (instance, Constructor) {
   }
 };
 
+var createClass$1 = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) defineProperties(Constructor, staticProps);
+    return Constructor;
+  };
+}();
+
 var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
 function unwrapExports(x) {
@@ -8639,7 +8657,7 @@ var TuneUpCoreModule = (_dec$5 = NgModule({
     classCallCheck(this, TuneUpCoreModule);
 }) || _class$5);
 
-var html$1 = "<div class=\"vertical\">\n  <tn-appbar class=\"tn-scene-appbar\"></tn-appbar>\n  <div class=\"horizontal\">\n    <tn-menu class=\"tn-scene-menu\"></tn-menu>\n    <tn-content class=\"tn-scene-content\"></tn-content>\n    fdkkokfokbpo\n  </div>\n</div>\n";
+var html$1 = "<div class=\"vertical\">\n  <tn-appbar class=\"tn-scene-appbar\"></tn-appbar>\n  <div class=\"horizontal\">\n    <tn-menu class=\"tn-scene-menu\"></tn-menu>\n    <tn-content class=\"tn-scene-content\"></tn-content>\n  </div>\n</div>\n";
 
 __$styleInject(".tn-scene-appbar{background-color:#20272a;display:block;padding:0;height:70px;box-sizing:border-box;position:fixed;top:0;left:0;width:100%;z-index:1;box-shadow:0 2px 5px 0 rgba(0,0,0,.3)}.tn-scene-menu{position:fixed;left:0;top:70px;overflow:hidden;width:270px;box-shadow:0 0 5px 0 rgba(0,0,0,.3)}.tn-scene-content,.tn-scene-menu{height:100%;background-color:#fff}.tn-scene-content{margin-left:270px;padding-top:70px;width:100%}",undefined);
 
@@ -8653,24 +8671,42 @@ var SceneComponent = (_dec$1$1 = Component({
   classCallCheck$1(this, SceneComponent);
 }) || _class$1$1);
 
+var html$2 = "<div class=\"horizontal menu-bar\">\n    <div *ngIf=\"show\">\n            <button pButton type=\"button\" (click)=\"onHideMenuBarClick()\" icon=\"fa-caret-square-o-left\" iconPos=\"left\"></button>                \n    </div>\n    <div *ngIf=\"!show\">\n            <button pButton type=\"button\" (click)=\"onShowMenuBarClick()\" icon=\"fa-caret-square-o-right\" iconPos=\"left\"></button>                \n    </div>\n</div>";
+
 var _dec$2$1;
 var _class$2$1;
 
 var AppbarComponent = (_dec$2$1 = Component({
-  template: '<div>Appbar</div>',
-  selector: 'tn-appbar'
-}), _dec$2$1(_class$2$1 = function AppbarComponent() {
-  classCallCheck$1(this, AppbarComponent);
-}) || _class$2$1);
+  selector: 'tn-appbar',
+  template: html$2
+}), _dec$2$1(_class$2$1 = function () {
+  function AppbarComponent() {
+    classCallCheck$1(this, AppbarComponent);
+    this.show = true;
+  }
 
-var html$2 = "<router-outlet></router-outlet>\n";
+  createClass$1(AppbarComponent, [{
+    key: 'onHideMenuBarClick',
+    value: function onHideMenuBarClick() {
+      this.show = false;
+    }
+  }, {
+    key: 'onShowMenuBarClick',
+    value: function onShowMenuBarClick() {
+      this.show = true;
+    }
+  }]);
+  return AppbarComponent;
+}()) || _class$2$1);
+
+var html$3 = "<router-outlet></router-outlet>\n";
 
 var _dec$3$1;
 var _class$3$1;
 
 var ContentComponent = (_dec$3$1 = Component({
   selector: 'tn-content',
-  template: html$2
+  template: html$3
 }), _dec$3$1(_class$3$1 = function ContentComponent() {
   classCallCheck$1(this, ContentComponent);
 }) || _class$3$1);
@@ -8767,7 +8803,7 @@ var RoutingModule = (_dec$6 = NgModule({
   classCallCheck$1(this, RoutingModule);
 }) || _class$6);
 
-var html$3 = "<router-outlet></router-outlet>\n";
+var html$4 = "<router-outlet></router-outlet>\n";
 
 __$styleInject(".none{flex:none}.one{flex:1}.two{flex:2}.three{flex:3}.four{flex:4}.five{flex:5}.six{flex:6}.seven{flex:7}.eight{flex:8}.nine{flex:9}.ten{flex:10}.eleven{flex:11}.twelve{flex:12}.flex,.horizontal,.vertical{display:flex}.horizontal{flex-direction:row}.vertical{flex-direction:column}.wrap{flex-wrap:wrap}body{margin:0;min-height:100%;padding:0;overflow-x:hidden;overflow-y:auto;font-family:Roboto,Trebuchet MS,Arial,Helvetica,sans-serif;font-weight:400;color:#404c51;-webkit-font-smoothing:antialiased;font-size:1em}",undefined);
 
@@ -8776,7 +8812,7 @@ var _class$7;
 
 var AppComponent = (_dec$7 = Component({
   selector: 'tn-app',
-  template: html$3
+  template: html$4
 }), _dec$7(_class$7 = function AppComponent() {
   classCallCheck$1(this, AppComponent);
 }) || _class$7);

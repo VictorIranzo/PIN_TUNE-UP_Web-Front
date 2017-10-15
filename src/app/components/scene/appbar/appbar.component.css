@@ -1,14 +1,16 @@
 @import url("../scene.variables.css");
 
 .tn-scene-appbar--button {
+    margin-left: 10px;
     align-self: center;
 }
 
 .tn-scene-appbar--breadcrumb {
+    margin-left: 10px;
     align-self: center;    
 }
 
-div.tn-scene-appbar--toggleMenu {
+div.tn-scene-appbar--topMenu {
     background-color: #fff;
     width: var(--tn-scene-menu--width);
     height: var(--tn-scene-appbar--height);    

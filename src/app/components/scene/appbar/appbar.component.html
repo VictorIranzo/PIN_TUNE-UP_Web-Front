@@ -1,6 +1,12 @@
 <div class="horizontal menu-bar">
-    <div class ="none tn-scene-appbar--toggleMenu">Logo TuneUP</div>
-    <button class="tn-scene-appbar--button" *ngIf="menuOpen"  pButton type="button" (click)="onHideMenuClick()" icon="fa-caret-square-o-left" iconPos="left"></button>                                
-    <button class="tn-scene-appbar--button" *ngIf="!menuOpen" pButton type="button" (click)="onShowMenuClick()" icon="fa-caret-square-o-right" iconPos="left"></button>                
-    <p-breadcrumb class="tn-scene-appbar--breadcrumb" [model]="breadcrumbItems"></p-breadcrumb>    
+    <div class ="none tn-scene-appbar--topMenu">Logo TuneUP</div>
+    <div class ="horizontal ten">
+        <button class="tn-scene-appbar--button" *ngIf="menuOpen"  pButton type="button" (click)="onHideMenuClick()" icon="fa-caret-square-o-left" iconPos="left"></button>                                
+        <button class="tn-scene-appbar--button" *ngIf="!menuOpen" pButton type="button" (click)="onShowMenuClick()" icon="fa-caret-square-o-right" iconPos="left"></button>                    
+        <p-breadcrumb class="tn-scene-appbar--breadcrumb" [model]="breadcrumbItems"></p-breadcrumb>    
+    </div>
+    <div class = "horizontal one">
+        <button class="tn-scene-appbar--button" pButton type="button" label="Click"></button>        
+    </div>
+    
 </div>

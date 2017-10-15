@@ -9,7 +9,9 @@ import './appbar.component.css';
   template: html
 })
 export class AppbarComponent {
-  menuOpen = true;
+  
+  @Input() breadcrumbItems = [];  
+  @Input() menuOpen = true;
 
   onHideMenuClick() {
     this.menuOpen = false;

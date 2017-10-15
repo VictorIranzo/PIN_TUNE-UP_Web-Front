@@ -4,6 +4,10 @@
     align-self: center;
 }
 
+.tn-scene-appbar--breadcrumb {
+    align-self: center;    
+}
+
 div.tn-scene-appbar--toggleMenu {
     background-color: #fff;
     width: var(--tn-scene-menu--width);

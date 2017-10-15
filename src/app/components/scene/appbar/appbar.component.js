@@ -15,9 +15,9 @@ export class AppbarComponent {
     this._breadcrumbService = breadcrumbService;
   }
 
-  breadcrumbItems = [];  
   @Input() menuOpen = true;
-
+  breadcrumbItems = [];  
+  
   ngOnInit() {
     this._getBreadcrumbItems();
   }
@@ -26,11 +26,11 @@ export class AppbarComponent {
     this.breadcrumbItems = this._breadcrumbService.getItems();
   }
 
-  onHideMenuClick() {
+  _onHideMenuClick() {
     this.menuOpen = false;
   }
 
-  onShowMenuClick() {
+  _onShowMenuClick() {
     this.menuOpen = true;
   }
 

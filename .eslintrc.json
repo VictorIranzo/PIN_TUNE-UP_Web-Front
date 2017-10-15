@@ -16,7 +16,8 @@
     ],
     "require-jsdoc": 0,
     "new-cap": 0,
-    "no-invalid-this": 0
+    "no-invalid-this": 0,
+    "line-break-style": 0
   },
   "parser": "babel-eslint"
 }

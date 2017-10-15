@@ -1,4 +1,3 @@
-(function(l, i, v, e) { v = l.createElement(i); v.async = 1; v.src = '//' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; e = l.getElementsByTagName(i)[0]; e.parentNode.insertBefore(v, e)})(document, 'script');
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/platform-browser-dynamic'), require('@angular/core'), require('@angular/common/http'), require('@tune-up/vendor'), require('@angular/forms'), require('@angular/common'), require('@angular/router'), require('@angular/platform-browser'), require('@angular/platform-browser/animations')) :
 	typeof define === 'function' && define.amd ? define(['exports', '@angular/platform-browser-dynamic', '@angular/core', '@angular/common/http', '@tune-up/vendor', '@angular/forms', '@angular/common', '@angular/router', '@angular/platform-browser', '@angular/platform-browser/animations'], factory) :
@@ -10164,9 +10163,6 @@ var TuneUpCoreModule = (_dec$7 = core_1.NgModule({
   classCallCheck(this, TuneUpCoreModule);
 }) || _class$7);
 
-
-//# sourceMappingURL=tune-up.core.js.map
-
 var asyncGenerator$1 = function () {
   function AwaitValue(value) {
     this.value = value;
@@ -10468,7 +10464,7 @@ var MenuComponent = (_dec$8 = core_1.Component({
   classCallCheck$1(this, MenuComponent);
 }) || _class$8);
 
-var min = '';
+var min = '.min';
 
 var mainRoute = {
   path: '',
@@ -10503,7 +10499,7 @@ var appRoutes = {
  * 
  * ADD THE EXPORTS TO modules/config.routing
  */
-var min$1 = '';
+var min$1 = '.min';
 
 var homeRoute = {
   path: 'example',
@@ -10550,7 +10546,7 @@ var _class$10;
 var RoutingModule = (_dec$10 = core_1.NgModule({
   imports: [router.RouterModule.forRoot(configService.getRouteObjects(), {
     useHash: true,
-    enableTracing: "development" !== 'production'
+    enableTracing: "production" !== 'production'
   })],
   exports: [router.RouterModule],
   providers: [AuthGuard]
@@ -10592,7 +10588,7 @@ var TokenInterceptorProvider = {
   multi: true
 };
 
-var html$3 = "<tn-notifications></tn-notifications>\n<router-outlet></router-outlet>\n";
+var html$3 = "<tn-notifications></tn-notifications>\r\n<router-outlet></router-outlet>\r\n";
 
 __$styleInject(".none{flex:none}.one{flex:1}.two{flex:2}.three{flex:3}.four{flex:4}.five{flex:5}.six{flex:6}.seven{flex:7}.eight{flex:8}.nine{flex:9}.ten{flex:10}.eleven{flex:11}.twelve{flex:12}.flex,.horizontal,.vertical{display:flex}.horizontal{flex-direction:row}.vertical{flex-direction:column}.wrap{flex-wrap:wrap}body{margin:0;min-height:100%;padding:0;overflow-x:hidden;overflow-y:auto;font-family:Roboto,Trebuchet MS,Arial,Helvetica,sans-serif;font-weight:400;color:#404c51;-webkit-font-smoothing:antialiased;font-size:1em}",undefined);
 
@@ -10618,6 +10614,9 @@ var AppModule = (_dec$9 = core_1.NgModule({
   classCallCheck$1(this, AppModule);
 }) || _class$9);
 
+{
+  core_1.enableProdMode();
+}
 platformBrowserDynamic.platformBrowserDynamic().bootstrapModule(AppModule);
 
 exports.configService = configService;

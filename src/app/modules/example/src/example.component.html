@@ -15,7 +15,7 @@
 
 <form class="vertical" #frm="ngForm" (ngSubmit)="onSubmit()">
   <input class="tn-example-form--input one" type="text" [(ngModel)]="foo.email" rule="foo.email" name="email" #emailCtrl="ngModel" pInputText>
-  <tn-error [control]="emailCtrl"></tn-error>
+  <tn-validation-error [control]="emailCtrl"></tn-validation-error>
   <input class="tn-example-form--input one" type="password" [(ngModel)]="foo.password" rule="foo.password" name="password" pInputText>
   <div class="horizontal">
     <div class="one"></div>

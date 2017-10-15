@@ -10466,6 +10466,8 @@ var MenuComponent = (_dec$8 = Component({
   classCallCheck$1(this, MenuComponent);
 }) || _class$8);
 
+var min = '.min';
+
 var mainRoute = {
   path: '',
   component: SceneComponent,
@@ -10479,10 +10481,9 @@ var mainRedirectRoute = {
   redirectTo: 'home',
   pathMatch: 'full'
 };
-
 var loginRoute = {
   path: 'login',
-  loadChildren: 'src/app/modules/login/dist/tune-up.login.umd.min.js#login#LoginModule'
+  loadChildren: 'src/app/modules/login/dist/tune-up.login.umd' + min + '.js#login#LoginModule'
 };
 
 var appRoutes = {
@@ -10500,9 +10501,11 @@ var appRoutes = {
  * 
  * ADD THE EXPORTS TO modules/config.routing
  */
+var min$1 = '.min';
+
 var homeRoute = {
   path: 'example',
-  loadChildren: 'src/app/modules/example/dist/tune-up.example.umd.min.js#example#ExampleModule'
+  loadChildren: 'src/app/modules/example/dist/tune-up.example.umd' + min$1 + '.js#example#ExampleModule'
 };
 
 
@@ -10553,19 +10556,53 @@ var RoutingModule = (_dec$10 = NgModule({
   classCallCheck$1(this, RoutingModule);
 }) || _class$10);
 
-var html$3 = "<tn-notifications></tn-notifications>\n<router-outlet></router-outlet>\n";
-
-__$styleInject(".none{flex:none}.one{flex:1}.two{flex:2}.three{flex:3}.four{flex:4}.five{flex:5}.six{flex:6}.seven{flex:7}.eight{flex:8}.nine{flex:9}.ten{flex:10}.eleven{flex:11}.twelve{flex:12}.flex,.horizontal,.vertical{display:flex}.horizontal{flex-direction:row}.vertical{flex-direction:column}.wrap{flex-wrap:wrap}body{margin:0;min-height:100%;padding:0;overflow-x:hidden;overflow-y:auto;font-family:Roboto,Trebuchet MS,Arial,Helvetica,sans-serif;font-weight:400;color:#404c51;-webkit-font-smoothing:antialiased;font-size:1em}",undefined);
-
 var _dec$11;
 var _class$11;
 
-var AppComponent = (_dec$11 = Component({
+var TokenInterceptor = (_dec$11 = Injectable(), _dec$11(_class$11 = function () {
+  function TokenInterceptor(authService) {
+    classCallCheck$1(this, TokenInterceptor);
+
+    this._authService = authService;
+  }
+
+  createClass$1(TokenInterceptor, [{
+    key: 'intercept',
+    value: function intercept(req, next) {
+      if (!this._authService.getToken()) {
+        return next.handle(req);
+      }
+      var tokenReq = req.clone({
+        setHeaders: {
+          token: this._authService.getToken()
+        }
+      });
+      return next.handle(tokenReq);
+    }
+  }]);
+  return TokenInterceptor;
+}()) || _class$11);
+Reflect.defineMetadata('design:paramtypes', [AuthService], TokenInterceptor);
+
+var TokenInterceptorProvider = {
+  provide: HTTP_INTERCEPTORS,
+  useClass: TokenInterceptor,
+  multi: true
+};
+
+var html$3 = "<tn-notifications></tn-notifications>\r\n<router-outlet></router-outlet>\r\n";
+
+__$styleInject(".none{flex:none}.one{flex:1}.two{flex:2}.three{flex:3}.four{flex:4}.five{flex:5}.six{flex:6}.seven{flex:7}.eight{flex:8}.nine{flex:9}.ten{flex:10}.eleven{flex:11}.twelve{flex:12}.flex,.horizontal,.vertical{display:flex}.horizontal{flex-direction:row}.vertical{flex-direction:column}.wrap{flex-wrap:wrap}body{margin:0;min-height:100%;padding:0;overflow-x:hidden;overflow-y:auto;font-family:Roboto,Trebuchet MS,Arial,Helvetica,sans-serif;font-weight:400;color:#404c51;-webkit-font-smoothing:antialiased;font-size:1em}",undefined);
+
+var _dec$12;
+var _class$12;
+
+var AppComponent = (_dec$12 = Component({
   selector: 'tn-app',
   template: html$3
-}), _dec$11(_class$11 = function AppComponent() {
+}), _dec$12(_class$12 = function AppComponent() {
   classCallCheck$1(this, AppComponent);
-}) || _class$11);
+}) || _class$12);
 
 var _dec$9;
 var _class$9;
@@ -10573,7 +10610,7 @@ var _class$9;
 var AppModule = (_dec$9 = NgModule({
   imports: [TuneUpCoreModule, BrowserModule, BrowserAnimationsModule, HttpClientModule, RoutingModule],
   declarations: [AppComponent, SceneComponent, AppbarComponent, MenuComponent, ContentComponent],
-  providers: [ModuleLoaderProvider, APIInterceptorProvider, AuthService, AgentService, AboutService, NotificationsService],
+  providers: [ModuleLoaderProvider, APIInterceptorProvider, TokenInterceptorProvider, AuthService, AgentService, AboutService, NotificationsService],
   bootstrap: [AppComponent]
 }), _dec$9(_class$9 = function AppModule() {
   classCallCheck$1(this, AppModule);

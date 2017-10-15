@@ -1,19 +1,21 @@
-import {Component} from '@angular/core';
+import {Input, Component} from '@angular/core';
 
 import html from './appbar.component.html';
+
+import './appbar.component.css';
 
 @Component({
   selector: 'tn-appbar',  
   template: html
 })
 export class AppbarComponent {
-  show = true;
+  menuOpen = true;
 
-  onHideMenuBarClick() {
-    this.show = false;
+  onHideMenuClick() {
+    this.menuOpen = false;
   }
 
-  onShowMenuBarClick() {
-    this.show = true;
+  onShowMenuClick() {
+    this.menuOpen = true;
   }
 }

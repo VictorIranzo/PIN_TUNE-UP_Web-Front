@@ -1,8 +1,5 @@
 <div class="horizontal menu-bar">
-    <div *ngIf="show">
-            <button pButton type="button" (click)="onHideMenuBarClick()" icon="fa-caret-square-o-left" iconPos="left"></button>                
-    </div>
-    <div *ngIf="!show">
-            <button pButton type="button" (click)="onShowMenuBarClick()" icon="fa-caret-square-o-right" iconPos="left"></button>                
-    </div>
+    <div class ="none tn-scene-appbar--toggleMenu">a</div>
+    <button class="tn-scene-appbar--button" *ngIf="menuOpen"  pButton type="button" (click)="onHideMenuClick()" icon="fa-caret-square-o-left" iconPos="left"></button>                                
+    <button class="tn-scene-appbar--button" *ngIf="!menuOpen" pButton type="button" (click)="onShowMenuClick()" icon="fa-caret-square-o-right" iconPos="left"></button>                
 </div>

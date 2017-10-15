@@ -1,11 +1,11 @@
-:root{
-    --tn-scene-appbar--visibility: visible;
-  }
+@import url("../scene.variables.css");
 
 .tn-scene-appbar--button {
     align-self: center;
 }
 
-.tn-scene-appbar--menubar {
-    visibility: var(--tn-scene-appbar--visibility);
+div.tn-scene-appbar--toggleMenu {
+    background-color: #fff;
+    width: var(--tn-scene-menu--width);
+    height: var(--tn-scene-appbar--height);    
 }

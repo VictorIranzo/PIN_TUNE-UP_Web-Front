@@ -1,5 +1,7 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import html from './menuitem.component.html';
+
+import './menuitem.component.css';
 
 @Component({
   selector: 'tn-menuitem',

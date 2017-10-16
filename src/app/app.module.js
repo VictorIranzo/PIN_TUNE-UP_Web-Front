@@ -5,6 +5,8 @@ import {HttpClientModule} from '@angular/common/http';
 import {RoutingModule} from './routing';
 import {TokenInterceptorProvider} from './http';
 import {AuthService, AgentService, AboutService} from './services';
+import {MenuService} from './components/scene/menu/services';
+
 import {
   APIInterceptorProvider,
   ModuleLoaderProvider,
@@ -43,7 +45,8 @@ import {
     AuthService,
     AgentService,
     AboutService,
-    NotificationsService
+    NotificationsService,
+    MenuService
   ],
   bootstrap: [AppComponent]
 })

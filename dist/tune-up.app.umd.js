@@ -9990,6 +9990,11 @@ var AgentService = (_dec$3$1 = core_1.Injectable(), _dec$3$1(_class$3$1 = functi
   }
 
   createClass$1(AgentService, [{
+    key: 'isAdmin',
+    value: function isAdmin() {
+      return this._agent.Administrador;
+    }
+  }, {
     key: 'agent',
     get: function get$$1() {
       return this._agent;
@@ -10105,52 +10110,87 @@ var ContentComponent = (_dec$7$1 = core_1.Component({
   classCallCheck$1(this, ContentComponent);
 }) || _class$7$1);
 
-var html$3 = "<ul>\n  <li *ngFor = \"let item of items\" (click)=\"selectItem(item)\">\n   <tn-menuitem>\n     [text] = \"item.text\"\n     [path] = \"item.path\"\n     [icon] = \"item.icon\"\n     [adminOnly] = \"item.adminOnly\"\n    </tn-menuitem>\n  </li>\n </ul>\n\n";
-
-var _dec$8;
-var _class$8;
-
-var MenuComponent = (_dec$8 = core_1.Component({
-  selector: 'tn-menu',
-  template: html$3
-}), _dec$8(_class$8 = function MenuComponent() {
-  classCallCheck$1(this, MenuComponent);
-  this.items = [{
-    path: 'comunicaciones',
-    text: 'Comunicaciones',
-    icon: 'fa fa-bandcamp',
-    adminOnly: false
-  }, {
-    path: 'comunicaciones',
-    text: 'Comunicaciones',
-    icon: 'fa fa-bandcamp',
-    adminOnly: false
-  }, {
-    path: 'comunicaciones',
-    text: 'Comunicaciones',
-    icon: 'fa fa-bandcamp',
-    adminOnly: false
-  }, {
-    path: 'comunicaciones',
-    text: 'Comunicaciones',
-    icon: 'fa fa-bandcamp',
-    adminOnly: false
-  }];
-}) || _class$8);
-
-var html$4 = "<h3>\"text\"</h3>\n";
+var html$3 = "<button pButoon type=\"button\" (click) = \"clickBut()\" icon=\"fa fa-bandcamp\"></button>\n<p-sidebar #sidenav class = \"tn-menu-sidebar\">\n  <div *ngFor = \"let item of items\">\n    <div *ngIf = \"mustPrint(item)\">\n      <tn-menuitem  \n        [text] = \"item.text\"\n        [path] = \"item.path\"\n        [icon] = \"item.icon\"\n        [adminOnly] = \"item.adminOnly\"\n      ></tn-menuitem>\n    </div>\n  </div>\n</p-sidebar>\n";
 
 var _dec$9;
-var _dec2$1$1;
-var _dec3;
-var _dec4;
-var _dec5;
 var _class$9;
+
+var mqlGtsm = window.matchMedia('(min-width: 960px)');
+
+var MenuService = (_dec$9 = core_1.Injectable(), _dec$9(_class$9 = function () {
+  function MenuService(ngZone) {
+    var _this = this;
+
+    classCallCheck$1(this, MenuService);
+
+    this.onWindowSizeChanged = function (_ref) {
+      var matches = _ref.matches;
+
+      _this._docked = matches;
+      console.log(matches);
+      if (matches) _this.open();else _this.close();
+    };
+
+    this._sidenav = null;
+    this._ngZone = ngZone;
+  }
+
+  createClass$1(MenuService, [{
+    key: 'close',
+    value: function close() {
+      // this._sidenav && !this._docked && this._sidenav.close();
+      if (this._sidenav && !this._docked) this._sidenav.visible = false;
+    }
+  }, {
+    key: 'open',
+    value: function open() {
+      // this._sidenav && this._sidenav.open();
+      if (this._sidenav) {
+        this._sidenav.visible = true;
+        this._visible = true;
+      }
+      if (this._docked) {
+        document.getElementsByClassName('ui-sidebar-mask')[0].hidden = true;
+      } else {
+        document.getElementsByClassName('ui-sidebar-mask')[0].hidden = false;
+      }
+    }
+  }, {
+    key: 'initialize',
+    value: function initialize() {
+      var _this2 = this;
+
+      mqlGtsm.addListener(function (result) {
+        return _this2._ngZone.run(function () {
+          return _this2.onWindowSizeChanged(result);
+        });
+      });
+      this.onWindowSizeChanged(mqlGtsm);
+    }
+  }, {
+    key: 'dispose',
+    value: function dispose() {
+      mqlGtsm.removeListener(this.onWindowSizeChanged);
+      this._sidenav = null;
+    }
+  }, {
+    key: 'sidenav',
+    set: function set$$1(value) {
+      this._sidenav = value;
+      this._visible = this._sidenav._visible;
+    }
+  }]);
+  return MenuService;
+}()) || _class$9);
+Reflect.defineMetadata('design:paramtypes', [core_1.NgZone], MenuService);
+
+__$styleInject(".ng-tns-c0-0{top:var(--tn-scene-appbar--height)}",undefined);
+
+var _dec$8;
+var _dec2$1$1;
+var _class$8;
 var _class2$1$1;
 var _descriptor$1$1;
-var _descriptor2;
-var _descriptor3;
-var _descriptor4;
 
 function _initDefineProp$1$1(target, property, descriptor, context) {
   if (!descriptor) return;
@@ -10191,40 +10231,158 @@ function _applyDecoratedDescriptor$1$1(target, property, decorators, descriptor,
   return desc;
 }
 
-var MenuItemComponent = (_dec$9 = core_1.Component({
+var MenuComponent = (_dec$8 = core_1.Component({
+  selector: 'tn-menu',
+  template: html$3
+}), _dec2$1$1 = core_1.ViewChild('sidenav'), _dec$8(_class$8 = (_class2$1$1 = function () {
+  function MenuComponent(agentService, menuService) {
+    classCallCheck$1(this, MenuComponent);
+
+    _initDefineProp$1$1(this, 'sidenav', _descriptor$1$1, this);
+
+    this.items = configService.menuItems;
+
+    this._agentService = agentService;
+    this._menuService = menuService;
+  }
+
+  createClass$1(MenuComponent, [{
+    key: 'mustPrint',
+    value: function mustPrint(item) {
+      // if (item.adminOnly) {
+      //   if (this._agentService.isAdmin()) return true;
+      //   else return false;
+      // }
+      return true;
+    }
+  }, {
+    key: 'clickBut',
+    value: function clickBut() {
+      // this.visibleSidebar = true;
+      if (!this._menuService._sidenav.visible) this._menuService.open();else {
+        this._menuService.close();
+      }
+    }
+  }, {
+    key: 'ngAfterViewInit',
+    value: function ngAfterViewInit() {
+      this._menuService.sidenav = this.sidenav;
+      document.getElementsByClassName('ui-sidebar-close')[0].remove();
+    }
+  }, {
+    key: 'ngAfterViewChecked',
+    value: function ngAfterViewChecked() {
+      this._menuService.initialize();
+    }
+  }]);
+  return MenuComponent;
+}(), (_descriptor$1$1 = _applyDecoratedDescriptor$1$1(_class2$1$1.prototype, 'sidenav', [_dec2$1$1], {
+  enumerable: true,
+  initializer: function initializer() {
+    return null;
+  }
+})), _class2$1$1)) || _class$8);
+Reflect.defineMetadata('design:paramtypes', [AgentService, MenuService], MenuComponent);
+
+var html$4 = "<button pButton type=\"button\" class=\"ui-button-secondary\" label= {{text}} icon= {{icon}} (click) = \"onClick()\" routerLink={{path}}></button>\n\n";
+
+__$styleInject(".tn-menuitem-layout{width:fit-content;cursor:pointer;background-color:#fff}",undefined);
+
+var _dec$10;
+var _dec2$2;
+var _dec3;
+var _dec4;
+var _dec5;
+var _class$10;
+var _class2$2;
+var _descriptor$2;
+var _descriptor2;
+var _descriptor3;
+var _descriptor4;
+
+function _initDefineProp$2(target, property, descriptor, context) {
+  if (!descriptor) return;
+  Object.defineProperty(target, property, {
+    enumerable: descriptor.enumerable,
+    configurable: descriptor.configurable,
+    writable: descriptor.writable,
+    value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
+  });
+}
+
+function _applyDecoratedDescriptor$2(target, property, decorators, descriptor, context) {
+  var desc = {};
+  Object['ke' + 'ys'](descriptor).forEach(function (key) {
+    desc[key] = descriptor[key];
+  });
+  desc.enumerable = !!desc.enumerable;
+  desc.configurable = !!desc.configurable;
+
+  if ('value' in desc || desc.initializer) {
+    desc.writable = true;
+  }
+
+  desc = decorators.slice().reverse().reduce(function (desc, decorator) {
+    return decorator(target, property, desc) || desc;
+  }, desc);
+
+  if (context && desc.initializer !== void 0) {
+    desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
+    desc.initializer = undefined;
+  }
+
+  if (desc.initializer === void 0) {
+    Object['define' + 'Property'](target, property, desc);
+    desc = null;
+  }
+
+  return desc;
+}
+
+var MenuItemComponent = (_dec$10 = core_1.Component({
   selector: 'tn-menuitem',
   template: html$4
-}), _dec2$1$1 = Input(), _dec3 = Input(), _dec4 = Input(), _dec5 = Input(), _dec$9(_class$9 = (_class2$1$1 = function MenuItemComponent() {
-  classCallCheck$1(this, MenuItemComponent);
+}), _dec2$2 = core_1.Input(), _dec3 = core_1.Input(), _dec4 = core_1.Input(), _dec5 = core_1.Input(), _dec$10(_class$10 = (_class2$2 = function () {
+  function MenuItemComponent() {
+    classCallCheck$1(this, MenuItemComponent);
 
-  _initDefineProp$1$1(this, 'path', _descriptor$1$1, this);
+    _initDefineProp$2(this, 'path', _descriptor$2, this);
 
-  _initDefineProp$1$1(this, 'text', _descriptor2, this);
+    _initDefineProp$2(this, 'text', _descriptor2, this);
 
-  _initDefineProp$1$1(this, 'icon', _descriptor3, this);
+    _initDefineProp$2(this, 'icon', _descriptor3, this);
 
-  _initDefineProp$1$1(this, 'adminOnly', _descriptor4, this);
-}, (_descriptor$1$1 = _applyDecoratedDescriptor$1$1(_class2$1$1.prototype, 'path', [_dec2$1$1], {
+    _initDefineProp$2(this, 'adminOnly', _descriptor4, this);
+  }
+
+  createClass$1(MenuItemComponent, [{
+    key: 'onClick',
+    value: function onClick() {
+      console.log('Click en ' + text);
+    }
+  }]);
+  return MenuItemComponent;
+}(), (_descriptor$2 = _applyDecoratedDescriptor$2(_class2$2.prototype, 'path', [_dec2$2], {
   enumerable: true,
   initializer: function initializer() {
     return this.path;
   }
-}), _descriptor2 = _applyDecoratedDescriptor$1$1(_class2$1$1.prototype, 'text', [_dec3], {
+}), _descriptor2 = _applyDecoratedDescriptor$2(_class2$2.prototype, 'text', [_dec3], {
   enumerable: true,
   initializer: function initializer() {
     return this.text;
   }
-}), _descriptor3 = _applyDecoratedDescriptor$1$1(_class2$1$1.prototype, 'icon', [_dec4], {
+}), _descriptor3 = _applyDecoratedDescriptor$2(_class2$2.prototype, 'icon', [_dec4], {
   enumerable: true,
   initializer: function initializer() {
     return this.icon;
   }
-}), _descriptor4 = _applyDecoratedDescriptor$1$1(_class2$1$1.prototype, 'adminOnly', [_dec5], {
+}), _descriptor4 = _applyDecoratedDescriptor$2(_class2$2.prototype, 'adminOnly', [_dec5], {
   enumerable: true,
   initializer: function initializer() {
     return this.adminOnly;
   }
-})), _class2$1$1)) || _class$9);
+})), _class2$2)) || _class$10);
 
 var min = '';
 
@@ -10303,9 +10461,9 @@ var menuItemsMock = [{
   adminOnly: false
 }, {
   path: 'comunicaciones',
-  text: 'Comunicaciones',
+  text: 'No mostrar esto',
   icon: 'fa fa-bandcamp',
-  adminOnly: false
+  adminOnly: true
 }, {
   path: 'comunicaciones',
   text: 'Comunicaciones',
@@ -10324,24 +10482,24 @@ configService.init({
 });
 configService.addRoutesWithAuth(Object.values(childRoutes));
 
-var _dec$11;
-var _class$11;
+var _dec$12;
+var _class$12;
 
-var RoutingModule = (_dec$11 = core_1.NgModule({
+var RoutingModule = (_dec$12 = core_1.NgModule({
   imports: [router.RouterModule.forRoot(configService.getRouteObjects(), {
     useHash: true,
     enableTracing: "development" !== 'production'
   })],
   exports: [router.RouterModule],
   providers: [AuthGuard]
-}), _dec$11(_class$11 = function RoutingModule() {
+}), _dec$12(_class$12 = function RoutingModule() {
   classCallCheck$1(this, RoutingModule);
-}) || _class$11);
+}) || _class$12);
 
-var _dec$12;
-var _class$12;
+var _dec$13;
+var _class$13;
 
-var TokenInterceptor = (_dec$12 = core_1.Injectable(), _dec$12(_class$12 = function () {
+var TokenInterceptor = (_dec$13 = core_1.Injectable(), _dec$13(_class$13 = function () {
   function TokenInterceptor(authService) {
     classCallCheck$1(this, TokenInterceptor);
 
@@ -10363,7 +10521,7 @@ var TokenInterceptor = (_dec$12 = core_1.Injectable(), _dec$12(_class$12 = funct
     }
   }]);
   return TokenInterceptor;
-}()) || _class$12);
+}()) || _class$13);
 Reflect.defineMetadata('design:paramtypes', [AuthService], TokenInterceptor);
 
 var TokenInterceptorProvider = {
@@ -10376,27 +10534,27 @@ var html$5 = "<tn-notifications></tn-notifications>\r\n<router-outlet></router-o
 
 __$styleInject(".none{flex:none}.one{flex:1}.two{flex:2}.three{flex:3}.four{flex:4}.five{flex:5}.six{flex:6}.seven{flex:7}.eight{flex:8}.nine{flex:9}.ten{flex:10}.eleven{flex:11}.twelve{flex:12}.flex,.horizontal,.vertical{display:flex}.horizontal{flex-direction:row}.vertical{flex-direction:column}.wrap{flex-wrap:wrap}body{margin:0;min-height:100%;padding:0;overflow-x:hidden;overflow-y:auto;font-family:Roboto,Trebuchet MS,Arial,Helvetica,sans-serif;font-weight:400;color:#404c51;-webkit-font-smoothing:antialiased;font-size:1em}",undefined);
 
-var _dec$13;
-var _class$13;
+var _dec$14;
+var _class$14;
 
-var AppComponent = (_dec$13 = core_1.Component({
+var AppComponent = (_dec$14 = core_1.Component({
   selector: 'tn-app',
   template: html$5
-}), _dec$13(_class$13 = function AppComponent() {
+}), _dec$14(_class$14 = function AppComponent() {
   classCallCheck$1(this, AppComponent);
-}) || _class$13);
+}) || _class$14);
 
-var _dec$10;
-var _class$10;
+var _dec$11;
+var _class$11;
 
-var AppModule = (_dec$10 = core_1.NgModule({
+var AppModule = (_dec$11 = core_1.NgModule({
   imports: [TuneUpCoreModule, platformBrowser.BrowserModule, animations.BrowserAnimationsModule, http.HttpClientModule, RoutingModule],
   declarations: [AppComponent, SceneComponent, AppbarComponent, MenuComponent, ContentComponent, MenuItemComponent],
-  providers: [ModuleLoaderProvider, APIInterceptorProvider, TokenInterceptorProvider, AuthService, AgentService, AboutService, NotificationsService],
+  providers: [ModuleLoaderProvider, APIInterceptorProvider, TokenInterceptorProvider, AuthService, AgentService, AboutService, NotificationsService, MenuService],
   bootstrap: [AppComponent]
-}), _dec$10(_class$10 = function AppModule() {
+}), _dec$11(_class$11 = function AppModule() {
   classCallCheck$1(this, AppModule);
-}) || _class$10);
+}) || _class$11);
 
 platformBrowserDynamic.platformBrowserDynamic().bootstrapModule(AppModule);
 

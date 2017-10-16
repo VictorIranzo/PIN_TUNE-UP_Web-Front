@@ -7,9 +7,9 @@ export const menuItemsMock = [
   },
   {
     path: 'comunicaciones',
-    text: 'Comunicaciones',
+    text: 'No mostrar esto',
     icon: 'fa fa-bandcamp',
-    adminOnly: false
+    adminOnly: true
   },
   {
     path: 'comunicaciones',

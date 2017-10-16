@@ -11,4 +11,8 @@ export class AgentService {
   set agent(value) {
     this._agent = value;
   }
+
+  isAdmin() {
+    return this._agent.Administrador;
+  }
 }

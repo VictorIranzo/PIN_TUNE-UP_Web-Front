@@ -1,38 +1,46 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import html from './menu.component.html';
+import {configService} from '@tune-up/core';
+import {AgentService} from '../../../services';
+import {MenuService} from './services';
+
+import './menu.component.css';
 
 @Component({
   selector: 'tn-menu',
   template: html
 })
 export class MenuComponent {
-  visibleSidebar;
-  items = [
-    {
-      path: 'comunicaciones',
-      text: 'Comunicaciones',
-      icon: 'fa fa-bandcamp',
-      adminOnly: false
-    },
-    {
-      path: 'comunicaciones',
-      text: 'Comunicaciones',
-      icon: 'fa fa-bandcamp',
-      adminOnly: false
-    },
-    {
-      path: 'comunicaciones',
-      text: 'Comunicaciones',
-      icon: 'fa fa-bandcamp',
-      adminOnly: false
-    },
-    {
-      path: 'comunicaciones',
-      text: 'Comunicaciones',
-      icon: 'fa fa-bandcamp',
-      adminOnly: false
-    }
-  ];
+  @ViewChild('sidenav') sidenav = null;
+  items = configService.menuItems;
 
-  constructor() {}
+  constructor(agentService: AgentService, menuService: MenuService) {
+    this._agentService = agentService;
+    this._menuService = menuService;
+  }
+
+  mustPrint(item) {
+    if (item.adminOnly) {
+      if (this._agentService.isAdmin()) return true;
+      else return false;
+    }
+    return true;
+  }
+
+  clickBut() {
+    // this.visibleSidebar = true;
+    if (!this._menuService._sidenav.visible) this._menuService.open();
+    else {
+      this._menuService.close();
+    }
+  }
+
+  ngAfterViewInit() {
+    this._menuService.sidenav = this.sidenav;
+    document.getElementsByClassName('ui-sidebar-close')[0].remove();
+  }
+
+  ngAfterViewChecked() {
+    this._menuService.initialize();
+  }
 }

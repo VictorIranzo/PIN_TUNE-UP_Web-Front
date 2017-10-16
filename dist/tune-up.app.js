@@ -17,7 +17,7 @@ function __$styleInject(css, returnValue) {
 }
 
 import { platformBrowserDynamic as platformBrowserDynamic$1 } from '@angular/platform-browser-dynamic';
-import core_1, { Compiler, Component, Directive, Injectable, Input, NgModule, NgModuleFactoryLoader, NgZone, enableProdMode, forwardRef } from '@angular/core';
+import core_1, { Compiler, Component, Directive, Injectable, Input, NgModule, NgModuleFactoryLoader, NgZone, ViewChild, enableProdMode, forwardRef } from '@angular/core';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { primengExports } from '@tune-up/vendor';
 import { FormsModule, NG_VALIDATORS, Validators } from '@angular/forms';
@@ -10111,7 +10111,7 @@ var ContentComponent = (_dec$7$1 = Component({
   classCallCheck$1(this, ContentComponent);
 }) || _class$7$1);
 
-var html$3 = "<button pButoon type=\"button\" (click) = \"clickBut()\" icon=\"fa fa-bandcamp\"></button>\n<p-sidebar #sidenav class = \"tn-menu-sidebar\">\n  <div *ngFor = \"let item of items\">\n    <div *ngIf = \"mustPrint(item)\">\n      <tn-menuitem  \n        [text] = \"item.text\"\n        [path] = \"item.path\"\n        [icon] = \"item.icon\"\n        [adminOnly] = \"item.adminOnly\"\n      ></tn-menuitem>\n    </div>\n  </div>\n</p-sidebar>\n";
+var html$3 = "<button pButoon type=\"button\" (click) = \"clickBut()\" icon=\"fa fa-bandcamp\"></button>\n<p-sidebar #sidenav class = \"tn-menu-sidebar\">\n  <img class=\"tn-menu-sidebar--logo\" src=\"./assets/logo.png\">\n  <div *ngFor = \"let item of items\">\n    <div *ngIf = \"mustPrint(item)\">\n      <tn-menuitem  \n        [text] = \"item.text\"\n        [path] = \"item.path\"\n        [icon] = \"item.icon\"\n        [adminOnly] = \"item.adminOnly\"\n      ></tn-menuitem>\n    </div>\n  </div>\n</p-sidebar>\n";
 
 var _dec$9;
 var _class$9;
@@ -10140,13 +10140,17 @@ var MenuService = (_dec$9 = Injectable(), _dec$9(_class$9 = function () {
     key: 'close',
     value: function close() {
       // this._sidenav && !this._docked && this._sidenav.close();
-      if (this._sidenav && !this._docked) this._sidenav.visible = false;
+      if (this._sidenav && !this._docked) {
+        this._sidenav.visible = false;
+      }
     }
   }, {
     key: 'open',
     value: function open() {
       // this._sidenav && this._sidenav.open();
-      if (this._sidenav) this._sidenav.visible = true;
+      if (this._sidenav) {
+        this._sidenav.visible = true;
+      }
       if (this._docked) {
         document.getElementsByClassName('ui-sidebar-mask')[0].hidden = true;
       } else {
@@ -10181,7 +10185,7 @@ var MenuService = (_dec$9 = Injectable(), _dec$9(_class$9 = function () {
 }()) || _class$9);
 Reflect.defineMetadata('design:paramtypes', [NgZone], MenuService);
 
-__$styleInject(".ng-tns-c0-0{top:var(--tn-scene-appbar--height)}",undefined);
+__$styleInject(".ng-tns-c0-0{top:var(--tn-scene-appbar--height)}.tn-menu-sidebar--logo{width:180px;height:180px;padding-bottom:var(--padding-big)}",undefined);
 
 var _dec$8;
 var _dec2$1$1;
@@ -10246,17 +10250,18 @@ var MenuComponent = (_dec$8 = Component({
   createClass$1(MenuComponent, [{
     key: 'mustPrint',
     value: function mustPrint(item) {
-      // if (item.adminOnly) {
-      //   if (this._agentService.isAdmin()) return true;
-      //   else return false;
-      // }
+      if (item.adminOnly) {
+        if (this._agentService.isAdmin()) return true;else return false;
+      }
       return true;
     }
   }, {
     key: 'clickBut',
     value: function clickBut() {
       // this.visibleSidebar = true;
-      this._menuService.open();
+      if (!this._menuService._sidenav.visible) this._menuService.open();else {
+        this._menuService.close();
+      }
     }
   }, {
     key: 'ngAfterViewInit',
@@ -10279,9 +10284,9 @@ var MenuComponent = (_dec$8 = Component({
 })), _class2$1$1)) || _class$8);
 Reflect.defineMetadata('design:paramtypes', [AgentService, MenuService], MenuComponent);
 
-var html$4 = "<button pButton type=\"button\" class=\"ui-button-secondary\" label= {{text}} icon= {{icon}} (click) = \"onClick()\" routerLink={{path}}></button>\n\n";
+var html$4 = "<div class = \"tn-menuitem-layout\">\n<button pButton type=\"button\" class=\"ui-button-secondary\" label= {{text}} icon= {{icon}} (click) = \"onClick()\" routerLink={{path}}></button>\n</div>\n";
 
-__$styleInject(".tn-menuitem-layout{width:fit-content;cursor:pointer;background-color:#fff}",undefined);
+__$styleInject(".tn-menuitem-layout{cursor:pointer;background-color:#fff;height:50 px;width:100%}",undefined);
 
 var _dec$10;
 var _dec2$2;

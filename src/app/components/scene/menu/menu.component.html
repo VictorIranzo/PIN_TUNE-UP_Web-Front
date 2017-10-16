@@ -1,6 +1,7 @@
 <button pButoon type="button" (click) = "clickBut()" icon="fa fa-bandcamp"></button>
 <p-sidebar #sidenav class = "tn-menu-sidebar">
-  <div *ngFor = "let item of items">
+  <img class="tn-menu-sidebar--logo" src="./assets/logo.png">
+  <div *ngFor = "let item of items" class = "tn-menu-sidebar">
     <div *ngIf = "mustPrint(item)">
       <tn-menuitem  
         [text] = "item.text"

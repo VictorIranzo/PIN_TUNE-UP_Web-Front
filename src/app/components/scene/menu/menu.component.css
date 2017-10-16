@@ -1,7 +1,15 @@
 .tn-menu-sidebar{
-
+padding: 0px,0px,0px,0px;
 /* top: 70px; */
 }
 .ng-tns-c0-0{
   top: var(--tn-scene-appbar--height);
+}
+.tn-menu-sidebar--logo{
+  width: 180px;
+  height: 180px;
+  margin-left: 45px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+
 }

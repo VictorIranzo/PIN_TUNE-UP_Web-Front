@@ -1,11 +1,27 @@
 @import 'styleguide';
 
 .tn-menuitem-layout{
-  width: fit-content;
   cursor: pointer;
-  background-color: white;
+  background: white;
+  color: black;
+  border: none;
+  height: 150%;
+  width: 100%;
 
   /* @media (--gt-sm){
     height: 50px;
   } */
+}
+#ui-button{
+  background: white;
+  border: black;
+  color: black;
+}
+.ui-widget.ui-button{
+  background: white;
+  border-bottom: 1px solid black;
+  color: black;
+  /* border: none; */
+  height: 50px;
+  width: 100%;
 }

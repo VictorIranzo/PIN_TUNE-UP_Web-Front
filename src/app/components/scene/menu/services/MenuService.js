@@ -15,6 +15,7 @@ export class MenuService {
     // this._sidenav && !this._docked && this._sidenav.close();
     if (this._sidenav && !this._docked) { 
       this._sidenav.visible = false;
+    }
   }
   open() {
     // this._sidenav && this._sidenav.open();

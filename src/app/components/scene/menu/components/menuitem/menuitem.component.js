@@ -1,11 +1,12 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ViewEncapsulation} from '@angular/core';
 import html from './menuitem.component.html';
 
 import './menuitem.component.css';
 
 @Component({
   selector: 'tn-menuitem',
-  template: html
+  template: html,
+  encapsulation: ViewEncapsulation.None
 })
 export class MenuItemComponent {
   @Input() path;

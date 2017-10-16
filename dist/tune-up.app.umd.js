@@ -10110,7 +10110,7 @@ var ContentComponent = (_dec$7$1 = core_1.Component({
   classCallCheck$1(this, ContentComponent);
 }) || _class$7$1);
 
-var html$3 = "<button pButoon type=\"button\" (click) = \"clickBut()\" icon=\"fa fa-bandcamp\"></button>\n<p-sidebar #sidenav class = \"tn-menu-sidebar\">\n  <div *ngFor = \"let item of items\">\n    <div *ngIf = \"mustPrint(item)\">\n      <tn-menuitem  \n        [text] = \"item.text\"\n        [path] = \"item.path\"\n        [icon] = \"item.icon\"\n        [adminOnly] = \"item.adminOnly\"\n      ></tn-menuitem>\n    </div>\n  </div>\n</p-sidebar>\n";
+var html$3 = "<button pButoon type=\"button\" (click) = \"clickBut()\" icon=\"fa fa-bandcamp\"></button>\n<p-sidebar #sidenav class = \"tn-menu-sidebar\">\n  <img class=\"tn-menu-sidebar--logo\" src=\"./assets/logo.png\">\n  <div *ngFor = \"let item of items\" class = \"tn-menu-sidebar\">\n    <div *ngIf = \"mustPrint(item)\">\n      <tn-menuitem  \n        [text] = \"item.text\"\n        [path] = \"item.path\"\n        [icon] = \"item.icon\"\n        [adminOnly] = \"item.adminOnly\"\n      ></tn-menuitem>\n    </div>\n  </div>\n</p-sidebar>\n";
 
 var _dec$9;
 var _class$9;
@@ -10139,7 +10139,9 @@ var MenuService = (_dec$9 = core_1.Injectable(), _dec$9(_class$9 = function () {
     key: 'close',
     value: function close() {
       // this._sidenav && !this._docked && this._sidenav.close();
-      if (this._sidenav && !this._docked) this._sidenav.visible = false;
+      if (this._sidenav && !this._docked) {
+        this._sidenav.visible = false;
+      }
     }
   }, {
     key: 'open',
@@ -10147,7 +10149,6 @@ var MenuService = (_dec$9 = core_1.Injectable(), _dec$9(_class$9 = function () {
       // this._sidenav && this._sidenav.open();
       if (this._sidenav) {
         this._sidenav.visible = true;
-        this._visible = true;
       }
       if (this._docked) {
         document.getElementsByClassName('ui-sidebar-mask')[0].hidden = true;
@@ -10177,14 +10178,13 @@ var MenuService = (_dec$9 = core_1.Injectable(), _dec$9(_class$9 = function () {
     key: 'sidenav',
     set: function set$$1(value) {
       this._sidenav = value;
-      this._visible = this._sidenav._visible;
     }
   }]);
   return MenuService;
 }()) || _class$9);
 Reflect.defineMetadata('design:paramtypes', [core_1.NgZone], MenuService);
 
-__$styleInject(".ng-tns-c0-0{top:var(--tn-scene-appbar--height)}",undefined);
+__$styleInject(".tn-menu-sidebar{padding:0,0,0,0}.ng-tns-c0-0{top:var(--tn-scene-appbar--height)}.tn-menu-sidebar--logo{width:180px;height:180px;margin-left:45px;margin-top:20px;margin-bottom:20px}",undefined);
 
 var _dec$8;
 var _dec2$1$1;
@@ -10249,10 +10249,9 @@ var MenuComponent = (_dec$8 = core_1.Component({
   createClass$1(MenuComponent, [{
     key: 'mustPrint',
     value: function mustPrint(item) {
-      // if (item.adminOnly) {
-      //   if (this._agentService.isAdmin()) return true;
-      //   else return false;
-      // }
+      if (item.adminOnly) {
+        if (this._agentService.isAdmin()) return true;else return false;
+      }
       return true;
     }
   }, {
@@ -10284,9 +10283,9 @@ var MenuComponent = (_dec$8 = core_1.Component({
 })), _class2$1$1)) || _class$8);
 Reflect.defineMetadata('design:paramtypes', [AgentService, MenuService], MenuComponent);
 
-var html$4 = "<button pButton type=\"button\" class=\"ui-button-secondary\" label= {{text}} icon= {{icon}} (click) = \"onClick()\" routerLink={{path}}></button>\n\n";
+var html$4 = "<button pButton type=\"button\" class=\"tn-menuitem-layout\" label= {{text}} icon= {{icon}} (click) = \"onClick()\" routerLink={{path}}></button>\n";
 
-__$styleInject(".tn-menuitem-layout{width:fit-content;cursor:pointer;background-color:#fff}",undefined);
+__$styleInject(".tn-menuitem-layout{cursor:pointer;background:#fff;color:#000;border:none;height:150%;width:100%}#ui-button{background:#fff;border:#000;color:#000}.ui-widget.ui-button{background:#fff;border-bottom:1px solid #000;color:#000;height:50px;width:100%}",undefined);
 
 var _dec$10;
 var _dec2$2;
@@ -10341,7 +10340,8 @@ function _applyDecoratedDescriptor$2(target, property, decorators, descriptor, c
 
 var MenuItemComponent = (_dec$10 = core_1.Component({
   selector: 'tn-menuitem',
-  template: html$4
+  template: html$4,
+  encapsulation: core_1.ViewEncapsulation.None
 }), _dec2$2 = core_1.Input(), _dec3 = core_1.Input(), _dec4 = core_1.Input(), _dec5 = core_1.Input(), _dec$10(_class$10 = (_class2$2 = function () {
   function MenuItemComponent() {
     classCallCheck$1(this, MenuItemComponent);

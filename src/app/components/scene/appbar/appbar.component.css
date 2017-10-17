@@ -10,7 +10,7 @@
     align-self: center;    
 }
 
-div.tn-scene-appbar--topMenu {
+.tn-scene-appbar--topMenu {
     background-color: #fff;
     width: var(--tn-scene-menu--width);
     height: var(--tn-scene-appbar--height);    

@@ -23,11 +23,11 @@ export class AppbarComponent {
     this.breadcrumbItems = this._breadcrumbService.getItems();
   }
 
-  _onHideMenuClick() {
+  onHideMenuClick() {
     this.menuOpen = false;
   }
 
-  _onShowMenuClick() {
+  onShowMenuClick() {
     this.menuOpen = true;
   }
 }

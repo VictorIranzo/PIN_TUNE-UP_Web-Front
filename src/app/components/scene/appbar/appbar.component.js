@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {BreadcrumbService} from '../../../services/breadcrumb.service';
 
 import html from './appbar.component.html';
@@ -6,21 +6,18 @@ import html from './appbar.component.html';
 import './appbar.component.css';
 
 @Component({
-  selector: 'tn-appbar',  
+  selector: 'tn-appbar',
   template: html,
   providers: [BreadcrumbService]
 })
 export class AppbarComponent {
-  constructor(breadcrumbService : BreadcrumbService) {
+  constructor(breadcrumbService: BreadcrumbService) {
     this._breadcrumbService = breadcrumbService;
+    this._getBreadcrumbItems();
   }
 
   @Input() menuOpen = true;
-  breadcrumbItems = [];  
-  
-  ngOnInit() {
-    this._getBreadcrumbItems();
-  }
+  breadcrumbItems = [];
 
   _getBreadcrumbItems() {
     this.breadcrumbItems = this._breadcrumbService.getItems();
@@ -33,6 +30,4 @@ export class AppbarComponent {
   _onShowMenuClick() {
     this.menuOpen = true;
   }
-
-  
 }

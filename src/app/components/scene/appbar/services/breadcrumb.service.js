@@ -1,18 +1,18 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
-@Injectable() 
+@Injectable()
 export class BreadcrumbService {
-    _breadCrumbItems = [];
+  _breadCrumbItems = [];
 
-    getItems() {
-        return this._breadCrumbItems;
-    }
+  getItems() {
+    return this._breadCrumbItems;
+  }
 
-    setItems(menuItem) {
-        this._breadCrumbItems = items;
-    }
+  setItems(menuItem) {
+    this._breadCrumbItems = items;
+  }
 
-    addItem(menuItem) {
-        this._breadCrumbItems.push(menuItem);
-    }
+  addItem(menuItem) {
+    this._breadCrumbItems.push(menuItem);
+  }
 }

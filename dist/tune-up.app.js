@@ -177,8 +177,6 @@ var createClass$1 = function () {
   };
 }();
 
-<<<<<<< HEAD
-=======
 
 
 
@@ -247,7 +245,6 @@ function __$styleInject$1(css, returnValue) {
     return returnValue;
 }
 
->>>>>>> 5b0153993acdbd185cdf7a2265e2ba001c9d919c
 var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
 function commonjsRequire() {
@@ -10017,9 +10014,6 @@ var AboutService = (_dec$4$1 = Injectable(), _dec$4$1(_class$4$1 = function () {
   function AboutService() {
     classCallCheck$1(this, AboutService);
 
-<<<<<<< HEAD
-__$styleInject(".tn-scene-appbar{background-color:#20272a;display:block;padding:0;height:70px;box-sizing:border-box;position:fixed;top:0;left:0;width:100%;z-index:1;box-shadow:0 2px 5px 0 rgba(0,0,0,.3)}.tn-scene-menu{position:fixed;left:0;top:70px;overflow:hidden;width:270px;box-shadow:0 0 5px 0 rgba(0,0,0,.3)}.tn-scene-content,.tn-scene-menu{height:100%;background-color:#fff}.tn-scene-content{margin-left:270px;padding-top:70px;width:100%}",undefined);
-=======
     this._about = null;
   }
 
@@ -10034,7 +10028,6 @@ __$styleInject(".tn-scene-appbar{background-color:#20272a;display:block;padding:
   }]);
   return AboutService;
 }()) || _class$4$1);
->>>>>>> 5b0153993acdbd185cdf7a2265e2ba001c9d919c
 
 var _dec$1$1;
 var _class$1$1;
@@ -10082,7 +10075,7 @@ var AuthGuard = (_dec$1$1 = Injectable(), _dec$1$1(_class$1$1 = function () {
 }()) || _class$1$1);
 Reflect.defineMetadata('design:paramtypes', [Router, AuthService], AuthGuard);
 
-var html$1$1 = "<div class=\"vertical\">\r\n  <tn-appbar class=\"tn-scene-appbar\"></tn-appbar>\r\n  <div class=\"horizontal\">\r\n    <tn-menu class=\"tn-scene-menu\"></tn-menu>\r\n    <tn-content class=\"tn-scene-content\"></tn-content>\r\n  </div>\r\n</div>\r\n";
+var html$1$1 = "<div class=\"vertical\">\n  <tn-appbar class=\"tn-scene-appbar\"></tn-appbar>\n  <div class=\"horizontal\">\n    <tn-menu class=\"tn-scene-menu\"></tn-menu>\n    <tn-content class=\"tn-scene-content\"></tn-content>\n  </div>\n</div>\n";
 
 __$styleInject(".tn-scene-appbar{background-color:#20272a;display:block;padding:0;height:70px;box-sizing:border-box;position:fixed;top:0;left:0;width:100%;z-index:1;box-shadow:0 2px 5px 0 rgba(0,0,0,.3)}.tn-scene-menu{position:fixed;left:0;top:70px;overflow:hidden;width:270px;box-shadow:0 0 5px 0 rgba(0,0,0,.3)}.tn-scene-content,.tn-scene-menu{height:100%;background-color:#fff}.tn-scene-content{margin-left:270px;padding-top:70px;width:100%}",undefined);
 
@@ -10160,7 +10153,7 @@ var MenuService = (_dec$7$1 = Injectable(), _dec$7$1(_class$7$1 = function () {
 }()) || _class$7$1);
 Reflect.defineMetadata('design:paramtypes', [NgZone], MenuService);
 
-__$styleInject(".tn-menu-sidebar{padding:0,0,0,0}.ng-tns-c0-0{top:var(--tn-scene-appbar--height)}.tn-menu-sidebar--logo{width:180px;height:180px;margin-left:45px;margin-top:20px;margin-bottom:20px}",undefined);
+__$styleInject(".tn-menu-sidebar{padding:0,0,0,0}.tn-menu-sidebar--logo{width:180px;height:180px;margin-left:45px;margin-top:20px;margin-bottom:20px}",undefined);
 
 var _dec$6$1;
 var _dec2$1$1;
@@ -10225,9 +10218,10 @@ var MenuComponent = (_dec$6$1 = Component({
   createClass$1(MenuComponent, [{
     key: 'mustPrint',
     value: function mustPrint(item) {
-      if (item.adminOnly) {
-        if (this._agentService.isAdmin()) return true;else return false;
-      }
+      // if (item.adminOnly) {
+      //   if (this._agentService.isAdmin()) return true;
+      //   else return false;
+      // }
       return true;
     }
   }, {
@@ -10253,7 +10247,7 @@ Reflect.defineMetadata('design:paramtypes', [AgentService, MenuService], MenuCom
 
 var html$3 = "<button pButton type=\"button\" class=\"tn-menuitem-layout\" label= {{text}} icon= {{icon}} (click) = \"onClick()\" routerLink={{path}}></button>\n";
 
-__$styleInject(".tn-menuitem-layout{cursor:pointer;background:#fff;color:#000;border:none;height:150%;width:100%}#ui-button{background:#fff;border:#000;color:#000}.ui-widget.ui-button{background:#fff;border-bottom:1px solid #000;color:#000;height:50px;width:100%}",undefined);
+__$styleInject(".tn-menuitem-layout{cursor:pointer;background:#fff;color:#000;border:none;height:150%;width:100%}",undefined);
 
 var _dec$8;
 var _dec2$2;
@@ -10363,82 +10357,135 @@ var SceneComponent = (_dec$5$1 = Component({
   classCallCheck$1(this, SceneComponent);
 }) || _class$5$1);
 
-<<<<<<< HEAD
-var html$2 = "<div class=\"horizontal menu-bar\">\n    <div *ngIf=\"show\">\n            <button pButton type=\"button\" (click)=\"onHideMenuBarClick()\" icon=\"fa-caret-square-o-left\" iconPos=\"left\"></button>                \n    </div>\n    <div *ngIf=\"!show\">\n            <button pButton type=\"button\" (click)=\"onShowMenuBarClick()\" icon=\"fa-caret-square-o-right\" iconPos=\"left\"></button>                \n    </div>\n</div>";
-
-var _dec$2$1;
-var _class$2$1;
-
-var AppbarComponent = (_dec$2$1 = Component({
-  selector: 'tn-appbar',
-  template: html$2
-}), _dec$2$1(_class$2$1 = function () {
-  function AppbarComponent() {
-    classCallCheck$1(this, AppbarComponent);
-    this.show = true;
-  }
-
-  createClass$1(AppbarComponent, [{
-    key: 'onHideMenuBarClick',
-    value: function onHideMenuBarClick() {
-      this.show = false;
-    }
-  }, {
-    key: 'onShowMenuBarClick',
-    value: function onShowMenuBarClick() {
-      this.show = true;
-    }
-  }]);
-  return AppbarComponent;
-}()) || _class$2$1);
-
-var html$3 = "<router-outlet></router-outlet>\n";
-=======
-var html$4 = "<div class=\"horizontal\">\n  <div class=\"none\">\n    <button pButoon type=\"button\" (click) = \"clickBut()\" icon=\"fa fa-bandcamp\"></button>\n  </div>\n  <div class=\"one\"></div>\n  <div class=\"none\">2</div>\n  <div class=\"none\">3</div>\n</div>\n";
-
-var _dec$9;
-var _class$9;
-
-var AppbarComponent = (_dec$9 = Component({
-  template: html$4,
-  selector: 'tn-appbar'
-}), _dec$9(_class$9 = function () {
-  function AppbarComponent(menuService) {
-    classCallCheck$1(this, AppbarComponent);
-  }
-
-  createClass$1(AppbarComponent, [{
-    key: 'clickBut',
-    value: function clickBut() {
-      // this.visibleSidebar = true;
-      if (!this._menuService._sidenav.visible) this._menuService.open();else {
-        this._menuService.close();
-      }
-    }
-  }]);
-  return AppbarComponent;
-}()) || _class$9);
-Reflect.defineMetadata('design:paramtypes', [MenuService], AppbarComponent);
-
-var html$5 = "<router-outlet></router-outlet>\r\n";
->>>>>>> 5b0153993acdbd185cdf7a2265e2ba001c9d919c
-
 var _dec$10;
 var _class$10;
 
-var ContentComponent = (_dec$10 = Component({
-  selector: 'tn-content',
-<<<<<<< HEAD
-  template: html$3
-}), _dec$3$1(_class$3$1 = function ContentComponent() {
-=======
-  template: html$5
-}), _dec$10(_class$10 = function ContentComponent() {
->>>>>>> 5b0153993acdbd185cdf7a2265e2ba001c9d919c
-  classCallCheck$1(this, ContentComponent);
-}) || _class$10);
+var BreadcrumbService = (_dec$10 = Injectable(), _dec$10(_class$10 = function () {
+  function BreadcrumbService() {
+    classCallCheck$1(this, BreadcrumbService);
+    this._breadCrumbItems = [];
+  }
 
-var min = '.min';
+  createClass$1(BreadcrumbService, [{
+    key: 'getItems',
+    value: function getItems() {
+      return this._breadCrumbItems;
+    }
+  }, {
+    key: 'setItems',
+    value: function setItems(menuItem) {
+      this._breadCrumbItems = items;
+    }
+  }, {
+    key: 'addItem',
+    value: function addItem(menuItem) {
+      this._breadCrumbItems.push(menuItem);
+    }
+  }]);
+  return BreadcrumbService;
+}()) || _class$10);
+
+var html$4 = "<div class=\"horizontal menu-bar\">\n    <div class =\"none tn-scene-appbar--topMenu\">Logo TuneUP</div>\n    <div class =\"horizontal ten\">\n        <button class=\"tn-scene-appbar--button\" *ngIf=\"menuOpen\"  pButton type=\"button\" (click)=\"onHideMenuClick()\" icon=\"fa-caret-square-o-left\" iconPos=\"left\"></button>                                \n        <button class=\"tn-scene-appbar--button\" *ngIf=\"!menuOpen\" pButton type=\"button\" (click)=\"onShowMenuClick()\" icon=\"fa-caret-square-o-right\" iconPos=\"left\"></button>                    \n        <p-breadcrumb class=\"tn-scene-appbar--breadcrumb\" [model]=\"breadcrumbItems\"></p-breadcrumb>    \n    </div>\n    <div class = \"horizontal one\">\n        <button class=\"tn-scene-appbar--button\" pButton type=\"button\" label=\"Click\"></button>        \n    </div>\n    \n</div>\n";
+
+__$styleInject(".tn-scene-appbar--breadcrumb,.tn-scene-appbar--button{margin-left:10px;align-self:center}.tn-scene-appbar--topMenu{background-color:#fff;width:270px;height:70px}",undefined);
+
+var _dec$9;
+var _dec2$3;
+var _class$9;
+var _class2$3;
+var _descriptor$3;
+
+function _initDefineProp$3(target, property, descriptor, context) {
+  if (!descriptor) return;
+  Object.defineProperty(target, property, {
+    enumerable: descriptor.enumerable,
+    configurable: descriptor.configurable,
+    writable: descriptor.writable,
+    value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
+  });
+}
+
+function _applyDecoratedDescriptor$3(target, property, decorators, descriptor, context) {
+  var desc = {};
+  Object['ke' + 'ys'](descriptor).forEach(function (key) {
+    desc[key] = descriptor[key];
+  });
+  desc.enumerable = !!desc.enumerable;
+  desc.configurable = !!desc.configurable;
+
+  if ('value' in desc || desc.initializer) {
+    desc.writable = true;
+  }
+
+  desc = decorators.slice().reverse().reduce(function (desc, decorator) {
+    return decorator(target, property, desc) || desc;
+  }, desc);
+
+  if (context && desc.initializer !== void 0) {
+    desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
+    desc.initializer = undefined;
+  }
+
+  if (desc.initializer === void 0) {
+    Object['define' + 'Property'](target, property, desc);
+    desc = null;
+  }
+
+  return desc;
+}
+
+var AppbarComponent = (_dec$9 = Component({
+  selector: 'tn-appbar',
+  template: html$4,
+  providers: [BreadcrumbService]
+}), _dec2$3 = Input(), _dec$9(_class$9 = (_class2$3 = function () {
+  function AppbarComponent(breadcrumbService) {
+    classCallCheck$1(this, AppbarComponent);
+
+    _initDefineProp$3(this, 'menuOpen', _descriptor$3, this);
+
+    this.breadcrumbItems = [];
+
+    this._breadcrumbService = breadcrumbService;
+    this._getBreadcrumbItems();
+  }
+
+  createClass$1(AppbarComponent, [{
+    key: '_getBreadcrumbItems',
+    value: function _getBreadcrumbItems() {
+      this.breadcrumbItems = this._breadcrumbService.getItems();
+    }
+  }, {
+    key: 'onHideMenuClick',
+    value: function onHideMenuClick() {
+      this.menuOpen = false;
+    }
+  }, {
+    key: 'onShowMenuClick',
+    value: function onShowMenuClick() {
+      this.menuOpen = true;
+    }
+  }]);
+  return AppbarComponent;
+}(), (_descriptor$3 = _applyDecoratedDescriptor$3(_class2$3.prototype, 'menuOpen', [_dec2$3], {
+  enumerable: true,
+  initializer: function initializer() {
+    return true;
+  }
+})), _class2$3)) || _class$9);
+Reflect.defineMetadata('design:paramtypes', [BreadcrumbService], AppbarComponent);
+
+var html$5 = "<router-outlet></router-outlet>\n";
+
+var _dec$11;
+var _class$11;
+
+var ContentComponent = (_dec$11 = Component({
+  selector: 'tn-content',
+  template: html$5
+}), _dec$11(_class$11 = function ContentComponent() {
+  classCallCheck$1(this, ContentComponent);
+}) || _class$11);
 
 var min = '.min';
 
@@ -10538,77 +10585,24 @@ configService.init({
 });
 configService.addRoutesWithAuth(Object.values(childRoutes));
 
-var _dec$12;
-var _class$12;
+var _dec$13;
+var _class$13;
 
-var RoutingModule = (_dec$12 = NgModule({
+var RoutingModule = (_dec$13 = NgModule({
   imports: [RouterModule.forRoot(configService.getRouteObjects(), {
     useHash: true,
     enableTracing: "production" !== 'production'
   })],
   exports: [RouterModule],
   providers: [AuthGuard]
-}), _dec$12(_class$12 = function RoutingModule() {
+}), _dec$13(_class$13 = function RoutingModule() {
   classCallCheck$1(this, RoutingModule);
-}) || _class$12);
-
-var _dec$13;
-var _class$13;
-
-var TokenInterceptor = (_dec$13 = Injectable(), _dec$13(_class$13 = function () {
-  function TokenInterceptor(authService) {
-    classCallCheck$1(this, TokenInterceptor);
-
-<<<<<<< HEAD
-var html$4 = "<router-outlet></router-outlet>\n";
-=======
-    this._authService = authService;
-  }
-
-  createClass$1(TokenInterceptor, [{
-    key: 'intercept',
-    value: function intercept(req, next) {
-      if (!this._authService.getToken()) {
-        return next.handle(req);
-      }
-      var tokenReq = req.clone({
-        setHeaders: {
-          token: this._authService.getToken()
-        }
-      });
-      return next.handle(tokenReq);
-    }
-  }]);
-  return TokenInterceptor;
-}()) || _class$13);
-Reflect.defineMetadata('design:paramtypes', [AuthService], TokenInterceptor);
-
-var TokenInterceptorProvider = {
-  provide: HTTP_INTERCEPTORS,
-  useClass: TokenInterceptor,
-  multi: true
-};
-
-<<<<<<< HEAD
-var html$6 = "<tn-notifications></tn-notifications>\r\n<router-outlet></router-outlet>\r\n";
->>>>>>> 5b0153993acdbd185cdf7a2265e2ba001c9d919c
-
-__$styleInject(".none{flex:none}.one{flex:1}.two{flex:2}.three{flex:3}.four{flex:4}.five{flex:5}.six{flex:6}.seven{flex:7}.eight{flex:8}.nine{flex:9}.ten{flex:10}.eleven{flex:11}.twelve{flex:12}.flex,.horizontal,.vertical{display:flex}.horizontal{flex-direction:row}.vertical{flex-direction:column}.wrap{flex-wrap:wrap}body{margin:0;min-height:100%;padding:0;overflow-x:hidden;overflow-y:auto;font-family:Roboto,Trebuchet MS,Arial,Helvetica,sans-serif;font-weight:400;color:#404c51;-webkit-font-smoothing:antialiased;font-size:1em}",undefined);
+}) || _class$13);
 
 var _dec$14;
 var _class$14;
 
-var AppComponent = (_dec$14 = Component({
-  selector: 'tn-app',
-  template: html$6
-}), _dec$14(_class$14 = function AppComponent() {
-  classCallCheck$1(this, AppComponent);
-}) || _class$14);
-=======
-var _dec$11;
-var _class$11;
-
-var TokenInterceptor = (_dec$11 = Injectable(), _dec$11(_class$11 = function () {
+var TokenInterceptor = (_dec$14 = Injectable(), _dec$14(_class$14 = function () {
   function TokenInterceptor(authService) {
     classCallCheck$1(this, TokenInterceptor);
 
@@ -10630,7 +10624,7 @@ var TokenInterceptor = (_dec$11 = Injectable(), _dec$11(_class$11 = function () 
     }
   }]);
   return TokenInterceptor;
-}()) || _class$11);
+}()) || _class$14);
 Reflect.defineMetadata('design:paramtypes', [AuthService], TokenInterceptor);
 
 var TokenInterceptorProvider = {
@@ -10639,41 +10633,31 @@ var TokenInterceptorProvider = {
   multi: true
 };
 
-var html$3 = "<tn-notifications></tn-notifications>\r\n<router-outlet></router-outlet>\r\n";
+var html$6 = "<tn-notifications></tn-notifications>\n<router-outlet></router-outlet>\n";
 
 __$styleInject(".none{flex:none}.one{flex:1}.two{flex:2}.three{flex:3}.four{flex:4}.five{flex:5}.six{flex:6}.seven{flex:7}.eight{flex:8}.nine{flex:9}.ten{flex:10}.eleven{flex:11}.twelve{flex:12}.flex,.horizontal,.vertical{display:flex}.horizontal{flex-direction:row}.vertical{flex-direction:column}.wrap{flex-wrap:wrap}body{margin:0;min-height:100%;padding:0;overflow-x:hidden;overflow-y:auto;font-family:Roboto,Trebuchet MS,Arial,Helvetica,sans-serif;font-weight:400;color:#404c51;-webkit-font-smoothing:antialiased;font-size:1em}",undefined);
+
+var _dec$15;
+var _class$15;
+
+var AppComponent = (_dec$15 = Component({
+  selector: 'tn-app',
+  template: html$6
+}), _dec$15(_class$15 = function AppComponent() {
+  classCallCheck$1(this, AppComponent);
+}) || _class$15);
 
 var _dec$12;
 var _class$12;
 
-var AppComponent = (_dec$12 = Component({
-  selector: 'tn-app',
-<<<<<<< HEAD
-  template: html$4
-}), _dec$7(_class$7 = function AppComponent() {
-=======
-  template: html$3
-}), _dec$12(_class$12 = function AppComponent() {
->>>>>>> 5b0153993acdbd185cdf7a2265e2ba001c9d919c
-  classCallCheck$1(this, AppComponent);
-}) || _class$12);
->>>>>>> a0f5583f85bc386cc7d43a935932f29db7f8b96f
-
-var _dec$11;
-var _class$11;
-
-var AppModule = (_dec$11 = NgModule({
+var AppModule = (_dec$12 = NgModule({
   imports: [TuneUpCoreModule, BrowserModule, BrowserAnimationsModule, HttpClientModule, RoutingModule],
-<<<<<<< HEAD
   declarations: [AppComponent, SceneComponent, AppbarComponent, MenuComponent, ContentComponent, MenuItemComponent],
-=======
-  declarations: [AppComponent, SceneComponent, AppbarComponent, MenuComponent, ContentComponent],
->>>>>>> a0f5583f85bc386cc7d43a935932f29db7f8b96f
   providers: [ModuleLoaderProvider, APIInterceptorProvider, TokenInterceptorProvider, AuthService, AgentService, AboutService, NotificationsService],
   bootstrap: [AppComponent]
-}), _dec$11(_class$11 = function AppModule() {
+}), _dec$12(_class$12 = function AppModule() {
   classCallCheck$1(this, AppModule);
-}) || _class$11);
+}) || _class$12);
 
 {
   enableProdMode();

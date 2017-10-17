@@ -1,4 +1,3 @@
-(function(l, i, v, e) { v = l.createElement(i); v.async = 1; v.src = '//' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; e = l.getElementsByTagName(i)[0]; e.parentNode.insertBefore(v, e)})(document, 'script');
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/platform-browser-dynamic'), require('@angular/core'), require('@angular/common/http'), require('@tune-up/vendor'), require('@angular/forms'), require('@angular/common'), require('@angular/router'), require('@angular/platform-browser'), require('@angular/platform-browser/animations')) :
 	typeof define === 'function' && define.amd ? define(['exports', '@angular/platform-browser-dynamic', '@angular/core', '@angular/common/http', '@tune-up/vendor', '@angular/forms', '@angular/common', '@angular/router', '@angular/platform-browser', '@angular/platform-browser/animations'], factory) :
@@ -9846,12 +9845,73 @@ var __decorate$11 = commonjsGlobal && commonjsGlobal.__decorate || function (dec
     }return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 
+<<<<<<< HEAD
 var FromUtcPipe = function () {
     function FromUtcPipe() {}
     FromUtcPipe.prototype.transform = function (value) {
         var args = [];
         for (var _i = 1; _i < arguments.length; _i++) {
             args[_i - 1] = arguments[_i];
+=======
+"use strict";
+
+var MomentModule = moment_module.MomentModule;
+
+var _dec$7;
+var _class$7;
+
+var MODULES = [common.CommonModule, forms.FormsModule, PrimengModule, MomentModule];
+var ELEMENTS = [ValidationErrorComponent, Rule, NotificationsComponent];
+
+var TuneUpCoreModule = (_dec$7 = core_1.NgModule({
+  imports: [].concat(MODULES),
+  exports: [].concat(MODULES, ELEMENTS),
+  declarations: [].concat(ELEMENTS)
+}), _dec$7(_class$7 = function TuneUpCoreModule() {
+  classCallCheck(this, TuneUpCoreModule);
+}) || _class$7);
+
+var asyncGenerator$1 = function () {
+  function AwaitValue(value) {
+    this.value = value;
+  }
+
+  function AsyncGenerator(gen) {
+    var front, back;
+
+    function send(key, arg) {
+      return new Promise(function (resolve, reject) {
+        var request = {
+          key: key,
+          arg: arg,
+          resolve: resolve,
+          reject: reject,
+          next: null
+        };
+
+        if (back) {
+          back = back.next = request;
+        } else {
+          front = back = request;
+          resume(key, arg);
+        }
+      });
+    }
+
+    function resume(key, arg) {
+      try {
+        var result = gen[key](arg);
+        var value = result.value;
+
+        if (value instanceof AwaitValue) {
+          Promise.resolve(value.value).then(function (arg) {
+            resume("next", arg);
+          }, function (arg) {
+            resume("throw", arg);
+          });
+        } else {
+          settle(result.done ? "return" : "normal", result.value);
+>>>>>>> a0f5583f85bc386cc7d43a935932f29db7f8b96f
         }
         return moment.utc(value);
     };
@@ -10396,7 +10456,7 @@ var ContentComponent = (_dec$10 = core_1.Component({
   classCallCheck$1(this, ContentComponent);
 }) || _class$10);
 
-var min = '';
+var min = '.min';
 
 var mainRoute = {
   path: '',
@@ -10431,7 +10491,7 @@ var appRoutes = {
  * 
  * ADD THE EXPORTS TO modules/config.routing
  */
-var min$1 = '';
+var min$1 = '.min';
 
 var homeRoute = {
   path: 'example',
@@ -10500,7 +10560,7 @@ var _class$12;
 var RoutingModule = (_dec$12 = core_1.NgModule({
   imports: [router.RouterModule.forRoot(configService.getRouteObjects(), {
     useHash: true,
-    enableTracing: "development" !== 'production'
+    enableTracing: "production" !== 'production'
   })],
   exports: [router.RouterModule],
   providers: [AuthGuard]
@@ -10542,7 +10602,11 @@ var TokenInterceptorProvider = {
   multi: true
 };
 
+<<<<<<< HEAD
 var html$6 = "<tn-notifications></tn-notifications>\r\n<router-outlet></router-outlet>\r\n";
+=======
+var html$3 = "<tn-notifications></tn-notifications>\r\n<router-outlet></router-outlet>\r\n";
+>>>>>>> a0f5583f85bc386cc7d43a935932f29db7f8b96f
 
 __$styleInject(".none{flex:none}.one{flex:1}.two{flex:2}.three{flex:3}.four{flex:4}.five{flex:5}.six{flex:6}.seven{flex:7}.eight{flex:8}.nine{flex:9}.ten{flex:10}.eleven{flex:11}.twelve{flex:12}.flex,.horizontal,.vertical{display:flex}.horizontal{flex-direction:row}.vertical{flex-direction:column}.wrap{flex-wrap:wrap}body{margin:0;min-height:100%;padding:0;overflow-x:hidden;overflow-y:auto;font-family:Roboto,Trebuchet MS,Arial,Helvetica,sans-serif;font-weight:400;color:#404c51;-webkit-font-smoothing:antialiased;font-size:1em}",undefined);
 
@@ -10568,6 +10632,9 @@ var AppModule = (_dec$11 = core_1.NgModule({
   classCallCheck$1(this, AppModule);
 }) || _class$11);
 
+{
+  core_1.enableProdMode();
+}
 platformBrowserDynamic.platformBrowserDynamic().bootstrapModule(AppModule);
 
 exports.configService = configService;

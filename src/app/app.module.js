@@ -1,18 +1,24 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {HttpClientModule} from '@angular/common/http';
 import {RoutingModule} from './routing';
+import {TokenInterceptorProvider} from './http';
+import {AuthService, AgentService, AboutService} from './services';
+
 import {
   APIInterceptorProvider,
   ModuleLoaderProvider,
-  TuneUpCoreModule
+  TuneUpCoreModule,
+  NotificationsService
 } from '@tune-up/core';
 import {AppComponent} from './app.component';
 import {
   SceneComponent,
   AppbarComponent,
   MenuComponent,
-  ContentComponent
+  ContentComponent,
+  MenuItemComponent
 } from './components';
 
 @NgModule({
@@ -20,6 +26,7 @@ import {
     TuneUpCoreModule,
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     RoutingModule
   ],
   declarations: [
@@ -27,9 +34,18 @@ import {
     SceneComponent,
     AppbarComponent,
     MenuComponent,
-    ContentComponent
+    ContentComponent,
+    MenuItemComponent
   ],
-  providers: [ModuleLoaderProvider, APIInterceptorProvider],
+  providers: [
+    ModuleLoaderProvider,
+    APIInterceptorProvider,
+    TokenInterceptorProvider,
+    AuthService,
+    AgentService,
+    AboutService,
+    NotificationsService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

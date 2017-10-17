@@ -1,0 +1,15 @@
+@import 'styleguide';
+
+.tn-menuitem-layout{
+  cursor: pointer;
+  background: white;
+  color: black;
+  border: none;
+  height: 150%;
+  width: 100%;
+
+  /* @media (--gt-sm){
+    height: 50px;
+  } */
+}
+

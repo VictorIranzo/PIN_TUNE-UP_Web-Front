@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import {Component, Input} from '@angular/core';
 import {BreadcrumbService} from './services/breadcrumb.service';
 
@@ -29,5 +30,25 @@ export class AppbarComponent {
 
   onShowMenuClick() {
     this.menuOpen = true;
+=======
+import {Component} from '@angular/core';
+import {MenuService} from '../menu';
+import html from './appbar.component.html';
+
+@Component({
+  template: html,
+  selector: 'tn-appbar',
+})
+export class AppbarComponent {
+  constructor(menuService: MenuService) {
+    this._menuService = menuService;
+  }
+  clickBut() {
+    // this.visibleSidebar = true;
+    if (!this._menuService._sidenav.visible) this._menuService.open();
+    else {
+      this._menuService.close();
+    }
+>>>>>>> 5b0153993acdbd185cdf7a2265e2ba001c9d919c
   }
 }

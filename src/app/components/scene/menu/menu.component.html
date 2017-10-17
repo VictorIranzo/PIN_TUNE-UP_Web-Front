@@ -1,0 +1,14 @@
+
+<p-sidebar #sidenav class = "tn-menu-sidebar">
+  <img class="tn-menu-sidebar--logo" src="./assets/logo.png">
+  <div *ngFor = "let item of items" class = "tn-menu-sidebar">
+    <div *ngIf = "mustPrint(item)">
+      <tn-menuitem  
+        [text] = "item.text"
+        [path] = "item.path"
+        [icon] = "item.icon"
+        [adminOnly] = "item.adminOnly"
+      ></tn-menuitem>
+    </div>
+  </div>
+</p-sidebar>

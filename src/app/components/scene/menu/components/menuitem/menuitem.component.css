@@ -12,16 +12,4 @@
     height: 50px;
   } */
 }
-#ui-button{
-  background: white;
-  border: black;
-  color: black;
-}
-.ui-widget.ui-button{
-  background: white;
-  border-bottom: 1px solid black;
-  color: black;
-  /* border: none; */
-  height: 50px;
-  width: 100%;
-}
+

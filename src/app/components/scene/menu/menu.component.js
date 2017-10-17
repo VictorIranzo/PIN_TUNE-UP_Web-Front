@@ -8,7 +8,7 @@ import './menu.component.css';
 
 @Component({
   selector: 'tn-menu',
-  template: html
+  template: html,
 })
 export class MenuComponent {
   @ViewChild('sidenav') sidenav = null;
@@ -20,19 +20,11 @@ export class MenuComponent {
   }
 
   mustPrint(item) {
-    if (item.adminOnly) {
-      if (this._agentService.isAdmin()) return true;
-      else return false;
-    }
+    // if (item.adminOnly) {
+    //   if (this._agentService.isAdmin()) return true;
+    //   else return false;
+    // }
     return true;
-  }
-
-  clickBut() {
-    // this.visibleSidebar = true;
-    if (!this._menuService._sidenav.visible) this._menuService.open();
-    else {
-      this._menuService.close();
-    }
   }
 
   ngAfterViewInit() {

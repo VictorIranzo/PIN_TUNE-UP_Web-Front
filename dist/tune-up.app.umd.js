@@ -10078,46 +10078,14 @@ var html$1$1 = "<div class=\"vertical\">\r\n  <tn-appbar class=\"tn-scene-appbar
 
 __$styleInject(".tn-scene-appbar{background-color:#20272a;display:block;padding:0;height:70px;box-sizing:border-box;position:fixed;top:0;left:0;width:100%;z-index:1;box-shadow:0 2px 5px 0 rgba(0,0,0,.3)}.tn-scene-menu{position:fixed;left:0;top:70px;overflow:hidden;width:270px;box-shadow:0 0 5px 0 rgba(0,0,0,.3)}.tn-scene-content,.tn-scene-menu{height:100%;background-color:#fff}.tn-scene-content{margin-left:270px;padding-top:70px;width:100%}",undefined);
 
-var _dec$5$1;
-var _class$5$1;
-
-var SceneComponent = (_dec$5$1 = core_1.Component({
-  selector: 'tn-scene',
-  template: html$1$1
-}), _dec$5$1(_class$5$1 = function SceneComponent() {
-  classCallCheck$1(this, SceneComponent);
-}) || _class$5$1);
-
-var _dec$6$1;
-var _class$6$1;
-
-var AppbarComponent = (_dec$6$1 = core_1.Component({
-  template: '<div>Appbar</div>',
-  selector: 'tn-appbar'
-}), _dec$6$1(_class$6$1 = function AppbarComponent() {
-  classCallCheck$1(this, AppbarComponent);
-}) || _class$6$1);
-
-var html$2 = "<router-outlet></router-outlet>\r\n";
+var html$2 = "\n<p-sidebar #sidenav class = \"tn-menu-sidebar\">\n  <img class=\"tn-menu-sidebar--logo\" src=\"./assets/logo.png\">\n  <div *ngFor = \"let item of items\" class = \"tn-menu-sidebar\">\n    <div *ngIf = \"mustPrint(item)\">\n      <tn-menuitem  \n        [text] = \"item.text\"\n        [path] = \"item.path\"\n        [icon] = \"item.icon\"\n        [adminOnly] = \"item.adminOnly\"\n      ></tn-menuitem>\n    </div>\n  </div>\n</p-sidebar>\n";
 
 var _dec$7$1;
 var _class$7$1;
 
-var ContentComponent = (_dec$7$1 = core_1.Component({
-  selector: 'tn-content',
-  template: html$2
-}), _dec$7$1(_class$7$1 = function ContentComponent() {
-  classCallCheck$1(this, ContentComponent);
-}) || _class$7$1);
-
-var html$3 = "<button pButoon type=\"button\" (click) = \"clickBut()\" icon=\"fa fa-bandcamp\"></button>\n<p-sidebar #sidenav class = \"tn-menu-sidebar\">\n  <img class=\"tn-menu-sidebar--logo\" src=\"./assets/logo.png\">\n  <div *ngFor = \"let item of items\" class = \"tn-menu-sidebar\">\n    <div *ngIf = \"mustPrint(item)\">\n      <tn-menuitem  \n        [text] = \"item.text\"\n        [path] = \"item.path\"\n        [icon] = \"item.icon\"\n        [adminOnly] = \"item.adminOnly\"\n      ></tn-menuitem>\n    </div>\n  </div>\n</p-sidebar>\n";
-
-var _dec$9;
-var _class$9;
-
 var mqlGtsm = window.matchMedia('(min-width: 960px)');
 
-var MenuService = (_dec$9 = core_1.Injectable(), _dec$9(_class$9 = function () {
+var MenuService = (_dec$7$1 = core_1.Injectable(), _dec$7$1(_class$7$1 = function () {
   function MenuService(ngZone) {
     var _this = this;
 
@@ -10181,14 +10149,14 @@ var MenuService = (_dec$9 = core_1.Injectable(), _dec$9(_class$9 = function () {
     }
   }]);
   return MenuService;
-}()) || _class$9);
+}()) || _class$7$1);
 Reflect.defineMetadata('design:paramtypes', [core_1.NgZone], MenuService);
 
-__$styleInject(".tn-menu-sidebar{padding:0,0,0,0}.ng-tns-c0-0{top:var(--tn-scene-appbar--height)}.tn-menu-sidebar--logo{width:180px;height:180px;margin-left:45px;margin-top:20px;margin-bottom:20px}",undefined);
+__$styleInject(".tn-menu-sidebar{padding:0,0,0,0}.tn-menu-sidebar--logo{width:180px;height:180px;margin-left:45px;margin-top:20px;margin-bottom:20px}",undefined);
 
-var _dec$8;
+var _dec$6$1;
 var _dec2$1$1;
-var _class$8;
+var _class$6$1;
 var _class2$1$1;
 var _descriptor$1$1;
 
@@ -10231,10 +10199,10 @@ function _applyDecoratedDescriptor$1$1(target, property, decorators, descriptor,
   return desc;
 }
 
-var MenuComponent = (_dec$8 = core_1.Component({
+var MenuComponent = (_dec$6$1 = core_1.Component({
   selector: 'tn-menu',
-  template: html$3
-}), _dec2$1$1 = core_1.ViewChild('sidenav'), _dec$8(_class$8 = (_class2$1$1 = function () {
+  template: html$2
+}), _dec2$1$1 = core_1.ViewChild('sidenav'), _dec$6$1(_class$6$1 = (_class2$1$1 = function () {
   function MenuComponent(agentService, menuService) {
     classCallCheck$1(this, MenuComponent);
 
@@ -10249,18 +10217,11 @@ var MenuComponent = (_dec$8 = core_1.Component({
   createClass$1(MenuComponent, [{
     key: 'mustPrint',
     value: function mustPrint(item) {
-      if (item.adminOnly) {
-        if (this._agentService.isAdmin()) return true;else return false;
-      }
+      // if (item.adminOnly) {
+      //   if (this._agentService.isAdmin()) return true;
+      //   else return false;
+      // }
       return true;
-    }
-  }, {
-    key: 'clickBut',
-    value: function clickBut() {
-      // this.visibleSidebar = true;
-      if (!this._menuService._sidenav.visible) this._menuService.open();else {
-        this._menuService.close();
-      }
     }
   }, {
     key: 'ngAfterViewInit',
@@ -10280,19 +10241,19 @@ var MenuComponent = (_dec$8 = core_1.Component({
   initializer: function initializer() {
     return null;
   }
-})), _class2$1$1)) || _class$8);
+})), _class2$1$1)) || _class$6$1);
 Reflect.defineMetadata('design:paramtypes', [AgentService, MenuService], MenuComponent);
 
-var html$4 = "<button pButton type=\"button\" class=\"tn-menuitem-layout\" label= {{text}} icon= {{icon}} (click) = \"onClick()\" routerLink={{path}}></button>\n";
+var html$3 = "<button pButton type=\"button\" class=\"tn-menuitem-layout\" label= {{text}} icon= {{icon}} (click) = \"onClick()\" routerLink={{path}}></button>\n";
 
-__$styleInject(".tn-menuitem-layout{cursor:pointer;background:#fff;color:#000;border:none;height:150%;width:100%}#ui-button{background:#fff;border:#000;color:#000}.ui-widget.ui-button{background:#fff;border-bottom:1px solid #000;color:#000;height:50px;width:100%}",undefined);
+__$styleInject(".tn-menuitem-layout{cursor:pointer;background:#fff;color:#000;border:none;height:150%;width:100%}",undefined);
 
-var _dec$10;
+var _dec$8;
 var _dec2$2;
 var _dec3;
 var _dec4;
 var _dec5;
-var _class$10;
+var _class$8;
 var _class2$2;
 var _descriptor$2;
 var _descriptor2;
@@ -10338,11 +10299,11 @@ function _applyDecoratedDescriptor$2(target, property, decorators, descriptor, c
   return desc;
 }
 
-var MenuItemComponent = (_dec$10 = core_1.Component({
+var MenuItemComponent = (_dec$8 = core_1.Component({
   selector: 'tn-menuitem',
-  template: html$4,
+  template: html$3,
   encapsulation: core_1.ViewEncapsulation.None
-}), _dec2$2 = core_1.Input(), _dec3 = core_1.Input(), _dec4 = core_1.Input(), _dec5 = core_1.Input(), _dec$10(_class$10 = (_class2$2 = function () {
+}), _dec2$2 = core_1.Input(), _dec3 = core_1.Input(), _dec4 = core_1.Input(), _dec5 = core_1.Input(), _dec$8(_class$8 = (_class2$2 = function () {
   function MenuItemComponent() {
     classCallCheck$1(this, MenuItemComponent);
 
@@ -10382,7 +10343,58 @@ var MenuItemComponent = (_dec$10 = core_1.Component({
   initializer: function initializer() {
     return this.adminOnly;
   }
-})), _class2$2)) || _class$10);
+})), _class2$2)) || _class$8);
+
+var _dec$5$1;
+var _class$5$1;
+
+var SceneComponent = (_dec$5$1 = core_1.Component({
+  selector: 'tn-scene',
+  template: html$1$1,
+  providers: [MenuService]
+}), _dec$5$1(_class$5$1 = function SceneComponent() {
+  classCallCheck$1(this, SceneComponent);
+}) || _class$5$1);
+
+var html$4 = "<div class=\"horizontal\">\n  <div class=\"none\">\n    <button pButton (click) = \"clickBut()\" icon=\"fa fa-bandcamp\"></button>\n  </div>\n  <div class=\"one\"></div>\n  <div class=\"none\">2</div>\n  <div class=\"none\">3</div>\n</div>\n";
+
+var _dec$9;
+var _class$9;
+
+var AppbarComponent = (_dec$9 = core_1.Component({
+  template: html$4,
+  selector: 'tn-appbar'
+}), _dec$9(_class$9 = function () {
+  function AppbarComponent(menuService) {
+    classCallCheck$1(this, AppbarComponent);
+
+    this._menuService = menuService;
+  }
+
+  createClass$1(AppbarComponent, [{
+    key: 'clickBut',
+    value: function clickBut() {
+      // this.visibleSidebar = true;
+      if (!this._menuService._sidenav.visible) this._menuService.open();else {
+        this._menuService.close();
+      }
+    }
+  }]);
+  return AppbarComponent;
+}()) || _class$9);
+Reflect.defineMetadata('design:paramtypes', [MenuService], AppbarComponent);
+
+var html$5 = "<router-outlet></router-outlet>\r\n";
+
+var _dec$10;
+var _class$10;
+
+var ContentComponent = (_dec$10 = core_1.Component({
+  selector: 'tn-content',
+  template: html$5
+}), _dec$10(_class$10 = function ContentComponent() {
+  classCallCheck$1(this, ContentComponent);
+}) || _class$10);
 
 var min = '';
 
@@ -10530,7 +10542,7 @@ var TokenInterceptorProvider = {
   multi: true
 };
 
-var html$5 = "<tn-notifications></tn-notifications>\r\n<router-outlet></router-outlet>\r\n";
+var html$6 = "<tn-notifications></tn-notifications>\r\n<router-outlet></router-outlet>\r\n";
 
 __$styleInject(".none{flex:none}.one{flex:1}.two{flex:2}.three{flex:3}.four{flex:4}.five{flex:5}.six{flex:6}.seven{flex:7}.eight{flex:8}.nine{flex:9}.ten{flex:10}.eleven{flex:11}.twelve{flex:12}.flex,.horizontal,.vertical{display:flex}.horizontal{flex-direction:row}.vertical{flex-direction:column}.wrap{flex-wrap:wrap}body{margin:0;min-height:100%;padding:0;overflow-x:hidden;overflow-y:auto;font-family:Roboto,Trebuchet MS,Arial,Helvetica,sans-serif;font-weight:400;color:#404c51;-webkit-font-smoothing:antialiased;font-size:1em}",undefined);
 
@@ -10539,7 +10551,7 @@ var _class$14;
 
 var AppComponent = (_dec$14 = core_1.Component({
   selector: 'tn-app',
-  template: html$5
+  template: html$6
 }), _dec$14(_class$14 = function AppComponent() {
   classCallCheck$1(this, AppComponent);
 }) || _class$14);
@@ -10550,7 +10562,7 @@ var _class$11;
 var AppModule = (_dec$11 = core_1.NgModule({
   imports: [TuneUpCoreModule, platformBrowser.BrowserModule, animations.BrowserAnimationsModule, http.HttpClientModule, RoutingModule],
   declarations: [AppComponent, SceneComponent, AppbarComponent, MenuComponent, ContentComponent, MenuItemComponent],
-  providers: [ModuleLoaderProvider, APIInterceptorProvider, TokenInterceptorProvider, AuthService, AgentService, AboutService, NotificationsService, MenuService],
+  providers: [ModuleLoaderProvider, APIInterceptorProvider, TokenInterceptorProvider, AuthService, AgentService, AboutService, NotificationsService],
   bootstrap: [AppComponent]
 }), _dec$11(_class$11 = function AppModule() {
   classCallCheck$1(this, AppModule);

@@ -51,7 +51,7 @@ export class LoginComponent {
   ngOnInit() {
     const paramsReturnUrl = this._route.snapshot.queryParams.returnUrl;
     this._returnUrl =
-      !paramsReturnUrl || paramsReturnUrl === '/login'
+      !paramsReturnUrl || paramsReturnUrl === '/home'
         ? this._returnUrl
         : paramsReturnUrl;
 

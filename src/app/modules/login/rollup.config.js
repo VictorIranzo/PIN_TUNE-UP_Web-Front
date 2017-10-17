@@ -27,9 +27,9 @@ export default {
         easyimport({
           path: '../../../styles'
         }),
-        url({
-          url: 'inline'
-        }),
+        // url({
+        //   url: 'inline'
+        // }),
         cssnext({
           features: {
             autoprefixer: false

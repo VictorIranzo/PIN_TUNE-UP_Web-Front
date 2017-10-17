@@ -10490,20 +10490,11 @@ var appRoutes = {
   loginRoute: loginRoute
 };
 
-/**
- * Route to lazy load the module, path is the url, without the /
- * loadChildren is the path from wher our server is running (index.html)
- * until the module file. The format is:
- *  'src/app/modules/MODULENAME/dist/tune-up.MODULENAME.umd[.min].js#MODULENAME#MODULENAMEModule'
- * you can load the min or nomin version, MODULENAMEModule is how you should call the NgModule
- * 
- * ADD THE EXPORTS TO modules/config.routing
- */
 var min$1 = '.min';
 
 var homeRoute = {
-  path: 'example',
-  loadChildren: 'src/app/modules/example/dist/tune-up.example.umd' + min$1 + '.js#example#ExampleModule'
+  path: 'home',
+  loadChildren: 'src/app/modules/home/dist/tune-up.home.umd' + min$1 + '.js#home#HomeModule'
 };
 
 
@@ -10512,19 +10503,10 @@ var childRoutes = Object.freeze({
 	homeRoute: homeRoute
 });
 
-/**
- * MenuItem object to navigate to this module
- * path: route without /
- * text: label for the menu button
- * icon: font-awesome icon id
- * adminOnly: true if requires admin privilege
- * 
- * ADD THE EXPORTS TO modules/config.menu
- */
 var homeMenuItem = {
-  path: 'example',
-  text: 'Ejemplo',
-  icon: 'af-example',
+  path: 'home',
+  text: 'Inicio',
+  icon: 'fa fa-home',
   adminOnly: false
 };
 
@@ -10588,7 +10570,7 @@ var TokenInterceptorProvider = {
   multi: true
 };
 
-var html$3 = "<tn-notifications></tn-notifications>\r\n<router-outlet></router-outlet>\r\n";
+var html$3 = "<tn-notifications></tn-notifications>\n<router-outlet></router-outlet>\n";
 
 __$styleInject(".none{flex:none}.one{flex:1}.two{flex:2}.three{flex:3}.four{flex:4}.five{flex:5}.six{flex:6}.seven{flex:7}.eight{flex:8}.nine{flex:9}.ten{flex:10}.eleven{flex:11}.twelve{flex:12}.flex,.horizontal,.vertical{display:flex}.horizontal{flex-direction:row}.vertical{flex-direction:column}.wrap{flex-wrap:wrap}body{margin:0;min-height:100%;padding:0;overflow-x:hidden;overflow-y:auto;font-family:Roboto,Trebuchet MS,Arial,Helvetica,sans-serif;font-weight:400;color:#404c51;-webkit-font-smoothing:antialiased;font-size:1em}",undefined);
 

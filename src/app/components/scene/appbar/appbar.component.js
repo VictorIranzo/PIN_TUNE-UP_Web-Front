@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {BreadcrumbService} from '../../../services/breadcrumb.service';
+import {BreadcrumbService} from './services/breadcrumb.service';
 
 import html from './appbar.component.html';
 

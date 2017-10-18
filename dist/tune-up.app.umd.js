@@ -3356,8 +3356,6 @@ var ConfigService = function () {
     value: function addRoutesWithAuth(childRoutes) {
       var mainRoute = this._routes.mainRoute;
       mainRoute && mainRoute.children && childRoutes.map(function (route) {
-        route.canLoad = route.canLoad || [];
-        route.canLoad = [].concat(toConsumableArray(route.canLoad), toConsumableArray(mainRoute.canLoadChildren || []));
         mainRoute.children.push(route);
       });
     }
@@ -3525,7 +3523,7 @@ var PrimengModule = (_dec$2 = core_1.NgModule({
   classCallCheck(this, PrimengModule);
 }) || _class$2);
 
-var html = "<ng-container *ngIf=\"control.dirty && !control.valid\">\n  <p *ngFor=\"let error of getErrors()\" class=\"tn-validation--error\">\n    {{error}}\n  </p>\n</ng-container>\n";
+var html = "<ng-container *ngIf=\"control.dirty && !control.valid\">\r\n  <p *ngFor=\"let error of getErrors()\" class=\"tn-validation--error\">\r\n    {{error}}\r\n  </p>\r\n</ng-container>\r\n";
 
 __$styleInject$1(".tn-validation--error{color:red;font-size:12px;font-size:.75rem;margin-bottom:8px}",undefined);
 
@@ -4987,7 +4985,7 @@ var NotificationsService = (_dec$6 = core_1.Injectable(), _dec$6(_class$6 = func
   return NotificationsService;
 }()) || _class$6);
 
-var html$1 = "<p-growl [value]=\"msgs\"></p-growl>\n";
+var html$1 = "<p-growl [value]=\"msgs\"></p-growl>\r\n";
 
 var _dec$5;
 var _class$5;
@@ -10398,21 +10396,6 @@ var AuthGuard = (_dec$1$1 = core_1.Injectable(), _dec$1$1(_class$1$1 = function 
     value: function canActivate(route, state) {
       return this._checkAndRedirect(route, state);
     }
-  }, {
-    key: 'canActivateChild',
-    value: function canActivateChild(route, state) {
-      return this._checkAndRedirect(route, state);
-    }
-  }, {
-    key: 'canLoadChildren',
-    value: function canLoadChildren(route, state) {
-      return this._checkAndRedirect(route, state);
-    }
-  }, {
-    key: 'canLoad',
-    value: function canLoad(route, state) {
-      return this._checkAndRedirect(route, state);
-    }
   }]);
   return AuthGuard;
 }()) || _class$1$1);
@@ -10470,8 +10453,6 @@ var mainRoute = {
   path: '',
   component: SceneComponent,
   canActivate: [AuthGuard],
-  canActivateChild: [AuthGuard],
-  canLoadChildren: [AuthGuard],
   children: []
 };
 var mainRedirectRoute = {
@@ -10486,8 +10467,8 @@ var loginRoute = {
 
 var appRoutes = {
   mainRoute: mainRoute,
-  mainRedirectRoute: mainRedirectRoute,
-  loginRoute: loginRoute
+  loginRoute: loginRoute,
+  mainRedirectRoute: mainRedirectRoute
 };
 
 var min$1 = '.min';

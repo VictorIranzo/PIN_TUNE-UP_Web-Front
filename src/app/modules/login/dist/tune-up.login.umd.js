@@ -303,7 +303,7 @@ var LoginComponent = (_dec$2 = core$1.Component({
           _this._parseSites(Resultado);
         }
       }, function (error) {
-        _this._notificationsService.error('Error', error.Message);
+        _this._notificationsService.error('Error', error);
       });
     };
 
@@ -332,12 +332,11 @@ var LoginComponent = (_dec$2 = core$1.Component({
         _this._aboutService.about = Configuracion;
         _this._redirect();
       }, function (error) {
-        _this._notificationsService.error('Error de login', error.Message);
+        _this._notificationsService.error('Error de login', error);
       });
     };
 
-    // TODO: change to home when implemented
-    this._returnUrl = '/example';
+    this._returnUrl = '/home';
     this.sites = [];
     this._route = route;
     this._router = router$$1;
@@ -353,6 +352,7 @@ var LoginComponent = (_dec$2 = core$1.Component({
     key: '_checkLogedIn',
     value: function _checkLogedIn() {
       if (this._authService.getToken()) {
+        debugger;
         this._redirect();
       }
     }
@@ -365,8 +365,7 @@ var LoginComponent = (_dec$2 = core$1.Component({
     key: 'ngOnInit',
     value: function ngOnInit() {
       var paramsReturnUrl = this._route.snapshot.queryParams.returnUrl;
-      this._returnUrl = !paramsReturnUrl || paramsReturnUrl === '/home' ? this._returnUrl : paramsReturnUrl;
-
+      this._returnUrl = !paramsReturnUrl || paramsReturnUrl === '/login' || paramsReturnUrl === '/' ? this._returnUrl : paramsReturnUrl;
       this._checkLogedIn();
     }
   }, {

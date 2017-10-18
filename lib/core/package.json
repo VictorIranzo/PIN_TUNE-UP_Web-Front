@@ -1,6 +1,6 @@
 {
   "name": "@tune-up/core",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Tune-UP Web Angular 4 core",
   "main": "dist/tune-up.core.umd.js",
   "main:min": "dist/tune-up.core.umd.min.js",

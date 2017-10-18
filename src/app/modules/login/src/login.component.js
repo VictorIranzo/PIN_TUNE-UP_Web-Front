@@ -1,8 +1,8 @@
-import {Router, ActivatedRoute} from '@angular/router';
-import {Component, ViewChild} from '@angular/core';
-import {AuthService, AgentService, AboutService} from '@tune-up/app';
-import {NotificationsService} from '@tune-up/core';
-import {LoginService, SitesService} from './services';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Component, ViewChild } from '@angular/core';
+import { AuthService, AgentService, AboutService } from '@tune-up/app';
+import { NotificationsService } from '@tune-up/core';
+import { LoginService, SitesService } from './services';
 import html from './login.component.html';
 import './login.component.css';
 
@@ -28,8 +28,7 @@ export class LoginComponent {
     aboutService: AboutService,
     notificationsService: NotificationsService
   ) {
-    // TODO: change to home when implemented
-    this._returnUrl = '/example';
+    this._returnUrl = '/home';
     this.sites = [];
     this._route = route;
     this._router = router;
@@ -42,6 +41,7 @@ export class LoginComponent {
   }
   _checkLogedIn() {
     if (this._authService.getToken()) {
+      debugger;
       this._redirect();
     }
   }
@@ -51,10 +51,11 @@ export class LoginComponent {
   ngOnInit() {
     const paramsReturnUrl = this._route.snapshot.queryParams.returnUrl;
     this._returnUrl =
-      !paramsReturnUrl || paramsReturnUrl === '/home'
+      !paramsReturnUrl ||
+        paramsReturnUrl === '/login' ||
+        paramsReturnUrl === '/'
         ? this._returnUrl
         : paramsReturnUrl;
-
     this._checkLogedIn();
   }
   onEmailFocusLost = () => {
@@ -62,7 +63,7 @@ export class LoginComponent {
       this.emailCtrl.valid &&
       this._sitesService.get(this.model.email).subscribe(
         data => {
-          const {Resultado} = data;
+          const { Resultado } = data;
           // TODO: refactor when backend api is refactored
           if (Resultado.length === 0) {
             this._notificationsService.error(
@@ -74,13 +75,13 @@ export class LoginComponent {
           }
         },
         error => {
-          this._notificationsService.error('Error', error.Message);
+          this._notificationsService.error('Error', error);
         }
       );
   };
   _parseSites(sites) {
     this.sites = sites.map(site => {
-      return {label: `${site.Id}: ${site.Nombre} `, value: site.Id};
+      return { label: `${site.Id}: ${site.Nombre} `, value: site.Id };
     });
     this.model.idsitio = sites[0] && sites[0].Id;
   }
@@ -98,14 +99,14 @@ export class LoginComponent {
           this._notificationsService.error('Error de login', data.Mensaje);
           return;
         }
-        let {Token, Agente, Configuracion} = data.Resultado;
+        let { Token, Agente, Configuracion } = data.Resultado;
         this._authService.setToken(Token);
         this._agentService.agent = Agente;
         this._aboutService.about = Configuracion;
         this._redirect();
       },
       error => {
-        this._notificationsService.error('Error de login', error.Message);
+        this._notificationsService.error('Error de login', error);
       }
     );
   };

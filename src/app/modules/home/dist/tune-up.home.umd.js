@@ -24,8 +24,6 @@ function __$styleInject(css, returnValue) {
 
 var html = "<div class=\"horizontal\">\n  <tn-kanban-resume class=\"none\"></tn-kanban-resume>\n  <tn-ut-list class=\"one\"></tn-ut-list>\n</div>\n";
 
-__$styleInject("", undefined);
-
 var asyncGenerator = function () {
   function AwaitValue(value) {
     this.value = value;
@@ -152,6 +150,8 @@ var classCallCheck = function (instance, Constructor) {
 var _dec$2;
 var _class$2;
 
+// import './home.component.css';
+
 var HomeComponent = (_dec$2 = core.Component({
   selector: 'tn-home',
   template: html
@@ -171,10 +171,10 @@ var HomeRoutingModule = (_dec$1 = core.NgModule({
 
 var html$1 = "KANBAN RESUMIDO\n";
 
-__$styleInject("", undefined);
-
 var _dec$3;
 var _class$3;
+
+// import './kanbanresume.component.css';
 
 var KanbanResumeComponent = (_dec$3 = core.Component({
   selector: 'tn-kanban-resume',
@@ -185,10 +185,10 @@ var KanbanResumeComponent = (_dec$3 = core.Component({
 
 var html$2 = "UTLIST\n";
 
-__$styleInject("", undefined);
-
 var _dec$4;
 var _class$4;
+
+// import './utlist.component.css';
 
 var UtListComponent = (_dec$4 = core.Component({
   selector: 'tn-ut-list',

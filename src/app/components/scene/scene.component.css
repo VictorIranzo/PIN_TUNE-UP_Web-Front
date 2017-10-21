@@ -1,4 +1,5 @@
 @import url("./scene.variables.css");
+@import 'styleguide';
 
 .tn-scene-appbar {
   background-color: #20272a;
@@ -21,32 +22,19 @@
   height: 100%;
   background-color: #fff;
   overflow: hidden;
+  @media (--gt-sm){  
   width: var(--tn-scene-menu--width);
   box-shadow: 0 0 5px 0 rgba(0,0,0,.3);
+  }
 }
 
 .tn-scene-content{
-  margin-left: var(--tn-scene-menu--width);
   padding-top: var(--tn-scene-appbar--height);
   background-color: #fff;
   width: 100%;
   height: 100%;
+  @media (--gt-sm){ 
+    margin-left: var(--tn-scene-menu--width);
+  }
 }
 
-.tn-scene-menu-nodocked {
-  position: fixed;
-  left: 0;
-  top: var(--tn-scene-appbar--height);
-  height: 100%;
-  background-color: #fff;
-  overflow: hidden;
-  width: 0px;
-  /* box-shadow: 0 0 5px 0 rgba(0,0,0,.3); */
-}
-
-.tn-scene-content-nodocked{
-  padding-top: var(--tn-scene-appbar--height);
-  background-color: #fff;
-  width: 100%;
-  height: 100%;
-}

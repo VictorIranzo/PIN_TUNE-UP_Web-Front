@@ -10074,9 +10074,9 @@ var AuthGuard = (_dec$1$1 = core_1.Injectable(), _dec$1$1(_class$1$1 = function 
 }()) || _class$1$1);
 Reflect.defineMetadata('design:paramtypes', [router.Router, AuthService], AuthGuard);
 
-var html$1$1 = "<div class=\"vertical\">\n  <tn-appbar class=\"tn-scene-appbar\"></tn-appbar>\n  <div class=\"horizontal\">\n    <tn-menu class=\"tn-scene-menu\"></tn-menu>\n    <!-- <tn-menu class=\"tn-scene-menu-nodocked\" *ngIf=\"!this._menuService.isDocked()\"></tn-menu> -->\n    <tn-content class=\"tn-scene-content\"></tn-content>\n    <!-- <tn-content class=\"tn-scene-content-nodocked\" *ngIf=\"!this._menuService.isDocked()\"></tn-content> -->\n  </div>\n</div>\n";
+var html$1$1 = "<div class=\"vertical\">\n  <tn-appbar class=\"tn-scene-appbar\"></tn-appbar>\n  <div class=\"horizontal\">\n    <tn-menu class=\"tn-scene-menu\"></tn-menu>\n    <tn-content class=\"tn-scene-content\"></tn-content>\n  </div>\n</div>\n";
 
-__$styleInject(".tn-scene-appbar{background-color:#20272a;display:block;padding:0;height:70px;box-sizing:border-box;position:fixed;top:0;left:0;width:100%;z-index:1;box-shadow:0 2px 5px 0 rgba(0,0,0,.3)}.tn-scene-menu{position:fixed;left:0;top:70px;overflow:hidden;width:270px;box-shadow:0 0 5px 0 rgba(0,0,0,.3)}.tn-scene-content,.tn-scene-menu{height:100%;background-color:#fff}.tn-scene-content{margin-left:270px;padding-top:70px;width:100%}.tn-scene-menu-nodocked{position:fixed;left:0;top:70px;height:100%;background-color:#fff;overflow:hidden;width:0}.tn-scene-content-nodocked{padding-top:70px;background-color:#fff;width:100%;height:100%}",undefined);
+__$styleInject(".tn-scene-appbar{background-color:#20272a;display:block;padding:0;height:70px;box-sizing:border-box;position:fixed;top:0;left:0;width:100%;z-index:1;box-shadow:0 2px 5px 0 rgba(0,0,0,.3)}.tn-scene-menu{position:fixed;left:0;top:70px;height:100%;background-color:#fff;overflow:hidden}@media (min-width:960px){.tn-scene-menu{width:270px;box-shadow:0 0 5px 0 rgba(0,0,0,.3)}}.tn-scene-content{padding-top:70px;background-color:#fff;width:100%;height:100%}@media (min-width:960px){.tn-scene-content{margin-left:270px}}",undefined);
 
 var html$2 = "<p-sidebar #sidenav class = \"tn-menu-sidebar\">\n  <img class=\"tn-menu-sidebar--logo\" src=\"./assets/logo.png\">\n  <div *ngFor = \"let item of items\" class = \"tn-menu-sidebar\">\n    <div *ngIf = \"mustPrint(item)\">\n      <tn-menuitem  \n        [text] = \"item.text\"\n        [path] = \"item.path\"\n        [icon] = \"item.icon\"\n        [adminOnly] = \"item.adminOnly\"\n      ></tn-menuitem>\n    </div>\n  </div>\n</p-sidebar>\n";
 
@@ -10257,9 +10257,9 @@ var MenuComponent = (_dec$6$1 = core_1.Component({
 })), _class2$1$1)) || _class$6$1);
 Reflect.defineMetadata('design:paramtypes', [AgentService, MenuService], MenuComponent);
 
-var html$3 = "<button pButton type=\"button\" class=\"tn-menuitem-layout\" label= {{text}} icon= {{icon}} (click) = \"onClick()\" routerLink={{path}}></button>\r\n";
+var html$3 = "<button pButton type=\"button\" class=\"tn-menuitem-layout\" label= {{text}} icon= {{icon}} (click) = \"onClick()\" routerLink={{path}}></button>\n";
 
-__$styleInject(".tn-menuitem-layout{cursor:pointer;background:#fff;color:#000;border:none;height:150%;width:100%}",undefined);
+__$styleInject(".tn-menuitem-layout{height:150%!important;width:100%!important;margin-bottom:10 px!important}",undefined);
 
 var _dec$8;
 var _dec2$2;

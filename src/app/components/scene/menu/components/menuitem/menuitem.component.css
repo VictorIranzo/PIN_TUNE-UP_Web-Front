@@ -1,0 +1,11 @@
+@import 'styleguide';
+
+.tn-menuitem-layout{
+  height: 150% !important; 
+  width: 100% !important;
+  margin-bottom: 10 px !important;
+  /* @media (--gt-sm){
+    height: 50px;
+  } */
+}
+

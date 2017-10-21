@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+    <base href="/">        
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!--TODO: CSP-->
-    <!--TODO: Base href-->
-    <title>TUNE-UP</title>
+    <!-- TODO: CSP -->
+    <link rel="stylesheet" type="text/css" href="src/styles/appshell/spinner.css">
+    <title>Tune-UP DEV</title>
 </head>
-
 <body>
-    <tune-up></tune-up>
-    <script src="dist/tune_up_web_frot.umd.min.js"></script>
+    <tn-app>
+        <div class="loader-dots"></div>
+    </tn-app>
+    <script src="node_modules/@tune-up/vendor/dist/tune-up.vendor.umd.min.js"></script>
+    <script src="dist/tune-up.app.umd.js"></script>
 </body>
-
 </html>

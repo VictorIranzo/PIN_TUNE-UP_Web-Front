@@ -1,0 +1,40 @@
+@import url("./scene.variables.css");
+@import 'styleguide';
+
+.tn-scene-appbar {
+  background-color: #20272a;
+  display: block;
+  padding: 0;
+  height: var(--tn-scene-appbar--height);
+  box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9997;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,.3);
+}
+
+.tn-scene-menu {
+  position: fixed;
+  left: 0;
+  top: var(--tn-scene-appbar--height);
+  height: 100%;
+  background-color: #fff;
+  overflow: hidden;
+  @media (--gt-sm){  
+  width: var(--tn-scene-menu--width);
+  box-shadow: 0 0 5px 0 rgba(0,0,0,.3);
+  }
+}
+
+.tn-scene-content{
+  padding-top: var(--tn-scene-appbar--height);
+  background-color: #fff;
+  width: 100%;
+  height: 100%;
+  @media (--gt-sm){ 
+    margin-left: var(--tn-scene-menu--width);
+  }
+}
+

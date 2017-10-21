@@ -8,4 +8,8 @@ import {MenuService} from './menu';
   template: html,
   providers: [MenuService]
 })
-export class SceneComponent {}
+export class SceneComponent {
+  constructor(menuService: MenuService) {
+    this._menuService = menuService;
+  }
+}

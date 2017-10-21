@@ -1,3 +1,4 @@
+(function(l, i, v, e) { v = l.createElement(i); v.async = 1; v.src = '//' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; e = l.getElementsByTagName(i)[0]; e.parentNode.insertBefore(v, e)})(document, 'script');
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/platform-browser-dynamic'), require('@angular/core'), require('@angular/common/http'), require('@tune-up/vendor'), require('@angular/forms'), require('@angular/common'), require('@angular/router'), require('@angular/platform-browser'), require('@angular/platform-browser/animations')) :
 	typeof define === 'function' && define.amd ? define(['exports', '@angular/platform-browser-dynamic', '@angular/core', '@angular/common/http', '@tune-up/vendor', '@angular/forms', '@angular/common', '@angular/router', '@angular/platform-browser', '@angular/platform-browser/animations'], factory) :
@@ -10073,11 +10074,11 @@ var AuthGuard = (_dec$1$1 = core_1.Injectable(), _dec$1$1(_class$1$1 = function 
 }()) || _class$1$1);
 Reflect.defineMetadata('design:paramtypes', [router.Router, AuthService], AuthGuard);
 
-var html$1$1 = "<div class=\"vertical\">\n  <tn-appbar class=\"tn-scene-appbar\"></tn-appbar>\n  <div class=\"horizontal\">\n    <tn-menu class=\"tn-scene-menu\"></tn-menu>\n    <tn-content class=\"tn-scene-content\"></tn-content>\n  </div>\n</div>\n";
+var html$1$1 = "<div class=\"vertical\">\n  <tn-appbar class=\"tn-scene-appbar\"></tn-appbar>\n  <div class=\"horizontal\">\n    <tn-menu class=\"tn-scene-menu\" *ngIf=\"this._menuService.isDocked()\"></tn-menu>\n    <tn-menu class=\"tn-scene-menu-nodocked\" *ngIf=\"!this._menuService.isDocked()\"></tn-menu>\n    <tn-content class=\"tn-scene-content\" *ngIf=\"this._menuService.isDocked()\"></tn-content>\n    <tn-content class=\"tn-scene-content-nodocked\" *ngIf=\"!this._menuService.isDocked()\"></tn-content>\n  </div>\n</div>\n";
 
-__$styleInject(".tn-scene-appbar{background-color:#20272a;display:block;padding:0;height:70px;box-sizing:border-box;position:fixed;top:0;left:0;width:100%;z-index:1;box-shadow:0 2px 5px 0 rgba(0,0,0,.3)}.tn-scene-menu{position:fixed;left:0;top:70px;overflow:hidden;width:270px;box-shadow:0 0 5px 0 rgba(0,0,0,.3)}.tn-scene-content,.tn-scene-menu{height:100%;background-color:#fff}.tn-scene-content{margin-left:270px;padding-top:70px;width:100%}",undefined);
+__$styleInject(".tn-scene-appbar{background-color:#20272a;display:block;padding:0;height:70px;box-sizing:border-box;position:fixed;top:0;left:0;width:100%;z-index:1;box-shadow:0 2px 5px 0 rgba(0,0,0,.3)}.tn-scene-menu{position:fixed;left:0;top:70px;overflow:hidden;width:270px;box-shadow:0 0 5px 0 rgba(0,0,0,.3)}.tn-scene-content,.tn-scene-menu{height:100%;background-color:#fff}.tn-scene-content{margin-left:270px;padding-top:70px;width:100%}.tn-scene-menu-nodocked{position:fixed;left:0;top:70px;height:100%;background-color:#fff;overflow:hidden;width:0}.tn-scene-content-nodocked{padding-top:70px;background-color:#fff;width:100%;height:100%}",undefined);
 
-var html$2 = "\n<p-sidebar #sidenav class = \"tn-menu-sidebar\">\n  <img class=\"tn-menu-sidebar--logo\" src=\"./assets/logo.png\">\n  <div *ngFor = \"let item of items\" class = \"tn-menu-sidebar\">\n    <div *ngIf = \"mustPrint(item)\">\n      <tn-menuitem  \n        [text] = \"item.text\"\n        [path] = \"item.path\"\n        [icon] = \"item.icon\"\n        [adminOnly] = \"item.adminOnly\"\n      ></tn-menuitem>\n    </div>\n  </div>\n</p-sidebar>\n";
+var html$2 = "<p-sidebar #sidenav class = \"tn-menu-sidebar\">\n  <img class=\"tn-menu-sidebar--logo\" src=\"./assets/logo.png\">\n  <div *ngFor = \"let item of items\" class = \"tn-menu-sidebar\">\n    <div *ngIf = \"mustPrint(item)\">\n      <tn-menuitem  \n        [text] = \"item.text\"\n        [path] = \"item.path\"\n        [icon] = \"item.icon\"\n        [adminOnly] = \"item.adminOnly\"\n      ></tn-menuitem>\n    </div>\n  </div>\n</p-sidebar>\n";
 
 var _dec$7$1;
 var _class$7$1;
@@ -10094,12 +10095,13 @@ var MenuService = (_dec$7$1 = core_1.Injectable(), _dec$7$1(_class$7$1 = functio
       var matches = _ref.matches;
 
       _this._docked = matches;
-      console.log(matches);
+      // this.onShowMenuAppBar.emit(!this._docked);
       if (matches) _this.open();else _this.close();
     };
 
     this._sidenav = null;
     this._ngZone = ngZone;
+    // this.onShowMenuAppBar = new EventEmitter();
   }
 
   createClass$1(MenuService, [{
@@ -10117,10 +10119,12 @@ var MenuService = (_dec$7$1 = core_1.Injectable(), _dec$7$1(_class$7$1 = functio
       if (this._sidenav) {
         this._sidenav.visible = true;
       }
-      if (this._docked) {
-        document.getElementsByClassName('ui-sidebar-mask')[0].hidden = true;
-      } else {
-        document.getElementsByClassName('ui-sidebar-mask')[0].hidden = false;
+      if (document.getElementsByClassName('ui-sidebar-mask')[0]) {
+        if (this._docked) {
+          document.getElementsByClassName('ui-sidebar-mask')[0].hidden = true;
+        } else {
+          document.getElementsByClassName('ui-sidebar-mask')[0].hidden = false;
+        }
       }
     }
   }, {
@@ -10142,6 +10146,16 @@ var MenuService = (_dec$7$1 = core_1.Injectable(), _dec$7$1(_class$7$1 = functio
       this._sidenav = null;
     }
   }, {
+    key: 'isVisible',
+    value: function isVisible() {
+      return this._sidenav && this._sidenav.visible;
+    }
+  }, {
+    key: 'isDocked',
+    value: function isDocked() {
+      return this._docked;
+    }
+  }, {
     key: 'sidenav',
     set: function set$$1(value) {
       this._sidenav = value;
@@ -10151,7 +10165,7 @@ var MenuService = (_dec$7$1 = core_1.Injectable(), _dec$7$1(_class$7$1 = functio
 }()) || _class$7$1);
 Reflect.defineMetadata('design:paramtypes', [core_1.NgZone], MenuService);
 
-__$styleInject(".tn-menu-sidebar{padding:0,0,0,0}.tn-menu-sidebar--logo{width:180px;height:180px;margin-left:45px;margin-top:20px;margin-bottom:20px}",undefined);
+__$styleInject(".tn-menu-sidebar{padding:0,0,0,0}.tn-menu-sidebar--logo{width:180px;height:180px;margin-left:30px;margin-top:80px;margin-bottom:20px}.ui-sidebar-left{width:270px}",undefined);
 
 var _dec$6$1;
 var _dec2$1$1;
@@ -10243,7 +10257,7 @@ var MenuComponent = (_dec$6$1 = core_1.Component({
 })), _class2$1$1)) || _class$6$1);
 Reflect.defineMetadata('design:paramtypes', [AgentService, MenuService], MenuComponent);
 
-var html$3 = "<button pButton type=\"button\" class=\"tn-menuitem-layout\" label= {{text}} icon= {{icon}} (click) = \"onClick()\" routerLink={{path}}></button>\n";
+var html$3 = "<button pButton type=\"button\" class=\"tn-menuitem-layout\" label= {{text}} icon= {{icon}} (click) = \"onClick()\" routerLink={{path}}></button>\r\n";
 
 __$styleInject(".tn-menuitem-layout{cursor:pointer;background:#fff;color:#000;border:none;height:150%;width:100%}",undefined);
 
@@ -10351,9 +10365,12 @@ var SceneComponent = (_dec$5$1 = core_1.Component({
   selector: 'tn-scene',
   template: html$1$1,
   providers: [MenuService]
-}), _dec$5$1(_class$5$1 = function SceneComponent() {
+}), _dec$5$1(_class$5$1 = function SceneComponent(menuService) {
   classCallCheck$1(this, SceneComponent);
+
+  this._menuService = menuService;
 }) || _class$5$1);
+Reflect.defineMetadata('design:paramtypes', [MenuService], SceneComponent);
 
 var _dec$10;
 var _class$10;
@@ -10383,68 +10400,27 @@ var BreadcrumbService = (_dec$10 = core_1.Injectable(), _dec$10(_class$10 = func
   return BreadcrumbService;
 }()) || _class$10);
 
-var html$4 = "<div class=\"horizontal menu-bar\">\n    <div class =\"none tn-scene-appbar--topMenu\">Logo TuneUP</div>\n    <div class =\"horizontal ten\">\n        <button class=\"tn-scene-appbar--button\" *ngIf=\"menuOpen\"  pButton type=\"button\" (click)=\"onHideMenuClick()\" icon=\"fa-caret-square-o-left\" iconPos=\"left\"></button>                                \n        <button class=\"tn-scene-appbar--button\" *ngIf=\"!menuOpen\" pButton type=\"button\" (click)=\"onShowMenuClick()\" icon=\"fa-caret-square-o-right\" iconPos=\"left\"></button>                    \n        <p-breadcrumb class=\"tn-scene-appbar--breadcrumb\" [model]=\"breadcrumbItems\"></p-breadcrumb>    \n    </div>\n    <div class = \"horizontal one\">\n        <button class=\"tn-scene-appbar--button\" pButton type=\"button\" label=\"Click\"></button>        \n    </div>\n    \n</div>\n";
+var html$4 = "<div class=\"horizontal menu-bar\">\n    <!-- <div class =\"none tn-scene-appbar--topMenu\">Logo TuneUP</div> -->\n    <div class =\"horizontal ten\">\n      <div *ngIf=\"!this._menuService.isDocked()\" >\n        <button class=\"tn-scene-appbar--button\" *ngIf=\"this._menuService.isVisible()\"  pButton type=\"button\" (click)=\"onHideMenuClick()\" icon=\"fa-caret-square-o-left\" iconPos=\"left\"></button>                                \n        <button class=\"tn-scene-appbar--button\" *ngIf=\"!this._menuService.isVisible()\" pButton type=\"button\" (click)=\"onShowMenuClick()\" icon=\"fa-caret-square-o-right\" iconPos=\"left\"></button>                    \n      </div>\n      <p-breadcrumb class=\"tn-scene-appbar--breadcrumb\" [model]=\"breadcrumbItems\"></p-breadcrumb>    \n    </div>\n    <div class = \"horizontal one\">\n        <!-- <button class=\"tn-scene-appbar--button\" pButton type=\"button\" label=\"Click\"></button>         -->\n    </div>\n</div>\n";
 
 __$styleInject(".tn-scene-appbar--breadcrumb,.tn-scene-appbar--button{margin-left:10px;align-self:center}.tn-scene-appbar--topMenu{background-color:#fff;width:270px;height:70px}",undefined);
 
 var _dec$9;
-var _dec2$3;
 var _class$9;
-var _class2$3;
-var _descriptor$3;
-
-function _initDefineProp$3(target, property, descriptor, context) {
-  if (!descriptor) return;
-  Object.defineProperty(target, property, {
-    enumerable: descriptor.enumerable,
-    configurable: descriptor.configurable,
-    writable: descriptor.writable,
-    value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
-  });
-}
-
-function _applyDecoratedDescriptor$3(target, property, decorators, descriptor, context) {
-  var desc = {};
-  Object['ke' + 'ys'](descriptor).forEach(function (key) {
-    desc[key] = descriptor[key];
-  });
-  desc.enumerable = !!desc.enumerable;
-  desc.configurable = !!desc.configurable;
-
-  if ('value' in desc || desc.initializer) {
-    desc.writable = true;
-  }
-
-  desc = decorators.slice().reverse().reduce(function (desc, decorator) {
-    return decorator(target, property, desc) || desc;
-  }, desc);
-
-  if (context && desc.initializer !== void 0) {
-    desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
-    desc.initializer = undefined;
-  }
-
-  if (desc.initializer === void 0) {
-    Object['define' + 'Property'](target, property, desc);
-    desc = null;
-  }
-
-  return desc;
-}
 
 var AppbarComponent = (_dec$9 = core_1.Component({
   selector: 'tn-appbar',
   template: html$4,
   providers: [BreadcrumbService]
-}), _dec2$3 = core_1.Input(), _dec$9(_class$9 = (_class2$3 = function () {
-  function AppbarComponent(breadcrumbService) {
+}), _dec$9(_class$9 = function () {
+  //showMenu = false;
+  function AppbarComponent(breadcrumbService, menuService) {
     classCallCheck$1(this, AppbarComponent);
-
-    _initDefineProp$3(this, 'menuOpen', _descriptor$3, this);
-
+    this.menuOpen = true;
     this.breadcrumbItems = [];
 
     this._breadcrumbService = breadcrumbService;
+    this._menuService = menuService;
+    //this._menuService.onShowMenuAppBar.subscribe(result =>{ this.showMenu = result;console.log(result)});
     this._getBreadcrumbItems();
   }
 
@@ -10457,23 +10433,20 @@ var AppbarComponent = (_dec$9 = core_1.Component({
     key: 'onHideMenuClick',
     value: function onHideMenuClick() {
       this.menuOpen = false;
+      this._menuService.close();
     }
   }, {
     key: 'onShowMenuClick',
     value: function onShowMenuClick() {
       this.menuOpen = true;
+      this._menuService.open();
     }
   }]);
   return AppbarComponent;
-}(), (_descriptor$3 = _applyDecoratedDescriptor$3(_class2$3.prototype, 'menuOpen', [_dec2$3], {
-  enumerable: true,
-  initializer: function initializer() {
-    return true;
-  }
-})), _class2$3)) || _class$9);
-Reflect.defineMetadata('design:paramtypes', [BreadcrumbService], AppbarComponent);
+}()) || _class$9);
+Reflect.defineMetadata('design:paramtypes', [BreadcrumbService, MenuService], AppbarComponent);
 
-var html$5 = "<router-outlet></router-outlet>\n";
+var html$5 = "<router-outlet></router-outlet>\r\n";
 
 var _dec$11;
 var _class$11;
@@ -10485,7 +10458,7 @@ var ContentComponent = (_dec$11 = core_1.Component({
   classCallCheck$1(this, ContentComponent);
 }) || _class$11);
 
-var min = '.min';
+var min = '';
 
 var mainRoute = {
   path: '',
@@ -10520,7 +10493,7 @@ var appRoutes = {
  * 
  * ADD THE EXPORTS TO modules/config.routing
  */
-var min$1 = '.min';
+var min$1 = '';
 
 var homeRoute = {
   path: 'example',
@@ -10589,7 +10562,7 @@ var _class$13;
 var RoutingModule = (_dec$13 = core_1.NgModule({
   imports: [router.RouterModule.forRoot(configService.getRouteObjects(), {
     useHash: true,
-    enableTracing: "production" !== 'production'
+    enableTracing: "development" !== 'production'
   })],
   exports: [router.RouterModule],
   providers: [AuthGuard]
@@ -10631,7 +10604,7 @@ var TokenInterceptorProvider = {
   multi: true
 };
 
-var html$6 = "<tn-notifications></tn-notifications>\n<router-outlet></router-outlet>\n";
+var html$6 = "<tn-notifications></tn-notifications>\r\n<router-outlet></router-outlet>\r\n";
 
 __$styleInject(".none{flex:none}.one{flex:1}.two{flex:2}.three{flex:3}.four{flex:4}.five{flex:5}.six{flex:6}.seven{flex:7}.eight{flex:8}.nine{flex:9}.ten{flex:10}.eleven{flex:11}.twelve{flex:12}.flex,.horizontal,.vertical{display:flex}.horizontal{flex-direction:row}.vertical{flex-direction:column}.wrap{flex-wrap:wrap}body{margin:0;min-height:100%;padding:0;overflow-x:hidden;overflow-y:auto;font-family:Roboto,Trebuchet MS,Arial,Helvetica,sans-serif;font-weight:400;color:#404c51;-webkit-font-smoothing:antialiased;font-size:1em}",undefined);
 
@@ -10657,9 +10630,6 @@ var AppModule = (_dec$12 = core_1.NgModule({
   classCallCheck$1(this, AppModule);
 }) || _class$12);
 
-{
-  core_1.enableProdMode();
-}
 platformBrowserDynamic.platformBrowserDynamic().bootstrapModule(AppModule);
 
 exports.configService = configService;

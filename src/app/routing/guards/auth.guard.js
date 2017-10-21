@@ -19,13 +19,4 @@ export class AuthGuard {
   canActivate(route, state) {
     return this._checkAndRedirect(route, state);
   }
-  canActivateChild(route, state) {
-    return this._checkAndRedirect(route, state);
-  }
-  canLoadChildren(route, state) {
-    return this._checkAndRedirect(route, state);
-  }
-  canLoad(route, state) {
-    return this._checkAndRedirect(route, state);
-  }
 }

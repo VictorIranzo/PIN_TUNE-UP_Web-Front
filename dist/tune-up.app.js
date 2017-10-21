@@ -3838,6 +3838,904 @@ var errorObject = {
     errorObject: errorObject_1
 };
 
+
+var _escape2 = _interopRequireDefault(_escape);
+
+
+
+var _unescape2 = _interopRequireDefault(_unescape);
+
+
+
+var _stripLow2 = _interopRequireDefault(stripLow_1);
+
+
+
+var _whitelist2 = _interopRequireDefault(whitelist_1);
+
+
+
+var _blacklist2 = _interopRequireDefault(blacklist_1);
+
+
+
+var _isWhitelisted2 = _interopRequireDefault(isWhitelisted_1);
+
+
+
+var _normalizeEmail2 = _interopRequireDefault(normalizeEmail_1);
+
+
+
+var _toString2 = _interopRequireDefault(toString_1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var version = '9.0.0';
+
+var validator = {
+  version: version,
+  toDate: _toDate2.default,
+  toFloat: _toFloat2.default,
+  toInt: _toInt2.default,
+  toBoolean: _toBoolean2.default,
+  equals: _equals2.default,
+  contains: _contains2.default,
+  matches: _matches2.default,
+  isEmail: _isEmail2.default,
+  isURL: _isURL2.default,
+  isMACAddress: _isMACAddress2.default,
+  isIP: _isIP2.default,
+  isFQDN: _isFQDN2.default,
+  isBoolean: _isBoolean2.default,
+  isAlpha: _isAlpha2.default,
+  isAlphanumeric: _isAlphanumeric2.default,
+  isNumeric: _isNumeric2.default,
+  isPort: _isPort2.default,
+  isLowercase: _isLowercase2.default,
+  isUppercase: _isUppercase2.default,
+  isAscii: _isAscii2.default,
+  isFullWidth: _isFullWidth2.default,
+  isHalfWidth: _isHalfWidth2.default,
+  isVariableWidth: _isVariableWidth2.default,
+  isMultibyte: _isMultibyte2.default,
+  isSurrogatePair: _isSurrogatePair2.default,
+  isInt: _isInt2.default,
+  isFloat: _isFloat2.default,
+  isDecimal: _isDecimal2.default,
+  isHexadecimal: _isHexadecimal2.default,
+  isDivisibleBy: _isDivisibleBy2.default,
+  isHexColor: _isHexColor2.default,
+  isISRC: _isISRC2.default,
+  isMD5: _isMD2.default,
+  isHash: _isHash2.default,
+  isJSON: _isJSON2.default,
+  isEmpty: _isEmpty2.default,
+  isLength: _isLength2.default,
+  isByteLength: _isByteLength2.default,
+  isUUID: _isUUID2.default,
+  isMongoId: _isMongoId2.default,
+  isAfter: _isAfter2.default,
+  isBefore: _isBefore2.default,
+  isIn: _isIn2.default,
+  isCreditCard: _isCreditCard2.default,
+  isISIN: _isISIN2.default,
+  isISBN: _isISBN2.default,
+  isISSN: _isISSN2.default,
+  isMobilePhone: _isMobilePhone2.default,
+  isPostalCode: _isPostalCode2.default,
+  isCurrency: _isCurrency2.default,
+  isISO8601: _isISO2.default,
+  isBase64: _isBase2.default,
+  isDataURI: _isDataURI2.default,
+  isLatLong: _isLatLong2.default,
+  ltrim: _ltrim2.default,
+  rtrim: _rtrim2.default,
+  trim: _trim2.default,
+  escape: _escape2.default,
+  unescape: _unescape2.default,
+  stripLow: _stripLow2.default,
+  whitelist: _whitelist2.default,
+  blacklist: _blacklist2.default,
+  isWhitelisted: _isWhitelisted2.default,
+  normalizeEmail: _normalizeEmail2.default,
+  toString: _toString2.default
+};
+
+exports.default = validator;
+module.exports = exports['default'];
+});
+
+var validator = unwrapExports(validator_1);
+
+var required = function required(value) {
+  return !!value;
+};
+
+
+
+var customValidators = Object.freeze({
+	required: required
+});
+
+var defaultConfig = {
+  validators: Object.assign({}, validator, customValidators),
+  validations: {},
+  defaultValidationError: 'Campo inválido',
+  routes: {},
+  menuItems: [],
+  APIBaseUrl: 'http://cliente.tuneupprocess.com/webapi/api'
+};
+
+var asyncGenerator = function () {
+  function AwaitValue(value) {
+    this.value = value;
+  }
+
+  function AsyncGenerator(gen) {
+    var front, back;
+
+    function send(key, arg) {
+      return new Promise(function (resolve, reject) {
+        var request = {
+          key: key,
+          arg: arg,
+          resolve: resolve,
+          reject: reject,
+          next: null
+        };
+
+        if (back) {
+          back = back.next = request;
+        } else {
+          front = back = request;
+          resume(key, arg);
+        }
+      });
+    }
+
+    function resume(key, arg) {
+      try {
+        var result = gen[key](arg);
+        var value = result.value;
+
+        if (value instanceof AwaitValue) {
+          Promise.resolve(value.value).then(function (arg) {
+            resume("next", arg);
+          }, function (arg) {
+            resume("throw", arg);
+          });
+        } else {
+          settle(result.done ? "return" : "normal", result.value);
+        }
+      } catch (err) {
+        settle("throw", err);
+      }
+    }
+
+    function settle(type, value) {
+      switch (type) {
+        case "return":
+          front.resolve({
+            value: value,
+            done: true
+          });
+          break;
+
+        case "throw":
+          front.reject(value);
+          break;
+
+        default:
+          front.resolve({
+            value: value,
+            done: false
+          });
+          break;
+      }
+
+      front = front.next;
+
+      if (front) {
+        resume(front.key, front.arg);
+      } else {
+        back = null;
+      }
+    }
+
+    this._invoke = send;
+
+    if (typeof gen.return !== "function") {
+      this.return = undefined;
+    }
+  }
+
+  if (typeof Symbol === "function" && Symbol.asyncIterator) {
+    AsyncGenerator.prototype[Symbol.asyncIterator] = function () {
+      return this;
+    };
+  }
+
+  AsyncGenerator.prototype.next = function (arg) {
+    return this._invoke("next", arg);
+  };
+
+  AsyncGenerator.prototype.throw = function (arg) {
+    return this._invoke("throw", arg);
+  };
+
+  AsyncGenerator.prototype.return = function (arg) {
+    return this._invoke("return", arg);
+  };
+
+  return {
+    wrap: function (fn) {
+      return function () {
+        return new AsyncGenerator(fn.apply(this, arguments));
+      };
+    },
+    await: function (value) {
+      return new AwaitValue(value);
+    }
+  };
+}();
+
+
+
+
+
+var classCallCheck = function (instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+};
+
+var createClass = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) defineProperties(Constructor, staticProps);
+    return Constructor;
+  };
+}();
+
+
+
+
+
+var defineProperty = function (obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var slicedToArray = function () {
+  function sliceIterator(arr, i) {
+    var _arr = [];
+    var _n = true;
+    var _d = false;
+    var _e = undefined;
+
+    try {
+      for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+        _arr.push(_s.value);
+
+        if (i && _arr.length === i) break;
+      }
+    } catch (err) {
+      _d = true;
+      _e = err;
+    } finally {
+      try {
+        if (!_n && _i["return"]) _i["return"]();
+      } finally {
+        if (_d) throw _e;
+      }
+    }
+
+    return _arr;
+  }
+
+  return function (arr, i) {
+    if (Array.isArray(arr)) {
+      return arr;
+    } else if (Symbol.iterator in Object(arr)) {
+      return sliceIterator(arr, i);
+    } else {
+      throw new TypeError("Invalid attempt to destructure non-iterable instance");
+    }
+  };
+}();
+
+
+
+
+
+
+
+
+
+
+
+
+
+var toConsumableArray = function (arr) {
+  if (Array.isArray(arr)) {
+    for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
+
+    return arr2;
+  } else {
+    return Array.from(arr);
+  }
+};
+
+var ConfigService = function () {
+  function ConfigService() {
+    classCallCheck(this, ConfigService);
+
+    Object.assign(this, defaultConfig);
+  }
+
+  createClass(ConfigService, [{
+    key: 'init',
+    value: function init(configObject) {
+      var validators = configObject.validators,
+          validations = configObject.validations,
+          defaultValidationError = configObject.defaultValidationError,
+          routes = configObject.routes,
+          menuItems = configObject.menuItems,
+          APIBaseUrl = configObject.APIBaseUrl;
+
+
+      validators && this.addValidators(validators);
+      validations && this.addValidations(validations);
+      routes && this.addRoutes(routes);
+      menuItems && this.addMenuItems(menuItems);
+
+      this._defaultValidationError = defaultValidationError ? defaultValidationError : this._defaultValidationError;
+      this._APIBaseUrl = APIBaseUrl ? APIBaseUrl : this._APIBaseUrl;
+    }
+  }, {
+    key: 'addValidators',
+    value: function addValidators(newValidators) {
+      Object.assign(this._validators, newValidators);
+    }
+  }, {
+    key: 'addValidations',
+    value: function addValidations(newValidations) {
+      Object.assign(this._validations, newValidations);
+    }
+  }, {
+    key: 'addRoutes',
+    value: function addRoutes(newRoutes) {
+      Object.assign(this._routes, newRoutes);
+    }
+  }, {
+    key: 'getRouteObjects',
+    value: function getRouteObjects() {
+      return Object.values(this._routes);
+    }
+  }, {
+    key: 'addRoutesWithAuth',
+    value: function addRoutesWithAuth(childRoutes) {
+      var mainRoute = this._routes.mainRoute;
+      mainRoute && mainRoute.children && childRoutes.map(function (route) {
+        mainRoute.children.push(route);
+      });
+    }
+  }, {
+    key: 'addMenuItems',
+    value: function addMenuItems(newMenuItems) {
+      this._menuItems = this._menuItems.concat(newMenuItems);
+    }
+  }, {
+    key: 'validators',
+    get: function get$$1() {
+      return this._validators;
+    },
+    set: function set$$1(value) {
+      this._validators = value;
+    }
+  }, {
+    key: 'validations',
+    get: function get$$1() {
+      return this._validations;
+    },
+    set: function set$$1(value) {
+      this._validations = value;
+    }
+  }, {
+    key: 'routes',
+    get: function get$$1() {
+      return this._routes;
+    },
+    set: function set$$1(value) {
+      this._routes = value;
+    }
+  }, {
+    key: 'menuItems',
+    get: function get$$1() {
+      return this._menuItems;
+    },
+    set: function set$$1(value) {
+      this._menuItems = value;
+    }
+  }, {
+    key: 'defaultValidationError',
+    get: function get$$1() {
+      return this._defaultValidationError;
+    },
+    set: function set$$1(value) {
+      this._defaultValidationError = value;
+    }
+  }, {
+    key: 'APIBaseUrl',
+    get: function get$$1() {
+      return this._APIBaseUrl;
+    },
+    set: function set$$1(value) {
+      this._APIBaseUrl = value;
+    }
+  }]);
+  return ConfigService;
+}();
+
+var configService = new ConfigService();
+
+var _dec;
+var _class;
+
+//import {BASE_URL} from './baseurl';
+
+var APIInterceptor = (_dec = Injectable(), _dec(_class = function () {
+  function APIInterceptor() {
+    classCallCheck(this, APIInterceptor);
+  }
+
+  createClass(APIInterceptor, [{
+    key: 'intercept',
+    value: function intercept(req, next) {
+      var apiReq = req.clone({ url: configService.APIBaseUrl + '/' + req.url });
+      return next.handle(apiReq);
+    }
+  }]);
+  return APIInterceptor;
+}()) || _class);
+
+var APIInterceptorProvider = {
+  provide: HTTP_INTERCEPTORS,
+  useClass: APIInterceptor,
+  multi: true
+};
+
+var _dec$1;
+var _class$1;
+
+var NAMESPACE = 'tuneUp';
+var SEPARATOR = '#';
+
+var ModuleLoader = (_dec$1 = Injectable(), _dec$1(_class$1 = function () {
+  function ModuleLoader(compiler) {
+    classCallCheck(this, ModuleLoader);
+
+    this.compiler = compiler;
+  }
+
+  createClass(ModuleLoader, [{
+    key: 'load',
+    value: function load(path) {
+      var _this = this;
+
+      var _splitPath = this.splitPath(path),
+          modulePath = _splitPath.modulePath,
+          moduleNamespace = _splitPath.moduleNamespace,
+          moduleName = _splitPath.moduleName;
+
+      return new Promise(function (resolve, reject) {
+        var loadedModule = window[NAMESPACE] && window[NAMESPACE][moduleNamespace];
+        if (loadedModule) {
+          resolve(loadedModule);
+        }
+        var script = document.createElement('script');
+        script.src = modulePath;
+        script.onload = function () {
+          _this.compiler.compileModuleAsync(window[NAMESPACE][moduleNamespace][moduleName]).then(function (ngModule) {
+            script.remove();
+            resolve(ngModule);
+          }).catch(function (error) {
+            reject(error);
+          });
+        };
+        script.onerror = function (error) {
+          reject('Could not load ' + path);
+        };
+        document.head.appendChild(script);
+      });
+    }
+  }, {
+    key: 'splitPath',
+    value: function splitPath(path) {
+      var _path$split = path.split(SEPARATOR),
+          _path$split2 = slicedToArray(_path$split, 3),
+          modulePath = _path$split2[0],
+          moduleNamespace = _path$split2[1],
+          moduleName = _path$split2[2];
+
+      return { modulePath: modulePath, moduleNamespace: moduleNamespace, moduleName: moduleName };
+    }
+  }]);
+  return ModuleLoader;
+}()) || _class$1);
+Reflect.defineMetadata('design:paramtypes', [Compiler], ModuleLoader);
+
+var ModuleLoaderProvider = {
+  provide: NgModuleFactoryLoader,
+  useClass: ModuleLoader
+};
+
+var _dec$2;
+var _class$2;
+
+var primengModules = Object.values(primengExports).filter(function (func) {
+  return func.name && func.name.endsWith('Module');
+});
+
+var PrimengModule = (_dec$2 = NgModule({
+  imports: primengModules,
+  exports: primengModules
+}), _dec$2(_class$2 = function PrimengModule() {
+  classCallCheck(this, PrimengModule);
+}) || _class$2);
+
+var html = "<ng-container *ngIf=\"control.dirty && !control.valid\">\r\n  <p *ngFor=\"let error of getErrors()\" class=\"tn-validation--error\">\r\n    {{error}}\r\n  </p>\r\n</ng-container>\r\n";
+
+__$styleInject$1(".tn-validation--error{color:red;font-size:12px;font-size:.75rem;margin-bottom:8px}",undefined);
+
+var _dec$3;
+var _dec2;
+var _class$3;
+var _class2;
+var _descriptor;
+
+function _initDefineProp(target, property, descriptor, context) {
+  if (!descriptor) return;
+  Object.defineProperty(target, property, {
+    enumerable: descriptor.enumerable,
+    configurable: descriptor.configurable,
+    writable: descriptor.writable,
+    value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
+  });
+}
+
+function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) {
+  var desc = {};
+  Object['ke' + 'ys'](descriptor).forEach(function (key) {
+    desc[key] = descriptor[key];
+  });
+  desc.enumerable = !!desc.enumerable;
+  desc.configurable = !!desc.configurable;
+
+  if ('value' in desc || desc.initializer) {
+    desc.writable = true;
+  }
+
+  desc = decorators.slice().reverse().reduce(function (desc, decorator) {
+    return decorator(target, property, desc) || desc;
+  }, desc);
+
+  if (context && desc.initializer !== void 0) {
+    desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
+    desc.initializer = undefined;
+  }
+
+  if (desc.initializer === void 0) {
+    Object['define' + 'Property'](target, property, desc);
+    desc = null;
+  }
+
+  return desc;
+}
+
+var ValidationErrorComponent = (_dec$3 = Component({
+  selector: 'tn-validation-error',
+  template: html
+}), _dec2 = Input(), _dec$3(_class$3 = (_class2 = function () {
+  function ValidationErrorComponent() {
+    classCallCheck(this, ValidationErrorComponent);
+
+    _initDefineProp(this, 'control', _descriptor, this);
+  }
+
+  createClass(ValidationErrorComponent, [{
+    key: 'getErrors',
+    value: function getErrors() {
+      return Object.values(this.control && this.control.errors || {});
+    }
+  }]);
+  return ValidationErrorComponent;
+}(), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, 'control', [_dec2], {
+  enumerable: true,
+  initializer: function initializer() {
+    return this.control;
+  }
+})), _class2)) || _class$3);
+
+var _dec$4;
+var _dec2$1;
+var _class$4;
+var _class2$1;
+var _descriptor$1;
+
+function _initDefineProp$1(target, property, descriptor, context) {
+  if (!descriptor) return;
+  Object.defineProperty(target, property, {
+    enumerable: descriptor.enumerable,
+    configurable: descriptor.configurable,
+    writable: descriptor.writable,
+    value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
+  });
+}
+
+function _applyDecoratedDescriptor$1(target, property, decorators, descriptor, context) {
+  var desc = {};
+  Object['ke' + 'ys'](descriptor).forEach(function (key) {
+    desc[key] = descriptor[key];
+  });
+  desc.enumerable = !!desc.enumerable;
+  desc.configurable = !!desc.configurable;
+
+  if ('value' in desc || desc.initializer) {
+    desc.writable = true;
+  }
+
+  desc = decorators.slice().reverse().reduce(function (desc, decorator) {
+    return decorator(target, property, desc) || desc;
+  }, desc);
+
+  if (context && desc.initializer !== void 0) {
+    desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
+    desc.initializer = undefined;
+  }
+
+  if (desc.initializer === void 0) {
+    Object['define' + 'Property'](target, property, desc);
+    desc = null;
+  }
+
+  return desc;
+}
+
+var NG_VALIDATORS_PROVIDER = {
+  provide: NG_VALIDATORS,
+  useExisting: forwardRef(function () {
+    return Rule;
+  }),
+  multi: true
+};
+
+var Rule = (_dec$4 = Directive({
+  selector: '[rule][ngModel]',
+  providers: [NG_VALIDATORS_PROVIDER]
+}), _dec2$1 = Input('rule'), _dec$4(_class$4 = (_class2$1 = function () {
+  function Rule() {
+    classCallCheck(this, Rule);
+
+    _initDefineProp$1(this, 'path', _descriptor$1, this);
+
+    this._subscribersCache = [];
+  }
+
+  createClass(Rule, [{
+    key: 'ngOnInit',
+    value: function ngOnInit() {
+      this.validationFunctions = this._getValidationFunctions();
+    }
+  }, {
+    key: 'validate',
+    value: function validate(control) {
+      var errors = Validators.compose(this.validationFunctions)(control);
+      return errors;
+    }
+  }, {
+    key: '_getValidationFunctions',
+    value: function _getValidationFunctions() {
+      var _this = this;
+
+      return this._getValidations().map(function (validationObj) {
+        var _getValidationParams2 = _this._getValidationParams(validationObj),
+            func = _getValidationParams2.func,
+            args = _getValidationParams2.args,
+            modelArgs = _getValidationParams2.modelArgs,
+            msg = _getValidationParams2.msg;
+
+        return _this._createValidatorFunction(args, func, modelArgs, msg);
+      });
+    }
+  }, {
+    key: '_createValidatorFunction',
+    value: function _createValidatorFunction(args, func, modelArgs, msg) {
+      var _this2 = this;
+
+      return function (control) {
+        var scope = {};
+        var modelValues = modelArgs[0] ? _this2._handleModelValues(modelArgs, control) : [];
+        var thisArgs = [control.value || ''].concat(toConsumableArray(args), toConsumableArray(modelValues));
+        return func.apply(scope, thisArgs) ? null : defineProperty({}, func.name, msg);
+      };
+    }
+  }, {
+    key: '_getValidations',
+    value: function _getValidations() {
+      var keys = this.path.split('.');
+      var entity = keys[0];
+      var field = keys[1];
+      return configService.validations[entity][field];
+    }
+  }, {
+    key: '_getValidationParams',
+    value: function _getValidationParams(validationObj) {
+      var validationName = this._getValidatonName(validationObj);
+      var validation = validationObj[validationName];
+      var allArgs = validation.arguments || [];
+      var validators = configService.validators;
+      return {
+        func: validators[validationName],
+        args: allArgs.filter(function (c) {
+          return !Array.isArray(c);
+        }),
+        modelArgs: allArgs.filter(function (c) {
+          return Array.isArray(c);
+        }).map(function (c) {
+          return c[0];
+        }),
+        msg: validation.message || configService.defaultValidationError
+      };
+    }
+  }, {
+    key: '_getCheckControlFunction',
+    value: function _getCheckControlFunction() {
+      return function (control) {
+        control.updateValueAndValidity();
+      };
+    }
+  }, {
+    key: '_subscribeOnValueChanges',
+    value: function _subscribeOnValueChanges(modelArg, control) {
+      if (!this._subscribersCache.includes(modelArg)) {
+        var checkControl = this._getCheckControlFunction();
+        var target = control.parent.controls[modelArg].valueChanges;
+        this._subscribersCache.push(modelArg);
+        target.subscribe(function () {
+          return checkControl(control);
+        });
+      }
+    }
+  }, {
+    key: '_getValidatonName',
+    value: function _getValidatonName(validationObj) {
+      return Object.keys(validationObj)[0];
+    }
+  }, {
+    key: '_handleModelValues',
+    value: function _handleModelValues(modelArgs, control) {
+      var _this3 = this;
+
+      return modelArgs.map(function (modelArg) {
+        var modelArgValue = control.parent.controls[modelArg].value || '';
+        _this3._subscribeOnValueChanges(modelArg, control);
+        return modelArgValue;
+      });
+    }
+  }]);
+  return Rule;
+}(), (_descriptor$1 = _applyDecoratedDescriptor$1(_class2$1.prototype, 'path', [_dec2$1], {
+  enumerable: true,
+  initializer: function initializer() {
+    return null;
+  }
+})), _class2$1)) || _class$4);
+
+"use strict";
+// CommonJS / Node have global context exposed as "global" variable.
+// We don't want to include the whole node.d.ts this this compilation unit so we'll just fake
+// the global "global" var for now.
+var __window = typeof window !== 'undefined' && window;
+var __self = typeof self !== 'undefined' && typeof WorkerGlobalScope !== 'undefined' &&
+    self instanceof WorkerGlobalScope && self;
+var __global = typeof commonjsGlobal !== 'undefined' && commonjsGlobal;
+var _root = __window || __global || __self;
+var root_1 = _root;
+// Workaround Closure Compiler restriction: The body of a goog.module cannot use throw.
+// This is needed when used with angular/tsickle which inserts a goog.module statement.
+// Wrap in IIFE
+(function () {
+    if (!_root) {
+        throw new Error('RxJS could not find any global context (window, self, global)');
+    }
+})();
+
+
+var root = {
+	root: root_1
+};
+
+"use strict";
+function isFunction(x) {
+    return typeof x === 'function';
+}
+var isFunction_2 = isFunction;
+
+
+var isFunction_1 = {
+	isFunction: isFunction_2
+};
+
+"use strict";
+var isArray_1 = Array.isArray || (function (x) { return x && typeof x.length === 'number'; });
+
+
+var isArray = {
+	isArray: isArray_1
+};
+
+"use strict";
+function isObject(x) {
+    return x != null && typeof x === 'object';
+}
+var isObject_2 = isObject;
+
+
+var isObject_1 = {
+	isObject: isObject_2
+};
+
+"use strict";
+// typeof any so that it we don't have to cast when comparing a result to the error object
+var errorObject_1 = { e: {} };
+
+
+var errorObject = {
+	errorObject: errorObject_1
+};
+
 "use strict";
 
 var tryCatchTarget;
@@ -4962,7 +5860,7 @@ var NotificationsService = (_dec$6 = Injectable(), _dec$6(_class$6 = function ()
     return NotificationsService;
 }()) || _class$6);
 
-var html$1 = "<p-growl [value]=\"msgs\"></p-growl>\n";
+var html$1 = "<p-growl [value]=\"msgs\"></p-growl>\r\n";
 
 var _dec$5;
 var _class$5;
@@ -10055,21 +10953,6 @@ var AuthGuard = (_dec$1$1 = Injectable(), _dec$1$1(_class$1$1 = function () {
     value: function canActivate(route, state) {
       return this._checkAndRedirect(route, state);
     }
-  }, {
-    key: 'canActivateChild',
-    value: function canActivateChild(route, state) {
-      return this._checkAndRedirect(route, state);
-    }
-  }, {
-    key: 'canLoadChildren',
-    value: function canLoadChildren(route, state) {
-      return this._checkAndRedirect(route, state);
-    }
-  }, {
-    key: 'canLoad',
-    value: function canLoad(route, state) {
-      return this._checkAndRedirect(route, state);
-    }
   }]);
   return AuthGuard;
 }()) || _class$1$1);
@@ -10493,8 +11376,6 @@ var mainRoute = {
   path: '',
   component: SceneComponent,
   canActivate: [AuthGuard],
-  canActivateChild: [AuthGuard],
-  canLoadChildren: [AuthGuard],
   children: []
 };
 var mainRedirectRoute = {
@@ -10509,10 +11390,11 @@ var loginRoute = {
 
 var appRoutes = {
   mainRoute: mainRoute,
-  mainRedirectRoute: mainRedirectRoute,
-  loginRoute: loginRoute
+  loginRoute: loginRoute,
+  mainRedirectRoute: mainRedirectRoute
 };
 
+<<<<<<< HEAD
 /**
  * Route to lazy load the module, path is the url, without the /
  * loadChildren is the path from wher our server is running (index.html)
@@ -10522,11 +11404,13 @@ var appRoutes = {
  * 
  * ADD THE EXPORTS TO modules/config.routing
  */
+=======
+>>>>>>> master
 var min$1 = '.min';
 
 var homeRoute = {
-  path: 'example',
-  loadChildren: 'src/app/modules/example/dist/tune-up.example.umd' + min$1 + '.js#example#ExampleModule'
+  path: 'home',
+  loadChildren: 'src/app/modules/home/dist/tune-up.home.umd' + min$1 + '.js#home#HomeModule'
 };
 
 
@@ -10535,6 +11419,7 @@ var childRoutes = Object.freeze({
 	homeRoute: homeRoute
 });
 
+<<<<<<< HEAD
 /**
  * MenuItem object to navigate to this module
  * path: route without /
@@ -10544,10 +11429,12 @@ var childRoutes = Object.freeze({
  * 
  * ADD THE EXPORTS TO modules/config.menu
  */
+=======
+>>>>>>> master
 var homeMenuItem = {
-  path: 'example',
-  text: 'Ejemplo',
-  icon: 'af-example',
+  path: 'home',
+  text: 'Inicio',
+  icon: 'fa fa-home',
   adminOnly: false
 };
 
@@ -10633,7 +11520,7 @@ var TokenInterceptorProvider = {
   multi: true
 };
 
-var html$6 = "<tn-notifications></tn-notifications>\n<router-outlet></router-outlet>\n";
+var html$3 = "<tn-notifications></tn-notifications>\n<router-outlet></router-outlet>\n";
 
 __$styleInject(".none{flex:none}.one{flex:1}.two{flex:2}.three{flex:3}.four{flex:4}.five{flex:5}.six{flex:6}.seven{flex:7}.eight{flex:8}.nine{flex:9}.ten{flex:10}.eleven{flex:11}.twelve{flex:12}.flex,.horizontal,.vertical{display:flex}.horizontal{flex-direction:row}.vertical{flex-direction:column}.wrap{flex-wrap:wrap}body{margin:0;min-height:100%;padding:0;overflow-x:hidden;overflow-y:auto;font-family:Roboto,Trebuchet MS,Arial,Helvetica,sans-serif;font-weight:400;color:#404c51;-webkit-font-smoothing:antialiased;font-size:1em}",undefined);
 

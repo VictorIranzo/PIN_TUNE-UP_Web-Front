@@ -3361,8 +3361,6 @@ var ConfigService = function () {
         value: function addRoutesWithAuth(childRoutes) {
             var mainRoute = this._routes.mainRoute;
             mainRoute && mainRoute.children && childRoutes.map(function (route) {
-                route.canLoad = route.canLoad || [];
-                route.canLoad = [].concat(toConsumableArray(route.canLoad), toConsumableArray(mainRoute.canLoadChildren || []));
                 mainRoute.children.push(route);
             });
         }
@@ -3530,7 +3528,7 @@ var PrimengModule = (_dec$2 = core_1.NgModule({
     classCallCheck(this, PrimengModule);
 }) || _class$2);
 
-var html = "<ng-container *ngIf=\"control.dirty && !control.valid\">\n  <p *ngFor=\"let error of getErrors()\" class=\"tn-validation--error\">\n    {{error}}\n  </p>\n</ng-container>\n";
+var html = "<ng-container *ngIf=\"control.dirty && !control.valid\">\r\n  <p *ngFor=\"let error of getErrors()\" class=\"tn-validation--error\">\r\n    {{error}}\r\n  </p>\r\n</ng-container>\r\n";
 
 __$styleInject$1(".tn-validation--error{color:red;font-size:12px;font-size:.75rem;margin-bottom:8px}", undefined);
 
@@ -4961,7 +4959,7 @@ var NotificationsService = (_dec$6 = core_1.Injectable(), _dec$6(_class$6 = func
     return NotificationsService;
 }()) || _class$6);
 
-var html$1 = "<p-growl [value]=\"msgs\"></p-growl>\n";
+var html$1 = "<p-growl [value]=\"msgs\"></p-growl>\r\n";
 
 var _dec$5;
 var _class$5;
@@ -10054,21 +10052,6 @@ var AuthGuard = (_dec$1$1 = core_1.Injectable(), _dec$1$1(_class$1$1 = function 
     value: function canActivate(route, state) {
       return this._checkAndRedirect(route, state);
     }
-  }, {
-    key: 'canActivateChild',
-    value: function canActivateChild(route, state) {
-      return this._checkAndRedirect(route, state);
-    }
-  }, {
-    key: 'canLoadChildren',
-    value: function canLoadChildren(route, state) {
-      return this._checkAndRedirect(route, state);
-    }
-  }, {
-    key: 'canLoad',
-    value: function canLoad(route, state) {
-      return this._checkAndRedirect(route, state);
-    }
   }]);
   return AuthGuard;
 }()) || _class$1$1);
@@ -10464,8 +10447,6 @@ var mainRoute = {
   path: '',
   component: SceneComponent,
   canActivate: [AuthGuard],
-  canActivateChild: [AuthGuard],
-  canLoadChildren: [AuthGuard],
   children: []
 };
 var mainRedirectRoute = {
@@ -10480,24 +10461,15 @@ var loginRoute = {
 
 var appRoutes = {
   mainRoute: mainRoute,
-  mainRedirectRoute: mainRedirectRoute,
-  loginRoute: loginRoute
+  loginRoute: loginRoute,
+  mainRedirectRoute: mainRedirectRoute
 };
 
-/**
- * Route to lazy load the module, path is the url, without the /
- * loadChildren is the path from wher our server is running (index.html)
- * until the module file. The format is:
- *  'src/app/modules/MODULENAME/dist/tune-up.MODULENAME.umd[.min].js#MODULENAME#MODULENAMEModule'
- * you can load the min or nomin version, MODULENAMEModule is how you should call the NgModule
- * 
- * ADD THE EXPORTS TO modules/config.routing
- */
 var min$1 = '';
 
 var homeRoute = {
-  path: 'example',
-  loadChildren: 'src/app/modules/example/dist/tune-up.example.umd' + min$1 + '.js#example#ExampleModule'
+  path: 'home',
+  loadChildren: 'src/app/modules/home/dist/tune-up.home.umd' + min$1 + '.js#home#HomeModule'
 };
 
 
@@ -10506,19 +10478,10 @@ var childRoutes = Object.freeze({
 	homeRoute: homeRoute
 });
 
-/**
- * MenuItem object to navigate to this module
- * path: route without /
- * text: label for the menu button
- * icon: font-awesome icon id
- * adminOnly: true if requires admin privilege
- * 
- * ADD THE EXPORTS TO modules/config.menu
- */
 var homeMenuItem = {
-  path: 'example',
-  text: 'Ejemplo',
-  icon: 'af-example',
+  path: 'home',
+  text: 'Inicio',
+  icon: 'fa fa-home',
   adminOnly: false
 };
 

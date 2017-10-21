@@ -7,8 +7,6 @@ const mainRoute = {
   path: '',
   component: SceneComponent,
   canActivate: [AuthGuard],
-  canActivateChild: [AuthGuard],
-  canLoadChildren: [AuthGuard],
   children: []
 };
 const mainRedirectRoute = {
@@ -23,6 +21,6 @@ const loginRoute = {
 
 export default {
   mainRoute,
-  mainRedirectRoute,
-  loginRoute
+  loginRoute,
+  mainRedirectRoute  
 };

@@ -1,5 +1,7 @@
-<p-dataTable [value]="ut" [loading]="true">
-    <p-column field="name" header="Actividad"></p-column>
-    <p-column field="to-do" header="TO-DO"></p-column>
-    <p-column field="doing" header="Doing"></p-column>
-</p-dataTable>
+<div class ="horizontal">
+    <p-dataTable [value]="kanbanActivities" [loading]="true">
+        <p-column field="NombreActividad" header="Actividad"></p-column>
+        <p-column field="NumSeguimientosPendiente" header="TO-DO"></p-column>
+        <p-column field="NumSeguimientosProgreso" header="Doing"></p-column>
+    </p-dataTable>
+</div>

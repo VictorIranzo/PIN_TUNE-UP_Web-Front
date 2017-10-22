@@ -1,7 +1,7 @@
 <div class ="horizontal">
-    <p-dataTable [value]="kanbanActivities">
+    <p-dataTable [value]="kanbanActivities" [responsive]="true">
         <p-column field="NombreActividad" header="Actividad"></p-column>
-        <p-column field="NumSeguimientosPendiente" header="TO-DO" [style]="{'width':'10%'}"></p-column>
-        <p-column field="NumSeguimientosProgreso" header="Doing" [style]="{'width':'10%'}"></p-column>
+        <p-column field="NumSeguimientosPendiente" header="TO-DO" [style]="{'width':'20%'}"></p-column>
+        <p-column field="NumSeguimientosProgreso" header="Doing" [style]="{'width':'20%'}"></p-column>
     </p-dataTable>
 </div>

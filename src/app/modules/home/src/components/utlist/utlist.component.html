@@ -1,1 +1,18 @@
-UTLIST
+<p-dataTable [value]="uts" [rows]="20" [paginator]="true" [pageLinks]="5"  [sortMode]="multiple">
+  <p-column field="IdWorkflow" header="Tipo/Estado" [sortable]="true">
+    <ng-template let-ut="rowData" pTemplate="body">
+      <span class="ui-button-icon" [ngClass]="getUtTypeIcon(ut)"></span>
+      <span class="ui-button-icon" [ngClass]="getStateIcon(ut)"></span>
+    </ng-template>
+  </p-column>
+  <p-column field="IdAgente" header="Agente" [sortable]="true"></p-column>
+  <!-- <p-column header="Agente">
+    <ng-template let-utIndex="rowIndex" pTemplate="body">
+      <img src="getAgentPic(utIndex)"></img>
+    </ng-template>
+  </p-column> -->
+  <p-column field="NombreProyecto" header="Producto/Servicio" [sortable]="true"></p-column>
+  <p-column field="NombreVersion" header="Sprint" [sortable]="true"></p-column>
+  <p-column field="IdUT" header="Código" [sortable]="true"></p-column>
+  <p-column field="NombreUT" header="Nombre" [sortable]="true"></p-column>
+</p-dataTable>

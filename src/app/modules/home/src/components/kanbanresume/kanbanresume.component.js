@@ -6,4 +6,6 @@ import html from './kanbanresume.component.html';
   selector: 'tn-kanban-resume',
   template: html
 })
-export class KanbanResumeComponent {}
+export class KanbanResumeComponent {
+  Activities = [];
+}

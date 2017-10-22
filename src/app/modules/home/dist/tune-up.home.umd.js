@@ -22,7 +22,9 @@ function __$styleInject(css, returnValue) {
   return returnValue;
 }
 
-var html = "<div class=\"horizontal\">\n  <tn-kanban-resume class=\"none\"></tn-kanban-resume>\n  <tn-ut-list class=\"one\"></tn-ut-list>\n</div>\n";
+var html = "<div class=\"horizontal\">\n  <tn-kanban-resume class=\"none\"></tn-kanban-resume>\n  <tn-ut-list class=\"one tn-home__utlist\"></tn-ut-list>\n</div>\n";
+
+__$styleInject(".tn-home__utlist{margin:16px;z-index:0;overflow-x:overlay;text-align:center}", undefined);
 
 var asyncGenerator = function () {
   function AwaitValue(value) {
@@ -168,8 +170,6 @@ var createClass = function () {
 var _dec$2;
 var _class$2;
 
-// import './home.component.css';
-
 var HomeComponent = (_dec$2 = core.Component({
   selector: 'tn-home',
   template: html
@@ -249,9 +249,9 @@ var AgentPicService = (_dec$6 = core.Injectable(), _dec$6(_class$6 = function ()
 }()) || _class$6);
 Reflect.defineMetadata('design:paramtypes', [http.HttpClient], AgentPicService);
 
-var html$2 = "<p-dataTable [value]=\"uts\" [rows]=\"20\" [paginator]=\"true\" [pageLinks]=\"5\"  [sortMode]=\"multiple\">\n  <p-column field=\"IdWorkflow\" header=\"Tipo/Estado\" [sortable]=\"true\">\n    <ng-template let-ut=\"rowData\" pTemplate=\"body\">\n      <span class=\"ui-button-icon\" [ngClass]=\"getUtTypeIcon(ut)\"></span>\n      <span class=\"ui-button-icon\" [ngClass]=\"getStateIcon(ut)\"></span>\n    </ng-template>\n  </p-column>\n  <p-column field=\"IdAgente\" header=\"Agente\" [sortable]=\"true\"></p-column>\n  <!-- <p-column header=\"Agente\">\n    <ng-template let-utIndex=\"rowIndex\" pTemplate=\"body\">\n      <img src=\"getAgentPic(utIndex)\"></img>\n    </ng-template>\n  </p-column> -->\n  <p-column field=\"NombreProyecto\" header=\"Producto/Servicio\" [sortable]=\"true\"></p-column>\n  <p-column field=\"NombreVersion\" header=\"Sprint\" [sortable]=\"true\"></p-column>\n  <p-column field=\"IdUT\" header=\"Código\" [sortable]=\"true\"></p-column>\n  <p-column field=\"NombreUT\" header=\"Nombre\" [sortable]=\"true\"></p-column>\n</p-dataTable>\n";
+var html$2 = "<div class=\"ui-widget-header none horizontal tn-home__utlist__searchbar\">\n  <i class=\"fa fa-search none tn_home__utlist__searchbar__icon\"></i>\n  <input #gb type=\"text\" pInputText size=\"50\" class=\"tn-home__utlist__searchbar__input\" placeholder=\"Búsqueda global\">\n</div>\n<p-dataTable [value]=\"uts\" [rows]=\"20\" [paginator]=\"true\" [pageLinks]=\"5\" [sortMode]=\"multiple\" [globalFilter]=\"gb\"\n  reorderableColumns=\"true\">\n  <p-column [style]=\"{'width':'10%'}\"  field=\"Estado\" header=\"Estado\" [sortable]=\"true\">\n    <ng-template let-ut=\"rowData\" pTemplate=\"body\">\n      <span class=\"ui-button-icon\" [ngClass]=\"getUtTypeIcon(ut)\"></span>\n      <span class=\"ui-button-icon\" [ngClass]=\"getStateIcon(ut)\"></span>\n    </ng-template>\n  </p-column>\n  <p-column [style]=\"{'width':'10%'}\" field=\"IdAgente\" header=\"Agente\" [sortable]=\"true\"></p-column>\n  <!-- <p-column field=\"IdAgente\" header=\"Agente\" [sortable]=\"true\">\n    <ng-template let-ut=\"rowData\" pTemplate=\"body\">\n      <img src=\"getAgentPic(utIndex)\"></img>\n    </ng-template>\n  </p-column> -->\n  <p-column [style]=\"{'width':'30%'}\" field=\"NombreProyecto\" header=\"Producto/Servicio\" [sortable]=\"true\"></p-column>\n  <p-column [style]=\"{'width':'10%'}\" field=\"NombreVersion\" header=\"Sprint\" [sortable]=\"true\"></p-column>\n  <p-column [style]=\"{'width':'10%'}\" field=\"IdUT\" header=\"Código\" [sortable]=\"true\"></p-column>\n  <p-column [style]=\"{'width':'30%'}\" field=\"NombreUT\" header=\"Nombre\" [sortable]=\"true\"></p-column>\n</p-dataTable>\n";
 
-__$styleInject("", undefined);
+__$styleInject(".tn-home__utlist__searchbar{padding:16px;border-bottom:0}.tn_home__utlist__searchbar__icon{margin-top:4px;margin-right:8px}.tn-home__utlist__searchbar__input{width:100%}", undefined);
 
 var _dec$4;
 var _class$4;

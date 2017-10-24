@@ -12,6 +12,7 @@ import './kanbanresume.component.css';
 })
 export class KanbanResumeComponent {
   kanbanActivities = [];
+  selectedActivity = undefined;
 
   constructor(
     activitiesService: KanbanActivitiesService,

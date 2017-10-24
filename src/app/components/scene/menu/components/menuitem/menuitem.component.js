@@ -1,12 +1,11 @@
-import {Component, Input, ViewEncapsulation} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import html from './menuitem.component.html';
 
 import './menuitem.component.css';
 
 @Component({
   selector: 'tn-menuitem',
-  template: html,
-  encapsulation: ViewEncapsulation.None
+  template: html
 })
 export class MenuItemComponent {
   @Input() path;
@@ -17,6 +16,6 @@ export class MenuItemComponent {
   constructor() {}
 
   onClick() {
-    console.log('Click en ' + text);
+    console.log('Click en ' + this.text);
   }
 }

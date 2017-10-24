@@ -16,15 +16,11 @@ function __$styleInject(css, returnValue) {
   return returnValue;
 }
 
-import { Component, Injectable, NgModule, Pipe } from '@angular/core';
+import { Component, Injectable, Input, NgModule, Pipe } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { AgentService, NotificationsService, TuneUpCoreModule } from '@tune-up/core';
 import { HttpClient } from '@angular/common/http';
+import { AgentService, NotificationsService, TuneUpCoreModule } from '@tune-up/core';
 import { DomSanitizer } from '@angular/platform-browser';
-
-var html = "<div class=\"horizontal\">\r\n  <tn-kanban-resume class=\"none\"></tn-kanban-resume>\r\n  <tn-ut-list class=\"one tn-home__utlist\"></tn-ut-list>\r\n</div>\r\n";
-
-__$styleInject(".tn-home__utlist{margin:16px;z-index:0;overflow-x:overlay;text-align:center}", undefined);
 
 var asyncGenerator = function () {
   function AwaitValue(value) {
@@ -217,44 +213,10 @@ var toConsumableArray = function (arr) {
   }
 };
 
-var _dec$2;
-var _class$2;
-
-var HomeComponent = (_dec$2 = Component({
-  selector: 'tn-home',
-  template: html
-}), _dec$2(_class$2 = function HomeComponent() {
-  classCallCheck(this, HomeComponent);
-}) || _class$2);
-
-var _dec$1;
-var _class$1;
-
-var HomeRoutingModule = (_dec$1 = NgModule({
-  imports: [RouterModule.forChild([{ path: '', component: HomeComponent }])],
-  exports: [RouterModule]
-}), _dec$1(_class$1 = function HomeRoutingModule() {
-  classCallCheck(this, HomeRoutingModule);
-}) || _class$1);
-
-var html$1 = "KANBAN RESUMIDO\n";
-
 var _dec$3;
 var _class$3;
 
-// import './kanbanresume.component.css';
-
-var KanbanResumeComponent = (_dec$3 = Component({
-  selector: 'tn-kanban-resume',
-  template: html$1
-}), _dec$3(_class$3 = function KanbanResumeComponent() {
-  classCallCheck(this, KanbanResumeComponent);
-}) || _class$3);
-
-var _dec$5;
-var _class$5;
-
-var UtListService = (_dec$5 = Injectable(), _dec$5(_class$5 = function () {
+var UtListService = (_dec$3 = Injectable(), _dec$3(_class$3 = function () {
   function UtListService(http$$1) {
     classCallCheck(this, UtListService);
 
@@ -275,13 +237,13 @@ var UtListService = (_dec$5 = Injectable(), _dec$5(_class$5 = function () {
     }
   }]);
   return UtListService;
-}()) || _class$5);
+}()) || _class$3);
 Reflect.defineMetadata('design:paramtypes', [HttpClient], UtListService);
 
-var _dec$6;
-var _class$6;
+var _dec$4;
+var _class$4;
 
-var AgentPicService = (_dec$6 = Injectable(), _dec$6(_class$6 = function () {
+var AgentPicService = (_dec$4 = Injectable(), _dec$4(_class$4 = function () {
   function AgentPicService(http$$1) {
     classCallCheck(this, AgentPicService);
 
@@ -298,15 +260,247 @@ var AgentPicService = (_dec$6 = Injectable(), _dec$6(_class$6 = function () {
     }
   }]);
   return AgentPicService;
-}()) || _class$6);
+}()) || _class$4);
 Reflect.defineMetadata('design:paramtypes', [HttpClient], AgentPicService);
 
-var html$2 = "<div class=\"ui-widget-header none horizontal tn-home__utlist__searchbar\">\n  <i class=\"fa fa-search none tn_home__utlist__searchbar__icon\"></i>\n  <input #gb type=\"text\" pInputText size=\"50\" class=\"tn-home__utlist__searchbar__input\" placeholder=\"Búsqueda global\">\n</div>\n<p-dataTable [value]=\"uts\" [rows]=\"20\" [paginator]=\"true\" [pageLinks]=\"5\" [sortMode]=\"multiple\" [globalFilter]=\"gb\" reorderableColumns=\"true\">\n  <p-column [style]=\"{'width':'10%'}\" field=\"Estado\" header=\"Estado\" [sortable]=\"true\">\n    <ng-template let-ut=\"rowData\" pTemplate=\"body\">\n      <span class=\"ui-button-icon\" [ngClass]=\"getUtTypeIcon(ut)\"></span>\n      <span class=\"ui-button-icon\" [ngClass]=\"getStateIcon(ut)\"></span>\n    </ng-template>\n  </p-column>\n  <p-column [style]=\"{'width':'10%'}\" field=\"IdAgente\" header=\"Agente\" [sortable]=\"true\">\n    <ng-template let-ut=\"rowData\" pTemplate=\"body\">\n      <img *ngIf=\"ut.IdAgente\" class=\"tn-home__utlist__agent__pic\" [src]=\"getAgentPic(ut) | safeHtml\">\n      <i *ngIf=\"ut.IdAgente === -1\" class=\"fa fa-2x fa-users\"></i>\n    </ng-template>\n  </p-column>\n  <p-column [style]=\"{'width':'30%'}\" field=\"NombreProyecto\" header=\"Producto/Servicio\" [sortable]=\"true\"></p-column>\n  <p-column [style]=\"{'width':'10%'}\" field=\"NombreVersion\" header=\"Sprint\" [sortable]=\"true\"></p-column>\n  <p-column [style]=\"{'width':'10%'}\" field=\"IdUT\" header=\"Código\" [sortable]=\"true\"></p-column>\n  <p-column [style]=\"{'width':'30%'}\" field=\"NombreUT\" header=\"Nombre\" [sortable]=\"true\"></p-column>\n</p-dataTable>\n";
+var html = "<div class=\"horizontal\">\n  <tn-kanban-resume class=\"tn-home__kanbanresume\" [filterUts]=\"filterUts\"></tn-kanban-resume>\n  <tn-ut-list class=\"tn-home__utlist\" [uts]=\"utsToShow\"></tn-ut-list>\n</div>\n";
+
+__$styleInject(".tn-home__utlist{margin:16px;z-index:0;overflow-x:overlay;text-align:center;width:75%}.tn-home__kanbanresume{margin-top:16px;margin-bottom:16px;margin-left:16px;width:25%}", undefined);
+
+var _dec$2;
+var _class$2;
+
+var HomeComponent = (_dec$2 = Component({
+  selector: 'tn-home',
+  template: html,
+  providers: [UtListService]
+}), _dec$2(_class$2 = function () {
+  function HomeComponent(utListService, notificationService) {
+    var _this = this;
+
+    classCallCheck(this, HomeComponent);
+
+    this.filterUts = function (idActivity, status) {
+      _this.utsToShow = _this.allUts.filter(function (ut) {
+        return (
+          // (idActivity === 'ALL' || ut.IdActividad === idActivity) &&
+          status === 'ALL' || ut.Estado === status
+        );
+      });
+    };
+
+    this._utListService = utListService;
+    this._notificationsService = notificationService;
+    this.allUts = [];
+    this.utsToShow = [];
+    this._getUts();
+  }
+
+  createClass(HomeComponent, [{
+    key: '_getUts',
+    value: function _getUts() {
+      var _this2 = this;
+
+      this._utListService.get().subscribe(function (data) {
+        if (!data.Exito) {
+          _this2._notificationsService.error('No se pudieron obtener las UTs', data.Mensaje);
+          return;
+        }
+        _this2.allUts = data.Resultado;
+        _this2.utsToShow = data.Resultado;
+      }, function (error) {
+        return _this2._notificationsService.error('No se pudieron obtener las UTs', error);
+      });
+    }
+  }]);
+  return HomeComponent;
+}()) || _class$2);
+Reflect.defineMetadata('design:paramtypes', [UtListService, NotificationsService], HomeComponent);
+
+var _dec$1;
+var _class$1;
+
+var HomeRoutingModule = (_dec$1 = NgModule({
+  imports: [RouterModule.forChild([{ path: '', component: HomeComponent }])],
+  exports: [RouterModule]
+}), _dec$1(_class$1 = function HomeRoutingModule() {
+  classCallCheck(this, HomeRoutingModule);
+}) || _class$1);
+
+var _dec$6;
+var _class$6;
+
+var KanbanActivitiesService = (_dec$6 = Injectable(), _dec$6(_class$6 = function () {
+  function KanbanActivitiesService(http$$1) {
+    classCallCheck(this, KanbanActivitiesService);
+
+    this._http = http$$1;
+    this._url = 'ActividadesKanban2';
+  }
+
+  createClass(KanbanActivitiesService, [{
+    key: 'get',
+    value: function get$$1() {
+      var idActividad = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'ALL';
+      var idAgente = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'ALL';
+      var idProducto = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'ALL';
+      var idVersion = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'ALL';
+      var idProyecto = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 'ALL';
+
+      return this._http.get(this._url + '?idActividad=' + idActividad + '&idAgente=' + idAgente + '&idProducto=' + idProducto + '&idVersion=' + idVersion + '&idProyecto=' + idProyecto);
+    }
+  }]);
+  return KanbanActivitiesService;
+}()) || _class$6);
+Reflect.defineMetadata('design:paramtypes', [HttpClient], KanbanActivitiesService);
+
+var html$1 = "<div class =\"horizontal\">\n    <p-dataTable [value]=\"kanbanActivities\" [responsive]=\"true\">\n        <p-column header=\"Actividad\">            \n                <ng-template let-activity=\"rowData\" let-i=\"rowIndex\" pTemplate=\"body\">\n                    <span (click)=\"filterKanbanActivies(activity.IdActividad, 'ALL')\" class=\"tn-home-kanban_resume--span\">{{activity.NombreActividad}}</span>\n                </ng-template>\n            </p-column>       \n        <p-column header=\"To Do\" [style]=\"{'width':'20%'}\">            \n            <ng-template let-activity=\"rowData\" let-i=\"rowIndex\" pTemplate=\"body\">\n                <span (click)=\"filterKanbanActivies(activity.IdActividad, 'TO DO')\" class=\"tn-home-kanban_resume--span\">{{activity.NumSeguimientosPendiente}}</span>\n            </ng-template>\n        </p-column>   \n        <p-column header=\"Doing\" [style]=\"{'width':'20%'}\">            \n            <ng-template let-activity=\"rowData\" let-i=\"rowIndex\" pTemplate=\"body\" >\n                <span (click)=\"filterKanbanActivies(activity.IdActividad, 'ACTIVE')\" class=\"tn-home-kanban_resume--span\">{{activity.NumSeguimientosProgreso}}</span>\n            </ng-template>\n        </p-column>                \n    </p-dataTable>\n</div>\n";
+
+__$styleInject(".tn-home-kanban_resume--span{overflow:auto;display:block;padding:0!important;margin:0}", undefined);
+
+var _dec$5;
+var _dec2;
+var _class$5;
+var _class2;
+var _descriptor;
+
+function _initDefineProp(target, property, descriptor, context) {
+  if (!descriptor) return;
+  Object.defineProperty(target, property, {
+    enumerable: descriptor.enumerable,
+    configurable: descriptor.configurable,
+    writable: descriptor.writable,
+    value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
+  });
+}
+
+function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) {
+  var desc = {};
+  Object['ke' + 'ys'](descriptor).forEach(function (key) {
+    desc[key] = descriptor[key];
+  });
+  desc.enumerable = !!desc.enumerable;
+  desc.configurable = !!desc.configurable;
+
+  if ('value' in desc || desc.initializer) {
+    desc.writable = true;
+  }
+
+  desc = decorators.slice().reverse().reduce(function (desc, decorator) {
+    return decorator(target, property, desc) || desc;
+  }, desc);
+
+  if (context && desc.initializer !== void 0) {
+    desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
+    desc.initializer = undefined;
+  }
+
+  if (desc.initializer === void 0) {
+    Object['define' + 'Property'](target, property, desc);
+    desc = null;
+  }
+
+  return desc;
+}
+
+var KanbanResumeComponent = (_dec$5 = Component({
+  selector: 'tn-kanban-resume',
+  template: html$1,
+  providers: [KanbanActivitiesService]
+}), _dec2 = Input(), _dec$5(_class$5 = (_class2 = function () {
+  function KanbanResumeComponent(activitiesService, notificationsService) {
+    classCallCheck(this, KanbanResumeComponent);
+    this.kanbanActivities = [];
+    this.selectedActivity = undefined;
+
+    _initDefineProp(this, 'filterUts', _descriptor, this);
+
+    this._activitiesService = activitiesService;
+    this._notificationsService = notificationsService;
+    this._getKanbanActivities();
+  }
+
+  createClass(KanbanResumeComponent, [{
+    key: '_getKanbanActivities',
+    value: function _getKanbanActivities() {
+      var _this = this;
+
+      this._activitiesService.get().subscribe(function (data) {
+        if (!data.Exito) {
+          _this._notificationsService.error('No se pudieron obtener las actividades del Kanban Resumido', data.Mensaje);
+          return;
+        }
+        _this.kanbanActivities = data.Resultado;
+      }, function (error) {
+        return _this._notificationsService.error('No se pudieron obtener las actividades del Kanban Resumido', error);
+      });
+    }
+  }, {
+    key: 'filterKanbanActivies',
+    value: function filterKanbanActivies() {
+      var idActivity = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'ALL';
+      var status = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'ALL';
+
+      this.filterUts(idActivity, status);
+    }
+  }]);
+  return KanbanResumeComponent;
+}(), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, 'filterUts', [_dec2], {
+  enumerable: true,
+  initializer: function initializer() {
+    return this.filterUts;
+  }
+})), _class2)) || _class$5);
+Reflect.defineMetadata('design:paramtypes', [KanbanActivitiesService, NotificationsService], KanbanResumeComponent);
+
+var html$2 = "<div class=\"ui-widget-header none horizontal tn-home__utlist__searchbar\">\n  <i class=\"fa fa-search none tn_home__utlist__searchbar__icon\"></i>\n  <input #gb type=\"text\" pInputText size=\"50\" class=\"tn-home__utlist__searchbar__input\" placeholder=\"Búsqueda global\">\n</div>\n<p-dataTable [value]=\"uts\" [rows]=\"20\" [paginator]=\"true\" [pageLinks]=\"5\" [sortMode]=\"multiple\" [globalFilter]=\"gb\" reorderableColumns=\"true\">\n  <p-column [style]=\"{'width':'10%'}\" field=\"Estado\" header=\"Estado\" [sortable]=\"true\">\n    <ng-template let-ut=\"rowData\" pTemplate=\"body\">\n      <span class=\"ui-button-icon\" [ngClass]=\"getUtTypeIcon(ut)\"></span>\n      <span class=\"ui-button-icon\" [ngClass]=\"getStateIcon(ut)\"></span>\n    </ng-template>\n  </p-column>\n  <p-column [style]=\"{'width':'10%'}\" field=\"IdAgente\" header=\"Agente\" [sortable]=\"true\">\n    <ng-template let-ut=\"rowData\" pTemplate=\"body\">\n      <img *ngIf=\"ut.IdAgente\" class=\"tn-home__utlist__agent__pic\" [src]=\"getAgentPic(ut) | safeHtml\">\n      <i *ngIf=\"ut.IdAgente === -1\" class=\"fa fa-2x fa-users\"></i>\n    </ng-template>\n  </p-column>\n  <p-column [style]=\"{'width':'30%'}\" field=\"NombreProyecto\" header=\"Producto/Servicio\" [sortable]=\"true\"></p-column>\n  <p-column [style]=\"{'width':'10%'}\" field=\"NombreVersion\" header=\"Sprint\" [sortable]=\"true\"></p-column>\n  <p-column [style]=\"{'width':'10%'}\" field=\"IdUT\" header=\"Código\" [sortable]=\"true\">\n    <ng-template let-ut=\"rowData\" pTemplate=\"body\">\n      <span class=\"ui-cell-data\" [routerLink]=\"getUtLink(ut)\">{{ut.IdUT}}</span>\n    </ng-template>\n  </p-column>\n  <p-column [style]=\"{'width':'30%'}\" field=\"NombreUT\" header=\"Nombre\" [sortable]=\"true\"></p-column>\n</p-dataTable>\n";
 
 __$styleInject(".tn-home__utlist__searchbar{padding:16px;border-bottom:0}.tn_home__utlist__searchbar__icon{margin-top:4px;margin-right:8px}.tn-home__utlist__searchbar__input{width:100%}.tn-home__utlist__agent__pic{width:40px;height:40px}", undefined);
 
-var _dec$4;
-var _class$4;
+var _dec$7;
+var _dec2$1;
+var _class$7;
+var _class2$1;
+var _descriptor$1;
+
+function _initDefineProp$1(target, property, descriptor, context) {
+  if (!descriptor) return;
+  Object.defineProperty(target, property, {
+    enumerable: descriptor.enumerable,
+    configurable: descriptor.configurable,
+    writable: descriptor.writable,
+    value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
+  });
+}
+
+function _applyDecoratedDescriptor$1(target, property, decorators, descriptor, context) {
+  var desc = {};
+  Object['ke' + 'ys'](descriptor).forEach(function (key) {
+    desc[key] = descriptor[key];
+  });
+  desc.enumerable = !!desc.enumerable;
+  desc.configurable = !!desc.configurable;
+
+  if ('value' in desc || desc.initializer) {
+    desc.writable = true;
+  }
+
+  desc = decorators.slice().reverse().reduce(function (desc, decorator) {
+    return decorator(target, property, desc) || desc;
+  }, desc);
+
+  if (context && desc.initializer !== void 0) {
+    desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
+    desc.initializer = undefined;
+  }
+
+  if (desc.initializer === void 0) {
+    Object['define' + 'Property'](target, property, desc);
+    desc = null;
+  }
+
+  return desc;
+}
 
 var utTypesIcons = {
   1: 'fa fa-star',
@@ -323,15 +517,17 @@ var workflowIcons = {
 };
 var agentPics = {};
 
-var UtListComponent = (_dec$4 = Component({
+var UtListComponent = (_dec$7 = Component({
   selector: 'tn-ut-list',
   template: html$2,
-  providers: [UtListService, AgentPicService]
-}), _dec$4(_class$4 = function () {
-  function UtListComponent(utListService, agentPicService, notificationService, agentService) {
+  providers: [AgentPicService]
+}), _dec2$1 = Input(), _dec$7(_class$7 = (_class2$1 = function () {
+  function UtListComponent(agentPicService, notificationService, agentService) {
     var _this = this;
 
     classCallCheck(this, UtListComponent);
+
+    _initDefineProp$1(this, 'uts', _descriptor$1, this);
 
     this.getAgentPic = function (ut) {
       var idAgente = ut.IdAgente;
@@ -354,30 +550,16 @@ var UtListComponent = (_dec$4 = Component({
       return workflowIcons[ut.IdTipoSeguimiento];
     };
 
-    this._utListService = utListService;
+    this.getUtLink = function (ut) {
+      return 'uts/' + ut.id;
+    };
+
     this._agentPicService = agentPicService;
     this._notificationsService = notificationService;
     this._agentService = agentService;
-    this.uts = [];
-    this._getUts();
   }
 
   createClass(UtListComponent, [{
-    key: '_getUts',
-    value: function _getUts() {
-      var _this2 = this;
-
-      this._utListService.get().subscribe(function (data) {
-        if (!data.Exito) {
-          _this2._notificationsService.error('No se pudieron obtener las UTs', data.Mensaje);
-          return;
-        }
-        _this2.uts = data.Resultado;
-      }, function (error) {
-        return _this2._notificationsService.error('No se pudieron obtener las UTs', error);
-      });
-    }
-  }, {
     key: 'setImgSrc',
     value: function setImgSrc() {
       // TODO
@@ -387,13 +569,18 @@ var UtListComponent = (_dec$4 = Component({
     }
   }]);
   return UtListComponent;
-}()) || _class$4);
-Reflect.defineMetadata('design:paramtypes', [UtListService, AgentPicService, NotificationsService, AgentService], UtListComponent);
+}(), (_descriptor$1 = _applyDecoratedDescriptor$1(_class2$1.prototype, 'uts', [_dec2$1], {
+  enumerable: true,
+  initializer: function initializer() {
+    return this.uts;
+  }
+})), _class2$1)) || _class$7);
+Reflect.defineMetadata('design:paramtypes', [AgentPicService, NotificationsService, AgentService], UtListComponent);
 
-var _dec$7;
-var _class$7;
+var _dec$8;
+var _class$8;
 
-var SafeHtml = (_dec$7 = Pipe({ name: 'safeHtml' }), _dec$7(_class$7 = function () {
+var SafeHtml = (_dec$8 = Pipe({ name: 'safeHtml' }), _dec$8(_class$8 = function () {
   function SafeHtml(sanitizer) {
     classCallCheck(this, SafeHtml);
 
@@ -407,7 +594,7 @@ var SafeHtml = (_dec$7 = Pipe({ name: 'safeHtml' }), _dec$7(_class$7 = function 
     }
   }]);
   return SafeHtml;
-}()) || _class$7);
+}()) || _class$8);
 Reflect.defineMetadata('design:paramtypes', [DomSanitizer], SafeHtml);
 
 var _dec;

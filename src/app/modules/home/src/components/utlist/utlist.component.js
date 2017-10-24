@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {NotificationsService, AgentService} from '@tune-up/core';
-import {UtListService, AgentPicService} from './services';
+import {AgentPicService} from './services';
 import html from './utlist.component.html';
 import './utlist.component.css';
 
@@ -22,40 +22,18 @@ const agentPics = {};
 @Component({
   selector: 'tn-ut-list',
   template: html,
-  providers: [UtListService, AgentPicService]
+  providers: [AgentPicService]
 })
 export class UtListComponent {
+  @Input() uts;
   constructor(
-    utListService: UtListService,
     agentPicService: AgentPicService,
     notificationService: NotificationsService,
     agentService: AgentService
   ) {
-    this._utListService = utListService;
     this._agentPicService = agentPicService;
     this._notificationsService = notificationService;
     this._agentService = agentService;
-    this.uts = [];
-    this._getUts();
-  }
-  _getUts() {
-    this._utListService.get().subscribe(
-      data => {
-        if (!data.Exito) {
-          this._notificationsService.error(
-            'No se pudieron obtener las UTs',
-            data.Mensaje
-          );
-          return;
-        }
-        this.uts = data.Resultado;
-      },
-      error =>
-        this._notificationsService.error(
-          'No se pudieron obtener las UTs',
-          error
-        )
-    );
   }
   getAgentPic = ut => {
     const idAgente = ut.IdAgente;
@@ -74,6 +52,9 @@ export class UtListComponent {
   };
   getStateIcon = ut => {
     return workflowIcons[ut.IdTipoSeguimiento];
+  };
+  getUtLink = ut => {
+    return `uts/${ut.id}`;
   };
   setImgSrc() {
     // TODO

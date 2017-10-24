@@ -17,6 +17,10 @@
   </p-column>
   <p-column [style]="{'width':'30%'}" field="NombreProyecto" header="Producto/Servicio" [sortable]="true"></p-column>
   <p-column [style]="{'width':'10%'}" field="NombreVersion" header="Sprint" [sortable]="true"></p-column>
-  <p-column [style]="{'width':'10%'}" field="IdUT" header="Código" [sortable]="true"></p-column>
+  <p-column [style]="{'width':'10%'}" field="IdUT" header="Código" [sortable]="true">
+    <ng-template let-ut="rowData" pTemplate="body">
+      <span class="ui-cell-data" [routerLink]="getUtLink(ut)">{{ut.IdUT}}</span>
+    </ng-template>
+  </p-column>
   <p-column [style]="{'width':'30%'}" field="NombreUT" header="Nombre" [sortable]="true"></p-column>
 </p-dataTable>

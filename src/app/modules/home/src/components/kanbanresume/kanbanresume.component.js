@@ -42,4 +42,8 @@ export class KanbanResumeComponent {
         )
     );
   }
+
+  filterKanbanActivies(idActivity = 'ALL', status = 'ALL') {
+    // llamada a filtro
+  }
 }

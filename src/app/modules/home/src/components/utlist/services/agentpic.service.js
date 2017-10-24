@@ -8,8 +8,8 @@ export class AgentPicService {
     this._url = 'Agentes/Imagen';
   }
   get(idAgente, idSitio) {
-    return this._http.get(
-      `${this._url}?idAgente=${idAgente}&idSitio=${idSitio}`
-    );
+    return this._http.get(`${this._url}/${idAgente}/${idSitio}`, {
+      responseType: 'blob'
+    });
   }
 }

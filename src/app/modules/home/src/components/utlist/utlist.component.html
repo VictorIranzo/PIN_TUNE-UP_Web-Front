@@ -2,20 +2,19 @@
   <i class="fa fa-search none tn_home__utlist__searchbar__icon"></i>
   <input #gb type="text" pInputText size="50" class="tn-home__utlist__searchbar__input" placeholder="Búsqueda global">
 </div>
-<p-dataTable [value]="uts" [rows]="20" [paginator]="true" [pageLinks]="5" [sortMode]="multiple" [globalFilter]="gb"
-  reorderableColumns="true">
-  <p-column [style]="{'width':'10%'}"  field="Estado" header="Estado" [sortable]="true">
+<p-dataTable [value]="uts" [rows]="20" [paginator]="true" [pageLinks]="5" [sortMode]="multiple" [globalFilter]="gb" reorderableColumns="true">
+  <p-column [style]="{'width':'10%'}" field="Estado" header="Estado" [sortable]="true">
     <ng-template let-ut="rowData" pTemplate="body">
       <span class="ui-button-icon" [ngClass]="getUtTypeIcon(ut)"></span>
       <span class="ui-button-icon" [ngClass]="getStateIcon(ut)"></span>
     </ng-template>
   </p-column>
-  <p-column [style]="{'width':'10%'}" field="IdAgente" header="Agente" [sortable]="true"></p-column>
-  <!-- <p-column field="IdAgente" header="Agente" [sortable]="true">
+  <p-column [style]="{'width':'10%'}" field="IdAgente" header="Agente" [sortable]="true">
     <ng-template let-ut="rowData" pTemplate="body">
-      <img src="getAgentPic(utIndex)"></img>
+      <img *ngIf="ut.IdAgente" class="tn-home__utlist__agent__pic" [src]="getAgentPic(ut) | safeHtml">
+      <i *ngIf="ut.IdAgente === -1" class="fa fa-2x fa-users"></i>
     </ng-template>
-  </p-column> -->
+  </p-column>
   <p-column [style]="{'width':'30%'}" field="NombreProyecto" header="Producto/Servicio" [sortable]="true"></p-column>
   <p-column [style]="{'width':'10%'}" field="NombreVersion" header="Sprint" [sortable]="true"></p-column>
   <p-column [style]="{'width':'10%'}" field="IdUT" header="Código" [sortable]="true"></p-column>

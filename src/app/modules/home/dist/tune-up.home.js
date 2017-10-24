@@ -16,12 +16,13 @@ function __$styleInject(css, returnValue) {
   return returnValue;
 }
 
-import { Component, Injectable, NgModule } from '@angular/core';
+import { Component, Injectable, NgModule, Pipe } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { NotificationsService, TuneUpCoreModule } from '@tune-up/core';
+import { AgentService, NotificationsService, TuneUpCoreModule } from '@tune-up/core';
 import { HttpClient } from '@angular/common/http';
+import { DomSanitizer } from '@angular/platform-browser';
 
-var html = "<div class=\"horizontal\">\n  <tn-kanban-resume class=\"none\"></tn-kanban-resume>\n  <tn-ut-list class=\"one tn-home__utlist\"></tn-ut-list>\n</div>\n";
+var html = "<div class=\"horizontal\">\r\n  <tn-kanban-resume class=\"none\"></tn-kanban-resume>\r\n  <tn-ut-list class=\"one tn-home__utlist\"></tn-ut-list>\r\n</div>\r\n";
 
 __$styleInject(".tn-home__utlist{margin:16px;z-index:0;overflow-x:overlay;text-align:center}", undefined);
 
@@ -166,6 +167,56 @@ var createClass = function () {
   };
 }();
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var toConsumableArray = function (arr) {
+  if (Array.isArray(arr)) {
+    for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
+
+    return arr2;
+  } else {
+    return Array.from(arr);
+  }
+};
+
 var _dec$2;
 var _class$2;
 
@@ -241,50 +292,72 @@ var AgentPicService = (_dec$6 = Injectable(), _dec$6(_class$6 = function () {
   createClass(AgentPicService, [{
     key: 'get',
     value: function get$$1(idAgente, idSitio) {
-      return this._http.get(this._url + '?idAgente=' + idAgente + '&idSitio=' + idSitio);
+      return this._http.get(this._url + '/' + idAgente + '/' + idSitio, {
+        responseType: 'blob'
+      });
     }
   }]);
   return AgentPicService;
 }()) || _class$6);
 Reflect.defineMetadata('design:paramtypes', [HttpClient], AgentPicService);
 
-var html$2 = "<div class=\"ui-widget-header none horizontal tn-home__utlist__searchbar\">\n  <i class=\"fa fa-search none tn_home__utlist__searchbar__icon\"></i>\n  <input #gb type=\"text\" pInputText size=\"50\" class=\"tn-home__utlist__searchbar__input\" placeholder=\"Búsqueda global\">\n</div>\n<p-dataTable [value]=\"uts\" [rows]=\"20\" [paginator]=\"true\" [pageLinks]=\"5\" [sortMode]=\"multiple\" [globalFilter]=\"gb\"\n  reorderableColumns=\"true\">\n  <p-column [style]=\"{'width':'10%'}\"  field=\"Estado\" header=\"Estado\" [sortable]=\"true\">\n    <ng-template let-ut=\"rowData\" pTemplate=\"body\">\n      <span class=\"ui-button-icon\" [ngClass]=\"getUtTypeIcon(ut)\"></span>\n      <span class=\"ui-button-icon\" [ngClass]=\"getStateIcon(ut)\"></span>\n    </ng-template>\n  </p-column>\n  <p-column [style]=\"{'width':'10%'}\" field=\"IdAgente\" header=\"Agente\" [sortable]=\"true\"></p-column>\n  <!-- <p-column field=\"IdAgente\" header=\"Agente\" [sortable]=\"true\">\n    <ng-template let-ut=\"rowData\" pTemplate=\"body\">\n      <img src=\"getAgentPic(utIndex)\"></img>\n    </ng-template>\n  </p-column> -->\n  <p-column [style]=\"{'width':'30%'}\" field=\"NombreProyecto\" header=\"Producto/Servicio\" [sortable]=\"true\"></p-column>\n  <p-column [style]=\"{'width':'10%'}\" field=\"NombreVersion\" header=\"Sprint\" [sortable]=\"true\"></p-column>\n  <p-column [style]=\"{'width':'10%'}\" field=\"IdUT\" header=\"Código\" [sortable]=\"true\"></p-column>\n  <p-column [style]=\"{'width':'30%'}\" field=\"NombreUT\" header=\"Nombre\" [sortable]=\"true\"></p-column>\n</p-dataTable>\n";
+var html$2 = "<div class=\"ui-widget-header none horizontal tn-home__utlist__searchbar\">\n  <i class=\"fa fa-search none tn_home__utlist__searchbar__icon\"></i>\n  <input #gb type=\"text\" pInputText size=\"50\" class=\"tn-home__utlist__searchbar__input\" placeholder=\"Búsqueda global\">\n</div>\n<p-dataTable [value]=\"uts\" [rows]=\"20\" [paginator]=\"true\" [pageLinks]=\"5\" [sortMode]=\"multiple\" [globalFilter]=\"gb\" reorderableColumns=\"true\">\n  <p-column [style]=\"{'width':'10%'}\" field=\"Estado\" header=\"Estado\" [sortable]=\"true\">\n    <ng-template let-ut=\"rowData\" pTemplate=\"body\">\n      <span class=\"ui-button-icon\" [ngClass]=\"getUtTypeIcon(ut)\"></span>\n      <span class=\"ui-button-icon\" [ngClass]=\"getStateIcon(ut)\"></span>\n    </ng-template>\n  </p-column>\n  <p-column [style]=\"{'width':'10%'}\" field=\"IdAgente\" header=\"Agente\" [sortable]=\"true\">\n    <ng-template let-ut=\"rowData\" pTemplate=\"body\">\n      <img *ngIf=\"ut.IdAgente\" class=\"tn-home__utlist__agent__pic\" [src]=\"getAgentPic(ut) | safeHtml\">\n      <i *ngIf=\"ut.IdAgente === -1\" class=\"fa fa-2x fa-users\"></i>\n    </ng-template>\n  </p-column>\n  <p-column [style]=\"{'width':'30%'}\" field=\"NombreProyecto\" header=\"Producto/Servicio\" [sortable]=\"true\"></p-column>\n  <p-column [style]=\"{'width':'10%'}\" field=\"NombreVersion\" header=\"Sprint\" [sortable]=\"true\"></p-column>\n  <p-column [style]=\"{'width':'10%'}\" field=\"IdUT\" header=\"Código\" [sortable]=\"true\"></p-column>\n  <p-column [style]=\"{'width':'30%'}\" field=\"NombreUT\" header=\"Nombre\" [sortable]=\"true\"></p-column>\n</p-dataTable>\n";
 
-__$styleInject(".tn-home__utlist__searchbar{padding:16px;border-bottom:0}.tn_home__utlist__searchbar__icon{margin-top:4px;margin-right:8px}.tn-home__utlist__searchbar__input{width:100%}", undefined);
+__$styleInject(".tn-home__utlist__searchbar{padding:16px;border-bottom:0}.tn_home__utlist__searchbar__icon{margin-top:4px;margin-right:8px}.tn-home__utlist__searchbar__input{width:100%}.tn-home__utlist__agent__pic{width:40px;height:40px}", undefined);
 
 var _dec$4;
 var _class$4;
 
-var utTypes = ['mejora', 'fallo', 'nuevo', 'otro'];
 var utTypesIcons = {
-  mejora: 'fa fa-star',
-  fallo: 'fa fa-bug',
-  nuevo: 'fa fa-plus-circle',
-  otro: 'fa fa-puzzle-piece'
+  1: 'fa fa-star',
+  2: 'fa fa-bug',
+  3: 'fa fa-plus-circle',
+  4: 'fa fa-puzzle-piece'
 };
+var workflowIcons = {
+  1: 'fa fa-arrow-up',
+  2: 'fa fa-repeat',
+  3: 'fa fa-cog',
+  4: 'fa fa-undo',
+  5: 'fa fa-refresh'
+};
+var agentPics = {};
+
 var UtListComponent = (_dec$4 = Component({
   selector: 'tn-ut-list',
   template: html$2,
   providers: [UtListService, AgentPicService]
 }), _dec$4(_class$4 = function () {
-  function UtListComponent(utListService, agentPicService, notificationService) {
+  function UtListComponent(utListService, agentPicService, notificationService, agentService) {
+    var _this = this;
+
     classCallCheck(this, UtListComponent);
 
     this.getAgentPic = function (ut) {
-      // TODO
+      var idAgente = ut.IdAgente;
+      if (idAgente) {
+        var idSitio = _this._agentService.getSiteId();
+        if (!agentPics[idAgente]) {
+          _this._agentPicService.get(idAgente, idSitio).subscribe(function (data) {
+            agentPics[idAgente] = URL.createObjectURL(data);
+          });
+        }
+        return agentPics[idAgente];
+      }
     };
 
     this.getUtTypeIcon = function (ut) {
-      return utTypesIcons[utTypes[ut.IdTipoUT]];
+      return utTypesIcons[ut.IdTipoUT];
     };
 
-    this.getStateIcon = function (utIndex) {
-      return 'fa fa-close fa-open';
+    this.getStateIcon = function (ut) {
+      return workflowIcons[ut.IdTipoSeguimiento];
     };
 
     this._utListService = utListService;
     this._agentPicService = agentPicService;
     this._notificationsService = notificationService;
+    this._agentService = agentService;
     this.uts = [];
     this._getUts();
   }
@@ -292,29 +365,57 @@ var UtListComponent = (_dec$4 = Component({
   createClass(UtListComponent, [{
     key: '_getUts',
     value: function _getUts() {
-      var _this = this;
+      var _this2 = this;
 
       this._utListService.get().subscribe(function (data) {
         if (!data.Exito) {
-          _this._notificationsService.error('No se pudieron obtener las UTs', data.Mensaje);
+          _this2._notificationsService.error('No se pudieron obtener las UTs', data.Mensaje);
           return;
         }
-        _this.uts = data.Resultado;
+        _this2.uts = data.Resultado;
       }, function (error) {
-        return _this._notificationsService.error('No se pudieron obtener las UTs', error);
+        return _this2._notificationsService.error('No se pudieron obtener las UTs', error);
+      });
+    }
+  }, {
+    key: 'setImgSrc',
+    value: function setImgSrc() {
+      // TODO
+      [].concat(toConsumableArray(document.getElementsByClassName('tn-home__utlist__agent__pic'))).map(function (c) {
+        return c.src = c.getAttribute('data-src');
       });
     }
   }]);
   return UtListComponent;
 }()) || _class$4);
-Reflect.defineMetadata('design:paramtypes', [UtListService, AgentPicService, NotificationsService], UtListComponent);
+Reflect.defineMetadata('design:paramtypes', [UtListService, AgentPicService, NotificationsService, AgentService], UtListComponent);
+
+var _dec$7;
+var _class$7;
+
+var SafeHtml = (_dec$7 = Pipe({ name: 'safeHtml' }), _dec$7(_class$7 = function () {
+  function SafeHtml(sanitizer) {
+    classCallCheck(this, SafeHtml);
+
+    this.sanitizer = sanitizer;
+  }
+
+  createClass(SafeHtml, [{
+    key: 'transform',
+    value: function transform(html) {
+      return this.sanitizer.bypassSecurityTrustResourceUrl(html);
+    }
+  }]);
+  return SafeHtml;
+}()) || _class$7);
+Reflect.defineMetadata('design:paramtypes', [DomSanitizer], SafeHtml);
 
 var _dec;
 var _class;
 
 var HomeModule = (_dec = NgModule({
   imports: [TuneUpCoreModule, HomeRoutingModule],
-  declarations: [HomeComponent, KanbanResumeComponent, UtListComponent]
+  declarations: [HomeComponent, KanbanResumeComponent, UtListComponent, SafeHtml]
 }), _dec(_class = function HomeModule() {
   classCallCheck(this, HomeModule);
 }) || _class);

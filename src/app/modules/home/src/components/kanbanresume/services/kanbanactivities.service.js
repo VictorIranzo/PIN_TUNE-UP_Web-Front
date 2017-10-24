@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable()
 export class KanbanActivitiesService {
@@ -17,5 +17,5 @@ export class KanbanActivitiesService {
     return this._http.get(
       `${this._url}?idActividad=${idActividad}&idAgente=${idAgente}&idProducto=${idProducto}&idVersion=${idVersion}&idProyecto=${idProyecto}`
     );
-    } 
+  }
 }

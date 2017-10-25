@@ -1,17 +1,22 @@
-@import url("../scene.variables.css");
+@import "../scene.variables.css";
 
 .tn-scene-appbar--button {
     margin-left: 10px;
     align-self: center;
+    color: lightgray;
 }
-
 .tn-scene-appbar--breadcrumb {
     margin-left: 10px;
     align-self: center;    
 }
-
 .tn-scene-appbar--topMenu {
-    background-color: #fff;
     width: var(--tn-scene-menu--width);
     height: var(--tn-scene-appbar--height);    
+    text-align: center;
+    font-size: -webkit-xxx-large;
+    border-right: 1px solid;
+    color: lightgray;
+}
+.tn-scene-appbar-wrapper{
+  height: 100%;
 }

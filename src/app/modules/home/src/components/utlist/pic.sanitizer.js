@@ -7,6 +7,7 @@ export class SafeHtml {
     this.sanitizer = sanitizer;
   }
   transform(html) {
+    if (html === '') return '';
     return this.sanitizer.bypassSecurityTrustResourceUrl(html);
   }
 }

@@ -12,7 +12,7 @@
         </p-column>   
         <p-column header="Doing" [style]="{'width':'20%'}">            
             <ng-template let-activity="rowData" let-i="rowIndex" pTemplate="body" >
-                <span (click)="filterKanbanActivies(activity.IdActividad, 'ACTIVE')" class="tn-home-kanban_resume--span">{{activity.NumSeguimientosProgreso}}</span>
+                <span (click)="filterKanbanActivies(activity.IdActividad, 'DOING')" class="tn-home-kanban_resume--span">{{activity.NumSeguimientosProgreso}}</span>
             </ng-template>
         </p-column>                
     </p-dataTable>

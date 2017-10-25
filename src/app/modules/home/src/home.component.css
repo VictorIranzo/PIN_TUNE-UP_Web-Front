@@ -4,11 +4,27 @@
   z-index: 0;
   overflow-x: overlay;
   text-align: center;
-  width: 75%;
+  width: 100%;
+  @media(--gt-sm){
+    width:75%;
+  }
 }
 .tn-home__kanbanresume{
   margin-top: var(--margin-medium);
   margin-bottom: var(--margin-medium);
   margin-left: var(--margin-medium);  
-  width: 25%;
+  width: 100%;
+  @media(--gt-sm){
+    width: 25%;
+    height: fit-content;
+    position: sticky;
+    top: 85px;
+  }
+}
+.tn-home{
+  display: flex;
+  flex-direction: column;
+  @media(--gt-sm){
+    flex-direction: row;
+  }
 }

@@ -19,6 +19,11 @@ export class MenuService {
       this._sidenav.visible = false;
     }
   }
+  closeStrong() {
+    if (this._sidenav) {
+      this._sidenav.visible = false;
+    }
+  }
   open() {
     // this._sidenav && this._sidenav.open();
     if (this._sidenav) {

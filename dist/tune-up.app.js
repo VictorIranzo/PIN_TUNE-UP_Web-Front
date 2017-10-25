@@ -17,7 +17,7 @@ function __$styleInject(css, returnValue) {
 }
 
 import { platformBrowserDynamic as platformBrowserDynamic$1 } from '@angular/platform-browser-dynamic';
-import core_1, { Compiler, Component, Directive, Injectable, Input, NgModule, NgModuleFactoryLoader, NgZone, ViewChild, ViewEncapsulation, enableProdMode, forwardRef } from '@angular/core';
+import core_1, { Compiler, Component, Directive, Injectable, Input, NgModule, NgModuleFactoryLoader, NgZone, ViewChild, enableProdMode, forwardRef } from '@angular/core';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { primengExports } from '@tune-up/vendor';
 import { FormsModule, NG_VALIDATORS, Validators } from '@angular/forms';
@@ -10477,9 +10477,9 @@ Reflect.defineMetadata('design:paramtypes', [Router, AuthService], AuthGuard);
 
 var html$1$1 = "<div class=\"vertical\">\r\n  <tn-appbar class=\"tn-scene-appbar\"></tn-appbar>\r\n  <div class=\"horizontal\">\r\n    <tn-menu class=\"tn-scene-menu\"></tn-menu>\r\n    <tn-content class=\"tn-scene-content\"></tn-content>\r\n  </div>\r\n</div>\r\n";
 
-__$styleInject(".tn-scene-appbar{background-color:#20272a;display:block;padding:0;height:70px;box-sizing:border-box;position:fixed;top:0;left:0;width:100%;z-index:1;box-shadow:0 2px 5px 0 rgba(0,0,0,.3)}.tn-scene-menu{position:fixed;left:0;top:70px;height:100%;background-color:#fff;overflow:hidden}@media (min-width:960px){.tn-scene-menu{width:270px;box-shadow:0 0 5px 0 rgba(0,0,0,.3)}}.tn-scene-content{padding-top:70px;background-color:#fff;width:100%;height:100%}@media (min-width:960px){.tn-scene-content{margin-left:270px}}",undefined);
+__$styleInject(".tn-scene-appbar{background-color:#20272a;display:block;padding:0;height:70px;box-sizing:border-box;position:fixed;top:0;left:0;width:100%;z-index:2;box-shadow:0 2px 5px 0 rgba(0,0,0,.3)}.tn-scene-menu{position:fixed;left:0;top:70px;height:100%;background-color:#fff;overflow:hidden;z-index:1;text-align:center}@media (min-width:960px){.tn-scene-menu{width:270px;box-shadow:0 0 5px 0 rgba(0,0,0,.3)}}.tn-scene-content{padding-top:70px;background-color:#fff;width:100%;height:100%}@media (min-width:960px){.tn-scene-content{margin-left:270px}}",undefined);
 
-var html$2 = "<p-sidebar #sidenav class = \"tn-menu-sidebar\">\r\n  <img class=\"tn-menu-sidebar--logo\" src=\"./assets/logo.png\">\r\n  <div *ngFor = \"let item of items\" class = \"tn-menu-sidebar\">\r\n    <div *ngIf = \"mustPrint(item)\">\r\n      <tn-menuitem  \r\n        [text] = \"item.text\"\r\n        [path] = \"item.path\"\r\n        [icon] = \"item.icon\"\r\n        [adminOnly] = \"item.adminOnly\"\r\n      ></tn-menuitem>\r\n    </div>\r\n  </div>\r\n</p-sidebar>\r\n";
+var html$2 = "<p-sidebar #sidenav [ngStyle]=\"{width:'270px'}\">\n  <div>\n    <img class=\"tn-menu-sidebar--logo\" src=\"./assets/logo.png\">\n  </div>\n  <div class=\"tn-menu-sidebar\">\n    <div *ngFor=\"let item of items\">\n      <div *ngIf=\"mustPrint(item)\">\n        <tn-menuitem [text]=\"item.text\" [path]=\"item.path\" [icon]=\"item.icon\" [adminOnly]=\"item.adminOnly\"></tn-menuitem>\n      </div>\n    </div>\n  </div>\n</p-sidebar>\n";
 
 var _dec$7$1;
 var _class$7$1;
@@ -10510,6 +10510,13 @@ var MenuService = (_dec$7$1 = Injectable(), _dec$7$1(_class$7$1 = function () {
     value: function close() {
       // this._sidenav && !this._docked && this._sidenav.close();
       if (this._sidenav && !this._docked) {
+        this._sidenav.visible = false;
+      }
+    }
+  }, {
+    key: 'closeStrong',
+    value: function closeStrong() {
+      if (this._sidenav) {
         this._sidenav.visible = false;
       }
     }
@@ -10566,7 +10573,7 @@ var MenuService = (_dec$7$1 = Injectable(), _dec$7$1(_class$7$1 = function () {
 }()) || _class$7$1);
 Reflect.defineMetadata('design:paramtypes', [NgZone], MenuService);
 
-__$styleInject(".tn-menu-sidebar{padding:0,0,0,0}.tn-menu-sidebar--logo{width:180px;height:180px;margin-left:30px;margin-top:80px;margin-bottom:20px}.ui-sidebar-left{width:270px}",undefined);
+__$styleInject(".tn-menu-sidebar--logo{width:180px;height:180px;margin-top:80px;margin-bottom:20px}.ui-sidebar-left{width:270px}.tn-menu-sidebar{background:#2399e5;height:100%}",undefined);
 
 var _dec$6$1;
 var _dec2$1$1;
@@ -10642,6 +10649,7 @@ var MenuComponent = (_dec$6$1 = Component({
     value: function ngAfterViewInit() {
       this._menuService.sidenav = this.sidenav;
       document.getElementsByClassName('ui-sidebar-close')[0].remove();
+      document.getElementsByClassName('ui-sidebar')[0].style.padding = '0px';
     }
   }, {
     key: 'ngAfterViewChecked',
@@ -10658,9 +10666,9 @@ var MenuComponent = (_dec$6$1 = Component({
 })), _class2$1$1)) || _class$6$1);
 Reflect.defineMetadata('design:paramtypes', [AgentService, MenuService], MenuComponent);
 
-var html$3 = "<button pButton type=\"button\" class=\"tn-menuitem-layout\" label= {{text}} icon= {{icon}} (click) = \"onClick()\" routerLink={{path}}></button>\r\n";
+var html$3 = "<button pButton type=\"button\" class=\"tn-menuitem-layout\" label= {{text}} icon= {{icon}} (click)=\"onClick()\" routerLink={{path}}></button>\n";
 
-__$styleInject(".tn-menuitem-layout{height:150%!important;width:100%!important;margin-bottom:10 px!important}",undefined);
+__$styleInject(".tn-menuitem-layout{width:100%;border-bottom:1px solid #fff!important}",undefined);
 
 var _dec$8;
 var _dec2$2;
@@ -10715,8 +10723,7 @@ function _applyDecoratedDescriptor$2(target, property, decorators, descriptor, c
 
 var MenuItemComponent = (_dec$8 = Component({
   selector: 'tn-menuitem',
-  template: html$3,
-  encapsulation: ViewEncapsulation.None
+  template: html$3
 }), _dec2$2 = Input(), _dec3 = Input(), _dec4 = Input(), _dec5 = Input(), _dec$8(_class$8 = (_class2$2 = function () {
   function MenuItemComponent() {
     classCallCheck$1(this, MenuItemComponent);
@@ -10733,7 +10740,7 @@ var MenuItemComponent = (_dec$8 = Component({
   createClass$1(MenuItemComponent, [{
     key: 'onClick',
     value: function onClick() {
-      console.log('Click en ' + text);
+      console.log('Click en ' + this.text);
     }
   }]);
   return MenuItemComponent;
@@ -10801,9 +10808,9 @@ var BreadcrumbService = (_dec$10 = Injectable(), _dec$10(_class$10 = function ()
   return BreadcrumbService;
 }()) || _class$10);
 
-var html$4 = "<div class=\"horizontal menu-bar\">\r\n    <!-- <div class =\"none tn-scene-appbar--topMenu\">Logo TuneUP</div> -->\r\n    <div class =\"horizontal ten\">\r\n      <div *ngIf=\"!this._menuService.isDocked()\" >\r\n        <button class=\"tn-scene-appbar--button\" *ngIf=\"this._menuService.isVisible()\"  pButton type=\"button\" (click)=\"onHideMenuClick()\" icon=\"fa-caret-square-o-left\" iconPos=\"left\"></button>                                \r\n        <button class=\"tn-scene-appbar--button\" *ngIf=\"!this._menuService.isVisible()\" pButton type=\"button\" (click)=\"onShowMenuClick()\" icon=\"fa-caret-square-o-right\" iconPos=\"left\"></button>                    \r\n      </div>\r\n      <p-breadcrumb class=\"tn-scene-appbar--breadcrumb\" [model]=\"breadcrumbItems\"></p-breadcrumb>    \r\n    </div>\r\n    <div class = \"horizontal one\">\r\n        <!-- <button class=\"tn-scene-appbar--button\" pButton type=\"button\" label=\"Click\"></button>         -->\r\n    </div>\r\n</div>\r\n";
+var html$4 = "<div class=\"horizontal tn-scene-appbar-wrapper\">\n    <div *ngIf=\"this._menuService.isDocked()\" class=\"none tn-scene-appbar--topMenu\">TUNE-UP</div>\n    <div class =\"horizontal ten\">\n      <div class=\"tn-scene-appbar--button\" *ngIf=\"!this._menuService.isDocked()\" >\n        <i *ngIf=\"this._menuService.isVisible()\" (click)=\"onHideMenuClick()\" class=\"fa fa-2x fa-caret-square-o-left\"></i>                                \n        <i *ngIf=\"!this._menuService.isVisible()\" (click)=\"onShowMenuClick()\" class=\"fa fa-2x fa-caret-square-o-right\"></i>                    \n      </div>\n      <p-breadcrumb class=\"tn-scene-appbar--breadcrumb\" [model]=\"breadcrumbItems\"></p-breadcrumb>    \n    </div>\n    <div class = \"horizontal one\">\n        <i class=\"tn-scene-appbar--button fa fa-2x fa-list\"></i>        \n    </div>\n</div>\n";
 
-__$styleInject(".tn-scene-appbar--breadcrumb,.tn-scene-appbar--button{margin-left:10px;align-self:center}.tn-scene-appbar--topMenu{background-color:#fff;width:270px;height:70px}",undefined);
+__$styleInject(".tn-scene-appbar--button{color:#d3d3d3}.tn-scene-appbar--breadcrumb,.tn-scene-appbar--button{margin-left:10px;align-self:center}.tn-scene-appbar--topMenu{width:270px;height:70px;text-align:center;font-size:-webkit-xxx-large;border-right:1px solid;color:#d3d3d3}.tn-scene-appbar-wrapper{height:100%}",undefined);
 
 var _dec$9;
 var _class$9;
@@ -10813,7 +10820,7 @@ var AppbarComponent = (_dec$9 = Component({
   template: html$4,
   providers: [BreadcrumbService]
 }), _dec$9(_class$9 = function () {
-  //showMenu = false;
+  // showMenu = false;
   function AppbarComponent(breadcrumbService, menuService) {
     classCallCheck$1(this, AppbarComponent);
     this.menuOpen = true;
@@ -10821,7 +10828,7 @@ var AppbarComponent = (_dec$9 = Component({
 
     this._breadcrumbService = breadcrumbService;
     this._menuService = menuService;
-    //this._menuService.onShowMenuAppBar.subscribe(result =>{ this.showMenu = result;console.log(result)});
+    // this._menuService.onShowMenuAppBar.subscribe(result =>{ this.showMenu = result;console.log(result)});
     this._getBreadcrumbItems();
   }
 
@@ -10834,7 +10841,7 @@ var AppbarComponent = (_dec$9 = Component({
     key: 'onHideMenuClick',
     value: function onHideMenuClick() {
       this.menuOpen = false;
-      this._menuService.close();
+      this._menuService.closeStrong();
     }
   }, {
     key: 'onShowMenuClick',

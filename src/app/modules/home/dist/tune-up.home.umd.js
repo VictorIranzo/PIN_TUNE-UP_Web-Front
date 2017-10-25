@@ -163,56 +163,6 @@ var createClass = function () {
   };
 }();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-var toConsumableArray = function (arr) {
-  if (Array.isArray(arr)) {
-    for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
-
-    return arr2;
-  } else {
-    return Array.from(arr);
-  }
-};
-
 var _dec$3;
 var _class$3;
 
@@ -263,9 +213,9 @@ var AgentPicService = (_dec$4 = core.Injectable(), _dec$4(_class$4 = function ()
 }()) || _class$4);
 Reflect.defineMetadata('design:paramtypes', [http.HttpClient], AgentPicService);
 
-var html = "<div class=\"horizontal\">\n  <tn-kanban-resume class=\"tn-home__kanbanresume\" [filterUts]=\"filterUts\"></tn-kanban-resume>\n  <tn-ut-list class=\"tn-home__utlist\" [uts]=\"utsToShow\"></tn-ut-list>\n</div>\n";
+var html = "<div class=\"tn-home\">\n  <tn-kanban-resume class=\"tn-home__kanbanresume\" [filterUts]=\"filterUts\"></tn-kanban-resume>\n  <tn-ut-list class=\"tn-home__utlist\" [uts]=\"utsToShow\"></tn-ut-list>\n</div>\n";
 
-__$styleInject(".tn-home__utlist{margin:16px;z-index:0;overflow-x:overlay;text-align:center;width:75%}.tn-home__kanbanresume{margin-top:16px;margin-bottom:16px;margin-left:16px;width:25%}", undefined);
+__$styleInject(".tn-home__utlist{margin:16px;z-index:0;overflow-x:overlay;text-align:center;width:100%}@media (min-width:960px){.tn-home__utlist{width:75%}}.tn-home__kanbanresume{margin-top:16px;margin-bottom:16px;margin-left:16px;width:100%}@media (min-width:960px){.tn-home__kanbanresume{width:25%;height:fit-content;position:sticky;top:85px}}.tn-home{display:flex;flex-direction:column}@media (min-width:960px){.tn-home{flex-direction:row}}", undefined);
 
 var _dec$2;
 var _class$2;
@@ -284,7 +234,7 @@ var HomeComponent = (_dec$2 = core.Component({
       _this.utsToShow = _this.allUts.filter(function (ut) {
         return (
           // (idActivity === 'ALL' || ut.IdActividad === idActivity) &&
-          status === 'ALL' || ut.Estado === status
+          status === 'ALL' || ut.Estado === status || ut.Estado === 'ACTIVE' && status === 'DOING'
         );
       });
     };
@@ -354,7 +304,7 @@ var KanbanActivitiesService = (_dec$6 = core.Injectable(), _dec$6(_class$6 = fun
 }()) || _class$6);
 Reflect.defineMetadata('design:paramtypes', [http.HttpClient], KanbanActivitiesService);
 
-var html$1 = "<div class =\"horizontal\">\n    <p-dataTable [value]=\"kanbanActivities\" [responsive]=\"true\">\n        <p-column header=\"Actividad\">            \n                <ng-template let-activity=\"rowData\" let-i=\"rowIndex\" pTemplate=\"body\">\n                    <span (click)=\"filterKanbanActivies(activity.IdActividad, 'ALL')\" class=\"tn-home-kanban_resume--span\">{{activity.NombreActividad}}</span>\n                </ng-template>\n            </p-column>       \n        <p-column header=\"To Do\" [style]=\"{'width':'20%'}\">            \n            <ng-template let-activity=\"rowData\" let-i=\"rowIndex\" pTemplate=\"body\">\n                <span (click)=\"filterKanbanActivies(activity.IdActividad, 'TO DO')\" class=\"tn-home-kanban_resume--span\">{{activity.NumSeguimientosPendiente}}</span>\n            </ng-template>\n        </p-column>   \n        <p-column header=\"Doing\" [style]=\"{'width':'20%'}\">            \n            <ng-template let-activity=\"rowData\" let-i=\"rowIndex\" pTemplate=\"body\" >\n                <span (click)=\"filterKanbanActivies(activity.IdActividad, 'ACTIVE')\" class=\"tn-home-kanban_resume--span\">{{activity.NumSeguimientosProgreso}}</span>\n            </ng-template>\n        </p-column>                \n    </p-dataTable>\n</div>\n";
+var html$1 = "<div class =\"horizontal\">\n    <p-dataTable [value]=\"kanbanActivities\" [responsive]=\"true\">\n        <p-column header=\"Actividad\">            \n                <ng-template let-activity=\"rowData\" let-i=\"rowIndex\" pTemplate=\"body\">\n                    <span (click)=\"filterKanbanActivies(activity.IdActividad, 'ALL')\" class=\"tn-home-kanban_resume--span\">{{activity.NombreActividad}}</span>\n                </ng-template>\n            </p-column>       \n        <p-column header=\"To Do\" [style]=\"{'width':'20%'}\">            \n            <ng-template let-activity=\"rowData\" let-i=\"rowIndex\" pTemplate=\"body\">\n                <span (click)=\"filterKanbanActivies(activity.IdActividad, 'TO DO')\" class=\"tn-home-kanban_resume--span\">{{activity.NumSeguimientosPendiente}}</span>\n            </ng-template>\n        </p-column>   \n        <p-column header=\"Doing\" [style]=\"{'width':'20%'}\">            \n            <ng-template let-activity=\"rowData\" let-i=\"rowIndex\" pTemplate=\"body\" >\n                <span (click)=\"filterKanbanActivies(activity.IdActividad, 'DOING')\" class=\"tn-home-kanban_resume--span\">{{activity.NumSeguimientosProgreso}}</span>\n            </ng-template>\n        </p-column>                \n    </p-dataTable>\n</div>\n";
 
 __$styleInject(".tn-home-kanban_resume--span{overflow:auto;display:block;padding:0!important;margin:0}", undefined);
 
@@ -453,9 +403,9 @@ var KanbanResumeComponent = (_dec$5 = core.Component({
 })), _class2)) || _class$5);
 Reflect.defineMetadata('design:paramtypes', [KanbanActivitiesService, core$1.NotificationsService], KanbanResumeComponent);
 
-var html$2 = "<div class=\"ui-widget-header none horizontal tn-home__utlist__searchbar\">\n  <i class=\"fa fa-search none tn_home__utlist__searchbar__icon\"></i>\n  <input #gb type=\"text\" pInputText size=\"50\" class=\"tn-home__utlist__searchbar__input\" placeholder=\"Búsqueda global\">\n</div>\n<p-dataTable [value]=\"uts\" [rows]=\"20\" [paginator]=\"true\" [pageLinks]=\"5\" [sortMode]=\"multiple\" [globalFilter]=\"gb\" reorderableColumns=\"true\">\n  <p-column [style]=\"{'width':'10%'}\" field=\"Estado\" header=\"Estado\" [sortable]=\"true\">\n    <ng-template let-ut=\"rowData\" pTemplate=\"body\">\n      <span class=\"ui-button-icon\" [ngClass]=\"getUtTypeIcon(ut)\"></span>\n      <span class=\"ui-button-icon\" [ngClass]=\"getStateIcon(ut)\"></span>\n    </ng-template>\n  </p-column>\n  <p-column [style]=\"{'width':'10%'}\" field=\"IdAgente\" header=\"Agente\" [sortable]=\"true\">\n    <ng-template let-ut=\"rowData\" pTemplate=\"body\">\n      <img *ngIf=\"ut.IdAgente\" class=\"tn-home__utlist__agent__pic\" [src]=\"getAgentPic(ut) | safeHtml\">\n      <i *ngIf=\"ut.IdAgente === -1\" class=\"fa fa-2x fa-users\"></i>\n    </ng-template>\n  </p-column>\n  <p-column [style]=\"{'width':'30%'}\" field=\"NombreProyecto\" header=\"Producto/Servicio\" [sortable]=\"true\"></p-column>\n  <p-column [style]=\"{'width':'10%'}\" field=\"NombreVersion\" header=\"Sprint\" [sortable]=\"true\"></p-column>\n  <p-column [style]=\"{'width':'10%'}\" field=\"IdUT\" header=\"Código\" [sortable]=\"true\">\n    <ng-template let-ut=\"rowData\" pTemplate=\"body\">\n      <span class=\"ui-cell-data\" [routerLink]=\"getUtLink(ut)\">{{ut.IdUT}}</span>\n    </ng-template>\n  </p-column>\n  <p-column [style]=\"{'width':'30%'}\" field=\"NombreUT\" header=\"Nombre\" [sortable]=\"true\"></p-column>\n</p-dataTable>\n";
+var html$2 = "<div class=\"ui-widget-header none horizontal tn-home__utlist__searchbar\">\n  <i class=\"fa fa-search none tn_home__utlist__searchbar__icon\"></i>\n  <input #gb type=\"text\" pInputText size=\"50\" class=\"tn-home__utlist__searchbar__input\" placeholder=\"Búsqueda global\">\n</div>\n<p-dataTable [value]=\"uts\" [rows]=\"20\" [paginator]=\"true\" [pageLinks]=\"5\" [sortMode]=\"multiple\" [globalFilter]=\"gb\"\n  reorderableColumns=\"true\" [responsive]=\"true\">\n  <p-column [style]=\"{'width':'10%'}\" field=\"Estado\" header=\"Estado\" [sortable]=\"true\">\n    <ng-template let-ut=\"rowData\" pTemplate=\"body\">\n      <span class=\"ui-button-icon\" [ngClass]=\"getUtTypeIcon(ut)\"></span>\n      <span class=\"ui-button-icon\" [ngClass]=\"getStateIcon(ut)\"></span>\n    </ng-template>\n  </p-column>\n  <p-column [style]=\"{'width':'10%'}\" field=\"IdAgente\" header=\"Agente\" [sortable]=\"true\">\n    <ng-template let-ut=\"rowData\" pTemplate=\"body\">\n      <img *ngIf=\"ut.IdAgente && ut.IdAgente !== -1\" class=\"tn-home__utlist__agent__pic\" [src]=\"getAgentPic(ut) | safeHtml\">\n      <i *ngIf=\"ut.IdAgente === -1\" class=\"fa fa-2x fa-users\"></i>\n    </ng-template>\n  </p-column>\n  <p-column [style]=\"{'width':'30%'}\" field=\"NombreProducto\" header=\"Producto/Servicio\" [sortable]=\"true\"></p-column>\n  <p-column [style]=\"{'width':'10%'}\" field=\"NombreVersion\" header=\"Sprint\" [sortable]=\"true\"></p-column>\n  <p-column [style]=\"{'width':'10%'}\" field=\"IdUT\" header=\"Código\" [sortable]=\"true\">\n    <ng-template let-ut=\"rowData\" pTemplate=\"body\">\n      <span class=\"ui-cell-data\" [routerLink]=\"getUtLink(ut)\">{{ut.IdUT}}</span>\n    </ng-template>\n  </p-column>\n  <p-column [style]=\"{'width':'30%'}\" field=\"NombreUT\" header=\"Nombre\" [sortable]=\"true\"></p-column>\n</p-dataTable>\n";
 
-__$styleInject(".tn-home__utlist__searchbar{padding:16px;border-bottom:0}.tn_home__utlist__searchbar__icon{margin-top:4px;margin-right:8px}.tn-home__utlist__searchbar__input{width:100%}.tn-home__utlist__agent__pic{width:40px;height:40px}", undefined);
+__$styleInject(".tn-home__utlist__searchbar{padding:16px;border-bottom:0}.tn_home__utlist__searchbar__icon{margin-top:4px;margin-right:8px}.tn-home__utlist__searchbar__input{width:100%}.tn-home__utlist__agent__pic{width:30px;height:30px}", undefined);
 
 var _dec$7;
 var _dec2$1;
@@ -521,55 +471,43 @@ var UtListComponent = (_dec$7 = core.Component({
   selector: 'tn-ut-list',
   template: html$2,
   providers: [AgentPicService]
-}), _dec2$1 = core.Input(), _dec$7(_class$7 = (_class2$1 = function () {
-  function UtListComponent(agentPicService, notificationService, agentService) {
-    var _this = this;
+}), _dec2$1 = core.Input(), _dec$7(_class$7 = (_class2$1 = function UtListComponent(agentPicService, notificationService, agentService) {
+  var _this = this;
 
-    classCallCheck(this, UtListComponent);
+  classCallCheck(this, UtListComponent);
 
-    _initDefineProp$1(this, 'uts', _descriptor$1, this);
+  _initDefineProp$1(this, 'uts', _descriptor$1, this);
 
-    this.getAgentPic = function (ut) {
-      var idAgente = ut.IdAgente;
-      if (idAgente) {
-        var idSitio = _this._agentService.getSiteId();
-        if (!agentPics[idAgente]) {
-          _this._agentPicService.get(idAgente, idSitio).subscribe(function (data) {
-            agentPics[idAgente] = URL.createObjectURL(data);
-          });
-        }
-        return agentPics[idAgente];
+  this.getAgentPic = function (ut) {
+    var idAgente = ut.IdAgente;
+    if (idAgente) {
+      var idSitio = _this._agentService.getSiteId();
+      if (!agentPics[idAgente]) {
+        _this._agentPicService.get(idAgente, idSitio).subscribe(function (data) {
+          agentPics[idAgente] = URL.createObjectURL(data);
+        });
       }
-    };
-
-    this.getUtTypeIcon = function (ut) {
-      return utTypesIcons[ut.IdTipoUT];
-    };
-
-    this.getStateIcon = function (ut) {
-      return workflowIcons[ut.IdTipoSeguimiento];
-    };
-
-    this.getUtLink = function (ut) {
-      return 'uts/' + ut.id;
-    };
-
-    this._agentPicService = agentPicService;
-    this._notificationsService = notificationService;
-    this._agentService = agentService;
-  }
-
-  createClass(UtListComponent, [{
-    key: 'setImgSrc',
-    value: function setImgSrc() {
-      // TODO
-      [].concat(toConsumableArray(document.getElementsByClassName('tn-home__utlist__agent__pic'))).map(function (c) {
-        return c.src = c.getAttribute('data-src');
-      });
+      return agentPics[idAgente];
     }
-  }]);
-  return UtListComponent;
-}(), (_descriptor$1 = _applyDecoratedDescriptor$1(_class2$1.prototype, 'uts', [_dec2$1], {
+    return '';
+  };
+
+  this.getUtTypeIcon = function (ut) {
+    return utTypesIcons[ut.IdTipoUT];
+  };
+
+  this.getStateIcon = function (ut) {
+    return workflowIcons[ut.IdTipoSeguimiento];
+  };
+
+  this.getUtLink = function (ut) {
+    return 'uts/' + ut.id;
+  };
+
+  this._agentPicService = agentPicService;
+  this._notificationsService = notificationService;
+  this._agentService = agentService;
+}, (_descriptor$1 = _applyDecoratedDescriptor$1(_class2$1.prototype, 'uts', [_dec2$1], {
   enumerable: true,
   initializer: function initializer() {
     return this.uts;
@@ -590,6 +528,7 @@ var SafeHtml = (_dec$8 = core.Pipe({ name: 'safeHtml' }), _dec$8(_class$8 = func
   createClass(SafeHtml, [{
     key: 'transform',
     value: function transform(html) {
+      if (html === '') return '';
       return this.sanitizer.bypassSecurityTrustResourceUrl(html);
     }
   }]);

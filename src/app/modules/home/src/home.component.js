@@ -44,7 +44,9 @@ export class HomeComponent {
     this.utsToShow = this.allUts.filter(
       ut =>
         // (idActivity === 'ALL' || ut.IdActividad === idActivity) &&
-        status === 'ALL' || ut.Estado === status
+        status === 'ALL' ||
+        ut.Estado === status ||
+        (ut.Estado === 'ACTIVE' && status === 'DOING')
     );
   };
 }

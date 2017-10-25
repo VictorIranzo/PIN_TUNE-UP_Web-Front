@@ -12,14 +12,14 @@ import './appbar.component.css';
   providers: [BreadcrumbService]
 })
 export class AppbarComponent {
-  //showMenu = false;
+  // showMenu = false;
   menuOpen = true;
-   breadcrumbItems = [];
+  breadcrumbItems = [];
 
   constructor(breadcrumbService: BreadcrumbService, menuService: MenuService) {
     this._breadcrumbService = breadcrumbService;
     this._menuService = menuService;
-    //this._menuService.onShowMenuAppBar.subscribe(result =>{ this.showMenu = result;console.log(result)});
+    // this._menuService.onShowMenuAppBar.subscribe(result =>{ this.showMenu = result;console.log(result)});
     this._getBreadcrumbItems();
   }
 
@@ -29,7 +29,7 @@ export class AppbarComponent {
 
   onHideMenuClick() {
     this.menuOpen = false;
-    this._menuService.close();
+    this._menuService.closeStrong();
   }
 
   onShowMenuClick() {

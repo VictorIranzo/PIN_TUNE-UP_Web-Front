@@ -46,6 +46,7 @@ export class UtListComponent {
       }
       return agentPics[idAgente];
     }
+    return '';
   };
   getUtTypeIcon = ut => {
     return utTypesIcons[ut.IdTipoUT];
@@ -56,10 +57,4 @@ export class UtListComponent {
   getUtLink = ut => {
     return `uts/${ut.id}`;
   };
-  setImgSrc() {
-    // TODO
-    [...document.getElementsByClassName('tn-home__utlist__agent__pic')].map(
-      c => (c.src = c.getAttribute('data-src'))
-    );
-  }
 }

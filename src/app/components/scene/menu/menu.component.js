@@ -8,7 +8,7 @@ import './menu.component.css';
 
 @Component({
   selector: 'tn-menu',
-  template: html,
+  template: html
 })
 export class MenuComponent {
   @ViewChild('sidenav') sidenav = null;
@@ -30,6 +30,7 @@ export class MenuComponent {
   ngAfterViewInit() {
     this._menuService.sidenav = this.sidenav;
     document.getElementsByClassName('ui-sidebar-close')[0].remove();
+    document.getElementsByClassName('ui-sidebar')[0].style.padding = '0px';
   }
 
   ngAfterViewChecked() {

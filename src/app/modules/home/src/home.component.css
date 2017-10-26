@@ -4,16 +4,12 @@
   z-index: 0;
   overflow-x: overlay;
   text-align: center;
-  width: 100%;
   @media(--gt-sm){
     width:75%;
   }
 }
 .tn-home__kanbanresume{
-  margin-top: var(--margin-medium);
-  margin-bottom: var(--margin-medium);
-  margin-left: var(--margin-medium);  
-  width: 100%;
+  margin: var(--margin-medium);
   @media(--gt-sm){
     width: 25%;
     height: fit-content;

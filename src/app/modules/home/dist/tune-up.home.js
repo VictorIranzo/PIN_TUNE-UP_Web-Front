@@ -215,7 +215,7 @@ Reflect.defineMetadata('design:paramtypes', [HttpClient], AgentPicService);
 
 var html = "<div class=\"tn-home\">\n  <tn-kanban-resume class=\"tn-home__kanbanresume\" [filterUts]=\"filterUts\"></tn-kanban-resume>\n  <tn-ut-list class=\"tn-home__utlist\" [uts]=\"utsToShow\"></tn-ut-list>\n</div>\n";
 
-__$styleInject(".tn-home__utlist{margin:16px;z-index:0;overflow-x:overlay;text-align:center;width:100%}@media (min-width:960px){.tn-home__utlist{width:75%}}.tn-home__kanbanresume{margin-top:16px;margin-bottom:16px;margin-left:16px;width:100%}@media (min-width:960px){.tn-home__kanbanresume{width:25%;height:fit-content;position:sticky;top:85px}}.tn-home{display:flex;flex-direction:column}@media (min-width:960px){.tn-home{flex-direction:row}}", undefined);
+__$styleInject(".tn-home__utlist{margin:16px;z-index:0;overflow-x:overlay;text-align:center}@media (min-width:960px){.tn-home__utlist{width:75%}}.tn-home__kanbanresume{margin:16px}@media (min-width:960px){.tn-home__kanbanresume{width:25%;height:fit-content;position:sticky;top:85px}}.tn-home{display:flex;flex-direction:column}@media (min-width:960px){.tn-home{flex-direction:row}}", undefined);
 
 var _dec$2;
 var _class$2;

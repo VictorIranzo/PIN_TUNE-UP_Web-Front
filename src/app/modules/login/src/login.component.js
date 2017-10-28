@@ -1,8 +1,8 @@
-import { Router, ActivatedRoute } from '@angular/router';
-import { Component, ViewChild } from '@angular/core';
-import { AuthService, AgentService, AboutService } from '@tune-up/app';
-import { NotificationsService } from '@tune-up/core';
-import { LoginService, SitesService } from './services';
+import {Router, ActivatedRoute} from '@angular/router';
+import {Component, ViewChild} from '@angular/core';
+import {AuthService, AgentService, AboutService} from '@tune-up/app';
+import {NotificationsService} from '@tune-up/core';
+import {LoginService, SitesService} from './services';
 import html from './login.component.html';
 import './login.component.css';
 
@@ -52,8 +52,8 @@ export class LoginComponent {
     const paramsReturnUrl = this._route.snapshot.queryParams.returnUrl;
     this._returnUrl =
       !paramsReturnUrl ||
-        paramsReturnUrl === '/login' ||
-        paramsReturnUrl === '/'
+      paramsReturnUrl === '/login' ||
+      paramsReturnUrl === '/'
         ? this._returnUrl
         : paramsReturnUrl;
     this._checkLogedIn();
@@ -63,7 +63,7 @@ export class LoginComponent {
       this.emailCtrl.valid &&
       this._sitesService.get(this.model.email).subscribe(
         data => {
-          const { Resultado } = data;
+          const {Resultado} = data;
           // TODO: refactor when backend api is refactored
           if (Resultado.length === 0) {
             this._notificationsService.error(
@@ -81,7 +81,7 @@ export class LoginComponent {
   };
   _parseSites(sites) {
     this.sites = sites.map(site => {
-      return { label: `${site.Id}: ${site.Nombre} `, value: site.Id };
+      return {label: `${site.Id}: ${site.Nombre} `, value: site.Id};
     });
     this.model.idsitio = sites[0] && sites[0].Id;
   }
@@ -99,7 +99,8 @@ export class LoginComponent {
           this._notificationsService.error('Error de login', data.Mensaje);
           return;
         }
-        let { Token, Agente, Configuracion } = data.Resultado;
+        let {Token, Agente, Configuracion} = data.Resultado;
+        Agente.IdSitio = this.model.idsitio;
         this._authService.setToken(Token);
         this._agentService.agent = Agente;
         this._aboutService.about = Configuracion;

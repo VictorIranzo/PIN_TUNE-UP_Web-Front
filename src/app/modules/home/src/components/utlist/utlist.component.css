@@ -1,0 +1,16 @@
+@import 'styleguide';
+.tn-home__utlist__searchbar{
+  padding: var(--padding-medium);
+  border-bottom: 0;
+}
+.tn_home__utlist__searchbar__icon{
+  margin-top: var(--margin-tiny);
+  margin-right:var(--margin-small);
+}
+.tn-home__utlist__searchbar__input{
+  width:100%;
+}
+.tn-home__utlist__agent__pic{
+  width: 30px;
+  height: 30px;
+}

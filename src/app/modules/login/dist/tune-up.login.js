@@ -327,6 +327,7 @@ var LoginComponent = (_dec$2 = Component({
             Agente = _data$Resultado.Agente,
             Configuracion = _data$Resultado.Configuracion;
 
+        Agente.IdSitio = _this.model.idsitio;
         _this._authService.setToken(Token);
         _this._agentService.agent = Agente;
         _this._aboutService.about = Configuracion;

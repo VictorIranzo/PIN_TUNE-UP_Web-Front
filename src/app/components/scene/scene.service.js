@@ -3,29 +3,22 @@ import {NgZone, Injectable} from '@angular/core';
 const mqlGtsm = window.matchMedia('(min-width: 960px)');
 
 @Injectable()
-export class MenuService {
+export class SceneService {
   constructor(ngZone: NgZone) {
     this._sidenav = null;
     this._ngZone = ngZone;
-    // this.onShowMenuAppBar = new EventEmitter();
   }
 
   set sidenav(value) {
     this._sidenav = value;
+    this.initialize();
   }
   close() {
-    // this._sidenav && !this._docked && this._sidenav.close();
     if (this._sidenav && !this._docked) {
       this._sidenav.visible = false;
     }
   }
-  closeStrong() {
-    if (this._sidenav) {
-      this._sidenav.visible = false;
-    }
-  }
   open() {
-    // this._sidenav && this._sidenav.open();
     if (this._sidenav) {
       this._sidenav.visible = true;
     }
@@ -45,7 +38,6 @@ export class MenuService {
   }
   onWindowSizeChanged = ({matches}) => {
     this._docked = matches;
-    // this.onShowMenuAppBar.emit(!this._docked);
     if (matches) this.open();
     else this.close();
   };
@@ -53,11 +45,9 @@ export class MenuService {
     mqlGtsm.removeListener(this.onWindowSizeChanged);
     this._sidenav = null;
   }
-
   isVisible() {
     return this._sidenav && this._sidenav.visible;
   }
-
   isDocked() {
     return this._docked;
   }

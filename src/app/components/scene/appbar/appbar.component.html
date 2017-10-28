@@ -1,13 +1,13 @@
-<div class="horizontal menu-bar">
-    <!-- <div class ="none tn-scene-appbar--topMenu">Logo TuneUP</div> -->
+<div class="horizontal tn-scene-appbar-wrapper">
+    <div *ngIf="this._menuService.isDocked()" class="none tn-scene-appbar--topMenu">TUNE-UP</div>
     <div class ="horizontal ten">
-      <div *ngIf="!this._menuService.isDocked()" >
-        <button class="tn-scene-appbar--button" *ngIf="this._menuService.isVisible()"  pButton type="button" (click)="onHideMenuClick()" icon="fa-caret-square-o-left" iconPos="left"></button>                                
-        <button class="tn-scene-appbar--button" *ngIf="!this._menuService.isVisible()" pButton type="button" (click)="onShowMenuClick()" icon="fa-caret-square-o-right" iconPos="left"></button>                    
+      <div class="tn-scene-appbar--button" *ngIf="!this._menuService.isDocked()" >
+        <i *ngIf="this._menuService.isVisible()" (click)="onHideMenuClick()" class="fa fa-2x fa-caret-square-o-left"></i>                                
+        <i *ngIf="!this._menuService.isVisible()" (click)="onShowMenuClick()" class="fa fa-2x fa-caret-square-o-right"></i>                    
       </div>
       <p-breadcrumb class="tn-scene-appbar--breadcrumb" [model]="breadcrumbItems"></p-breadcrumb>    
     </div>
     <div class = "horizontal one">
-        <!-- <button class="tn-scene-appbar--button" pButton type="button" label="Click"></button>         -->
+        <i class="tn-scene-appbar--button fa fa-2x fa-list"></i>        
     </div>
 </div>

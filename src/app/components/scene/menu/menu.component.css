@@ -1,15 +1,16 @@
-@import url("../scene.variables.css");
+@import "../scene.variables.css";
 
-.tn-menu-sidebar{
-padding: 0px,0px,0px,0px;
-}
 .tn-menu-sidebar--logo{
   width: 180px;
   height: 180px;
-  margin-left: 30px;
   margin-top: 80px;
   margin-bottom: 20px;
 }
 .ui-sidebar-left{
   width: var(--tn-scene-menu--width);
 }
+.tn-menu-sidebar{
+  background:#2399e5;
+  height: 100%;
+}
+

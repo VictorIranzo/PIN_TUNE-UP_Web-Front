@@ -9,7 +9,7 @@ export class AgentPicService {
   }
   get(idAgente, idSitio) {
     return this._http.get(`${this._url}/${idAgente}/${idSitio}`, {
-      responseType: 'blob'
+      responseType: 'blob',
     });
   }
 }

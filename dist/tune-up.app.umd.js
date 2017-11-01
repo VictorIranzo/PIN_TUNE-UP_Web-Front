@@ -1,3 +1,4 @@
+(function(l, i, v, e) { v = l.createElement(i); v.async = 1; v.src = '//' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; e = l.getElementsByTagName(i)[0]; e.parentNode.insertBefore(v, e)})(document, 'script');
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/platform-browser-dynamic'), require('@angular/core'), require('@angular/common/http'), require('@tune-up/vendor'), require('@angular/forms'), require('@angular/common'), require('@angular/router'), require('@angular/platform-browser'), require('@angular/platform-browser/animations')) :
 	typeof define === 'function' && define.amd ? define(['exports', '@angular/platform-browser-dynamic', '@angular/core', '@angular/common/http', '@tune-up/vendor', '@angular/forms', '@angular/common', '@angular/router', '@angular/platform-browser', '@angular/platform-browser/animations'], factory) :
@@ -10161,6 +10162,9 @@ var TuneUpCoreModule = (_dec$7 = core_1.NgModule({
   classCallCheck(this, TuneUpCoreModule);
 }) || _class$7);
 
+
+//# sourceMappingURL=tune-up.core.js.map
+
 var asyncGenerator$1 = function () {
   function AwaitValue(value) {
     this.value = value;
@@ -10477,36 +10481,31 @@ var html$1$1 = "<div class=\"vertical\">\r\n  <tn-appbar class=\"tn-scene-appbar
 
 __$styleInject(".tn-scene-appbar{background-color:#20272a;display:block;padding:0;height:70px;box-sizing:border-box;position:fixed;top:0;left:0;width:100%;z-index:2;box-shadow:0 2px 5px 0 rgba(0,0,0,.3)}.tn-scene-menu{position:fixed;left:0;top:70px;height:100%;background-color:#fff;overflow:hidden;z-index:1;text-align:center}@media (min-width:960px){.tn-scene-menu{width:270px;box-shadow:0 0 5px 0 rgba(0,0,0,.3)}}.tn-scene-content{padding-top:70px;background-color:#fff;width:100%;height:100%}@media (min-width:960px){.tn-scene-content{margin-left:270px}}",undefined);
 
-var html$2 = "<p-sidebar #sidenav [ngStyle]=\"{width:'270px'}\">\n  <div>\n    <img class=\"tn-menu-sidebar--logo\" src=\"./assets/logo.png\">\n  </div>\n  <div class=\"tn-menu-sidebar\">\n    <div *ngFor=\"let item of items\">\n      <div *ngIf=\"mustPrint(item)\">\n        <tn-menuitem [text]=\"item.text\" [path]=\"item.path\" [icon]=\"item.icon\" [adminOnly]=\"item.adminOnly\"></tn-menuitem>\n      </div>\n    </div>\n  </div>\n</p-sidebar>\n";
-
-var _dec$7$1;
-var _class$7$1;
+var _dec$6$1;
+var _class$6$1;
 
 var mqlGtsm = window.matchMedia('(min-width: 960px)');
 
-var MenuService = (_dec$7$1 = core_1.Injectable(), _dec$7$1(_class$7$1 = function () {
-  function MenuService(ngZone) {
+var SceneService = (_dec$6$1 = core_1.Injectable(), _dec$6$1(_class$6$1 = function () {
+  function SceneService(ngZone) {
     var _this = this;
 
-    classCallCheck$1(this, MenuService);
+    classCallCheck$1(this, SceneService);
 
-    this.onWindowSizeChanged = function (_ref) {
+    this._onWindowSizeChanged = function (_ref) {
       var matches = _ref.matches;
 
       _this._docked = matches;
-      // this.onShowMenuAppBar.emit(!this._docked);
       if (matches) _this.open();else _this.close();
     };
 
     this._sidenav = null;
     this._ngZone = ngZone;
-    // this.onShowMenuAppBar = new EventEmitter();
   }
 
-  createClass$1(MenuService, [{
+  createClass$1(SceneService, [{
     key: 'close',
     value: function close() {
-      // this._sidenav && !this._docked && this._sidenav.close();
       if (this._sidenav && !this._docked) {
         this._sidenav.visible = false;
       }
@@ -10521,29 +10520,21 @@ var MenuService = (_dec$7$1 = core_1.Injectable(), _dec$7$1(_class$7$1 = functio
   }, {
     key: 'open',
     value: function open() {
-      // this._sidenav && this._sidenav.open();
       if (this._sidenav) {
         this._sidenav.visible = true;
       }
-      if (document.getElementsByClassName('ui-sidebar-mask')[0]) {
-        if (this._docked) {
-          document.getElementsByClassName('ui-sidebar-mask')[0].hidden = true;
-        } else {
-          document.getElementsByClassName('ui-sidebar-mask')[0].hidden = false;
-        }
-      }
     }
   }, {
-    key: 'initialize',
-    value: function initialize() {
+    key: '_initialize',
+    value: function _initialize() {
       var _this2 = this;
 
       mqlGtsm.addListener(function (result) {
         return _this2._ngZone.run(function () {
-          return _this2.onWindowSizeChanged(result);
+          return _this2._onWindowSizeChanged(result);
         });
       });
-      this.onWindowSizeChanged(mqlGtsm);
+      this._onWindowSizeChanged(mqlGtsm);
     }
   }, {
     key: 'dispose',
@@ -10565,17 +10556,126 @@ var MenuService = (_dec$7$1 = core_1.Injectable(), _dec$7$1(_class$7$1 = functio
     key: 'sidenav',
     set: function set$$1(value) {
       this._sidenav = value;
+      this._initialize();
     }
   }]);
-  return MenuService;
+  return SceneService;
+}()) || _class$6$1);
+Reflect.defineMetadata('design:paramtypes', [core_1.NgZone], SceneService);
+
+var _dec$5$1;
+var _class$5$1;
+
+var SceneComponent = (_dec$5$1 = core_1.Component({
+  selector: 'tn-scene',
+  template: html$1$1,
+  providers: [SceneService]
+}), _dec$5$1(_class$5$1 = function () {
+  function SceneComponent(sceneService) {
+    classCallCheck$1(this, SceneComponent);
+
+    this._sceneService = sceneService;
+  }
+
+  createClass$1(SceneComponent, [{
+    key: 'ngOnDestroy',
+    value: function ngOnDestroy() {
+      this._sceneService.dispose();
+    }
+  }]);
+  return SceneComponent;
+}()) || _class$5$1);
+Reflect.defineMetadata('design:paramtypes', [SceneService], SceneComponent);
+
+var _dec$8;
+var _class$8;
+
+var BreadcrumbService = (_dec$8 = core_1.Injectable(), _dec$8(_class$8 = function () {
+  function BreadcrumbService() {
+    classCallCheck$1(this, BreadcrumbService);
+    this._breadCrumbItems = [];
+  }
+
+  createClass$1(BreadcrumbService, [{
+    key: 'addItem',
+    value: function addItem(menuItem) {
+      this._breadCrumbItems.push(menuItem);
+    }
+  }, {
+    key: 'items',
+    get: function get$$1() {
+      return this._breadCrumbItems;
+    },
+    set: function set$$1(value) {
+      this._breadCrumbItems = value;
+    }
+  }]);
+  return BreadcrumbService;
+}()) || _class$8);
+
+var html$2 = "<!-- TODO: make functions to manage visibility, dont call the service directly -->\n<div class=\"horizontal tn-scene-appbar-wrapper\">\n    <div *ngIf=\"this._sceneService.isDocked()\" class=\"none tn-scene-appbar--topMenu\">TUNE-UP</div>\n    <div class =\"horizontal ten\">\n      <div class=\"tn-scene-appbar--button\" *ngIf=\"!this._sceneService.isDocked()\" >\n        <i *ngIf=\"this._sceneService.isVisible()\" (click)=\"onHideMenuClick()\" class=\"fa fa-2x fa-caret-square-o-left\"></i>                                \n        <i *ngIf=\"!this._sceneService.isVisible()\" (click)=\"onShowMenuClick()\" class=\"fa fa-2x fa-caret-square-o-right\"></i>                    \n      </div>\n      <p-breadcrumb class=\"tn-scene-appbar--breadcrumb\" [model]=\"breadcrumbItems\"></p-breadcrumb>    \n    </div>\n    <div class = \"horizontal one\">\n        <i class=\"tn-scene-appbar--button fa fa-2x fa-list\"></i>        \n    </div>\n</div>\n";
+
+__$styleInject(".tn-scene-appbar--button{color:#d3d3d3}.tn-scene-appbar--breadcrumb,.tn-scene-appbar--button{margin-left:10px;align-self:center}.tn-scene-appbar--topMenu{width:270px;height:70px;text-align:center;font-size:-webkit-xxx-large;border-right:1px solid;color:#d3d3d3}.tn-scene-appbar-wrapper{height:100%}",undefined);
+
+var _dec$7$1;
+var _class$7$1;
+
+var AppbarComponent = (_dec$7$1 = core_1.Component({
+  selector: 'tn-appbar',
+  template: html$2,
+  providers: [BreadcrumbService]
+}), _dec$7$1(_class$7$1 = function () {
+  function AppbarComponent(breadcrumbService, sceneService) {
+    classCallCheck$1(this, AppbarComponent);
+    this.menuOpen = true;
+    this.breadcrumbItems = [];
+
+    this._breadcrumbService = breadcrumbService;
+    this._sceneService = sceneService;
+    this._getBreadcrumbItems();
+  }
+
+  createClass$1(AppbarComponent, [{
+    key: '_getBreadcrumbItems',
+    value: function _getBreadcrumbItems() {
+      this.breadcrumbItems = this._breadcrumbService.items;
+    }
+  }, {
+    key: 'onHideMenuClick',
+    value: function onHideMenuClick() {
+      this.menuOpen = false;
+      this._sceneService.closeStrong();
+    }
+  }, {
+    key: 'onShowMenuClick',
+    value: function onShowMenuClick() {
+      this.menuOpen = true;
+      this._sceneService.open();
+    }
+  }]);
+  return AppbarComponent;
 }()) || _class$7$1);
-Reflect.defineMetadata('design:paramtypes', [core_1.NgZone], MenuService);
+Reflect.defineMetadata('design:paramtypes', [BreadcrumbService, SceneService], AppbarComponent);
+
+var html$3 = "<router-outlet></router-outlet>\r\n";
+
+var _dec$9;
+var _class$9;
+
+var ContentComponent = (_dec$9 = core_1.Component({
+  selector: 'tn-content',
+  template: html$3
+}), _dec$9(_class$9 = function ContentComponent() {
+  classCallCheck$1(this, ContentComponent);
+}) || _class$9);
+
+var html$4 = "<p-sidebar #sidenav [ngStyle]=\"{width:'270px'}\">\n  <div>\n    <img class=\"tn-menu-sidebar--logo\" src=\"./assets/logo.png\">\n  </div>\n  <div class=\"tn-menu-sidebar\">\n    <div *ngFor=\"let item of items\">\n      <div *ngIf=\"mustPrint(item)\">\n        <tn-menuitem [text]=\"item.text\" [path]=\"item.path\" [icon]=\"item.icon\" [adminOnly]=\"item.adminOnly\"></tn-menuitem>\n      </div>\n    </div>\n  </div>\n</p-sidebar>\n";
 
 __$styleInject(".tn-menu-sidebar--logo{width:180px;height:180px;margin-top:80px;margin-bottom:20px}.ui-sidebar-left{width:270px}.tn-menu-sidebar{background:#2399e5;height:100%}",undefined);
 
-var _dec$6$1;
+var _dec$10;
 var _dec2$1$1;
-var _class$6$1;
+var _class$10;
 var _class2$1$1;
 var _descriptor$1$1;
 
@@ -10618,11 +10718,11 @@ function _applyDecoratedDescriptor$1$1(target, property, decorators, descriptor,
   return desc;
 }
 
-var MenuComponent = (_dec$6$1 = core_1.Component({
+var MenuComponent = (_dec$10 = core_1.Component({
   selector: 'tn-menu',
-  template: html$2
-}), _dec2$1$1 = core_1.ViewChild('sidenav'), _dec$6$1(_class$6$1 = (_class2$1$1 = function () {
-  function MenuComponent(agentService, menuService) {
+  template: html$4
+}), _dec2$1$1 = core_1.ViewChild('sidenav'), _dec$10(_class$10 = (_class2$1$1 = function () {
+  function MenuComponent(agentService, sceneService) {
     classCallCheck$1(this, MenuComponent);
 
     _initDefineProp$1$1(this, 'sidenav', _descriptor$1$1, this);
@@ -10630,29 +10730,32 @@ var MenuComponent = (_dec$6$1 = core_1.Component({
     this.items = configService.menuItems;
 
     this._agentService = agentService;
-    this._menuService = menuService;
+    this._sceneService = sceneService;
   }
 
   createClass$1(MenuComponent, [{
     key: 'mustPrint',
     value: function mustPrint(item) {
-      // if (item.adminOnly) {
-      //   if (this._agentService.isAdmin()) return true;
-      //   else return false;
-      // }
+      // TODO: fix when needed
+      // return this._agentService.isAdmin();
       return true;
+    }
+  }, {
+    key: 'ngAfterContentInit',
+    value: function ngAfterContentInit() {
+      this._sceneService.sidenav = this.sidenav;
     }
   }, {
     key: 'ngAfterViewInit',
     value: function ngAfterViewInit() {
-      this._menuService.sidenav = this.sidenav;
-      document.getElementsByClassName('ui-sidebar-close')[0].remove();
-      document.getElementsByClassName('ui-sidebar')[0].style.padding = '0px';
+      this._tuneSidenav();
     }
   }, {
-    key: 'ngAfterViewChecked',
-    value: function ngAfterViewChecked() {
-      this._menuService.initialize();
+    key: '_tuneSidenav',
+    value: function _tuneSidenav() {
+      document.getElementsByClassName('ui-sidebar-mask')[0].hidden = true;
+      document.getElementsByClassName('ui-sidebar-close')[0].remove();
+      document.getElementsByClassName('ui-sidebar')[0].style.padding = '0px';
     }
   }]);
   return MenuComponent;
@@ -10661,19 +10764,19 @@ var MenuComponent = (_dec$6$1 = core_1.Component({
   initializer: function initializer() {
     return null;
   }
-})), _class2$1$1)) || _class$6$1);
-Reflect.defineMetadata('design:paramtypes', [AgentService, MenuService], MenuComponent);
+})), _class2$1$1)) || _class$10);
+Reflect.defineMetadata('design:paramtypes', [AgentService, SceneService], MenuComponent);
 
-var html$3 = "<button pButton type=\"button\" class=\"tn-menuitem-layout\" label= {{text}} icon= {{icon}} (click)=\"onClick()\" routerLink={{path}}></button>\n";
+var html$5 = "<button pButton type=\"button\" class=\"tn-menuitem-layout\" label= {{text}} icon= {{icon}} routerLink={{path}}></button>\n";
 
 __$styleInject(".tn-menuitem-layout{width:100%;border-bottom:1px solid #fff!important}",undefined);
 
-var _dec$8;
+var _dec$11;
 var _dec2$2;
 var _dec3;
 var _dec4;
 var _dec5;
-var _class$8;
+var _class$11;
 var _class2$2;
 var _descriptor$2;
 var _descriptor2;
@@ -10719,30 +10822,20 @@ function _applyDecoratedDescriptor$2(target, property, decorators, descriptor, c
   return desc;
 }
 
-var MenuItemComponent = (_dec$8 = core_1.Component({
+var MenuItemComponent = (_dec$11 = core_1.Component({
   selector: 'tn-menuitem',
-  template: html$3
-}), _dec2$2 = core_1.Input(), _dec3 = core_1.Input(), _dec4 = core_1.Input(), _dec5 = core_1.Input(), _dec$8(_class$8 = (_class2$2 = function () {
-  function MenuItemComponent() {
-    classCallCheck$1(this, MenuItemComponent);
+  template: html$5
+}), _dec2$2 = core_1.Input(), _dec3 = core_1.Input(), _dec4 = core_1.Input(), _dec5 = core_1.Input(), _dec$11(_class$11 = (_class2$2 = function MenuItemComponent() {
+  classCallCheck$1(this, MenuItemComponent);
 
-    _initDefineProp$2(this, 'path', _descriptor$2, this);
+  _initDefineProp$2(this, 'path', _descriptor$2, this);
 
-    _initDefineProp$2(this, 'text', _descriptor2, this);
+  _initDefineProp$2(this, 'text', _descriptor2, this);
 
-    _initDefineProp$2(this, 'icon', _descriptor3, this);
+  _initDefineProp$2(this, 'icon', _descriptor3, this);
 
-    _initDefineProp$2(this, 'adminOnly', _descriptor4, this);
-  }
-
-  createClass$1(MenuItemComponent, [{
-    key: 'onClick',
-    value: function onClick() {
-      console.log('Click en ' + this.text);
-    }
-  }]);
-  return MenuItemComponent;
-}(), (_descriptor$2 = _applyDecoratedDescriptor$2(_class2$2.prototype, 'path', [_dec2$2], {
+  _initDefineProp$2(this, 'adminOnly', _descriptor4, this);
+}, (_descriptor$2 = _applyDecoratedDescriptor$2(_class2$2.prototype, 'path', [_dec2$2], {
   enumerable: true,
   initializer: function initializer() {
     return this.path;
@@ -10762,109 +10855,7 @@ var MenuItemComponent = (_dec$8 = core_1.Component({
   initializer: function initializer() {
     return this.adminOnly;
   }
-})), _class2$2)) || _class$8);
-
-var _dec$5$1;
-var _class$5$1;
-
-var SceneComponent = (_dec$5$1 = core_1.Component({
-  selector: 'tn-scene',
-  template: html$1$1,
-  providers: [MenuService]
-}), _dec$5$1(_class$5$1 = function SceneComponent(menuService) {
-  classCallCheck$1(this, SceneComponent);
-
-  this._menuService = menuService;
-}) || _class$5$1);
-Reflect.defineMetadata('design:paramtypes', [MenuService], SceneComponent);
-
-var _dec$10;
-var _class$10;
-
-var BreadcrumbService = (_dec$10 = core_1.Injectable(), _dec$10(_class$10 = function () {
-  function BreadcrumbService() {
-    classCallCheck$1(this, BreadcrumbService);
-    this._breadCrumbItems = [];
-  }
-
-  createClass$1(BreadcrumbService, [{
-    key: 'getItems',
-    value: function getItems() {
-      return this._breadCrumbItems;
-    }
-  }, {
-    key: 'setItems',
-    value: function setItems(menuItem) {
-      this._breadCrumbItems = items;
-    }
-  }, {
-    key: 'addItem',
-    value: function addItem(menuItem) {
-      this._breadCrumbItems.push(menuItem);
-    }
-  }]);
-  return BreadcrumbService;
-}()) || _class$10);
-
-var html$4 = "<div class=\"horizontal tn-scene-appbar-wrapper\">\n    <div *ngIf=\"this._menuService.isDocked()\" class=\"none tn-scene-appbar--topMenu\">TUNE-UP</div>\n    <div class =\"horizontal ten\">\n      <div class=\"tn-scene-appbar--button\" *ngIf=\"!this._menuService.isDocked()\" >\n        <i *ngIf=\"this._menuService.isVisible()\" (click)=\"onHideMenuClick()\" class=\"fa fa-2x fa-caret-square-o-left\"></i>                                \n        <i *ngIf=\"!this._menuService.isVisible()\" (click)=\"onShowMenuClick()\" class=\"fa fa-2x fa-caret-square-o-right\"></i>                    \n      </div>\n      <p-breadcrumb class=\"tn-scene-appbar--breadcrumb\" [model]=\"breadcrumbItems\"></p-breadcrumb>    \n    </div>\n    <div class = \"horizontal one\">\n        <i class=\"tn-scene-appbar--button fa fa-2x fa-list\"></i>        \n    </div>\n</div>\n";
-
-__$styleInject(".tn-scene-appbar--button{color:#d3d3d3}.tn-scene-appbar--breadcrumb,.tn-scene-appbar--button{margin-left:10px;align-self:center}.tn-scene-appbar--topMenu{width:270px;height:70px;text-align:center;font-size:-webkit-xxx-large;border-right:1px solid;color:#d3d3d3}.tn-scene-appbar-wrapper{height:100%}",undefined);
-
-var _dec$9;
-var _class$9;
-
-var AppbarComponent = (_dec$9 = core_1.Component({
-  selector: 'tn-appbar',
-  template: html$4,
-  providers: [BreadcrumbService]
-}), _dec$9(_class$9 = function () {
-  // showMenu = false;
-  function AppbarComponent(breadcrumbService, menuService) {
-    classCallCheck$1(this, AppbarComponent);
-    this.menuOpen = true;
-    this.breadcrumbItems = [];
-
-    this._breadcrumbService = breadcrumbService;
-    this._menuService = menuService;
-    // this._menuService.onShowMenuAppBar.subscribe(result =>{ this.showMenu = result;console.log(result)});
-    this._getBreadcrumbItems();
-  }
-
-  createClass$1(AppbarComponent, [{
-    key: '_getBreadcrumbItems',
-    value: function _getBreadcrumbItems() {
-      this.breadcrumbItems = this._breadcrumbService.getItems();
-    }
-  }, {
-    key: 'onHideMenuClick',
-    value: function onHideMenuClick() {
-      this.menuOpen = false;
-      this._menuService.closeStrong();
-    }
-  }, {
-    key: 'onShowMenuClick',
-    value: function onShowMenuClick() {
-      this.menuOpen = true;
-      this._menuService.open();
-    }
-  }]);
-  return AppbarComponent;
-}()) || _class$9);
-Reflect.defineMetadata('design:paramtypes', [BreadcrumbService, MenuService], AppbarComponent);
-
-var html$5 = "<router-outlet></router-outlet>\r\n";
-
-var _dec$11;
-var _class$11;
-
-var ContentComponent = (_dec$11 = core_1.Component({
-  selector: 'tn-content',
-  template: html$5
-}), _dec$11(_class$11 = function ContentComponent() {
-  classCallCheck$1(this, ContentComponent);
-}) || _class$11);
-
-var min = '.min';
+})), _class2$2)) || _class$11);
 
 var mainRoute = {
   path: '',
@@ -10879,7 +10870,7 @@ var mainRedirectRoute = {
 };
 var loginRoute = {
   path: 'login',
-  loadChildren: 'src/app/modules/login/dist/tune-up.login.umd' + min + '.js#login#LoginModule'
+  loadChildren: 'src/app/modules/login/dist/tune-up.login.umd.js#login#LoginModule'
 };
 
 var appRoutes = {
@@ -10888,13 +10879,12 @@ var appRoutes = {
   mainRedirectRoute: mainRedirectRoute
 };
 
-var min$1 = '.min';
-
 var homeRoute = {
   path: 'home',
-  loadChildren: 'src/app/modules/home/dist/tune-up.home.umd' + min$1 + '.js#home#HomeModule'
+  loadChildren: 'src/app/modules/home/dist/tune-up.home.umd.js#home#HomeModule'
 };
 
+// TODO: remove
 
 
 var childRoutes = Object.freeze({
@@ -10908,6 +10898,7 @@ var homeMenuItem = {
   adminOnly: false
 };
 
+// TODO: remove
 
 
 var menuItems = Object.freeze({
@@ -10948,7 +10939,7 @@ var _class$13;
 var RoutingModule = (_dec$13 = core_1.NgModule({
   imports: [router.RouterModule.forRoot(configService.getRouteObjects(), {
     useHash: true,
-    enableTracing: "production" !== 'production'
+    enableTracing: "development" !== 'production'
   })],
   exports: [router.RouterModule],
   providers: [AuthGuard]
@@ -10992,7 +10983,7 @@ var TokenInterceptorProvider = {
 
 var html$6 = "<tn-notifications></tn-notifications>\n<router-outlet></router-outlet>\n";
 
-__$styleInject(".none{flex:none}.one{flex:1}.two{flex:2}.three{flex:3}.four{flex:4}.five{flex:5}.six{flex:6}.seven{flex:7}.eight{flex:8}.nine{flex:9}.ten{flex:10}.eleven{flex:11}.twelve{flex:12}.flex,.horizontal,.vertical{display:flex}.horizontal{flex-direction:row}.vertical{flex-direction:column}.wrap{flex-wrap:wrap}body{margin:0;min-height:100%;padding:0;overflow-x:hidden;overflow-y:auto;font-family:Roboto,Trebuchet MS,Arial,Helvetica,sans-serif;font-weight:400;color:#404c51;-webkit-font-smoothing:antialiased;font-size:1em}",undefined);
+__$styleInject(".none{flex:none}.one{flex:1}.two{flex:2}.three{flex:3}.four{flex:4}.five{flex:5}.six{flex:6}.seven{flex:7}.eight{flex:8}.nine{flex:9}.ten{flex:10}.eleven{flex:11}.twelve{flex:12}.flex,.horizontal,.vertical{display:flex}.horizontal{flex-direction:row}.vertical,.vertical-fill{flex-direction:column}.vertical-fill,fill{height:100%}.wrap{flex-wrap:wrap}body{margin:0;min-height:100%;padding:0;overflow-x:hidden;overflow-y:auto;font-family:Roboto,Trebuchet MS,Arial,Helvetica,sans-serif;font-weight:400;color:#404c51;-webkit-font-smoothing:antialiased;font-size:1em}",undefined);
 
 var _dec$15;
 var _class$15;
@@ -11016,9 +11007,6 @@ var AppModule = (_dec$12 = core_1.NgModule({
   classCallCheck$1(this, AppModule);
 }) || _class$12);
 
-{
-  core_1.enableProdMode();
-}
 platformBrowserDynamic.platformBrowserDynamic().bootstrapModule(AppModule);
 
 exports.configService = configService;

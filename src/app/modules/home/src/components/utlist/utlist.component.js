@@ -4,25 +4,26 @@ import {AgentPicService} from './services';
 import html from './utlist.component.html';
 import './utlist.component.css';
 
+// TODO: extract to a config file
 const utTypesIcons = {
   1: 'fa fa-star',
   2: 'fa fa-bug',
   3: 'fa fa-plus-circle',
-  4: 'fa fa-puzzle-piece'
+  4: 'fa fa-puzzle-piece',
 };
 const workflowIcons = {
   1: 'fa fa-arrow-up',
   2: 'fa fa-repeat',
   3: 'fa fa-cog',
   4: 'fa fa-undo',
-  5: 'fa fa-refresh'
+  5: 'fa fa-refresh',
 };
 const agentPics = {};
 
 @Component({
   selector: 'tn-ut-list',
   template: html,
-  providers: [AgentPicService]
+  providers: [AgentPicService],
 })
 export class UtListComponent {
   @Input() uts;
@@ -35,26 +36,29 @@ export class UtListComponent {
     this._notificationsService = notificationService;
     this._agentService = agentService;
   }
-  getAgentPic = ut => {
+  getAgentPic = (ut) => {
+    // TODO: experiment with async pipe
     const idAgente = ut.IdAgente;
     if (idAgente) {
       const idSitio = this._agentService.getSiteId();
       if (!agentPics[idAgente]) {
-        this._agentPicService.get(idAgente, idSitio).subscribe(data => {
+        // TODO: refactor
+        this._agentPicService.get(idAgente, idSitio).subscribe((data) => {
           agentPics[idAgente] = URL.createObjectURL(data);
         });
       }
       return agentPics[idAgente];
     }
+    // TODO: return transparent png image
     return '';
   };
-  getUtTypeIcon = ut => {
+  getUtTypeIcon = (ut) => {
     return utTypesIcons[ut.IdTipoUT];
   };
-  getStateIcon = ut => {
+  getStateIcon = (ut) => {
     return workflowIcons[ut.IdTipoSeguimiento];
   };
-  getUtLink = ut => {
+  getUtLink = (ut) => {
     return `uts/${ut.id}`;
   };
 }

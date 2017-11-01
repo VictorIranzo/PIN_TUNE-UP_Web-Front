@@ -7,22 +7,23 @@ import './home.component.css';
 @Component({
   selector: 'tn-home',
   template: html,
-  providers: [UtListService]
+  providers: [UtListService],
 })
 export class HomeComponent {
+  allUts = [];
+  utsToShow = [];
   constructor(
     utListService: UtListService,
     notificationService: NotificationsService
   ) {
     this._utListService = utListService;
     this._notificationsService = notificationService;
-    this.allUts = [];
-    this.utsToShow = [];
     this._getUts();
   }
   _getUts() {
+    // TODO: refactor
     this._utListService.get().subscribe(
-      data => {
+      (data) => {
         if (!data.Exito) {
           this._notificationsService.error(
             'No se pudieron obtener las UTs',
@@ -33,7 +34,7 @@ export class HomeComponent {
         this.allUts = data.Resultado;
         this.utsToShow = data.Resultado;
       },
-      error =>
+      (error) =>
         this._notificationsService.error(
           'No se pudieron obtener las UTs',
           error
@@ -42,7 +43,8 @@ export class HomeComponent {
   }
   filterUts = (idActivity, status) => {
     this.utsToShow = this.allUts.filter(
-      ut =>
+      (ut) =>
+        // TODO: filter by activity
         // (idActivity === 'ALL' || ut.IdActividad === idActivity) &&
         status === 'ALL' ||
         ut.Estado === status ||

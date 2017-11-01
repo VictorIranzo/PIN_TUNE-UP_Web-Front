@@ -4,8 +4,11 @@
 .horizontal{
     flex-direction: row;
 }
-.vertical{
+.vertical, .vertical-fill{
     flex-direction: column;
+}
+.vertical-fill, fill{
+  height: 100%;
 }
 .wrap{
     flex-wrap: wrap;

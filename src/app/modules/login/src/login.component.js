@@ -9,14 +9,16 @@ import './login.component.css';
 @Component({
   selector: 'tn-login',
   template: html,
-  providers: [LoginService, SitesService]
+  providers: [LoginService, SitesService],
 })
 export class LoginComponent {
   model = {
     email: undefined,
     password: undefined,
-    idsitio: undefined
+    idsitio: undefined,
   };
+  sites = [];
+  _returnUrl = '/home';
   @ViewChild('emailCtrl') emailCtrl;
   constructor(
     route: ActivatedRoute,
@@ -28,8 +30,6 @@ export class LoginComponent {
     aboutService: AboutService,
     notificationsService: NotificationsService
   ) {
-    this._returnUrl = '/home';
-    this.sites = [];
     this._route = route;
     this._router = router;
     this._loginService = loginService;
@@ -41,7 +41,6 @@ export class LoginComponent {
   }
   _checkLogedIn() {
     if (this._authService.getToken()) {
-      debugger;
       this._redirect();
     }
   }
@@ -62,7 +61,7 @@ export class LoginComponent {
     this.model.email &&
       this.emailCtrl.valid &&
       this._sitesService.get(this.model.email).subscribe(
-        data => {
+        (data) => {
           const {Resultado} = data;
           // TODO: refactor when backend api is refactored
           if (Resultado.length === 0) {
@@ -74,18 +73,18 @@ export class LoginComponent {
             this._parseSites(Resultado);
           }
         },
-        error => {
+        (error) => {
           this._notificationsService.error('Error', error);
         }
       );
   };
   _parseSites(sites) {
-    this.sites = sites.map(site => {
+    this.sites = sites.map((site) => {
       return {label: `${site.Id}: ${site.Nombre} `, value: site.Id};
     });
     this.model.idsitio = sites[0] && sites[0].Id;
   }
-  setIdSitio = idSitio => {
+  setIdSitio = (idSitio) => {
     this.model.idsitio = idSitio;
   };
   showSelector = () => {
@@ -93,7 +92,7 @@ export class LoginComponent {
   };
   login = () => {
     this._loginService.login(this.model).subscribe(
-      data => {
+      (data) => {
         // TODO: refactor when backend api is refactored
         if (!data.Exito) {
           this._notificationsService.error('Error de login', data.Mensaje);
@@ -106,7 +105,7 @@ export class LoginComponent {
         this._aboutService.about = Configuracion;
         this._redirect();
       },
-      error => {
+      (error) => {
         this._notificationsService.error('Error de login', error);
       }
     );

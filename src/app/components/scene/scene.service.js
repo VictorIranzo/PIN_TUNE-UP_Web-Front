@@ -8,13 +8,17 @@ export class SceneService {
     this._sidenav = null;
     this._ngZone = ngZone;
   }
-
   set sidenav(value) {
     this._sidenav = value;
-    this.initialize();
+    this._initialize();
   }
   close() {
     if (this._sidenav && !this._docked) {
+      this._sidenav.visible = false;
+    }
+  }
+  closeStrong() {
+    if (this._sidenav) {
       this._sidenav.visible = false;
     }
   }
@@ -22,21 +26,14 @@ export class SceneService {
     if (this._sidenav) {
       this._sidenav.visible = true;
     }
-    if (document.getElementsByClassName('ui-sidebar-mask')[0]) {
-      if (this._docked) {
-        document.getElementsByClassName('ui-sidebar-mask')[0].hidden = true;
-      } else {
-        document.getElementsByClassName('ui-sidebar-mask')[0].hidden = false;
-      }
-    }
   }
-  initialize() {
-    mqlGtsm.addListener(result =>
-      this._ngZone.run(() => this.onWindowSizeChanged(result))
+  _initialize() {
+    mqlGtsm.addListener((result) =>
+      this._ngZone.run(() => this._onWindowSizeChanged(result))
     );
-    this.onWindowSizeChanged(mqlGtsm);
+    this._onWindowSizeChanged(mqlGtsm);
   }
-  onWindowSizeChanged = ({matches}) => {
+  _onWindowSizeChanged = ({matches}) => {
     this._docked = matches;
     if (matches) this.open();
     else this.close();

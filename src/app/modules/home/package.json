@@ -8,10 +8,8 @@
   "jsnext:main": "src/index.js",
   "scripts": {
     "build": "rollup -c rollup.config.js",
-    "build:nomin": "rollup -c rollup.config.nomin.js",
-    "build:dev": "rollup -c rollup.config.dev.js --watch",
-    "build:depl": "npm-run-all --parallel build build:nomin",
-    "depl": "npm run build:depl"
+    "build:dev": "rollup -w -c rollup.config.dev.js",
+    "start": "npm run build:dev"
   },
   "author": "",
   "license": "ISC",
@@ -20,6 +18,7 @@
     "babel-cli": "^6.26.0",
     "babel-preset-angular2": "0.0.2",
     "babel-preset-es2015-rollup": "^3.0.0",
+    "chokidar": "^1.7.0",
     "cssnano": "^3.10.0",
     "npm-run-all": "^4.1.1",
     "postcss-cssnext": "^3.0.2",

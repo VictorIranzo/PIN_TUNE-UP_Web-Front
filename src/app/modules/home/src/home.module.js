@@ -10,7 +10,8 @@ import {KanbanResumeComponent, UtListComponent, SafeHtml} from './components';
     HomeComponent,
     KanbanResumeComponent,
     UtListComponent,
-    SafeHtml
-  ]
+    // TODO: move SafeHtml to core
+    SafeHtml,
+  ],
 })
 export class HomeModule {}

@@ -4,6 +4,6 @@ import './app.component.css';
 
 @Component({
   selector: 'tn-app',
-  template: html
+  template: html,
 })
 export class AppComponent { }

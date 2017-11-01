@@ -12,8 +12,8 @@ export class TokenInterceptor {
     }
     const tokenReq = req.clone({
       setHeaders: {
-        token: this._authService.getToken()
-      }
+        token: this._authService.getToken(),
+      },
     });
     return next.handle(tokenReq);
   }

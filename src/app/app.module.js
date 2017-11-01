@@ -10,7 +10,7 @@ import {
   APIInterceptorProvider,
   ModuleLoaderProvider,
   TuneUpCoreModule,
-  NotificationsService
+  NotificationsService,
 } from '@tune-up/core';
 import {AppComponent} from './app.component';
 import {
@@ -18,7 +18,7 @@ import {
   AppbarComponent,
   MenuComponent,
   ContentComponent,
-  MenuItemComponent
+  MenuItemComponent,
 } from './components';
 
 @NgModule({
@@ -27,7 +27,7 @@ import {
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    RoutingModule
+    RoutingModule,
   ],
   declarations: [
     AppComponent,
@@ -35,7 +35,7 @@ import {
     AppbarComponent,
     MenuComponent,
     ContentComponent,
-    MenuItemComponent
+    MenuItemComponent,
   ],
   providers: [
     ModuleLoaderProvider,
@@ -46,6 +46,6 @@ import {
     AboutService,
     NotificationsService,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

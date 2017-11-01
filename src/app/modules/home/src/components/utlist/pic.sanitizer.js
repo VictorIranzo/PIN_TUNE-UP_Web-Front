@@ -1,6 +1,6 @@
 import {Pipe} from '@angular/core';
 import {DomSanitizer} from '@angular/platform-browser';
-
+// TODO: move to core
 @Pipe({name: 'safeHtml'})
 export class SafeHtml {
   constructor(sanitizer: DomSanitizer) {

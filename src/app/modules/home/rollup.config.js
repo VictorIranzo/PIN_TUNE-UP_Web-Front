@@ -12,9 +12,9 @@ import {moduleName, globals} from '@tune-up/build-utils';
 const pkg = require('./package.json');
 
 export default {
-  input: pkg['jsnext:main'],
+  input: 'src/index.js',
   output: {
-    file: pkg['main:min'],
+    file: pkg.main,
     format: 'umd',
   },
   sourcemap: true,

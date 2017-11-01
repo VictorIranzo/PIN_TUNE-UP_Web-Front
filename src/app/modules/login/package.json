@@ -5,8 +5,9 @@
   "main": "dist/tune-up.login.umd.js",
   "scripts": {
     "build": "rollup -c rollup.config.js",
-    "build:dev": "rollup -w -c rollup.config.dev.js",
-    "start": "npm run build:dev"
+    "build:watch": "rollup -w -c rollup.config.dev.js",
+    "build:dev": "rollup -c rollup.config.dev.js",
+    "start": "npm run build:watch"
   },
   "author": "",
   "license": "ISC",

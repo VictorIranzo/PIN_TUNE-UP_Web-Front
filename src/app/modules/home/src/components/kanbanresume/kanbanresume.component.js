@@ -22,17 +22,9 @@ export class KanbanResumeComponent {
     this._getKanbanActivities();
   }
   _getKanbanActivities() {
-    // TODO: refactor
-    this._activitiesService.get().subscribe(
+    this._getActivitiesSubscription = this._activitiesService.get().subscribe(
       (data) => {
-        if (!data.Exito) {
-          this._notificationsService.error(
-            'No se pudieron obtener las actividades del Kanban Resumido',
-            data.Mensaje
-          );
-          return;
-        }
-        this.kanbanActivities = data.Resultado;
+        this.kanbanActivities = data;
       },
       (error) =>
         this._notificationsService.error(
@@ -43,5 +35,10 @@ export class KanbanResumeComponent {
   }
   filterKanbanActivies(idActivity = 'ALL', status = 'ALL') {
     this.filterUts(idActivity, status);
+  }
+  ngOnDestroy() {
+    this._getActivitiesSubscription &&
+    !this._getActivitiesSubscription.closed &&
+    this._getActivitiesSubscription.unsubscribe();
   }
 }

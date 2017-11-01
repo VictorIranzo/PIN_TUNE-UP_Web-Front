@@ -21,18 +21,10 @@ export class HomeComponent {
     this._getUts();
   }
   _getUts() {
-    // TODO: refactor
-    this._utListService.get().subscribe(
+    this._getUtsSubscription = this._utListService.get().subscribe(
       (data) => {
-        if (!data.Exito) {
-          this._notificationsService.error(
-            'No se pudieron obtener las UTs',
-            data.Mensaje
-          );
-          return;
-        }
-        this.allUts = data.Resultado;
-        this.utsToShow = data.Resultado;
+        this.allUts = data;
+        this.utsToShow = data;
       },
       (error) =>
         this._notificationsService.error(
@@ -51,4 +43,9 @@ export class HomeComponent {
         (ut.Estado === 'ACTIVE' && status === 'DOING')
     );
   };
+  ngOnDestroy() {
+    this._getUtsSubscription &&
+    !this._getUtsSubscription.closed &&
+    this._getUtsSubscription.unsubscribe();
+  }
 }

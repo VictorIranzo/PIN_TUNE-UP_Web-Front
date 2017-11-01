@@ -3,7 +3,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientModule} from '@angular/common/http';
 import {RoutingModule} from './routing';
-import {TokenInterceptorProvider} from './http';
+import {TokenInterceptorProvider, ResponseInterceptorProvider} from './http';
 import {AuthService, AgentService, AboutService} from './services';
 
 import {
@@ -41,6 +41,7 @@ import {
     ModuleLoaderProvider,
     APIInterceptorProvider,
     TokenInterceptorProvider,
+    ResponseInterceptorProvider,
     AuthService,
     AgentService,
     AboutService,

@@ -5,8 +5,9 @@
   "main": "dist/tune-up.app.umd.js",
   "scripts": {
     "build": "rollup -c rollup.config.js",
-    "build:dev": "rollup -w -c rollup.config.dev.js",
-    "start": "npm run build:dev",
+    "build:watch":"rollup -w -c rollup.config.dev.js",
+    "build:dev": "rollup -c rollup.config.dev.js",
+    "start": "npm run build:watch",
     "lint": "eslint --fix src/**/*.js"
   },
   "repository": {
@@ -21,7 +22,8 @@
   "homepage": "https://github.com/Starkie/TUNE-UP-Process-Web-Front#readme",
   "dependencies": {
     "@tune-up/core": "file:lib/core",
-    "@tune-up/vendor": "file:lib/vendor"
+    "@tune-up/vendor": "file:lib/vendor",
+    "rxjs": "^5.5.2"
   },
   "devDependencies": {
     "@tune-up/build-utils": "file:lib/build-utils",

@@ -3,13 +3,11 @@
   "version": "0.0.0",
   "description": "",
   "main": "dist/tune-up.home.umd.js",
-  "main:min": "dist/tune-up.home.umd.min.js",
-  "module": "dist/tune-up.home.js",
-  "jsnext:main": "src/index.js",
   "scripts": {
     "build": "rollup -c rollup.config.js",
-    "build:dev": "rollup -w -c rollup.config.dev.js",
-    "start": "npm run build:dev"
+    "build:watch": "rollup -w -c rollup.config.dev.js",
+    "build:dev": "rollup -c rollup.config.dev.js",
+    "start": "npm run build:watch"
   },
   "author": "",
   "license": "ISC",

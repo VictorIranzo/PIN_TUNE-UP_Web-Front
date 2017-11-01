@@ -39,6 +39,19 @@ export class LoginComponent {
     this._agentService = agentService;
     this._notificationsService = notificationsService;
   }
+  ngOnInit() {
+    this._setDefaulReturnUrl();
+    this._checkLogedIn();
+  }
+  _setDefaulReturnUrl() {
+    const paramsReturnUrl = this._route.snapshot.queryParams.returnUrl;
+    this._returnUrl =
+      !paramsReturnUrl ||
+        paramsReturnUrl === '/login' ||
+        paramsReturnUrl === '/'
+        ? this._returnUrl
+        : paramsReturnUrl;
+  }
   _checkLogedIn() {
     if (this._authService.getToken()) {
       this._redirect();
@@ -47,58 +60,37 @@ export class LoginComponent {
   _redirect() {
     this._router.navigateByUrl(this._returnUrl);
   }
-  ngOnInit() {
-    const paramsReturnUrl = this._route.snapshot.queryParams.returnUrl;
-    this._returnUrl =
-      !paramsReturnUrl ||
-      paramsReturnUrl === '/login' ||
-      paramsReturnUrl === '/'
-        ? this._returnUrl
-        : paramsReturnUrl;
-    this._checkLogedIn();
-  }
   onEmailFocusLost = () => {
-    this.model.email &&
-      this.emailCtrl.valid &&
-      this._sitesService.get(this.model.email).subscribe(
-        (data) => {
-          const {Resultado} = data;
-          // TODO: refactor when backend api is refactored
-          if (Resultado.length === 0) {
-            this._notificationsService.error(
-              'No hay sitios disponibles',
-              'No existen sitios asociados con este email.'
-            );
-          } else {
-            this._parseSites(Resultado);
-          }
-        },
-        (error) => {
-          this._notificationsService.error('Error', error);
-        }
-      );
+    if (!this.model.email || !this.emailCtrl.valid) {
+      return;
+    }
+    this._getSitesSubscription = this._sitesService.get(this.model.email).subscribe(
+      (data) => {
+        this._handleNoSites(data);
+        data.length > 0 && this._parseSites(data);
+      },
+      (error) => {
+        this._notificationsService.error('No se pudieron encontrar sitios', error);
+      }
+    );
   };
+  _handleNoSites(sites) {
+    sites.length === 0 &&
+      this._notificationsService.error(
+        'No hay sitios disponibles',
+        'No existen sitios asociados con este email.'
+      );
+  }
   _parseSites(sites) {
     this.sites = sites.map((site) => {
       return {label: `${site.Id}: ${site.Nombre} `, value: site.Id};
     });
     this.model.idsitio = sites[0] && sites[0].Id;
   }
-  setIdSitio = (idSitio) => {
-    this.model.idsitio = idSitio;
-  };
-  showSelector = () => {
-    return this.sites.length > 1;
-  };
   login = () => {
-    this._loginService.login(this.model).subscribe(
+    this._loginSubscription = this._loginService.login(this.model).subscribe(
       (data) => {
-        // TODO: refactor when backend api is refactored
-        if (!data.Exito) {
-          this._notificationsService.error('Error de login', data.Mensaje);
-          return;
-        }
-        let {Token, Agente, Configuracion} = data.Resultado;
+        let {Token, Agente, Configuracion} = data;
         Agente.IdSitio = this.model.idsitio;
         this._authService.setToken(Token);
         this._agentService.agent = Agente;
@@ -110,4 +102,18 @@ export class LoginComponent {
       }
     );
   };
+  setIdSitio = (idSitio) => {
+    this.model.idsitio = idSitio;
+  };
+  showSelector = () => {
+    return this.sites.length > 1;
+  };
+  ngOnDestroy() {
+    this._getSitesSubscription &&
+      !this._getSitesSubscription.closed &&
+      this._getSitesSubscription.unsubscribe();
+    this._loginSubscription &&
+      !this._loginSubscription.closed &&
+      this._loginSubscription.unsubscribe();
+  }
 }

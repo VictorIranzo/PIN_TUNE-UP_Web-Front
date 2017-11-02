@@ -3,6 +3,6 @@ import html from './content.component.html';
 
 @Component({
   selector: 'tn-content',
-  template: html
+  template: html,
 })
 export class ContentComponent {}

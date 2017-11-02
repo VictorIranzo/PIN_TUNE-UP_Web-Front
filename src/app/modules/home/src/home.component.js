@@ -7,33 +7,26 @@ import './home.component.css';
 @Component({
   selector: 'tn-home',
   template: html,
-  providers: [UtListService]
+  providers: [UtListService],
 })
 export class HomeComponent {
+  allUts = [];
+  utsToShow = [];
   constructor(
     utListService: UtListService,
     notificationService: NotificationsService
   ) {
     this._utListService = utListService;
     this._notificationsService = notificationService;
-    this.allUts = [];
-    this.utsToShow = [];
     this._getUts();
   }
   _getUts() {
-    this._utListService.get().subscribe(
-      data => {
-        if (!data.Exito) {
-          this._notificationsService.error(
-            'No se pudieron obtener las UTs',
-            data.Mensaje
-          );
-          return;
-        }
-        this.allUts = data.Resultado;
-        this.utsToShow = data.Resultado;
+    this._getUtsSubscription = this._utListService.get().subscribe(
+      (data) => {
+        this.allUts = data;
+        this.utsToShow = data;
       },
-      error =>
+      (error) =>
         this._notificationsService.error(
           'No se pudieron obtener las UTs',
           error
@@ -42,11 +35,17 @@ export class HomeComponent {
   }
   filterUts = (idActivity, status) => {
     this.utsToShow = this.allUts.filter(
-      ut =>
+      (ut) =>
+        // TODO: filter by activity
         // (idActivity === 'ALL' || ut.IdActividad === idActivity) &&
         status === 'ALL' ||
         ut.Estado === status ||
         (ut.Estado === 'ACTIVE' && status === 'DOING')
     );
   };
+  ngOnDestroy() {
+    this._getUtsSubscription &&
+    !this._getUtsSubscription.closed &&
+    this._getUtsSubscription.unsubscribe();
+  }
 }

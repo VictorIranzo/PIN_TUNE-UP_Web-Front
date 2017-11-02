@@ -6,6 +6,6 @@ import {TuneUpCoreModule} from '@tune-up/core';
 
 @NgModule({
   imports: [TuneUpCoreModule, LoginRoutingModule],
-  declarations: [LoginComponent, SiteSelectorComponent]
+  declarations: [LoginComponent, SiteSelectorComponent],
 })
 export class LoginModule {}

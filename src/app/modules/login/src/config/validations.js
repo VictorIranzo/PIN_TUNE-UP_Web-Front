@@ -3,21 +3,21 @@ export const validations = {
     email: [
       {
         isEmail: {
-          message: 'Debe ser un email válido'
-        }
+          message: 'Debe ser un email válido',
+        },
       },
       {
         required: {
-          message: 'El email es requerido'
-        }
-      }
+          message: 'El email es requerido',
+        },
+      },
     ],
     password: [
       {
         required: {
-          message: 'La contraseña es requerida'
-        }
-      }
-    ]
-  }
+          message: 'La contraseña es requerida',
+        },
+      },
+    ],
+  },
 };

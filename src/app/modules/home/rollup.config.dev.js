@@ -1,3 +1,4 @@
-import config from './rollup.config.nomin.js';
-config.output = config.output[0];
+import config from './rollup.config.js';
+
+config.plugins.pop();
 export default config;

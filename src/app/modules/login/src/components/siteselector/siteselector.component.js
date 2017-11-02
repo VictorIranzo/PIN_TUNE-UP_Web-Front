@@ -3,12 +3,12 @@ import html from './siteselector.component.html';
 
 @Component({
   selector: 'tn-site-selector',
-  template: html
+  template: html,
 })
 export class SiteSelectorComponent {
   @Input() sites = [];
   @Output() onSiteSelected = new EventEmitter();
-  selectSite = event => {
+  selectSite = (event) => {
     this.onSiteSelected.emit(event.value);
   };
 }

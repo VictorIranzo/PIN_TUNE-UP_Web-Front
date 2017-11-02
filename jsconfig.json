@@ -5,8 +5,15 @@
     "exclude": [
         "node_modules",
         "dist",
-        "lib",
-        "src/**/dist",
-        "src/**/node_modules"
+        "lib/build-utils/dist",
+        "lib/build-utils/node_modules",        
+        "lib/core/dist",
+        "lib/core/node_modules",
+        "lib/vendor/dist",
+        "lib/vendor/node_modules",
+        "src/app/modules/home/dist",
+        "src/app/modules/home/node_modules",
+        "src/app/modules/login/dist",
+        "src/app/modules/login/node_modules"
     ]
 }

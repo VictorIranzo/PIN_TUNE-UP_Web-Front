@@ -226,9 +226,9 @@ var SitesService = (_dec$4 = core$1.Injectable(), _dec$4(_class$4 = function () 
 }()) || _class$4);
 Reflect.defineMetadata('design:paramtypes', [http.HttpClient], SitesService);
 
-var html = "<div class=\"tn-login-background\">\n  <form class=\"vertical tn-login-form\" #frm=\"ngForm\" (ngSubmit)=\"frm.valid && login()\">\n    <img class=\"tn-login--header\" src=\"assets/logo.png\">\n    <div class=\"tn-login-form-wrapper\">\n     \n      <div class=\"tn-login-form-inputgroup\">\n        <span class=\"ui-float-label\">\n          <input class=\"tn-login-form-inputgroup--input\" type=\"text\" [(ngModel)]=\"model.email\" rule=\"login.email\" name=\"email\" #emailCtrl=\"ngModel\" (focusout)=\"onEmailFocusLost()\"\n          pInputText>\n          <label>Email *</label>\n        </span>\n        <tn-validation-error [control]=\"emailCtrl\"></tn-validation-error>\n      </div>\n\n      <div class=\"tn-login-form-inputgroup\">\n        <span class=\"ui-float-label\">\n          <input class=\"tn-login-form-inputgroup--input\" type=\"password\" [(ngModel)]=\"model.password\" rule=\"login.password\" name=\"password\" #passwordCtrl=\"ngModel\" pInputText>\n          <label>Contraseña *</label>\n        </span>\n        <tn-validation-error [control]=\"passwordCtrl\"></tn-validation-error>\n      </div>\n\n      <div class=\"horizontal\">\n        <div class=\"one tn-login-form--siteselector\">\n          <tn-site-selector [sites]=\"sites\" *ngIf=\"showSelector()\" (onSiteSelected)=\"setIdSitio($event)\"></tn-site-selector>\n        </div>\n        <button class=\"none tn-login-form--submitbtn\" pButton type=\"submit\" label=\"Login\"></button>\n      </div>\n    </div>\n  </form>\n</div>\n";
+var html = "<div class=\"tn-login-background\">\r\n  <form class=\"vertical tn-login-form\" #frm=\"ngForm\" (ngSubmit)=\"frm.valid && login()\">\r\n    <img class=\"tn-login--header\" src=\"assets/logo.png\">\r\n    <div class=\"tn-login-form-wrapper\">\r\n     \r\n      <div class=\"tn-login-form-inputgroup\">\r\n        <span class=\"ui-float-label\">\r\n          <input class=\"tn-login-form-inputgroup--input\" type=\"text\" [(ngModel)]=\"model.email\" rule=\"login.email\" name=\"email\" #emailCtrl=\"ngModel\" (focusout)=\"onEmailFocusLost()\"\r\n          pInputText>\r\n          <label>Email *</label>\r\n        </span>\r\n        <tn-validation-error [control]=\"emailCtrl\"></tn-validation-error>\r\n      </div>\r\n\r\n      <div class=\"tn-login-form-inputgroup\">\r\n        <span class=\"ui-float-label\">\r\n          <input class=\"tn-login-form-inputgroup--input\" type=\"password\" [(ngModel)]=\"model.password\" rule=\"login.password\" name=\"password\" #passwordCtrl=\"ngModel\" pInputText>\r\n          <label>Contraseña *</label>\r\n        </span>\r\n        <tn-validation-error [control]=\"passwordCtrl\"></tn-validation-error>\r\n      </div>\r\n\r\n      <div class=\"horizontal\">\r\n        <div class=\"one tn-login-form--siteselector\">\r\n          <tn-site-selector [sites]=\"sites\" *ngIf=\"showSelector()\" (onSiteSelected)=\"setIdSitio($event)\"></tn-site-selector>\r\n        </div>\r\n        <button class=\"none tn-login-form--submitbtn\" pButton type=\"submit\" label=\"Login\"></button>\r\n      </div>\r\n    </div>\r\n  </form>\r\n</div>\r\n";
 
-__$styleInject(".tn-login-background{background:url(assets/bg.jpg);background-size:cover;background-color:#1976d2;background-repeat:no-repeat;color:#fff}.tn-login-background,.tn-login-form{position:absolute;top:0;right:0;width:100%;height:100%}.tn-login-form{align-items:center;padding:100px 50px;box-shadow:0 5px 7px 5px rgba(0,0,0,.1);box-sizing:border-box;background-color:#fff;overflow:auto}@media (min-width:960px){.tn-login-form{width:fit-content}}.tn-login--header{width:180px;height:180px;padding-bottom:32px}.tn-login-form-wrapper{width:270px}.tn-login-form-inputgroup{padding-bottom:32px}.tn-login-form-inputgroup--input{width:100%}.tn-login-form--siteselector{margin-right:8px}.tn-login-form--submitbtn{height:100%}", undefined);
+__$styleInject(".tn-login-background{background:url(assets/bg.jpg);background-size:cover;background-color:#1976d2;background-repeat:no-repeat;color:#fff}.tn-login-background,.tn-login-form{position:absolute;top:0;right:0;width:100%;height:100%}.tn-login-form{align-items:center;padding:100px 50px;box-shadow:0 5px 7px 5px rgba(0,0,0,.1);box-sizing:border-box;background-color:#fff;overflow:auto}@media (min-width:960px){.tn-login-form{width:fit-content}}.tn-login--header{width:180px;height:180px;padding-bottom:32px}.tn-login-form-wrapper{width:270px}.tn-login-form-inputgroup{padding-bottom:32px}.tn-login-form-inputgroup--input{width:100%}.tn-login-form--siteselector{margin-right:8px}.tn-login-form--submitbtn{height:100%}",undefined);
 
 var _dec$2;
 var _dec2;
@@ -289,43 +289,28 @@ var LoginComponent = (_dec$2 = core$1.Component({
       password: undefined,
       idsitio: undefined
     };
+    this.sites = [];
+    this._returnUrl = '/home';
 
     _initDefineProp(this, 'emailCtrl', _descriptor, this);
 
     this.onEmailFocusLost = function () {
-      _this.model.email && _this.emailCtrl.valid && _this._sitesService.get(_this.model.email).subscribe(function (data) {
-        var Resultado = data.Resultado;
-        // TODO: refactor when backend api is refactored
-
-        if (Resultado.length === 0) {
-          _this._notificationsService.error('No hay sitios disponibles', 'No existen sitios asociados con este email.');
-        } else {
-          _this._parseSites(Resultado);
-        }
+      if (!_this.model.email || !_this.emailCtrl.valid) {
+        return;
+      }
+      _this._getSitesSubscription = _this._sitesService.get(_this.model.email).subscribe(function (data) {
+        _this._handleNoSites(data);
+        data.length > 0 && _this._parseSites(data);
       }, function (error) {
-        _this._notificationsService.error('Error', error);
+        _this._notificationsService.error('No se pudieron encontrar sitios', error);
       });
     };
 
-    this.setIdSitio = function (idSitio) {
-      _this.model.idsitio = idSitio;
-    };
-
-    this.showSelector = function () {
-      return _this.sites.length > 1;
-    };
-
     this.login = function () {
-      _this._loginService.login(_this.model).subscribe(function (data) {
-        // TODO: refactor when backend api is refactored
-        if (!data.Exito) {
-          _this._notificationsService.error('Error de login', data.Mensaje);
-          return;
-        }
-        var _data$Resultado = data.Resultado,
-            Token = _data$Resultado.Token,
-            Agente = _data$Resultado.Agente,
-            Configuracion = _data$Resultado.Configuracion;
+      _this._loginSubscription = _this._loginService.login(_this.model).subscribe(function (data) {
+        var Token = data.Token,
+            Agente = data.Agente,
+            Configuracion = data.Configuracion;
 
         Agente.IdSitio = _this.model.idsitio;
         _this._authService.setToken(Token);
@@ -337,8 +322,14 @@ var LoginComponent = (_dec$2 = core$1.Component({
       });
     };
 
-    this._returnUrl = '/home';
-    this.sites = [];
+    this.setIdSitio = function (idSitio) {
+      _this.model.idsitio = idSitio;
+    };
+
+    this.showSelector = function () {
+      return _this.sites.length > 1;
+    };
+
     this._route = route;
     this._router = router$$1;
     this._loginService = loginService;
@@ -350,10 +341,21 @@ var LoginComponent = (_dec$2 = core$1.Component({
   }
 
   createClass(LoginComponent, [{
+    key: 'ngOnInit',
+    value: function ngOnInit() {
+      this._setDefaulReturnUrl();
+      this._checkLogedIn();
+    }
+  }, {
+    key: '_setDefaulReturnUrl',
+    value: function _setDefaulReturnUrl() {
+      var paramsReturnUrl = this._route.snapshot.queryParams.returnUrl;
+      this._returnUrl = !paramsReturnUrl || paramsReturnUrl === '/login' || paramsReturnUrl === '/' ? this._returnUrl : paramsReturnUrl;
+    }
+  }, {
     key: '_checkLogedIn',
     value: function _checkLogedIn() {
       if (this._authService.getToken()) {
-        debugger;
         this._redirect();
       }
     }
@@ -363,11 +365,9 @@ var LoginComponent = (_dec$2 = core$1.Component({
       this._router.navigateByUrl(this._returnUrl);
     }
   }, {
-    key: 'ngOnInit',
-    value: function ngOnInit() {
-      var paramsReturnUrl = this._route.snapshot.queryParams.returnUrl;
-      this._returnUrl = !paramsReturnUrl || paramsReturnUrl === '/login' || paramsReturnUrl === '/' ? this._returnUrl : paramsReturnUrl;
-      this._checkLogedIn();
+    key: '_handleNoSites',
+    value: function _handleNoSites(sites) {
+      sites.length === 0 && this._notificationsService.error('No hay sitios disponibles', 'No existen sitios asociados con este email.');
     }
   }, {
     key: '_parseSites',
@@ -376,6 +376,12 @@ var LoginComponent = (_dec$2 = core$1.Component({
         return { label: site.Id + ': ' + site.Nombre + ' ', value: site.Id };
       });
       this.model.idsitio = sites[0] && sites[0].Id;
+    }
+  }, {
+    key: 'ngOnDestroy',
+    value: function ngOnDestroy() {
+      this._getSitesSubscription && !this._getSitesSubscription.closed && this._getSitesSubscription.unsubscribe();
+      this._loginSubscription && !this._loginSubscription.closed && this._loginSubscription.unsubscribe();
     }
   }]);
   return LoginComponent;

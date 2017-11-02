@@ -1,5 +1,6 @@
 dist/**
-lib/**
 node_modules/**
 src/**/dist/**
 src/**/node_modules/**
+lib/**/dist/**
+lib/**/node_modules/**

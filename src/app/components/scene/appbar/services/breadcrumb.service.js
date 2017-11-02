@@ -4,14 +4,12 @@ import {Injectable} from '@angular/core';
 export class BreadcrumbService {
   _breadCrumbItems = [];
 
-  getItems() {
+  get items() {
     return this._breadCrumbItems;
   }
-
-  setItems(menuItem) {
-    this._breadCrumbItems = items;
+  set items(value) {
+    this._breadCrumbItems = value;
   }
-
   addItem(menuItem) {
     this._breadCrumbItems.push(menuItem);
   }

@@ -10,6 +10,7 @@
   width: var(--tn-scene-menu--width);
 }
 .tn-menu-sidebar{
+  /* TODO: poner color como variable en guía de estilos */
   background:#2399e5;
   height: 100%;
 }

@@ -13,54 +13,61 @@ import {moduleName, vendorGlobals} from '@tune-up/build-utils';
 const pkg = require('./package.json');
 
 export default {
-  input: pkg['jsnext:main'],
+  input: 'src/index.js',
   output: {
-    file: pkg['main:min'],
-    format: 'umd'
+    file: pkg.main,
+    format: 'umd',
   },
   sourcemap: true,
   name: moduleName(pkg),
   external: Object.keys(vendorGlobals),
   globals: vendorGlobals,
+  watch: {
+    chokidar: true,
+  },
   plugins: [
     replace({
       exclude: 'node_modules/**',
-      ENVIRONMENT: JSON.stringify('production')
+      ENVIRONMENT: JSON.stringify('production'),
     }),
     postcss({
       plugins: [
         easyimport({
-          path: 'src/styles'
+          path: 'src/styles',
         }),
         url({
-          url: 'inline'
+          url: 'inline',
         }),
         cssnext({
           features: {
-            autoprefixer: false
-          }
+            autoprefixer: false,
+          },
         }),
-        cssnano()
-      ]
+        cssnano(),
+      ],
     }),
     string({
-      include: '**/*.html'
+      include: '**/*.html',
     }),
     nodeResolve(),
     commonjs({
       include: 'node_modules/**',
-      exclude: 'node_modules/@tune-up/**'
+      exclude: 'node_modules/@tune-up/**',
     }),
     babel({
-      exclude: ['node_modules/**', '**/*.css']
+      ignore: [
+        'node_modules',
+        '**/*.css',
+        '**/*.html',
+      ],
     }),
     uglify({
       mangle: {
-        keep_fnames: true
+        keep_fnames: true,
       },
       compress: {
-        keep_fnames: true
-      }
-    })
-  ]
+        keep_fnames: true,
+      },
+    }),
+  ],
 };

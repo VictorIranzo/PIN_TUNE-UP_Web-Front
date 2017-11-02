@@ -1,14 +1,13 @@
 import {Component, Input} from '@angular/core';
 import {NotificationsService} from '@tune-up/core';
 import {KanbanActivitiesService} from './services';
-
 import html from './kanbanresume.component.html';
 import './kanbanresume.component.css';
 
 @Component({
   selector: 'tn-kanban-resume',
   template: html,
-  providers: [KanbanActivitiesService]
+  providers: [KanbanActivitiesService],
 })
 export class KanbanResumeComponent {
   kanbanActivities = [];
@@ -22,28 +21,24 @@ export class KanbanResumeComponent {
     this._notificationsService = notificationsService;
     this._getKanbanActivities();
   }
-
   _getKanbanActivities() {
-    this._activitiesService.get().subscribe(
-      data => {
-        if (!data.Exito) {
-          this._notificationsService.error(
-            'No se pudieron obtener las actividades del Kanban Resumido',
-            data.Mensaje
-          );
-          return;
-        }
-        this.kanbanActivities = data.Resultado;
+    this._getActivitiesSubscription = this._activitiesService.get().subscribe(
+      (data) => {
+        this.kanbanActivities = data;
       },
-      error =>
+      (error) =>
         this._notificationsService.error(
           'No se pudieron obtener las actividades del Kanban Resumido',
           error
         )
     );
   }
-
   filterKanbanActivies(idActivity = 'ALL', status = 'ALL') {
     this.filterUts(idActivity, status);
+  }
+  ngOnDestroy() {
+    this._getActivitiesSubscription &&
+    !this._getActivitiesSubscription.closed &&
+    this._getActivitiesSubscription.unsubscribe();
   }
 }

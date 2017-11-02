@@ -1,26 +1,25 @@
 import {AuthGuard} from './routing/guards';
 import {SceneComponent} from './components';
 
-const min = ENVIRONMENT === 'production' ? '.min' : '';
-
+// TODO: change route system, we define them here not throug config
 const mainRoute = {
   path: '',
   component: SceneComponent,
   canActivate: [AuthGuard],
-  children: []
+  children: [],
 };
 const mainRedirectRoute = {
   path: '**',
   redirectTo: 'home',
-  pathMatch: 'full'
+  pathMatch: 'full',
 };
 const loginRoute = {
   path: 'login',
-  loadChildren: `src/app/modules/login/dist/tune-up.login.umd${min}.js#login#LoginModule`
+  loadChildren: 'src/app/modules/login/dist/tune-up.login.umd.js#login#LoginModule',
 };
 
 export default {
   mainRoute,
   loginRoute,
-  mainRedirectRoute  
+  mainRedirectRoute,
 };

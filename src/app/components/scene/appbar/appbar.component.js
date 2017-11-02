@@ -1,39 +1,32 @@
-import {Component, Input} from '@angular/core';
+import {Component} from '@angular/core';
 import {BreadcrumbService} from './services/breadcrumb.service';
-import {MenuService} from '../menu';
-
+import {SceneService} from '../scene.service';
 import html from './appbar.component.html';
-
 import './appbar.component.css';
 
 @Component({
   selector: 'tn-appbar',
   template: html,
-  providers: [BreadcrumbService]
+  providers: [BreadcrumbService],
 })
 export class AppbarComponent {
-  // showMenu = false;
   menuOpen = true;
   breadcrumbItems = [];
 
-  constructor(breadcrumbService: BreadcrumbService, menuService: MenuService) {
+  constructor(breadcrumbService: BreadcrumbService, sceneService: SceneService) {
     this._breadcrumbService = breadcrumbService;
-    this._menuService = menuService;
-    // this._menuService.onShowMenuAppBar.subscribe(result =>{ this.showMenu = result;console.log(result)});
+    this._sceneService = sceneService;
     this._getBreadcrumbItems();
   }
-
   _getBreadcrumbItems() {
-    this.breadcrumbItems = this._breadcrumbService.getItems();
+    this.breadcrumbItems = this._breadcrumbService.items;
   }
-
   onHideMenuClick() {
     this.menuOpen = false;
-    this._menuService.closeStrong();
+    this._sceneService.closeStrong();
   }
-
   onShowMenuClick() {
     this.menuOpen = true;
-    this._menuService.open();
+    this._sceneService.open();
   }
 }

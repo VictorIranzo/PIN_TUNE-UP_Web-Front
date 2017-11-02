@@ -1,9 +1,10 @@
+<!-- TODO: make functions to manage visibility, dont call the service directly -->
 <div class="horizontal tn-scene-appbar-wrapper">
-    <div *ngIf="this._menuService.isDocked()" class="none tn-scene-appbar--topMenu">TUNE-UP</div>
+    <div *ngIf="this._sceneService.isDocked()" class="none tn-scene-appbar--topMenu">TUNE-UP</div>
     <div class ="horizontal ten">
-      <div class="tn-scene-appbar--button" *ngIf="!this._menuService.isDocked()" >
-        <i *ngIf="this._menuService.isVisible()" (click)="onHideMenuClick()" class="fa fa-2x fa-caret-square-o-left"></i>                                
-        <i *ngIf="!this._menuService.isVisible()" (click)="onShowMenuClick()" class="fa fa-2x fa-caret-square-o-right"></i>                    
+      <div class="tn-scene-appbar--button" *ngIf="!this._sceneService.isDocked()" >
+        <i *ngIf="this._sceneService.isVisible()" (click)="onHideMenuClick()" class="fa fa-2x fa-caret-square-o-left"></i>                                
+        <i *ngIf="!this._sceneService.isVisible()" (click)="onShowMenuClick()" class="fa fa-2x fa-caret-square-o-right"></i>                    
       </div>
       <p-breadcrumb class="tn-scene-appbar--breadcrumb" [model]="breadcrumbItems"></p-breadcrumb>    
     </div>

@@ -15,7 +15,7 @@ export default {
   input: pkg['jsnext:main'],
   output: {
     file: pkg['main:min'],
-    format: 'umd'
+    format: 'umd',
   },
   sourcemap: true,
   name: moduleName(pkg),
@@ -25,36 +25,36 @@ export default {
     postcss({
       plugins: [
         easyimport({
-          path: '../../../styles'
+          path: '../../../styles',
         }),
         url({
-          url: 'inline'
+          url: 'inline',
         }),
         cssnext({
           features: {
-            autoprefixer: false
-          }
+            autoprefixer: false,
+          },
         }),
-        cssnano()
-      ]
+        cssnano(),
+      ],
     }),
     string({
-      include: '**/*.html'
+      include: '**/*.html',
     }),
     nodeResolve(),
     commonjs({
-      include: 'node_modules/**'
+      include: 'node_modules/**',
     }),
     babel({
-      exclude: ['node_modules/**']
+      exclude: ['node_modules/**'],
     }),
     uglify({
       mangle: {
-        keep_fnames: true
+        keep_fnames: true,
       },
       compress: {
-        keep_fnames: true
-      }
-    })
-  ]
+        keep_fnames: true,
+      },
+    }),
+  ],
 };

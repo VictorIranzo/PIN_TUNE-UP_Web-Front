@@ -2,9 +2,16 @@ import {NgModule} from '@angular/core';
 import {UtRoutingModule} from './ut.routing';
 import {UtComponent} from './ut.component';
 import {TuneUpCoreModule} from '@tune-up/core';
+import {DetailsComponent, DetailsService} from './components';
 
 @NgModule({
   imports: [TuneUpCoreModule, UtRoutingModule],
-  declarations: [UtComponent]
+  declarations: [
+    UtComponent,
+    DetailsComponent,
+  ],
+  providers: [
+    DetailsService,
+  ],
 })
 export class UtModule {}

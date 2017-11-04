@@ -16,11 +16,14 @@ function __$styleInject(css, returnValue) {
   return returnValue;
 }
 
-import { Component, NgModule, ViewChild } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Component, Injectable, NgModule, ViewChild } from '@angular/core';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { TuneUpCoreModule } from '@tune-up/core';
+import { Location } from '@angular/common';
+import 'rxjs/add/operator/switchMap';
+import { HttpClient } from '@angular/common/http';
 
-var html = "<form class=\"vertical\" #frm=\"ngForm\" (ngSubmit)=\"onSubmit()\">\r\n  <input class=\"tn-example-form--input one\" type=\"text\" [(ngModel)]=\"foo.email\" rule=\"foo.email\" name=\"email\" #emailCtrl=\"ngModel\" pInputText>\r\n  <tn-validation-error [control]=\"emailCtrl\"></tn-validation-error>\r\n  <input class=\"tn-example-form--input one\" type=\"password\" [(ngModel)]=\"foo.password\" rule=\"foo.password\" name=\"password\" pInputText>\r\n  <div class=\"horizontal\">\r\n    <div class=\"one\"></div>\r\n    <button class=\"none\" pButton type=\"submit\" label=\"Submit\"></button>\r\n  </div>\r\n</form>\r\n";
+var html = "<form class=\"vertical\" #frm=\"ngForm\" (ngSubmit)=\"onSubmit()\">\n  <input class=\"tn-example-form--input one\" type=\"text\" [(ngModel)]=\"foo.email\" rule=\"foo.email\" name=\"email\" #emailCtrl=\"ngModel\" pInputText>\n  <tn-validation-error [control]=\"emailCtrl\"></tn-validation-error>\n  <input class=\"tn-example-form--input one\" type=\"password\" [(ngModel)]=\"foo.password\" rule=\"foo.password\" name=\"password\" pInputText>\n  <div class=\"horizontal\">\n    <div class=\"one\"></div>\n    <button class=\"none\" pButton type=\"submit\" label=\"Submit\"></button>\n  </div>\n  <tn-ut-details>UT!</tn-ut-details>\n</form>\n";
 
 __$styleInject(".tn-example-form--input{margin-bottom:8px;margin-top:8px}", undefined);
 
@@ -147,6 +150,24 @@ var classCallCheck = function (instance, Constructor) {
   }
 };
 
+var createClass = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) defineProperties(Constructor, staticProps);
+    return Constructor;
+  };
+}();
+
 var _dec$2;
 var _dec2;
 var _class$2;
@@ -227,15 +248,73 @@ var UtRoutingModule = (_dec$1 = NgModule({
   classCallCheck(this, UtRoutingModule);
 }) || _class$1);
 
+var html$1 = "";
+
+__$styleInject("", undefined);
+
+var _dec$4;
+var _class$4;
+
+var DetailsService = (_dec$4 = Injectable(), _dec$4(_class$4 = function () {
+  function DetailsService(http$$1) {
+    classCallCheck(this, DetailsService);
+
+    this._http = http$$1;
+    this._url = 'FichaUT2';
+  }
+
+  createClass(DetailsService, [{
+    key: 'getUt',
+    value: function getUt(id) {
+      return this._http.get(this._url + '/' + id, {
+        responseType: 'blob'
+      });
+    }
+  }]);
+  return DetailsService;
+}()) || _class$4);
+Reflect.defineMetadata('design:paramtypes', [HttpClient], DetailsService);
+
+var _dec$3;
+var _class$3;
+
+var DetailsComponent = (_dec$3 = Component({
+  selector: 'tn-ut-details',
+  template: html$1
+}), _dec$3(_class$3 = function () {
+  function DetailsComponent(route, location, detailsService) {
+    classCallCheck(this, DetailsComponent);
+    this.ut = null;
+
+    this._detailsService = detailsService;
+  }
+
+  createClass(DetailsComponent, [{
+    key: 'ngOnInit',
+    value: function ngOnInit() {
+      var _this = this;
+
+      this.route.paramMap.switchMap(function (params) {
+        return _this._detailsService.getUt(+params.get('id'));
+      }).subscribe(function (ut) {
+        return _this.ut = ut;
+      });
+    }
+  }]);
+  return DetailsComponent;
+}()) || _class$3);
+Reflect.defineMetadata('design:paramtypes', [ActivatedRoute, Location, DetailsService], DetailsComponent);
+
 var _dec;
 var _class;
 
 var UtModule = (_dec = NgModule({
   imports: [TuneUpCoreModule, UtRoutingModule],
-  declarations: [UtComponent]
+  declarations: [UtComponent, DetailsComponent],
+  providers: [DetailsService]
 }), _dec(_class = function UtModule() {
   classCallCheck(this, UtModule);
 }) || _class);
 
-export { UtModule };
+export { UtModule, DetailsComponent, DetailsService };
 //# sourceMappingURL=tune-up.ut.js.map

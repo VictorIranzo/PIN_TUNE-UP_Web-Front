@@ -1,7 +1,12 @@
-const min = ENVIRONMENT === 'production' ? '.min' : '';
+import {DetailsComponent} from './src';
 
-export const homeRoute = {
-  path: 'ut',
+export const utRoute = {
+  path: 'uts',
   loadChildren:
-    `src/app/modules/ut/dist/tune-up.ut.umd${min}.js#ut#UtModule`
+    'src/app/modules/ut/dist/tune-up.ut.umd.js#ut#UtModule',
+};
+
+export const utDetails = {
+  path: 'uts/:id',
+  component: DetailsComponent,
 };

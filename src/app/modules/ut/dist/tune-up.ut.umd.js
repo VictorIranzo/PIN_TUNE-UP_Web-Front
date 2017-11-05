@@ -1,8 +1,8 @@
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/router'), require('@tune-up/core'), require('@angular/common'), require('rxjs/add/operator/switchMap'), require('@angular/common/http')) :
-	typeof define === 'function' && define.amd ? define(['exports', '@angular/core', '@angular/router', '@tune-up/core', '@angular/common', 'rxjs/add/operator/switchMap', '@angular/common/http'], factory) :
-	(factory((global.tuneUp = global.tuneUp || {}, global.tuneUp.ut = {}),global.tuneUp.vendor.ngCore,global.tuneUp.vendor.ngRouter,global.tuneUp.app,global.tuneUp.vendor.ngCommon,null,global.tuneUp.vendor.ngCommonHttp));
-}(this, (function (exports,core,router,core$1,common,switchMap,http) { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/router'), require('@angular/common'), require('rxjs/add/operator/switchMap'), require('@angular/common/http'), require('@tune-up/core')) :
+	typeof define === 'function' && define.amd ? define(['exports', '@angular/core', '@angular/router', '@angular/common', 'rxjs/add/operator/switchMap', '@angular/common/http', '@tune-up/core'], factory) :
+	(factory((global.tuneUp = global.tuneUp || {}, global.tuneUp.ut = {}),global.tuneUp.vendor.ngCore,global.tuneUp.vendor.ngRouter,global.tuneUp.vendor.ngCommon,null,global.tuneUp.vendor.ngCommonHttp,global.tuneUp.app));
+}(this, (function (exports,core,router,common,switchMap,http,core$1) { 'use strict';
 
 function __$styleInject(css, returnValue) {
   if (typeof document === 'undefined') {
@@ -237,17 +237,7 @@ var UtComponent = (_dec$2 = core.Component({
   }
 })), _class2)) || _class$2);
 
-var _dec$1;
-var _class$1;
-
-var UtRoutingModule = (_dec$1 = core.NgModule({
-  imports: [router.RouterModule.forChild([{ path: '', component: UtComponent }])],
-  exports: [router.RouterModule]
-}), _dec$1(_class$1 = function UtRoutingModule() {
-  classCallCheck(this, UtRoutingModule);
-}) || _class$1);
-
-var html$1 = "";
+var html$1 = "<div>id</div>\n";
 
 __$styleInject("", undefined);
 
@@ -284,7 +274,9 @@ var DetailsComponent = (_dec$3 = core.Component({
   function DetailsComponent(route, location, detailsService) {
     classCallCheck(this, DetailsComponent);
     this.ut = null;
+    this.id = null;
 
+    this._route = route;
     this._detailsService = detailsService;
   }
 
@@ -293,16 +285,30 @@ var DetailsComponent = (_dec$3 = core.Component({
     value: function ngOnInit() {
       var _this = this;
 
-      this.route.paramMap.switchMap(function (params) {
-        return _this._detailsService.getUt(+params.get('id'));
-      }).subscribe(function (ut) {
-        return _this.ut = ut;
+      // this._route.paramMap
+      // .switchMap((params) => this._detailsService.getUt(+params.get('id')))
+      // .subscribe((ut) => this.ut = ut);
+      this.id = this._route.params._value.id;
+      this._detailsService.getUt(this.id).subscribe(function (data) {
+        console.log(data);
+        _this.ut = URL.createObjectURL(data);
+        console.log(_this.ut);
       });
     }
   }]);
   return DetailsComponent;
 }()) || _class$3);
 Reflect.defineMetadata('design:paramtypes', [router.ActivatedRoute, common.Location, DetailsService], DetailsComponent);
+
+var _dec$1;
+var _class$1;
+
+var UtRoutingModule = (_dec$1 = core.NgModule({
+  imports: [router.RouterModule.forChild([{ path: '', component: UtComponent }, { path: ':id', component: DetailsComponent }])],
+  exports: [router.RouterModule]
+}), _dec$1(_class$1 = function UtRoutingModule() {
+  classCallCheck(this, UtRoutingModule);
+}) || _class$1);
 
 var _dec;
 var _class;

@@ -1,9 +1,9 @@
 (function(l, i, v, e) { v = l.createElement(i); v.async = 1; v.src = '//' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; e = l.getElementsByTagName(i)[0]; e.parentNode.insertBefore(v, e)})(document, 'script');
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/platform-browser-dynamic'), require('@angular/core'), require('@angular/common/http'), require('@tune-up/vendor'), require('@angular/forms'), require('@angular/common'), require('@angular/router'), require('rxjs/add/operator/switchMap'), require('@angular/platform-browser'), require('@angular/platform-browser/animations')) :
-	typeof define === 'function' && define.amd ? define(['exports', '@angular/platform-browser-dynamic', '@angular/core', '@angular/common/http', '@tune-up/vendor', '@angular/forms', '@angular/common', '@angular/router', 'rxjs/add/operator/switchMap', '@angular/platform-browser', '@angular/platform-browser/animations'], factory) :
-	(factory((global.tuneUp = global.tuneUp || {}, global.tuneUp.app = {}),global.tuneUp.vendor.ngPlatformBrowserDynamic,global.tuneUp.vendor.ngCore,global.tuneUp.vendor.ngCommonHttp,global.tuneUp.vendor,global.tuneUp.vendor.ngForms,global.tuneUp.vendor.ngCommon,global.tuneUp.vendor.ngRouter,null,global.tuneUp.vendor.ngPlatformBrowser,global.tuneUp.vendor.ngPlatformBrowserAnimations));
-}(this, (function (exports,platformBrowserDynamic,core_1,http,vendor,forms,common,router,switchMap,platformBrowser,animations) { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/platform-browser-dynamic'), require('@angular/core'), require('@angular/common/http'), require('@tune-up/vendor'), require('@angular/forms'), require('@angular/common'), require('@angular/router'), require('@angular/platform-browser'), require('@angular/platform-browser/animations')) :
+	typeof define === 'function' && define.amd ? define(['exports', '@angular/platform-browser-dynamic', '@angular/core', '@angular/common/http', '@tune-up/vendor', '@angular/forms', '@angular/common', '@angular/router', '@angular/platform-browser', '@angular/platform-browser/animations'], factory) :
+	(factory((global.tuneUp = global.tuneUp || {}, global.tuneUp.app = {}),global.tuneUp.vendor.ngPlatformBrowserDynamic,global.tuneUp.vendor.ngCore,global.tuneUp.vendor.ngCommonHttp,global.tuneUp.vendor,global.tuneUp.vendor.ngForms,global.tuneUp.vendor.ngCommon,global.tuneUp.vendor.ngRouter,global.tuneUp.vendor.ngPlatformBrowser,global.tuneUp.vendor.ngPlatformBrowserAnimations));
+}(this, (function (exports,platformBrowserDynamic,core_1,http,vendor,forms,common,router,platformBrowser,animations) { 'use strict';
 
 function __$styleInject(css, returnValue) {
   if (typeof document === 'undefined') {
@@ -10482,166 +10482,9 @@ var homeRoute = {
   loadChildren: 'src/app/modules/home/dist/tune-up.home.umd.js#home#HomeModule'
 };
 
-var html$6 = "<form class=\"vertical\" #frm=\"ngForm\" (ngSubmit)=\"onSubmit()\">\n  <input class=\"tn-example-form--input one\" type=\"text\" [(ngModel)]=\"foo.email\" rule=\"foo.email\" name=\"email\" #emailCtrl=\"ngModel\" pInputText>\n  <tn-validation-error [control]=\"emailCtrl\"></tn-validation-error>\n  <input class=\"tn-example-form--input one\" type=\"password\" [(ngModel)]=\"foo.password\" rule=\"foo.password\" name=\"password\" pInputText>\n  <div class=\"horizontal\">\n    <div class=\"one\"></div>\n    <button class=\"none\" pButton type=\"submit\" label=\"Submit\"></button>\n  </div>\n  <tn-ut-details>UT!</tn-ut-details>\n</form>\n";
-
-__$styleInject(".tn-example-form--input{margin-bottom:8px;margin-top:8px}",undefined);
-
-var _dec$14;
-var _dec2$3;
-var _class$14;
-var _class2$3;
-var _descriptor$3;
-
-function _initDefineProp$3(target, property, descriptor, context) {
-  if (!descriptor) return;
-  Object.defineProperty(target, property, {
-    enumerable: descriptor.enumerable,
-    configurable: descriptor.configurable,
-    writable: descriptor.writable,
-    value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
-  });
-}
-
-function _applyDecoratedDescriptor$3(target, property, decorators, descriptor, context) {
-  var desc = {};
-  Object['ke' + 'ys'](descriptor).forEach(function (key) {
-    desc[key] = descriptor[key];
-  });
-  desc.enumerable = !!desc.enumerable;
-  desc.configurable = !!desc.configurable;
-
-  if ('value' in desc || desc.initializer) {
-    desc.writable = true;
-  }
-
-  desc = decorators.slice().reverse().reduce(function (desc, decorator) {
-    return decorator(target, property, desc) || desc;
-  }, desc);
-
-  if (context && desc.initializer !== void 0) {
-    desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
-    desc.initializer = undefined;
-  }
-
-  if (desc.initializer === void 0) {
-    Object['define' + 'Property'](target, property, desc);
-    desc = null;
-  }
-
-  return desc;
-}
-
-var UtComponent = (_dec$14 = core_1.Component({
-  selector: 'tn-ut',
-  template: html$6
-}), _dec2$3 = core_1.ViewChild('frm'), _dec$14(_class$14 = (_class2$3 = function UtComponent() {
-  var _this = this;
-
-  classCallCheck$1(this, UtComponent);
-
-  _initDefineProp$3(this, 'form', _descriptor$3, this);
-
-  this.onSubmit = function () {
-    console.log(_this);
-  };
-
-  this.foo = {
-    email: undefined,
-    password: undefined
-  };
-}, (_descriptor$3 = _applyDecoratedDescriptor$3(_class2$3.prototype, 'form', [_dec2$3], {
-  enumerable: true,
-  initializer: function initializer() {
-    return this.form;
-  }
-})), _class2$3)) || _class$14);
-
-var _dec$13;
-var _class$13;
-
-var UtRoutingModule = (_dec$13 = core_1.NgModule({
-  imports: [router.RouterModule.forChild([{ path: '', component: UtComponent }])],
-  exports: [router.RouterModule]
-}), _dec$13(_class$13 = function UtRoutingModule() {
-  classCallCheck$1(this, UtRoutingModule);
-}) || _class$13);
-
-var html$7 = "";
-
-__$styleInject("",undefined);
-
-var _dec$16;
-var _class$16;
-
-var DetailsService = (_dec$16 = core_1.Injectable(), _dec$16(_class$16 = function () {
-  function DetailsService(http$$1) {
-    classCallCheck$1(this, DetailsService);
-
-    this._http = http$$1;
-    this._url = 'FichaUT2';
-  }
-
-  createClass$1(DetailsService, [{
-    key: 'getUt',
-    value: function getUt(id) {
-      return this._http.get(this._url + '/' + id, {
-        responseType: 'blob'
-      });
-    }
-  }]);
-  return DetailsService;
-}()) || _class$16);
-Reflect.defineMetadata('design:paramtypes', [http.HttpClient], DetailsService);
-
-var _dec$15;
-var _class$15;
-
-var DetailsComponent = (_dec$15 = core_1.Component({
-  selector: 'tn-ut-details',
-  template: html$7
-}), _dec$15(_class$15 = function () {
-  function DetailsComponent(route, location, detailsService) {
-    classCallCheck$1(this, DetailsComponent);
-    this.ut = null;
-
-    this._detailsService = detailsService;
-  }
-
-  createClass$1(DetailsComponent, [{
-    key: 'ngOnInit',
-    value: function ngOnInit() {
-      var _this = this;
-
-      this.route.paramMap.switchMap(function (params) {
-        return _this._detailsService.getUt(+params.get('id'));
-      }).subscribe(function (ut) {
-        return _this.ut = ut;
-      });
-    }
-  }]);
-  return DetailsComponent;
-}()) || _class$15);
-Reflect.defineMetadata('design:paramtypes', [router.ActivatedRoute, common.Location, DetailsService], DetailsComponent);
-
-var _dec$12;
-var _class$12;
-
-var UtModule = (_dec$12 = core_1.NgModule({
-  imports: [TuneUpCoreModule, UtRoutingModule],
-  declarations: [UtComponent, DetailsComponent],
-  providers: [DetailsService]
-}), _dec$12(_class$12 = function UtModule() {
-  classCallCheck$1(this, UtModule);
-}) || _class$12);
-
 var utRoute = {
   path: 'uts',
   loadChildren: 'src/app/modules/ut/dist/tune-up.ut.umd.js#ut#UtModule'
-};
-
-var utDetails = {
-  path: 'uts/:id',
-  component: DetailsComponent
 };
 
 // TODO: remove
@@ -10649,8 +10492,7 @@ var utDetails = {
 
 var childRoutes = Object.freeze({
 	homeRoute: homeRoute,
-	utRoute: utRoute,
-	utDetails: utDetails
+	utRoute: utRoute
 });
 
 var homeMenuItem = {
@@ -10701,26 +10543,26 @@ configService.init({
 });
 configService.addRoutesWithAuth(Object.values(childRoutes));
 
-var _dec$18;
-var _class$18;
+var _dec$13;
+var _class$13;
 
 // TODO: move this to app.routing and register routes manually
 
-var RoutingModule = (_dec$18 = core_1.NgModule({
+var RoutingModule = (_dec$13 = core_1.NgModule({
   imports: [router.RouterModule.forRoot(configService.getRouteObjects(), {
     useHash: true,
     enableTracing: "development" !== 'production'
   })],
   exports: [router.RouterModule],
   providers: [AuthGuard]
-}), _dec$18(_class$18 = function RoutingModule() {
+}), _dec$13(_class$13 = function RoutingModule() {
   classCallCheck$1(this, RoutingModule);
-}) || _class$18);
+}) || _class$13);
 
-var _dec$19;
-var _class$19;
+var _dec$14;
+var _class$14;
 
-var ResponseInterceptor = (_dec$19 = core_1.Injectable(), _dec$19(_class$19 = function () {
+var ResponseInterceptor = (_dec$14 = core_1.Injectable(), _dec$14(_class$14 = function () {
   function ResponseInterceptor() {
     classCallCheck$1(this, ResponseInterceptor);
   }
@@ -10755,7 +10597,7 @@ var ResponseInterceptor = (_dec$19 = core_1.Injectable(), _dec$19(_class$19 = fu
     }
   }]);
   return ResponseInterceptor;
-}()) || _class$19);
+}()) || _class$14);
 
 var ResponseInterceptorProvider = {
   provide: http.HTTP_INTERCEPTORS,
@@ -10763,10 +10605,10 @@ var ResponseInterceptorProvider = {
   multi: true
 };
 
-var _dec$20;
-var _class$20;
+var _dec$15;
+var _class$15;
 
-var TokenInterceptor = (_dec$20 = core_1.Injectable(), _dec$20(_class$20 = function () {
+var TokenInterceptor = (_dec$15 = core_1.Injectable(), _dec$15(_class$15 = function () {
   function TokenInterceptor(authService) {
     classCallCheck$1(this, TokenInterceptor);
 
@@ -10788,7 +10630,7 @@ var TokenInterceptor = (_dec$20 = core_1.Injectable(), _dec$20(_class$20 = funct
     }
   }]);
   return TokenInterceptor;
-}()) || _class$20);
+}()) || _class$15);
 Reflect.defineMetadata('design:paramtypes', [AuthService], TokenInterceptor);
 
 var TokenInterceptorProvider = {
@@ -10797,31 +10639,31 @@ var TokenInterceptorProvider = {
   multi: true
 };
 
-var html$8 = "<tn-notifications></tn-notifications>\r\n<router-outlet></router-outlet>\r\n";
+var html$6 = "<tn-notifications></tn-notifications>\r\n<router-outlet></router-outlet>\r\n";
 
 __$styleInject(".none{flex:none}.one{flex:1}.two{flex:2}.three{flex:3}.four{flex:4}.five{flex:5}.six{flex:6}.seven{flex:7}.eight{flex:8}.nine{flex:9}.ten{flex:10}.eleven{flex:11}.twelve{flex:12}.flex,.horizontal,.vertical{display:flex}.horizontal{flex-direction:row}.vertical,.vertical-fill{flex-direction:column}.vertical-fill,fill{height:100%}.wrap{flex-wrap:wrap}body{margin:0;min-height:100%;padding:0;overflow-x:hidden;overflow-y:auto;font-family:Roboto,Trebuchet MS,Arial,Helvetica,sans-serif;font-weight:400;color:#404c51;-webkit-font-smoothing:antialiased;font-size:1em}",undefined);
 
-var _dec$21;
-var _class$21;
+var _dec$16;
+var _class$16;
 
-var AppComponent = (_dec$21 = core_1.Component({
+var AppComponent = (_dec$16 = core_1.Component({
   selector: 'tn-app',
-  template: html$8
-}), _dec$21(_class$21 = function AppComponent() {
+  template: html$6
+}), _dec$16(_class$16 = function AppComponent() {
   classCallCheck$1(this, AppComponent);
-}) || _class$21);
+}) || _class$16);
 
-var _dec$17;
-var _class$17;
+var _dec$12;
+var _class$12;
 
-var AppModule = (_dec$17 = core_1.NgModule({
+var AppModule = (_dec$12 = core_1.NgModule({
   imports: [TuneUpCoreModule, platformBrowser.BrowserModule, animations.BrowserAnimationsModule, http.HttpClientModule, RoutingModule],
   declarations: [AppComponent, SceneComponent, AppbarComponent, MenuComponent, ContentComponent, MenuItemComponent],
   providers: [ModuleLoaderProvider, APIInterceptorProvider, TokenInterceptorProvider, ResponseInterceptorProvider, AuthService, AgentService, AboutService, NotificationsService],
   bootstrap: [AppComponent]
-}), _dec$17(_class$17 = function AppModule() {
+}), _dec$12(_class$12 = function AppModule() {
   classCallCheck$1(this, AppModule);
-}) || _class$17);
+}) || _class$12);
 
 platformBrowserDynamic.platformBrowserDynamic().bootstrapModule(AppModule);
 

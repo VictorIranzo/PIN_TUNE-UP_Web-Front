@@ -15,15 +15,23 @@ import {DetailsService} from './services';
 })
 export class DetailsComponent {
   ut = null;
+  id = null;
   constructor(route: ActivatedRoute,
               location: Location,
               detailsService: DetailsService) {
+        this._route = route;
         this._detailsService = detailsService;
   }
 
   ngOnInit() {
-    this.route.paramMap
-    .switchMap((params: ParamMap) => this._detailsService.getUt(+params.get('id')))
-    .subscribe((ut) => this.ut = ut);
+    // this._route.paramMap
+    // .switchMap((params) => this._detailsService.getUt(+params.get('id')))
+    // .subscribe((ut) => this.ut = ut);
+    this.id= this._route.params._value.id;
+    this._detailsService.getUt(this.id).subscribe((data) => {
+      console.log(data);
+      this.ut = URL.createObjectURL(data);
+      console.log(this.ut);
+    });
   }
 }

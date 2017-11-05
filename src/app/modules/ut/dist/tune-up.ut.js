@@ -256,9 +256,7 @@ var DetailsService = (_dec$4 = Injectable(), _dec$4(_class$4 = function () {
   createClass(DetailsService, [{
     key: 'getUt',
     value: function getUt(id) {
-      return this._http.get(this._url + '/' + id, {
-        responseType: 'blob'
-      });
+      return this._http.get(this._url + '/' + id);
     }
   }]);
   return DetailsService;
@@ -289,11 +287,9 @@ var DetailsComponent = (_dec$3 = Component({
       // this._route.paramMap
       // .switchMap((params) => this._detailsService.getUt(+params.get('id')))
       // .subscribe((ut) => this.ut = ut);
-      this.id = this._route.params._value.id;
+      this.id = parseInt(this._route.params._value.id);
       this._detailsService.getUt(this.id).subscribe(function (data) {
-        console.log(data);
-        _this.ut = URL.createObjectURL(data);
-        console.log(_this.ut);
+        _this.ut = data;
       });
     }
   }]);

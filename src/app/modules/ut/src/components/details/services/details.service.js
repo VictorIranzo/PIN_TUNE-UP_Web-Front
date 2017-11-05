@@ -10,9 +10,7 @@ export class DetailsService {
   }
 
   getUt(id) {
-    return this._http.get(`${this._url}/${id}`, {
-    responseType: 'blob',
-  });
+    return this._http.get(`${this._url}/${id}`);
   }
 }
 

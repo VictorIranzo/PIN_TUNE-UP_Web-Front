@@ -27,11 +27,9 @@ export class DetailsComponent {
     // this._route.paramMap
     // .switchMap((params) => this._detailsService.getUt(+params.get('id')))
     // .subscribe((ut) => this.ut = ut);
-    this.id= this._route.params._value.id;
+    this.id= parseInt(this._route.params._value.id);
     this._detailsService.getUt(this.id).subscribe((data) => {
-      console.log(data);
-      this.ut = URL.createObjectURL(data);
-      console.log(this.ut);
+      this.ut = data;
     });
   }
 }

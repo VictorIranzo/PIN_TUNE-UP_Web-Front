@@ -14,8 +14,9 @@ import {DetailsService} from './services';
   template: html,
 })
 export class DetailsComponent {
-  ut = null;
-  id = null;
+  codigoUT = null;
+  editingMode = false;
+
   constructor(route: ActivatedRoute,
               location: Location,
               detailsService: DetailsService) {
@@ -24,12 +25,34 @@ export class DetailsComponent {
   }
 
   ngOnInit() {
-    // this._route.paramMap
-    // .switchMap((params) => this._detailsService.getUt(+params.get('id')))
-    // .subscribe((ut) => this.ut = ut);
-    this.id= parseInt(this._route.params._value.id);
-    this._detailsService.getUt(this.id).subscribe((data) => {
+    this.codigoUT= parseInt(this._route.params._value.id);
+
+    this._detailsService.getUt(this.codigoUT).subscribe((data) => {
       this.ut = data;
+      this.nombreUT = this.ut.UT.Nombre;
+      this.orden = this.ut.UT.Orden;
+      this.producto = this.ut.ProductoUT;
+      this.sprintsDisponibles = this.ut.listaVersionesUT;
+      this.workflowsDisponibles = this.ut.listaWorkflowsDisponibles;
+      this.tiposDisponibles = this.ut.listaTiposUT;
+      this.proyectosDisponibles = this.ut.listaProyectos;
+      this.descripcion = this.ut.Descripcion;
     });
+
+    this._detailsService.getProductosDisponibles().subscribe((data) => {
+      this.productosDisponibles = data;
+    });
+  }
+
+  onEditar() {
+    this.editingMode = true;
+  }
+
+  onCancelar() {
+    this.editingMode = false;
+  }
+
+  onGuardar() {
+    this.editingMode = false;
   }
 }

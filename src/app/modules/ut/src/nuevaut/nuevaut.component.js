@@ -6,7 +6,7 @@ import './nuevaut.component.css';
   selector: 'tn-nuevaut',
   template: html,
 })
-export class NuevaUT {
+export class NuevaUTComponent {
   ut = {
     Nombre,
     IdVersion,

@@ -7,6 +7,9 @@ import './nuevaut.component.css';
   template: html,
 })
 export class NuevaUT {
+  ut = {
+    
+  }
   constructor() {
   }
 }

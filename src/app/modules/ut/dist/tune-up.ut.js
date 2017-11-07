@@ -16,11 +16,14 @@ function __$styleInject(css, returnValue) {
   return returnValue;
 }
 
-import { Component, NgModule, ViewChild } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Component, Injectable, NgModule, ViewChild } from '@angular/core';
+import { ActivatedRoute, RouterModule } from '@angular/router';
+import { Location } from '@angular/common';
+import 'rxjs/add/operator/switchMap';
+import { HttpClient } from '@angular/common/http';
 import { TuneUpCoreModule } from '@tune-up/core';
 
-var html = "<form class=\"vertical\" #frm=\"ngForm\" (ngSubmit)=\"onSubmit()\">\n  <input class=\"tn-example-form--input one\" type=\"text\" [(ngModel)]=\"foo.email\" rule=\"foo.email\" name=\"email\" #emailCtrl=\"ngModel\" pInputText>\n  <tn-validation-error [control]=\"emailCtrl\"></tn-validation-error>\n  <input class=\"tn-example-form--input one\" type=\"password\" [(ngModel)]=\"foo.password\" rule=\"foo.password\" name=\"password\" pInputText>\n  <div class=\"horizontal\">\n    <div class=\"one\"></div>\n    <button class=\"none\" pButton type=\"submit\" label=\"Submit\"></button>\n  </div>\n</form>\n";
+var html = "<form class=\"vertical\" #frm=\"ngForm\" (ngSubmit)=\"onSubmit()\">\n  <input class=\"tn-example-form--input one\" type=\"text\" [(ngModel)]=\"foo.email\" rule=\"foo.email\" name=\"email\" #emailCtrl=\"ngModel\" pInputText>\n  <tn-validation-error [control]=\"emailCtrl\"></tn-validation-error>\n  <input class=\"tn-example-form--input one\" type=\"password\" [(ngModel)]=\"foo.password\" rule=\"foo.password\" name=\"password\" pInputText>\n  <div class=\"horizontal\">\n    <div class=\"one\"></div>\n    <button class=\"none\" pButton type=\"submit\" label=\"Submit\"></button>\n  </div>\n  <tn-ut-details>UT!</tn-ut-details>\n</form>\n";
 
 __$styleInject(".tn-example-form--input{margin-bottom:8px;margin-top:8px}", undefined);
 
@@ -147,6 +150,24 @@ var classCallCheck = function (instance, Constructor) {
   }
 };
 
+var createClass = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) defineProperties(Constructor, staticProps);
+    return Constructor;
+  };
+}();
+
 var _dec$2;
 var _dec2;
 var _class$2;
@@ -192,15 +213,6 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
   return desc;
 }
 
-/**
- * Always import html and css this way.
- * Always use the prefix tn in the selector.
- * Always initialize the models in the constructor
- *  (ngModel can't do it with nested model)
- * and always initialize them to undefined (not null)
- * Everytime you need to use a method from the html declare
- * it as an arrow function.
- */
 var UtComponent = (_dec$2 = Component({
   selector: 'tn-ut',
   template: html
@@ -226,11 +238,101 @@ var UtComponent = (_dec$2 = Component({
   }
 })), _class2)) || _class$2);
 
+var html$1 = "<div class=\"ui-g\">\n  <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n    Código\n  </div>\n  <div class=\"ui-g-3 ui-md-2 ui-lg-1\">\n    <input id=\"disabled-input\" type=\"text\" size= \"4\" pInputText [(ngModel)]= \"codigoUT\" [disabled]=\"true\" />\n  </div>\n  <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n    Nombre\n  </div>\n  <div class=\"ui-g-20 ui-md-10 ui-lg-5\">\n    <input id=\"input\" type=\"text\" size=\"50\" pInputText [(ngModel)]=\"nombreUT\" [disabled]= \"!editingMode\"> \n  </div>\n  <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\n      <button *ngIf=\"!editingMode\" pButton type=\"button\" label=\"Editar\" (click)=\"onEditar()\"></button>\n      <button *ngIf=\"editingMode\" pButton type=\"button\" label=\"Guardar\" (click)=\"onGuardar()\"></button>\n      <button *ngIf=\"editingMode\" pButton type=\"button\" label=\"Cancelar\" (click)=\"onCancelar()\"></button>\n  </div>\n</div>\n<div class=\"ui-g\">\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n        Producto\n    </div>\n    <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\n        <p-dropdown [options]=\"productosDisponibles\" [(ngModel)]=\"producto\" optionLabel= \"Nombre\" [disabled]= \"!editingMode\" [style]=\"{'width':'250px'}\"></p-dropdown>\n    </div>\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n        Sprint\n    </div>\n    <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\n        <p-dropdown [options]=\"sprintsDisponibles\" optionLabel= \"Nombre\" [disabled]= \"!editingMode\" [style]=\"{'width':'200px'}\"></p-dropdown>\n    </div>\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n        Orden\n      </div>\n      <div class=\"ui-g-6 ui-md-4 ui-lg-2\">\n        <input id=\"input\" type=\"text\" size=\"4\" pInputText [(ngModel)]=\"orden\" [disabled]= \"!editingMode\"> \n    </div>\n</div>\n<div class=\"ui-g\">\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n      Workflow\n    </div>\n    <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\n        <p-dropdown [options]=\"workflowsDisponibles\" optionLabel= \"Nombre\" [disabled]= \"!editingMode\" [style]=\"{'width':'250px'}\"></p-dropdown>\n    </div>\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n        Tipo\n    </div>\n    <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\n        <p-dropdown [options]=\"tiposDisponibles\" optionLabel= \"Nombre\" [disabled]= \"!editingMode\" [style]=\"{'width':'200px'}\"></p-dropdown>\n    </div>\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n        Proyecto\n      </div>\n      <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\n          <p-dropdown [options]=\"proyectosDisponibles\" optionLabel= \"Nombre\" [disabled]= \"!editingMode\" [style]=\"{'width':'250px'}\"></p-dropdown>\n    </div>\n</div>\n<div class=\"ui-g\">\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n        Descripción\n      </div>\n      <div class=\"ui-g-30 ui-md-20 ui-lg-10\">\n          <textarea rows=\"5\"  pInputTextarea  [(ngModel)]=\"descripcion\" [disabled]= \"!editingMode\" cols=\"120\"></textarea>\n      </div>\n\n</div>\n\n";
+
+__$styleInject("", undefined);
+
+var _dec$4;
+var _class$4;
+
+var DetailsService = (_dec$4 = Injectable(), _dec$4(_class$4 = function () {
+  function DetailsService(http$$1) {
+    classCallCheck(this, DetailsService);
+
+    this._http = http$$1;
+    this._urlUT = 'FichaUT2';
+    this._urlProductos = 'Productos2';
+  }
+
+  createClass(DetailsService, [{
+    key: 'getUt',
+    value: function getUt(id) {
+      return this._http.get(this._urlUT + '/' + id);
+    }
+  }, {
+    key: 'getProductosDisponibles',
+    value: function getProductosDisponibles() {
+      return this._http.get('' + this._urlProductos);
+    }
+  }]);
+  return DetailsService;
+}()) || _class$4);
+Reflect.defineMetadata('design:paramtypes', [HttpClient], DetailsService);
+
+var _dec$3;
+var _class$3;
+
+var DetailsComponent = (_dec$3 = Component({
+  selector: 'tn-ut-details',
+  template: html$1
+}), _dec$3(_class$3 = function () {
+  function DetailsComponent(route, location, detailsService) {
+    classCallCheck(this, DetailsComponent);
+    this.codigoUT = null;
+    this.editingMode = false;
+
+    this._route = route;
+    this._detailsService = detailsService;
+  }
+
+  createClass(DetailsComponent, [{
+    key: 'ngOnInit',
+    value: function ngOnInit() {
+      var _this = this;
+
+      this.codigoUT = parseInt(this._route.params._value.id);
+
+      this._detailsService.getUt(this.codigoUT).subscribe(function (data) {
+        _this.ut = data;
+        _this.nombreUT = _this.ut.UT.Nombre;
+        _this.orden = _this.ut.UT.Orden;
+        _this.producto = _this.ut.ProductoUT;
+        _this.sprintsDisponibles = _this.ut.listaVersionesUT;
+        _this.workflowsDisponibles = _this.ut.listaWorkflowsDisponibles;
+        _this.tiposDisponibles = _this.ut.listaTiposUT;
+        _this.proyectosDisponibles = _this.ut.listaProyectos;
+        _this.descripcion = _this.ut.Descripcion;
+      });
+
+      this._detailsService.getProductosDisponibles().subscribe(function (data) {
+        _this.productosDisponibles = data;
+      });
+    }
+  }, {
+    key: 'onEditar',
+    value: function onEditar() {
+      this.editingMode = true;
+    }
+  }, {
+    key: 'onCancelar',
+    value: function onCancelar() {
+      this.editingMode = false;
+    }
+  }, {
+    key: 'onGuardar',
+    value: function onGuardar() {
+      this.editingMode = false;
+    }
+  }]);
+  return DetailsComponent;
+}()) || _class$3);
+Reflect.defineMetadata('design:paramtypes', [ActivatedRoute, Location, DetailsService], DetailsComponent);
+
 var _dec$1;
 var _class$1;
 
 var UtRoutingModule = (_dec$1 = NgModule({
-  imports: [RouterModule.forChild([{ path: '', component: UtComponent }])],
+  imports: [RouterModule.forChild([{ path: '', component: UtComponent }, { path: ':id', component: DetailsComponent }])],
   exports: [RouterModule]
 }), _dec$1(_class$1 = function UtRoutingModule() {
   classCallCheck(this, UtRoutingModule);
@@ -239,17 +341,13 @@ var UtRoutingModule = (_dec$1 = NgModule({
 var _dec;
 var _class;
 
-/**
- * If using a PrimeNg module gives you and error, register
- * it in lib/core/src/packages/primeng so it is shared among
- * all the app.
- */
 var UtModule = (_dec = NgModule({
   imports: [TuneUpCoreModule, UtRoutingModule],
-  declarations: [UtComponent]
+  declarations: [UtComponent, DetailsComponent],
+  providers: [DetailsService]
 }), _dec(_class = function UtModule() {
   classCallCheck(this, UtModule);
 }) || _class);
 
-export { UtModule };
+export { UtModule, DetailsComponent, DetailsService };
 //# sourceMappingURL=tune-up.ut.js.map

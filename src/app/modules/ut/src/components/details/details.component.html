@@ -1,0 +1,69 @@
+<div class="ui-g">
+  <div class="ui-g-4 ui-md-2 ui-lg-1">
+    Código
+  </div>
+  <div class="ui-g-3 ui-md-2 ui-lg-1">
+    <input id="disabled-input" type="text" size= "4" pInputText [(ngModel)]= "codigoUT" [disabled]="true" />
+  </div>
+  <div class="ui-g-4 ui-md-2 ui-lg-1">
+    Nombre
+  </div>
+  <div class="ui-g-20 ui-md-10 ui-lg-5">
+    <input id="input" type="text" size="50" pInputText [(ngModel)]="nombreUT" [disabled]= "!editingMode"> 
+  </div>
+  <div class="ui-g-12 ui-md-6 ui-lg-3">
+      <button *ngIf="!editingMode" pButton type="button" label="Editar" (click)="onEditar()"></button>
+      <button *ngIf="editingMode" pButton type="button" label="Guardar" (click)="onGuardar()"></button>
+      <button *ngIf="editingMode" pButton type="button" label="Cancelar" (click)="onCancelar()"></button>
+  </div>
+</div>
+<div class="ui-g">
+    <div class="ui-g-4 ui-md-2 ui-lg-1">
+        Producto
+    </div>
+    <div class="ui-g-12 ui-md-6 ui-lg-3">
+        <p-dropdown [options]="productosDisponibles" [(ngModel)]="producto" optionLabel= "Nombre" [disabled]= "!editingMode" [style]="{'width':'250px'}"></p-dropdown>
+    </div>
+    <div class="ui-g-4 ui-md-2 ui-lg-1">
+        Sprint
+    </div>
+    <div class="ui-g-12 ui-md-6 ui-lg-3">
+        <p-dropdown [options]="sprintsDisponibles" optionLabel= "Nombre" [disabled]= "!editingMode" [style]="{'width':'200px'}"></p-dropdown>
+    </div>
+    <div class="ui-g-4 ui-md-2 ui-lg-1">
+        Orden
+      </div>
+      <div class="ui-g-6 ui-md-4 ui-lg-2">
+        <input id="input" type="text" size="4" pInputText [(ngModel)]="orden" [disabled]= "!editingMode"> 
+    </div>
+</div>
+<div class="ui-g">
+    <div class="ui-g-4 ui-md-2 ui-lg-1">
+      Workflow
+    </div>
+    <div class="ui-g-12 ui-md-6 ui-lg-3">
+        <p-dropdown [options]="workflowsDisponibles" optionLabel= "Nombre" [disabled]= "!editingMode" [style]="{'width':'250px'}"></p-dropdown>
+    </div>
+    <div class="ui-g-4 ui-md-2 ui-lg-1">
+        Tipo
+    </div>
+    <div class="ui-g-12 ui-md-6 ui-lg-3">
+        <p-dropdown [options]="tiposDisponibles" optionLabel= "Nombre" [disabled]= "!editingMode" [style]="{'width':'200px'}"></p-dropdown>
+    </div>
+    <div class="ui-g-4 ui-md-2 ui-lg-1">
+        Proyecto
+      </div>
+      <div class="ui-g-12 ui-md-6 ui-lg-3">
+          <p-dropdown [options]="proyectosDisponibles" optionLabel= "Nombre" [disabled]= "!editingMode" [style]="{'width':'250px'}"></p-dropdown>
+    </div>
+</div>
+<div class="ui-g">
+    <div class="ui-g-4 ui-md-2 ui-lg-1">
+        Descripción
+      </div>
+      <div class="ui-g-30 ui-md-20 ui-lg-10">
+          <textarea rows="5"  pInputTextarea  [(ngModel)]="descripcion" [disabled]= "!editingMode" cols="120"></textarea>
+      </div>
+
+</div>
+

@@ -8,8 +8,13 @@ import './nuevaut.component.css';
 })
 export class NuevaUT {
   ut = {
-    
-  }
+    Nombre,
+    IdVersion,
+    IdProducto,
+    IdWorkflow,
+    IdTipoUT,
+    IdProyecto,
+ }
   constructor() {
   }
 }

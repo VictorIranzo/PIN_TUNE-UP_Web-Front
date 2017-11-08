@@ -7,7 +7,7 @@ import {DetailsComponent, NuevaUTComponent} from './components';
   imports: [RouterModule.forChild([
     {path: '', component: UtComponent},
     {path: ':id', component: DetailsComponent},
-    {path: 'add', component: NuevaUTComponent},
+    {path: '/add', component: NuevaUTComponent},
   ])],
   exports: [RouterModule],
 })

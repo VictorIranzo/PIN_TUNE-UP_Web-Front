@@ -10,6 +10,16 @@ import './nuevaut.component.css';
   providers: [CreateUTService, GetProductosService],
 })
 export class NuevaUTComponent {
+  ut = {
+    Nombre: null,
+    IdVersion: null,
+    IdProducto: null,
+    IdWorkflow: null,
+    IdTipoUT: null,
+    IdProyecto: null,
+ };
+  productos = [];
+
   constructor(
     createUTService: CreateUTService,
     getProductosService : GetProductosService,
@@ -18,31 +28,19 @@ export class NuevaUTComponent {
     this._createUTService = createUTService;
     this._getProductosService = getProductosService;
     this._notificationService = notificationsService;
-
-    _getProductos();
+    this._getProductos();
   }
 
-  ut = {
-    Nombre,
-    IdVersion,
-    IdProducto,
-    IdWorkflow,
-    IdTipoUT,
-    IdProyecto,
- }
-
-  productos = []
   _getProductos() {
-    this._getProductosService.get().subscribe(
+    this._getProductosSubscription = this._getProductosService.get().subscribe(
       (data) => {
-        this.productos = data.Resultado;
+        this.productos = data;
       },
-      (error) => {
+      (error) =>
         this._notificationService.error(
           'No se han podido obtener los productos',
           error
-        );
-      }
+        )
     );
   }
 
@@ -60,5 +58,11 @@ export class NuevaUTComponent {
       }
     );
     return idUT;
+  }
+
+  ngOnDestroy() {
+    this._getProductosSubscription &&
+    !this._getProductosSubscription.closed &&
+    this._getProductosSubscription.unsubscribe();
   }
 }

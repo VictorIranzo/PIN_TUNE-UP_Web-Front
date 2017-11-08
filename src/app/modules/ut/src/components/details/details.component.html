@@ -22,13 +22,13 @@
         Producto
     </div>
     <div class="ui-g-12 ui-md-6 ui-lg-3">
-        <p-dropdown [options]="productosDisponibles" [(ngModel)]="producto" optionLabel= "Nombre" [disabled]= "!editingMode" [style]="{'width':'250px'}"></p-dropdown>
+        <p-dropdown [options]="productosDisponibles" [(ngModel)]="producto" optionLabel= "IdProducto" [disabled]= "!editingMode" [style]="{'width':'250px'}"></p-dropdown>
     </div>
     <div class="ui-g-4 ui-md-2 ui-lg-1">
         Sprint
     </div>
     <div class="ui-g-12 ui-md-6 ui-lg-3">
-        <p-dropdown [options]="sprintsDisponibles" optionLabel= "Nombre" [disabled]= "!editingMode" [style]="{'width':'200px'}"></p-dropdown>
+        <p-dropdown [options]="sprintsDisponibles" [(ngModel)]="sprint" [disabled]= "!editingMode" [style]="{'width':'200px'}"></p-dropdown>
     </div>
     <div class="ui-g-4 ui-md-2 ui-lg-1">
         Orden
@@ -42,19 +42,19 @@
       Workflow
     </div>
     <div class="ui-g-12 ui-md-6 ui-lg-3">
-        <p-dropdown [options]="workflowsDisponibles" optionLabel= "Nombre" [disabled]= "!editingMode" [style]="{'width':'250px'}"></p-dropdown>
+        <p-dropdown [options]="workflowsDisponibles" [(ngModel)]="workflow" [disabled]= "!editingMode" [style]="{'width':'250px'}"></p-dropdown>
     </div>
     <div class="ui-g-4 ui-md-2 ui-lg-1">
         Tipo
     </div>
     <div class="ui-g-12 ui-md-6 ui-lg-3">
-        <p-dropdown [options]="tiposDisponibles" optionLabel= "Nombre" [disabled]= "!editingMode" [style]="{'width':'200px'}"></p-dropdown>
+        <p-dropdown [options]="tiposDisponibles" [(ngModel)]="tipo" [disabled]= "!editingMode" [style]="{'width':'200px'}"></p-dropdown>
     </div>
     <div class="ui-g-4 ui-md-2 ui-lg-1">
         Proyecto
       </div>
       <div class="ui-g-12 ui-md-6 ui-lg-3">
-          <p-dropdown [options]="proyectosDisponibles" optionLabel= "Nombre" [disabled]= "!editingMode" [style]="{'width':'250px'}"></p-dropdown>
+          <p-dropdown [options]="proyectosDisponibles" [(ngModel)]="proyecto" [disabled]= "!editingMode" [style]="{'width':'250px'}"></p-dropdown>
     </div>
 </div>
 <div class="ui-g">

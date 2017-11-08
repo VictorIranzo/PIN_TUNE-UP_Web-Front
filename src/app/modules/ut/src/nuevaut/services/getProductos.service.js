@@ -2,14 +2,14 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
 @Injectable()
-export class CreateUTService {
+export class GetProductosService {
   constructor(http: HttpClient) {
     this._http = http;
-    this._url = 'UTs/Crear';
+    this._url = 'Productos2';
   }
-  put(
-    newUT
-  ) {
-    return this._http.put(this._url, newUT);
+  get() {
+    return this._http.get(
+      `${this._url}`
+    );
   }
 }

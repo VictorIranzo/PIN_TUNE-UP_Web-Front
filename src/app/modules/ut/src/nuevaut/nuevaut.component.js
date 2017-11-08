@@ -46,7 +46,7 @@ export class NuevaUTComponent {
     );
   }
 
-  crearUT() {
+  _crearUT() {
     idUT = 0;
     this.createUTService.put(this.ut).subscribe(
       (data) => {

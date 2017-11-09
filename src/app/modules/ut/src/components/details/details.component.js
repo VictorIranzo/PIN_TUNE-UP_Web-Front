@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, ParamMap} from '@angular/router';
 import {Location} from '@angular/common';
 
@@ -16,33 +16,39 @@ import {DetailsService} from './services';
 export class DetailsComponent {
   codigoUT = null;
   editingMode = false;
+  sprint = null;
+
+  @ViewChild('combo') combo = null;
 
   constructor(route: ActivatedRoute,
               location: Location,
               detailsService: DetailsService) {
         this._route = route;
         this._detailsService = detailsService;
+
+        this.codigoUT= parseInt(this._route.params._value.id);
+
+        this._detailsService.getUt(this.codigoUT).subscribe((data) => {
+              this.ut = data;
+              this.nombreUT = this.ut.UT.Nombre;
+              this.orden = this.ut.UT.Orden;
+              this.producto = this.ut.ProductoUT;
+              this._parseSprints(this.ut.listaVersionesUT);
+              this._parseWorkflows(this.ut.listaWorkflowsDisponibles);
+              this._parseTipos(this.ut.listaTiposUT);
+              this._parseProyectos(this.ut.listaProyectos);
+              this.descripcion = this.ut.UT.Definicion;
+              this._mapSelected(data);
+              this.sprint = 177;
+            });
+
+        this._detailsService.getProductosDisponibles().subscribe((data) => {
+              this._parseProductos(data);
+            });
   }
 
   ngOnInit() {
-    this.codigoUT= parseInt(this._route.params._value.id);
 
-    this._detailsService.getUt(this.codigoUT).subscribe((data) => {
-      this.ut = data;
-      this.nombreUT = this.ut.UT.Nombre;
-      this.orden = this.ut.UT.Orden;
-      this.producto = this.ut.ProductoUT;
-      this._parseSprints(this.ut.listaVersionesUT);
-      this._parseWorkflows(this.ut.listaWorkflowsDisponibles);
-      this._parseTipos(this.ut.listaTiposUT);
-      this._parseProyectos(this.ut.listaProyectos);
-      this.descripcion = this.ut.UT.Definicion;
-      this.sprint = 'Sprint 2';
-    });
-
-    this._detailsService.getProductosDisponibles().subscribe((data) => {
-      this._parseProductos(data);
-    });
   }
 
   onEditar() {
@@ -87,4 +93,9 @@ export class DetailsComponent {
     });
   }
 
+  _mapSelected(ut) {
+    this.sprintsDisponibles.forEach(function(element) {
+      if (element.value == ut.UT.IdVersion) this.sprint = element.value;
+    });
+  }
 }

@@ -7,9 +7,7 @@ export class CreateUTService {
     this._http = http;
     this._url = 'UTs/Crear';
   }
-  put(
-    newUT
-  ) {
+  put(newUT) {
     return this._http.put(this._url, newUT);
   }
 }

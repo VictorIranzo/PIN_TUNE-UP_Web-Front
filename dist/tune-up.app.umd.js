@@ -10210,7 +10210,7 @@ var BreadcrumbService = (_dec$8 = core_1.Injectable(), _dec$8(_class$8 = functio
   return BreadcrumbService;
 }()) || _class$8);
 
-var html$2 = "<!-- TODO: make functions to manage visibility, dont call the service directly -->\n<div class=\"horizontal tn-scene-appbar-wrapper\">\n    <div *ngIf=\"this._sceneService.isDocked()\" class=\"none tn-scene-appbar--topMenu\">TUNE-UP</div>\n    <div class =\"horizontal ten\">\n      <div class=\"tn-scene-appbar--button\" *ngIf=\"!this._sceneService.isDocked()\" >\n        <i *ngIf=\"this._sceneService.isVisible()\" (click)=\"onHideMenuClick()\" class=\"fa fa-2x fa-caret-square-o-left\"></i>                                \n        <i *ngIf=\"!this._sceneService.isVisible()\" (click)=\"onShowMenuClick()\" class=\"fa fa-2x fa-caret-square-o-right\"></i>                    \n      </div>\n      <p-breadcrumb class=\"tn-scene-appbar--breadcrumb\" [model]=\"breadcrumbItems\"></p-breadcrumb>    \n    </div>\n    <div class = \"horizontal one\">\n        <i class=\"tn-scene-appbar--button fa fa-2x fa-list\"></i>        \n    </div>\n</div>\n";
+var html$2 = "<!-- TODO: make functions to manage visibility, dont call the service directly -->\r\n<div class=\"horizontal tn-scene-appbar-wrapper\">\r\n    <div *ngIf=\"this._sceneService.isDocked()\" class=\"none tn-scene-appbar--topMenu\">TUNE-UP</div>\r\n    <div class =\"horizontal ten\">\r\n      <div class=\"tn-scene-appbar--button\" *ngIf=\"!this._sceneService.isDocked()\" >\r\n        <i *ngIf=\"this._sceneService.isVisible()\" (click)=\"onHideMenuClick()\" class=\"fa fa-2x fa-caret-square-o-left\"></i>                                \r\n        <i *ngIf=\"!this._sceneService.isVisible()\" (click)=\"onShowMenuClick()\" class=\"fa fa-2x fa-caret-square-o-right\"></i>                    \r\n      </div>\r\n      <p-breadcrumb class=\"tn-scene-appbar--breadcrumb\" [model]=\"breadcrumbItems\"></p-breadcrumb>    \r\n    </div>\r\n    <div class = \"horizontal one\">\r\n        <i class=\"tn-scene-appbar--button fa fa-2x fa-list\"></i>        \r\n    </div>\r\n</div>\r\n";
 
 __$styleInject(".tn-scene-appbar--button{color:#d3d3d3}.tn-scene-appbar--breadcrumb,.tn-scene-appbar--button{margin-left:10px;align-self:center}.tn-scene-appbar--topMenu{width:270px;height:70px;text-align:center;font-size:-webkit-xxx-large;border-right:1px solid;color:#d3d3d3}.tn-scene-appbar-wrapper{height:100%}",undefined);
 
@@ -10639,7 +10639,7 @@ var TokenInterceptorProvider = {
   multi: true
 };
 
-var html$6 = "<tn-notifications></tn-notifications>\r\n<router-outlet></router-outlet>\r\n";
+var html$6 = "<tn-notifications></tn-notifications>\n<router-outlet></router-outlet>\n";
 
 __$styleInject(".none{flex:none}.one{flex:1}.two{flex:2}.three{flex:3}.four{flex:4}.five{flex:5}.six{flex:6}.seven{flex:7}.eight{flex:8}.nine{flex:9}.ten{flex:10}.eleven{flex:11}.twelve{flex:12}.flex,.horizontal,.vertical{display:flex}.horizontal{flex-direction:row}.vertical,.vertical-fill{flex-direction:column}.vertical-fill,fill{height:100%}.wrap{flex-wrap:wrap}body{margin:0;min-height:100%;padding:0;overflow-x:hidden;overflow-y:auto;font-family:Roboto,Trebuchet MS,Arial,Helvetica,sans-serif;font-weight:400;color:#404c51;-webkit-font-smoothing:antialiased;font-size:1em}",undefined);
 

@@ -16,16 +16,15 @@ function __$styleInject(css, returnValue) {
   return returnValue;
 }
 
-import { Component, Injectable, NgModule, ViewChild } from '@angular/core';
+import { Component, Injectable, NgModule } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Location } from '@angular/common';
-import 'rxjs/add/operator/switchMap';
 import { HttpClient } from '@angular/common/http';
-import { TuneUpCoreModule } from '@tune-up/core';
+import { NotificationsService, TuneUpCoreModule } from '@tune-up/core';
 
-var html = "<form class=\"vertical\" #frm=\"ngForm\" (ngSubmit)=\"onSubmit()\">\n  <input class=\"tn-example-form--input one\" type=\"text\" [(ngModel)]=\"foo.email\" rule=\"foo.email\" name=\"email\" #emailCtrl=\"ngModel\" pInputText>\n  <tn-validation-error [control]=\"emailCtrl\"></tn-validation-error>\n  <input class=\"tn-example-form--input one\" type=\"password\" [(ngModel)]=\"foo.password\" rule=\"foo.password\" name=\"password\" pInputText>\n  <div class=\"horizontal\">\n    <div class=\"one\"></div>\n    <button class=\"none\" pButton type=\"submit\" label=\"Submit\"></button>\n  </div>\n  <tn-ut-details>UT!</tn-ut-details>\n</form>\n";
+var html = "";
 
-__$styleInject(".tn-example-form--input{margin-bottom:8px;margin-top:8px}", undefined);
+__$styleInject("", undefined);
 
 var asyncGenerator = function () {
   function AwaitValue(value) {
@@ -169,78 +168,14 @@ var createClass = function () {
 }();
 
 var _dec$2;
-var _dec2;
 var _class$2;
-var _class2;
-var _descriptor;
-
-function _initDefineProp(target, property, descriptor, context) {
-  if (!descriptor) return;
-  Object.defineProperty(target, property, {
-    enumerable: descriptor.enumerable,
-    configurable: descriptor.configurable,
-    writable: descriptor.writable,
-    value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
-  });
-}
-
-function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) {
-  var desc = {};
-  Object['ke' + 'ys'](descriptor).forEach(function (key) {
-    desc[key] = descriptor[key];
-  });
-  desc.enumerable = !!desc.enumerable;
-  desc.configurable = !!desc.configurable;
-
-  if ('value' in desc || desc.initializer) {
-    desc.writable = true;
-  }
-
-  desc = decorators.slice().reverse().reduce(function (desc, decorator) {
-    return decorator(target, property, desc) || desc;
-  }, desc);
-
-  if (context && desc.initializer !== void 0) {
-    desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
-    desc.initializer = undefined;
-  }
-
-  if (desc.initializer === void 0) {
-    Object['define' + 'Property'](target, property, desc);
-    desc = null;
-  }
-
-  return desc;
-}
 
 var UtComponent = (_dec$2 = Component({
   selector: 'tn-ut',
   template: html
-}), _dec2 = ViewChild('frm'), _dec$2(_class$2 = (_class2 = function UtComponent() {
-  var _this = this;
-
+}), _dec$2(_class$2 = function UtComponent() {
   classCallCheck(this, UtComponent);
-
-  _initDefineProp(this, 'form', _descriptor, this);
-
-  this.onSubmit = function () {
-    console.log(_this);
-  };
-
-  this.foo = {
-    email: undefined,
-    password: undefined
-  };
-}, (_descriptor = _applyDecoratedDescriptor(_class2.prototype, 'form', [_dec2], {
-  enumerable: true,
-  initializer: function initializer() {
-    return this.form;
-  }
-})), _class2)) || _class$2);
-
-var html$1 = "<div class=\"ui-g\">\n  <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n    Código\n  </div>\n  <div class=\"ui-g-3 ui-md-2 ui-lg-1\">\n    <input id=\"disabled-input\" type=\"text\" size= \"4\" pInputText [(ngModel)]= \"codigoUT\" [disabled]=\"true\" />\n  </div>\n  <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n    Nombre\n  </div>\n  <div class=\"ui-g-20 ui-md-10 ui-lg-5\">\n    <input id=\"input\" type=\"text\" size=\"50\" pInputText [(ngModel)]=\"nombreUT\" [disabled]= \"!editingMode\"> \n  </div>\n  <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\n      <button *ngIf=\"!editingMode\" pButton type=\"button\" label=\"Editar\" (click)=\"onEditar()\"></button>\n      <button *ngIf=\"editingMode\" pButton type=\"button\" label=\"Guardar\" (click)=\"onGuardar()\"></button>\n      <button *ngIf=\"editingMode\" pButton type=\"button\" label=\"Cancelar\" (click)=\"onCancelar()\"></button>\n  </div>\n</div>\n<div class=\"ui-g\">\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n        Producto\n    </div>\n    <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\n        <p-dropdown [options]=\"productosDisponibles\" [(ngModel)]=\"producto\" optionLabel= \"IdProducto\" [disabled]= \"!editingMode\" [style]=\"{'width':'250px'}\"></p-dropdown>\n    </div>\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n        Sprint\n    </div>\n    <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\n        <p-dropdown [options]=\"sprintsDisponibles\" [(ngModel)]=\"sprint\" [disabled]= \"!editingMode\" [style]=\"{'width':'200px'}\"></p-dropdown>\n    </div>\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n        Orden\n      </div>\n      <div class=\"ui-g-6 ui-md-4 ui-lg-2\">\n        <input id=\"input\" type=\"text\" size=\"4\" pInputText [(ngModel)]=\"orden\" [disabled]= \"!editingMode\"> \n    </div>\n</div>\n<div class=\"ui-g\">\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n      Workflow\n    </div>\n    <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\n        <p-dropdown [options]=\"workflowsDisponibles\" [(ngModel)]=\"workflow\" [disabled]= \"!editingMode\" [style]=\"{'width':'250px'}\"></p-dropdown>\n    </div>\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n        Tipo\n    </div>\n    <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\n        <p-dropdown [options]=\"tiposDisponibles\" [(ngModel)]=\"tipo\" [disabled]= \"!editingMode\" [style]=\"{'width':'200px'}\"></p-dropdown>\n    </div>\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n        Proyecto\n      </div>\n      <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\n          <p-dropdown [options]=\"proyectosDisponibles\" [(ngModel)]=\"proyecto\" [disabled]= \"!editingMode\" [style]=\"{'width':'250px'}\"></p-dropdown>\n    </div>\n</div>\n<div class=\"ui-g\">\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n        Descripción\n      </div>\n      <div class=\"ui-g-30 ui-md-20 ui-lg-10\">\n          <textarea rows=\"5\"  pInputTextarea  [(ngModel)]=\"descripcion\" [disabled]= \"!editingMode\" cols=\"120\"></textarea>\n      </div>\n\n</div>\n\n";
-
-__$styleInject("", undefined);
+}) || _class$2);
 
 var _dec$4;
 var _class$4;
@@ -268,6 +203,10 @@ var DetailsService = (_dec$4 = Injectable(), _dec$4(_class$4 = function () {
   return DetailsService;
 }()) || _class$4);
 Reflect.defineMetadata('design:paramtypes', [HttpClient], DetailsService);
+
+var html$1 = "<div class=\"ui-g\">\r\n  <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\r\n    Código\r\n  </div>\r\n  <div class=\"ui-g-3 ui-md-2 ui-lg-1\">\r\n    <input id=\"disabled-input\" type=\"text\" size= \"4\" pInputText [(ngModel)]= \"codigoUT\" [disabled]=\"true\" />\r\n  </div>\r\n  <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\r\n    Nombre\r\n  </div>\r\n  <div class=\"ui-g-20 ui-md-10 ui-lg-5\">\r\n    <input id=\"input\" type=\"text\" size=\"50\" pInputText [(ngModel)]=\"nombreUT\" [disabled]= \"!editingMode\"> \r\n  </div>\r\n  <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\r\n      <button *ngIf=\"!editingMode\" pButton type=\"button\" label=\"Editar\" (click)=\"onEditar()\"></button>\r\n      <button *ngIf=\"editingMode\" pButton type=\"button\" label=\"Guardar\" (click)=\"onGuardar()\"></button>\r\n      <button *ngIf=\"editingMode\" pButton type=\"button\" label=\"Cancelar\" (click)=\"onCancelar()\"></button>\r\n  </div>\r\n</div>\r\n<div class=\"ui-g\">\r\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\r\n        Producto\r\n    </div>\r\n    <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\r\n        <p-dropdown [options]=\"productosDisponibles\" [(ngModel)]=\"producto\" optionLabel= \"IdProducto\" [disabled]= \"!editingMode\" [style]=\"{'width':'250px'}\"></p-dropdown>\r\n    </div>\r\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\r\n        Sprint\r\n    </div>\r\n    <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\r\n        <p-dropdown [options]=\"sprintsDisponibles\" [(ngModel)]=\"sprint\" [disabled]= \"!editingMode\" [style]=\"{'width':'200px'}\"></p-dropdown>\r\n    </div>\r\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\r\n        Orden\r\n      </div>\r\n      <div class=\"ui-g-6 ui-md-4 ui-lg-2\">\r\n        <input id=\"input\" type=\"text\" size=\"4\" pInputText [(ngModel)]=\"orden\" [disabled]= \"!editingMode\"> \r\n    </div>\r\n</div>\r\n<div class=\"ui-g\">\r\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\r\n      Workflow\r\n    </div>\r\n    <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\r\n        <p-dropdown [options]=\"workflowsDisponibles\" [(ngModel)]=\"workflow\" [disabled]= \"!editingMode\" [style]=\"{'width':'250px'}\"></p-dropdown>\r\n    </div>\r\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\r\n        Tipo\r\n    </div>\r\n    <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\r\n        <p-dropdown [options]=\"tiposDisponibles\" [(ngModel)]=\"tipo\" [disabled]= \"!editingMode\" [style]=\"{'width':'200px'}\"></p-dropdown>\r\n    </div>\r\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\r\n        Proyecto\r\n      </div>\r\n      <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\r\n          <p-dropdown [options]=\"proyectosDisponibles\" [(ngModel)]=\"proyecto\" [disabled]= \"!editingMode\" [style]=\"{'width':'250px'}\"></p-dropdown>\r\n    </div>\r\n</div>\r\n<div class=\"ui-g\">\r\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\r\n        Descripción\r\n      </div>\r\n      <div class=\"ui-g-30 ui-md-20 ui-lg-10\">\r\n          <textarea rows=\"5\"  pInputTextarea  [(ngModel)]=\"descripcion\" [disabled]= \"!editingMode\" cols=\"120\"></textarea>\r\n      </div>\r\n\r\n</div>\r\n\r\n";
+
+__$styleInject("", undefined);
 
 var _dec$3;
 var _class$3;
@@ -365,11 +304,117 @@ var DetailsComponent = (_dec$3 = Component({
 }()) || _class$3);
 Reflect.defineMetadata('design:paramtypes', [ActivatedRoute, Location, DetailsService], DetailsComponent);
 
+var _dec$6;
+var _class$6;
+
+var CreateUTService = (_dec$6 = Injectable(), _dec$6(_class$6 = function () {
+  function CreateUTService(http$$1) {
+    classCallCheck(this, CreateUTService);
+
+    this._http = http$$1;
+    this._url = 'UTs/Crear';
+  }
+
+  createClass(CreateUTService, [{
+    key: 'put',
+    value: function put(newUT) {
+      return this._http.put(this._url, newUT);
+    }
+  }]);
+  return CreateUTService;
+}()) || _class$6);
+Reflect.defineMetadata('design:paramtypes', [HttpClient], CreateUTService);
+
+var _dec$7;
+var _class$7;
+
+var GetProductosService = (_dec$7 = Injectable(), _dec$7(_class$7 = function () {
+  function GetProductosService(http$$1) {
+    classCallCheck(this, GetProductosService);
+
+    this._http = http$$1;
+    this._url = 'Productos2';
+  }
+
+  createClass(GetProductosService, [{
+    key: 'get',
+    value: function get$$1() {
+      return this._http.get('' + this._url);
+    }
+  }]);
+  return GetProductosService;
+}()) || _class$7);
+Reflect.defineMetadata('design:paramtypes', [HttpClient], GetProductosService);
+
+var html$2 = "<div class=\"horizontal\">\r\n  <span class=\"ui-float-label\">\r\n    <input id=\"nombre-ut-textfield\" type=\"text\" size=\"30\" [(ngModel)]=\"ut.Nombre\" pInputText> \r\n    <label for=\"nombre-ut-textfield\">Nombre UT</label>\r\n  </span>\r\n  \r\n  <p-dropdown [options]=\"productos\" [(ngModel)]=\"ut.IdProducto\" optionLabel=\"Nombre\"></p-dropdown>\r\n  \r\n</div>\r\n";
+
+__$styleInject("", undefined);
+
+var _dec$5;
+var _class$5;
+
+var NuevaUTComponent = (_dec$5 = Component({
+  selector: 'tn-ut-nuevaut',
+  template: html$2,
+  providers: [CreateUTService, GetProductosService]
+}), _dec$5(_class$5 = function () {
+  function NuevaUTComponent(createUTService, getProductosService, notificationsService) {
+    classCallCheck(this, NuevaUTComponent);
+    this.ut = {
+      Nombre: null,
+      IdVersion: null,
+      IdProducto: null,
+      IdWorkflow: null,
+      IdTipoUT: null,
+      IdProyecto: null
+    };
+    this.productos = [];
+
+    this._createUTService = createUTService;
+    this._getProductosService = getProductosService;
+    this._notificationService = notificationsService;
+    this._getProductos();
+  }
+
+  createClass(NuevaUTComponent, [{
+    key: '_getProductos',
+    value: function _getProductos() {
+      var _this = this;
+
+      this._getProductosSubscription = this._getProductosService.get().subscribe(function (data) {
+        _this.productos = data;
+      }, function (error) {
+        return _this._notificationService.error('No se han podido obtener los productos', error);
+      });
+    }
+  }, {
+    key: '_crearUT',
+    value: function _crearUT() {
+      var _this2 = this;
+
+      idUT = 0;
+      this.createUTService.put(this.ut).subscribe(function (data) {
+        _this2.idUT = data.Resultado;
+      }, function (error) {
+        _this2._notificationService.error('No se pudo crear la UT especficada', error);
+      });
+      return idUT;
+    }
+  }, {
+    key: 'ngOnDestroy',
+    value: function ngOnDestroy() {
+      this._getProductosSubscription && !this._getProductosSubscription.closed && this._getProductosSubscription.unsubscribe();
+    }
+  }]);
+  return NuevaUTComponent;
+}()) || _class$5);
+Reflect.defineMetadata('design:paramtypes', [CreateUTService, GetProductosService, NotificationsService], NuevaUTComponent);
+
 var _dec$1;
 var _class$1;
 
 var UtRoutingModule = (_dec$1 = NgModule({
-  imports: [RouterModule.forChild([{ path: '', component: UtComponent }, { path: ':id', component: DetailsComponent }])],
+  imports: [RouterModule.forChild([{ path: '', component: UtComponent }, { path: ':id', component: DetailsComponent }, { path: 'add', component: NuevaUTComponent }])],
   exports: [RouterModule]
 }), _dec$1(_class$1 = function UtRoutingModule() {
   classCallCheck(this, UtRoutingModule);
@@ -380,11 +425,11 @@ var _class;
 
 var UtModule = (_dec = NgModule({
   imports: [TuneUpCoreModule, UtRoutingModule],
-  declarations: [UtComponent, DetailsComponent],
+  declarations: [UtComponent, DetailsComponent, NuevaUTComponent],
   providers: [DetailsService]
 }), _dec(_class = function UtModule() {
   classCallCheck(this, UtModule);
 }) || _class);
 
-export { UtModule, DetailsComponent, DetailsService };
+export { UtModule, DetailsComponent, DetailsService, NuevaUTComponent, CreateUTService, GetProductosService };
 //# sourceMappingURL=tune-up.ut.js.map

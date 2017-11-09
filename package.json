@@ -22,8 +22,7 @@
   "homepage": "https://github.com/Starkie/TUNE-UP-Process-Web-Front#readme",
   "dependencies": {
     "@tune-up/core": "file:lib/core",
-    "@tune-up/vendor": "file:lib/vendor",
-    "rxjs": "^5.5.2"
+    "@tune-up/vendor": "file:lib/vendor"
   },
   "devDependencies": {
     "@tune-up/build-utils": "file:lib/build-utils",

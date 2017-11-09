@@ -1,13 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {ActivatedRoute, ParamMap} from '@angular/router';
+import {Component} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
-
+import {DetailsService} from './services';
 import html from './details.component.html';
 import './details.component.css';
-
-import 'rxjs/add/operator/switchMap';
-
-import {DetailsService} from './services';
 
 @Component({
   selector: 'tn-ut-details',
@@ -17,15 +13,13 @@ export class DetailsComponent {
   codigoUT = null;
   editingMode = false;
 
-  constructor(route: ActivatedRoute,
-              location: Location,
-              detailsService: DetailsService) {
-        this._route = route;
-        this._detailsService = detailsService;
+  constructor(route: ActivatedRoute, location: Location, detailsService: DetailsService) {
+    this._route = route;
+    this._detailsService = detailsService;
   }
 
   ngOnInit() {
-    this.codigoUT= parseInt(this._route.params._value.id);
+    this.codigoUT = parseInt(this._route.params._value.id);
 
     this._detailsService.getUt(this.codigoUT).subscribe((data) => {
       this.ut = data;
@@ -82,9 +76,8 @@ export class DetailsComponent {
   }
 
   _parseProductos(productos) {
-    this.productosDisponibles= productos.map((prod) => {
+    this.productosDisponibles = productos.map((prod) => {
       return {label: `${prod.Nombre}`, value: prod.IdProducto};
     });
   }
-
 }

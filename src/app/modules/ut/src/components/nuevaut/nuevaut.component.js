@@ -17,12 +17,12 @@ export class NuevaUTComponent {
     IdWorkflow: null,
     IdTipoUT: null,
     IdProyecto: null,
- };
+  };
   productos = [];
 
   constructor(
     createUTService: CreateUTService,
-    getProductosService : GetProductosService,
+    getProductosService: GetProductosService,
     notificationsService: NotificationsService,
   ) {
     this._createUTService = createUTService;
@@ -48,7 +48,7 @@ export class NuevaUTComponent {
     idUT = 0;
     this.createUTService.put(this.ut).subscribe(
       (data) => {
-         this.idUT = data.Resultado;
+        this.idUT = data.Resultado;
       },
       (error) => {
         this._notificationService.error(
@@ -62,7 +62,7 @@ export class NuevaUTComponent {
 
   ngOnDestroy() {
     this._getProductosSubscription &&
-    !this._getProductosSubscription.closed &&
-    this._getProductosSubscription.unsubscribe();
+      !this._getProductosSubscription.closed &&
+      this._getProductosSubscription.unsubscribe();
   }
 }

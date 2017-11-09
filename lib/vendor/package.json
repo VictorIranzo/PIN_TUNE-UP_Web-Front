@@ -1,6 +1,6 @@
 {
   "name": "@tune-up/vendor",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "",
   "main": "dist/tune-up.vendor.umd.js",
   "main:min": "dist/tune-up.vendor.umd.min.js",

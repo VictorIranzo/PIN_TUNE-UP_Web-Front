@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 
 import html from './details.component.html';
@@ -12,10 +12,9 @@ import {DetailsService} from './services';
 })
 export class DetailsComponent {
   editingMode = false;
-  model = {codigoUT: null, nombreUT: null, orden: null, producto: null, sprint: null, workflow: null, 
+  model = {codigoUT: null, nombreUT: null, orden: null,
+          producto: null, sprint: null, workflow: null,
           tipo: null, proyecto: null, descripcion: null};
-
-  @ViewChild('combo') combo = null;
 
   constructor(route: ActivatedRoute,
               detailsService: DetailsService) {

@@ -1,9 +1,9 @@
-@import "../scene.variables.css";
-
+@import '../scene.variables.css';
+@import 'styleguide';
 .tn-scene-appbar--button {
     margin-left: 10px;
     align-self: center;
-    color: lightgray;
+    color: var(--color-primary);
 }
 .tn-scene-appbar--breadcrumb {
     margin-left: 10px;
@@ -14,8 +14,10 @@
     height: var(--tn-scene-appbar--height);    
     text-align: center;
     font-size: -webkit-xxx-large;
-    border-right: 1px solid;
-    color: lightgray;
+    color: white;
+    align-items: center;
+    justify-content: center;
+    display: flex;
 }
 .tn-scene-appbar-wrapper{
   height: 100%;

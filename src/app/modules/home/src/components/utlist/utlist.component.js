@@ -37,20 +37,17 @@ export class UtListComponent {
     this._agentService = agentService;
   }
   getAgentPic = (ut) => {
-    // TODO: experiment with async pipe
-    const idAgente = ut.IdAgente;
-    if (idAgente) {
-      const idSitio = this._agentService.getSiteId();
-      if (!agentPics[idAgente]) {
-        // TODO: refactor
-        this._agentPicService.get(idAgente, idSitio).subscribe((data) => {
-          agentPics[idAgente] = URL.createObjectURL(data);
-        });
+      const idAgente = ut.IdAgente;
+      if (idAgente) {
+        const idSitio = this._agentService.getSiteId();
+        if (!agentPics[idAgente]) {
+          this._agentPicService.get(idAgente, idSitio).subscribe((data) => {
+            agentPics[idAgente] = URL.createObjectURL(data);
+          });
+        }
+        return agentPics[idAgente] || '';
       }
-      return agentPics[idAgente];
-    }
-    // TODO: return transparent png image
-    return '';
+      return '';
   };
   getUtTypeIcon = (ut) => {
     return utTypesIcons[ut.IdTipoUT];
@@ -59,6 +56,6 @@ export class UtListComponent {
     return workflowIcons[ut.IdTipoSeguimiento];
   };
   getUtLink = (ut) => {
-    return `uts/${ut.id}`;
+    return `/uts/${ut.IdUT}`;
   };
 }

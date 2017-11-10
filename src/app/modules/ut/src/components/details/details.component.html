@@ -1,9 +1,21 @@
+<!--
+TODO 
+hacer un form, en el submit llamas a onGuardar y el boton onGuardar le pones type = submit y le
+quitas el onclick. Si no hay form no hay validations.
+usar ng-template para poner iconos en los dropdowns, y añadirles busqueda https://www.primefaces.org/primeng/#/dropdown
+los iconos los puedes ver en el onclick.
+si consigues hacer el layout con flex te quedará mejor, si no puedes al menos pon el width en % no en absoluto
+seguramente tendría sentido agrupar los distintos elementos del form en divs para hacer agrupaciones lógicas
+hacer orden input de tipo numerico, ver si puedes hacer incrementos y decrementos de 10 en 10 con los tipicos botones
+y si cambias todos los !editingModel por algo que no tengas que negar 9 veces?
+Y DEJA DE PONER ESPACIOS EN EL HTML PORFAVOR
+ -->
 <div class="ui-g">
   <div class="ui-g-4 ui-md-2 ui-lg-1">
     Código
   </div>
   <div class="ui-g-3 ui-md-2 ui-lg-1">
-    <input id="disabled-input" type="text" size= "4" pInputText [(ngModel)]= "codigoUT" [disabled]="true" />
+    <input id="disabled-input" type="text" size="4" pInputText [(ngModel)]= "codigoUT" [disabled]="true" />
   </div>
   <div class="ui-g-4 ui-md-2 ui-lg-1">
     Nombre

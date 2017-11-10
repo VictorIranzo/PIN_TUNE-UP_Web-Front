@@ -1,7 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
-import {configService} from '@tune-up/core';
 import {AgentService} from '../../../services';
 import {SceneService} from '../scene.service';
+import {menuItems} from './menuitems';
 import html from './menu.component.html';
 import './menu.component.css';
 
@@ -11,8 +11,7 @@ import './menu.component.css';
 })
 export class MenuComponent {
   @ViewChild('sidenav') sidenav = null;
-  items = configService.menuItems;
-
+  items = menuItems;
   constructor(agentService: AgentService, sceneService: SceneService) {
     this._agentService = agentService;
     this._sceneService = sceneService;

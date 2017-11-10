@@ -1,9 +1,9 @@
 (function(l, i, v, e) { v = l.createElement(i); v.async = 1; v.src = '//' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; e = l.getElementsByTagName(i)[0]; e.parentNode.insertBefore(v, e)})(document, 'script');
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/platform-browser-dynamic'), require('@angular/core'), require('@angular/common/http'), require('@tune-up/vendor'), require('@angular/forms'), require('@angular/common'), require('@angular/router'), require('@angular/platform-browser'), require('@angular/platform-browser/animations')) :
-	typeof define === 'function' && define.amd ? define(['exports', '@angular/platform-browser-dynamic', '@angular/core', '@angular/common/http', '@tune-up/vendor', '@angular/forms', '@angular/common', '@angular/router', '@angular/platform-browser', '@angular/platform-browser/animations'], factory) :
-	(factory((global.tuneUp = global.tuneUp || {}, global.tuneUp.app = {}),global.tuneUp.vendor.ngPlatformBrowserDynamic,global.tuneUp.vendor.ngCore,global.tuneUp.vendor.ngCommonHttp,global.tuneUp.vendor,global.tuneUp.vendor.ngForms,global.tuneUp.vendor.ngCommon,global.tuneUp.vendor.ngRouter,global.tuneUp.vendor.ngPlatformBrowser,global.tuneUp.vendor.ngPlatformBrowserAnimations));
-}(this, (function (exports,platformBrowserDynamic,core_1,http,vendor,forms,common,router,platformBrowser,animations) { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/platform-browser-dynamic'), require('@angular/core'), require('@angular/platform-browser'), require('@angular/platform-browser/animations'), require('@angular/common/http'), require('@angular/router'), require('@tune-up/vendor'), require('@angular/forms'), require('@angular/common')) :
+	typeof define === 'function' && define.amd ? define(['exports', '@angular/platform-browser-dynamic', '@angular/core', '@angular/platform-browser', '@angular/platform-browser/animations', '@angular/common/http', '@angular/router', '@tune-up/vendor', '@angular/forms', '@angular/common'], factory) :
+	(factory((global.tuneUp = global.tuneUp || {}, global.tuneUp.app = {}),global.tuneUp.vendor.ngPlatformBrowserDynamic,global.tuneUp.vendor.ngCore,global.tuneUp.vendor.ngPlatformBrowser,global.tuneUp.vendor.ngPlatformBrowserAnimations,global.tuneUp.vendor.ngCommonHttp,global.tuneUp.vendor.ngRouter,global.tuneUp.vendor,global.tuneUp.vendor.ngForms,global.tuneUp.vendor.ngCommon));
+}(this, (function (exports,platformBrowserDynamic,core_1,platformBrowser,animations,http,router,vendor,forms,common) { 'use strict';
 
 function __$styleInject(css, returnValue) {
   if (typeof document === 'undefined') {
@@ -25,6 +25,10 @@ function __$styleInject(css, returnValue) {
 
 var core_1__default = 'default' in core_1 ? core_1['default'] : core_1;
 
+var html = "<div class=\"vertical\">\r\n  <tn-appbar class=\"tn-scene-appbar\"></tn-appbar>\r\n  <div class=\"horizontal\">\r\n    <tn-menu class=\"tn-scene-menu\"></tn-menu>\r\n    <tn-content class=\"tn-scene-content\"></tn-content>\r\n  </div>\r\n</div>\r\n";
+
+__$styleInject(".tn-scene-appbar{background-color:#20272a;display:block;padding:0;height:70px;box-sizing:border-box;position:fixed;top:0;left:0;width:100%;z-index:2;box-shadow:0 2px 5px 0 rgba(0,0,0,.3)}.tn-scene-menu{position:fixed;left:0;top:70px;height:100%;background-color:#fff;overflow:hidden;z-index:1;text-align:center}@media (min-width:960px){.tn-scene-menu{width:270px;box-shadow:0 0 5px 0 rgba(0,0,0,.3)}}.tn-scene-content{padding-top:70px;background-color:#fff;width:100%;height:100%}@media (min-width:960px){.tn-scene-content{margin-left:270px}}",undefined);
+
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
   return typeof obj;
 } : function (obj) {
@@ -35,7 +39,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 
 
-var asyncGenerator$1 = function () {
+var asyncGenerator = function () {
   function AwaitValue(value) {
     this.value = value;
   }
@@ -152,13 +156,13 @@ var asyncGenerator$1 = function () {
 
 
 
-var classCallCheck$1 = function (instance, Constructor) {
+var classCallCheck = function (instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
   }
 };
 
-var createClass$1 = function () {
+var createClass = function () {
   function defineProperties(target, props) {
     for (var i = 0; i < props.length; i++) {
       var descriptor = props[i];
@@ -176,54 +180,621 @@ var createClass$1 = function () {
   };
 }();
 
+var _dec$3;
+var _class$3;
 
+var mqlGtsm = window.matchMedia('(min-width: 960px)');
 
+var SceneService = (_dec$3 = core_1.Injectable(), _dec$3(_class$3 = function () {
+  function SceneService(ngZone) {
+    var _this = this;
 
+    classCallCheck(this, SceneService);
 
+    this._onWindowSizeChanged = function (_ref) {
+      var matches = _ref.matches;
 
+      _this._docked = matches;
+      if (matches) _this.open();else _this.close();
+    };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-var toConsumableArray$1 = function (arr) {
-  if (Array.isArray(arr)) {
-    for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
-
-    return arr2;
-  } else {
-    return Array.from(arr);
+    this._sidenav = null;
+    this._ngZone = ngZone;
   }
+
+  createClass(SceneService, [{
+    key: 'close',
+    value: function close() {
+      if (this._sidenav && !this._docked) {
+        this._sidenav.visible = false;
+      }
+    }
+  }, {
+    key: 'closeStrong',
+    value: function closeStrong() {
+      if (this._sidenav) {
+        this._sidenav.visible = false;
+      }
+    }
+  }, {
+    key: 'open',
+    value: function open() {
+      if (this._sidenav) {
+        this._sidenav.visible = true;
+      }
+    }
+  }, {
+    key: '_initialize',
+    value: function _initialize() {
+      var _this2 = this;
+
+      mqlGtsm.addListener(function (result) {
+        return _this2._ngZone.run(function () {
+          return _this2._onWindowSizeChanged(result);
+        });
+      });
+      this._onWindowSizeChanged(mqlGtsm);
+    }
+  }, {
+    key: 'dispose',
+    value: function dispose() {
+      mqlGtsm.removeListener(this.onWindowSizeChanged);
+      this._sidenav = null;
+    }
+  }, {
+    key: 'isVisible',
+    value: function isVisible() {
+      return this._sidenav && this._sidenav.visible;
+    }
+  }, {
+    key: 'isDocked',
+    value: function isDocked() {
+      return this._docked;
+    }
+  }, {
+    key: 'sidenav',
+    set: function set$$1(value) {
+      this._sidenav = value;
+      this._initialize();
+    }
+  }]);
+  return SceneService;
+}()) || _class$3);
+Reflect.defineMetadata('design:paramtypes', [core_1.NgZone], SceneService);
+
+var _dec$2;
+var _class$2;
+
+var SceneComponent = (_dec$2 = core_1.Component({
+  selector: 'tn-scene',
+  template: html,
+  providers: [SceneService]
+}), _dec$2(_class$2 = function () {
+  function SceneComponent(sceneService) {
+    classCallCheck(this, SceneComponent);
+
+    this._sceneService = sceneService;
+  }
+
+  createClass(SceneComponent, [{
+    key: 'ngOnDestroy',
+    value: function ngOnDestroy() {
+      this._sceneService.dispose();
+    }
+  }]);
+  return SceneComponent;
+}()) || _class$2);
+Reflect.defineMetadata('design:paramtypes', [SceneService], SceneComponent);
+
+var _dec$5;
+var _class$5;
+
+var BreadcrumbService = (_dec$5 = core_1.Injectable(), _dec$5(_class$5 = function () {
+  function BreadcrumbService() {
+    classCallCheck(this, BreadcrumbService);
+    this._breadCrumbItems = [];
+  }
+
+  createClass(BreadcrumbService, [{
+    key: 'addItem',
+    value: function addItem(menuItem) {
+      this._breadCrumbItems.push(menuItem);
+    }
+  }, {
+    key: 'items',
+    get: function get$$1() {
+      return this._breadCrumbItems;
+    },
+    set: function set$$1(value) {
+      this._breadCrumbItems = value;
+    }
+  }]);
+  return BreadcrumbService;
+}()) || _class$5);
+
+var html$1 = "<!-- TODO: make functions to manage visibility, dont call the service directly -->\r\n<div class=\"horizontal tn-scene-appbar-wrapper\">\r\n    <div *ngIf=\"this._sceneService.isDocked()\" class=\"none tn-scene-appbar--topMenu\">TUNE-UP</div>\r\n    <div class =\"horizontal ten\">\r\n      <div class=\"tn-scene-appbar--button\" *ngIf=\"!this._sceneService.isDocked()\" >\r\n        <i *ngIf=\"this._sceneService.isVisible()\" (click)=\"onHideMenuClick()\" class=\"fa fa-2x fa-caret-square-o-left\"></i>                                \r\n        <i *ngIf=\"!this._sceneService.isVisible()\" (click)=\"onShowMenuClick()\" class=\"fa fa-2x fa-caret-square-o-right\"></i>                    \r\n      </div>\r\n      <p-breadcrumb class=\"tn-scene-appbar--breadcrumb\" [model]=\"breadcrumbItems\"></p-breadcrumb>    \r\n    </div>\r\n    <div class = \"horizontal one\">\r\n        <i class=\"tn-scene-appbar--button fa fa-2x fa-list\"></i>        \r\n    </div>\r\n</div>\r\n";
+
+__$styleInject(".tn-scene-appbar--button{color:#7e57c2}.tn-scene-appbar--breadcrumb,.tn-scene-appbar--button{margin-left:10px;align-self:center}.tn-scene-appbar--topMenu{width:270px;height:70px;text-align:center;font-size:-webkit-xxx-large;color:#fff;align-items:center;justify-content:center;display:flex}.tn-scene-appbar-wrapper{height:100%}",undefined);
+
+var _dec$4;
+var _class$4;
+
+var AppbarComponent = (_dec$4 = core_1.Component({
+  selector: 'tn-appbar',
+  template: html$1,
+  providers: [BreadcrumbService]
+}), _dec$4(_class$4 = function () {
+  function AppbarComponent(breadcrumbService, sceneService) {
+    classCallCheck(this, AppbarComponent);
+    this.menuOpen = true;
+    this.breadcrumbItems = [];
+
+    this._breadcrumbService = breadcrumbService;
+    this._sceneService = sceneService;
+    this._getBreadcrumbItems();
+  }
+
+  createClass(AppbarComponent, [{
+    key: '_getBreadcrumbItems',
+    value: function _getBreadcrumbItems() {
+      this.breadcrumbItems = this._breadcrumbService.items;
+    }
+  }, {
+    key: 'onHideMenuClick',
+    value: function onHideMenuClick() {
+      this.menuOpen = false;
+      this._sceneService.closeStrong();
+    }
+  }, {
+    key: 'onShowMenuClick',
+    value: function onShowMenuClick() {
+      this.menuOpen = true;
+      this._sceneService.open();
+    }
+  }]);
+  return AppbarComponent;
+}()) || _class$4);
+Reflect.defineMetadata('design:paramtypes', [BreadcrumbService, SceneService], AppbarComponent);
+
+var html$2 = "<router-outlet></router-outlet>\r\n";
+
+var _dec$6;
+var _class$6;
+
+var ContentComponent = (_dec$6 = core_1.Component({
+  selector: 'tn-content',
+  template: html$2
+}), _dec$6(_class$6 = function ContentComponent() {
+  classCallCheck(this, ContentComponent);
+}) || _class$6);
+
+var _dec$8;
+var _class$8;
+
+var TOKEN_KEY = 'tnToken';
+
+var AuthService = (_dec$8 = core_1.Injectable(), _dec$8(_class$8 = function () {
+  function AuthService() {
+    classCallCheck(this, AuthService);
+  }
+
+  createClass(AuthService, [{
+    key: 'getToken',
+    value: function getToken() {
+      return sessionStorage.getItem(TOKEN_KEY);
+    }
+  }, {
+    key: 'setToken',
+    value: function setToken(token) {
+      sessionStorage.setItem(TOKEN_KEY, token);
+    }
+  }]);
+  return AuthService;
+}()) || _class$8);
+
+var _dec$9;
+var _class$9;
+
+var AgentService = (_dec$9 = core_1.Injectable(), _dec$9(_class$9 = function () {
+  function AgentService() {
+    classCallCheck(this, AgentService);
+
+    this._agent = this.getFromStorage();
+  }
+
+  createClass(AgentService, [{
+    key: 'getFromStorage',
+    value: function getFromStorage() {
+      var agent = sessionStorage.getItem('tnAgent') ? JSON.parse(sessionStorage.getItem('tnAgent')) : undefined;
+      return agent;
+    }
+  }, {
+    key: 'saveToStorage',
+    value: function saveToStorage(agent) {
+      sessionStorage.setItem('tnAgent', JSON.stringify(agent));
+    }
+  }, {
+    key: 'getSiteId',
+    value: function getSiteId() {
+      return this._agent.IdSitio;
+    }
+  }, {
+    key: 'isAdmin',
+    value: function isAdmin() {
+      return this._agent.Administrador;
+    }
+  }, {
+    key: 'agent',
+    get: function get$$1() {
+      return this._agent;
+    },
+    set: function set$$1(value) {
+      this._agent = value;
+      this.saveToStorage(value);
+    }
+  }]);
+  return AgentService;
+}()) || _class$9);
+
+var _dec$10;
+var _class$10;
+
+var AboutService = (_dec$10 = core_1.Injectable(), _dec$10(_class$10 = function () {
+  function AboutService() {
+    classCallCheck(this, AboutService);
+
+    this._about = null;
+  }
+
+  createClass(AboutService, [{
+    key: 'about',
+    get: function get$$1() {
+      return this._about;
+    },
+    set: function set$$1(value) {
+      this._about = value;
+    }
+  }]);
+  return AboutService;
+}()) || _class$10);
+
+var menuItems = [{
+  path: 'home',
+  text: 'Inicio',
+  icon: 'fa fa-home',
+  adminOnly: false
+}];
+
+var html$3 = "<p-sidebar #sidenav [ngStyle]=\"{width:'270px'}\">\r\n  <div>\r\n    <img class=\"tn-menu-sidebar--logo\" src=\"./assets/logo.png\">\r\n  </div>\r\n  <div class=\"tn-menu-sidebar\">\r\n    <div *ngFor=\"let item of items\">\r\n      <div *ngIf=\"mustPrint(item)\">\r\n        <tn-menuitem [text]=\"item.text\" [path]=\"item.path\" [icon]=\"item.icon\" [adminOnly]=\"item.adminOnly\"></tn-menuitem>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</p-sidebar>\r\n";
+
+__$styleInject(".tn-menu-sidebar--logo{width:180px;height:180px;margin-top:80px;margin-bottom:10px}.ui-sidebar-left{width:270px}.tn-menu-sidebar{background:#7e57c2;height:100%}",undefined);
+
+var _dec$7;
+var _dec2;
+var _class$7;
+var _class2;
+var _descriptor;
+
+function _initDefineProp(target, property, descriptor, context) {
+  if (!descriptor) return;
+  Object.defineProperty(target, property, {
+    enumerable: descriptor.enumerable,
+    configurable: descriptor.configurable,
+    writable: descriptor.writable,
+    value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
+  });
+}
+
+function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) {
+  var desc = {};
+  Object['ke' + 'ys'](descriptor).forEach(function (key) {
+    desc[key] = descriptor[key];
+  });
+  desc.enumerable = !!desc.enumerable;
+  desc.configurable = !!desc.configurable;
+
+  if ('value' in desc || desc.initializer) {
+    desc.writable = true;
+  }
+
+  desc = decorators.slice().reverse().reduce(function (desc, decorator) {
+    return decorator(target, property, desc) || desc;
+  }, desc);
+
+  if (context && desc.initializer !== void 0) {
+    desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
+    desc.initializer = undefined;
+  }
+
+  if (desc.initializer === void 0) {
+    Object['define' + 'Property'](target, property, desc);
+    desc = null;
+  }
+
+  return desc;
+}
+
+var MenuComponent = (_dec$7 = core_1.Component({
+  selector: 'tn-menu',
+  template: html$3
+}), _dec2 = core_1.ViewChild('sidenav'), _dec$7(_class$7 = (_class2 = function () {
+  function MenuComponent(agentService, sceneService) {
+    classCallCheck(this, MenuComponent);
+
+    _initDefineProp(this, 'sidenav', _descriptor, this);
+
+    this.items = menuItems;
+
+    this._agentService = agentService;
+    this._sceneService = sceneService;
+  }
+
+  createClass(MenuComponent, [{
+    key: 'mustPrint',
+    value: function mustPrint(item) {
+      // TODO: fix when needed
+      // return this._agentService.isAdmin();
+      return true;
+    }
+  }, {
+    key: 'ngAfterContentInit',
+    value: function ngAfterContentInit() {
+      this._sceneService.sidenav = this.sidenav;
+    }
+  }, {
+    key: 'ngAfterViewInit',
+    value: function ngAfterViewInit() {
+      this._tuneSidenav();
+    }
+  }, {
+    key: '_tuneSidenav',
+    value: function _tuneSidenav() {
+      document.getElementsByClassName('ui-sidebar-mask')[0].hidden = true;
+      document.getElementsByClassName('ui-sidebar-close')[0].remove();
+      document.getElementsByClassName('ui-sidebar')[0].style.padding = '0px';
+    }
+  }]);
+  return MenuComponent;
+}(), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, 'sidenav', [_dec2], {
+  enumerable: true,
+  initializer: function initializer() {
+    return null;
+  }
+})), _class2)) || _class$7);
+Reflect.defineMetadata('design:paramtypes', [AgentService, SceneService], MenuComponent);
+
+var html$4 = "<button pButton type=\"button\" class=\"tn-menuitem-layout\" label= {{text}} icon= {{icon}} routerLink={{path}}></button>\r\n";
+
+__$styleInject(".tn-menuitem-layout{width:100%;border-bottom:1px solid #fff!important}",undefined);
+
+var _dec$11;
+var _dec2$1;
+var _dec3;
+var _dec4;
+var _dec5;
+var _class$11;
+var _class2$1;
+var _descriptor$1;
+var _descriptor2;
+var _descriptor3;
+var _descriptor4;
+
+function _initDefineProp$1(target, property, descriptor, context) {
+  if (!descriptor) return;
+  Object.defineProperty(target, property, {
+    enumerable: descriptor.enumerable,
+    configurable: descriptor.configurable,
+    writable: descriptor.writable,
+    value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
+  });
+}
+
+function _applyDecoratedDescriptor$1(target, property, decorators, descriptor, context) {
+  var desc = {};
+  Object['ke' + 'ys'](descriptor).forEach(function (key) {
+    desc[key] = descriptor[key];
+  });
+  desc.enumerable = !!desc.enumerable;
+  desc.configurable = !!desc.configurable;
+
+  if ('value' in desc || desc.initializer) {
+    desc.writable = true;
+  }
+
+  desc = decorators.slice().reverse().reduce(function (desc, decorator) {
+    return decorator(target, property, desc) || desc;
+  }, desc);
+
+  if (context && desc.initializer !== void 0) {
+    desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
+    desc.initializer = undefined;
+  }
+
+  if (desc.initializer === void 0) {
+    Object['define' + 'Property'](target, property, desc);
+    desc = null;
+  }
+
+  return desc;
+}
+
+var MenuItemComponent = (_dec$11 = core_1.Component({
+  selector: 'tn-menuitem',
+  template: html$4
+}), _dec2$1 = core_1.Input(), _dec3 = core_1.Input(), _dec4 = core_1.Input(), _dec5 = core_1.Input(), _dec$11(_class$11 = (_class2$1 = function MenuItemComponent() {
+  classCallCheck(this, MenuItemComponent);
+
+  _initDefineProp$1(this, 'path', _descriptor$1, this);
+
+  _initDefineProp$1(this, 'text', _descriptor2, this);
+
+  _initDefineProp$1(this, 'icon', _descriptor3, this);
+
+  _initDefineProp$1(this, 'adminOnly', _descriptor4, this);
+}, (_descriptor$1 = _applyDecoratedDescriptor$1(_class2$1.prototype, 'path', [_dec2$1], {
+  enumerable: true,
+  initializer: function initializer() {
+    return this.path;
+  }
+}), _descriptor2 = _applyDecoratedDescriptor$1(_class2$1.prototype, 'text', [_dec3], {
+  enumerable: true,
+  initializer: function initializer() {
+    return this.text;
+  }
+}), _descriptor3 = _applyDecoratedDescriptor$1(_class2$1.prototype, 'icon', [_dec4], {
+  enumerable: true,
+  initializer: function initializer() {
+    return this.icon;
+  }
+}), _descriptor4 = _applyDecoratedDescriptor$1(_class2$1.prototype, 'adminOnly', [_dec5], {
+  enumerable: true,
+  initializer: function initializer() {
+    return this.adminOnly;
+  }
+})), _class2$1)) || _class$11);
+
+var _dec$12;
+var _class$12;
+
+var AuthGuard = (_dec$12 = core_1.Injectable(), _dec$12(_class$12 = function () {
+  function AuthGuard(router$$1, authService) {
+    classCallCheck(this, AuthGuard);
+
+    this._router = router$$1;
+    this._authService = authService;
+  }
+
+  createClass(AuthGuard, [{
+    key: '_checkAndRedirect',
+    value: function _checkAndRedirect(route, state) {
+      if (this._authService.getToken()) {
+        return true;
+      }
+      var returnUrl = state && state.url;
+      this._router.navigate(['/login'], { queryParams: { returnUrl: returnUrl } });
+      return false;
+    }
+  }, {
+    key: 'canActivate',
+    value: function canActivate(route, state) {
+      return this._checkAndRedirect(route, state);
+    }
+  }]);
+  return AuthGuard;
+}()) || _class$12);
+Reflect.defineMetadata('design:paramtypes', [router.Router, AuthService], AuthGuard);
+
+var _dec$1;
+var _class$1;
+
+var AppRoutingModule = (_dec$1 = core_1.NgModule({
+  imports: [router.RouterModule.forRoot([{
+    path: '',
+    component: SceneComponent,
+    canActivate: [AuthGuard],
+    // register lazy-load routes
+    children: [{
+      path: 'home',
+      loadChildren: 'src/app/modules/home/dist/tune-up.home.umd.js#home#HomeModule'
+    }, {
+      path: 'uts',
+      loadChildren: 'src/app/modules/ut/dist/tune-up.ut.umd.js#ut#UtModule'
+    }]
+  }, {
+    path: 'login',
+    loadChildren: 'src/app/modules/login/dist/tune-up.login.umd.js#login#LoginModule'
+  }, {
+    path: '**',
+    redirectTo: 'home',
+    pathMatch: 'full'
+  }], {
+    useHash: true,
+    enableTracing: "development" !== 'production'
+  })],
+  exports: [router.RouterModule],
+  providers: [AuthGuard]
+}), _dec$1(_class$1 = function AppRoutingModule() {
+  classCallCheck(this, AppRoutingModule);
+}) || _class$1);
+
+var _dec$13;
+var _class$13;
+
+var ResponseInterceptor = (_dec$13 = core_1.Injectable(), _dec$13(_class$13 = function () {
+  function ResponseInterceptor() {
+    classCallCheck(this, ResponseInterceptor);
+  }
+
+  createClass(ResponseInterceptor, [{
+    key: 'intercept',
+    value: function intercept(req, next) {
+      var _this = this;
+
+      return next.handle(req).map(function (event) {
+        if (event instanceof http.HttpResponse) {
+          if (!event.body.Resultado) {
+            return event;
+          }
+          _this._checkInvalid(event);
+          return event = _this._serializeBody(event);
+        }
+      });
+    }
+  }, {
+    key: '_serializeBody',
+    value: function _serializeBody(response) {
+      var result = response.body.Resultado;
+      return response.clone({ body: result });
+    }
+  }, {
+    key: '_checkInvalid',
+    value: function _checkInvalid(response) {
+      if (!response.body.Exito) {
+        throw new Error(response.body.Mensaje);
+      }
+    }
+  }]);
+  return ResponseInterceptor;
+}()) || _class$13);
+
+var ResponseInterceptorProvider = {
+  provide: http.HTTP_INTERCEPTORS,
+  useClass: ResponseInterceptor,
+  multi: true
+};
+
+var _dec$14;
+var _class$14;
+
+var TokenInterceptor = (_dec$14 = core_1.Injectable(), _dec$14(_class$14 = function () {
+  function TokenInterceptor(authService) {
+    classCallCheck(this, TokenInterceptor);
+
+    this._authService = authService;
+  }
+
+  createClass(TokenInterceptor, [{
+    key: 'intercept',
+    value: function intercept(req, next) {
+      if (!this._authService.getToken()) {
+        return next.handle(req);
+      }
+      var tokenReq = req.clone({
+        setHeaders: {
+          token: this._authService.getToken()
+        }
+      });
+      return next.handle(tokenReq);
+    }
+  }]);
+  return TokenInterceptor;
+}()) || _class$14);
+Reflect.defineMetadata('design:paramtypes', [AuthService], TokenInterceptor);
+
+var TokenInterceptorProvider = {
+  provide: http.HTTP_INTERCEPTORS,
+  useClass: TokenInterceptor,
+  multi: true
 };
 
 function __$styleInject$1(css, returnValue) {
@@ -3106,12 +3677,10 @@ var defaultConfig = {
     validators: Object.assign({}, validator, customValidators),
     validations: {},
     defaultValidationError: 'Campo inválido',
-    routes: {},
-    menuItems: [],
     APIBaseUrl: 'http://cliente.tuneupprocess.com/webapi/api'
 };
 
-var asyncGenerator = function () {
+var asyncGenerator$1 = function () {
     function AwaitValue(value) {
         this.value = value;
     }
@@ -3224,13 +3793,13 @@ var asyncGenerator = function () {
     };
 }();
 
-var classCallCheck = function classCallCheck(instance, Constructor) {
+var classCallCheck$1 = function classCallCheck$$1(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
         throw new TypeError("Cannot call a class as a function");
     }
 };
 
-var createClass = function () {
+var createClass$1 = function () {
     function defineProperties(target, props) {
         for (var i = 0; i < props.length; i++) {
             var descriptor = props[i];
@@ -3248,7 +3817,7 @@ var createClass = function () {
     };
 }();
 
-var defineProperty = function defineProperty(obj, key, value) {
+var defineProperty$1 = function defineProperty$$1(obj, key, value) {
     if (key in obj) {
         Object.defineProperty(obj, key, {
             value: value,
@@ -3263,7 +3832,7 @@ var defineProperty = function defineProperty(obj, key, value) {
     return obj;
 };
 
-var slicedToArray = function () {
+var slicedToArray$1 = function () {
     function sliceIterator(arr, i) {
         var _arr = [];
         var _n = true;
@@ -3301,7 +3870,7 @@ var slicedToArray = function () {
     };
 }();
 
-var toConsumableArray = function toConsumableArray(arr) {
+var toConsumableArray$1 = function toConsumableArray$$1(arr) {
     if (Array.isArray(arr)) {
         for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
             arr2[i] = arr[i];
@@ -3313,30 +3882,12 @@ var toConsumableArray = function toConsumableArray(arr) {
 
 var ConfigService = function () {
     function ConfigService() {
-        classCallCheck(this, ConfigService);
+        classCallCheck$1(this, ConfigService);
 
         Object.assign(this, defaultConfig);
     }
 
-    createClass(ConfigService, [{
-        key: 'init',
-        value: function init(configObject) {
-            var validators = configObject.validators,
-                validations = configObject.validations,
-                defaultValidationError = configObject.defaultValidationError,
-                routes = configObject.routes,
-                menuItems = configObject.menuItems,
-                APIBaseUrl = configObject.APIBaseUrl;
-
-            validators && this.addValidators(validators);
-            validations && this.addValidations(validations);
-            routes && this.addRoutes(routes);
-            menuItems && this.addMenuItems(menuItems);
-
-            this._defaultValidationError = defaultValidationError ? defaultValidationError : this._defaultValidationError;
-            this._APIBaseUrl = APIBaseUrl ? APIBaseUrl : this._APIBaseUrl;
-        }
-    }, {
+    createClass$1(ConfigService, [{
         key: 'addValidators',
         value: function addValidators(newValidators) {
             Object.assign(this._validators, newValidators);
@@ -3345,29 +3896,6 @@ var ConfigService = function () {
         key: 'addValidations',
         value: function addValidations(newValidations) {
             Object.assign(this._validations, newValidations);
-        }
-    }, {
-        key: 'addRoutes',
-        value: function addRoutes(newRoutes) {
-            Object.assign(this._routes, newRoutes);
-        }
-    }, {
-        key: 'getRouteObjects',
-        value: function getRouteObjects() {
-            return Object.values(this._routes);
-        }
-    }, {
-        key: 'addRoutesWithAuth',
-        value: function addRoutesWithAuth(childRoutes) {
-            var mainRoute = this._routes.mainRoute;
-            mainRoute && mainRoute.children && childRoutes.map(function (route) {
-                mainRoute.children.push(route);
-            });
-        }
-    }, {
-        key: 'addMenuItems',
-        value: function addMenuItems(newMenuItems) {
-            this._menuItems = this._menuItems.concat(newMenuItems);
         }
     }, {
         key: 'validators',
@@ -3384,22 +3912,6 @@ var ConfigService = function () {
         },
         set: function set$$1(value) {
             this._validations = value;
-        }
-    }, {
-        key: 'routes',
-        get: function get$$1() {
-            return this._routes;
-        },
-        set: function set$$1(value) {
-            this._routes = value;
-        }
-    }, {
-        key: 'menuItems',
-        get: function get$$1() {
-            return this._menuItems;
-        },
-        set: function set$$1(value) {
-            this._menuItems = value;
         }
     }, {
         key: 'defaultValidationError',
@@ -3423,17 +3935,17 @@ var ConfigService = function () {
 
 var configService = new ConfigService();
 
-var _dec;
-var _class;
+var _dec$15;
+var _class$15;
 
 //import {BASE_URL} from './baseurl';
 
-var APIInterceptor = (_dec = core_1.Injectable(), _dec(_class = function () {
+var APIInterceptor = (_dec$15 = core_1.Injectable(), _dec$15(_class$15 = function () {
     function APIInterceptor() {
-        classCallCheck(this, APIInterceptor);
+        classCallCheck$1(this, APIInterceptor);
     }
 
-    createClass(APIInterceptor, [{
+    createClass$1(APIInterceptor, [{
         key: 'intercept',
         value: function intercept(req, next) {
             var apiReq = req.clone({ url: configService.APIBaseUrl + '/' + req.url });
@@ -3441,7 +3953,7 @@ var APIInterceptor = (_dec = core_1.Injectable(), _dec(_class = function () {
         }
     }]);
     return APIInterceptor;
-}()) || _class);
+}()) || _class$15);
 
 var APIInterceptorProvider = {
     provide: http.HTTP_INTERCEPTORS,
@@ -3449,20 +3961,43 @@ var APIInterceptorProvider = {
     multi: true
 };
 
-var _dec$1;
-var _class$1;
+var _dec$1$1;
+var _class$1$1;
+
+var SafeHtmlPipe = (_dec$1$1 = core_1.Pipe({ name: 'safeHtml' }), _dec$1$1(_class$1$1 = function () {
+    function SafeHtmlPipe(sanitizer) {
+        classCallCheck$1(this, SafeHtmlPipe);
+
+        this.sanitizer = sanitizer;
+    }
+
+    createClass$1(SafeHtmlPipe, [{
+        key: 'transform',
+        value: function transform(html) {
+            if (html === '') {
+                return '';
+            }
+            return this.sanitizer.bypassSecurityTrustResourceUrl(html);
+        }
+    }]);
+    return SafeHtmlPipe;
+}()) || _class$1$1);
+Reflect.defineMetadata('design:paramtypes', [platformBrowser.DomSanitizer], SafeHtmlPipe);
+
+var _dec$2$1;
+var _class$2$1;
 
 var NAMESPACE = 'tuneUp';
 var SEPARATOR = '#';
 
-var ModuleLoader = (_dec$1 = core_1.Injectable(), _dec$1(_class$1 = function () {
+var ModuleLoader = (_dec$2$1 = core_1.Injectable(), _dec$2$1(_class$2$1 = function () {
     function ModuleLoader(compiler) {
-        classCallCheck(this, ModuleLoader);
+        classCallCheck$1(this, ModuleLoader);
 
         this.compiler = compiler;
     }
 
-    createClass(ModuleLoader, [{
+    createClass$1(ModuleLoader, [{
         key: 'load',
         value: function load(path) {
             var _this = this;
@@ -3497,7 +4032,7 @@ var ModuleLoader = (_dec$1 = core_1.Injectable(), _dec$1(_class$1 = function () 
         key: 'splitPath',
         value: function splitPath(path) {
             var _path$split = path.split(SEPARATOR),
-                _path$split2 = slicedToArray(_path$split, 3),
+                _path$split2 = slicedToArray$1(_path$split, 3),
                 modulePath = _path$split2[0],
                 moduleNamespace = _path$split2[1],
                 moduleName = _path$split2[2];
@@ -3506,7 +4041,7 @@ var ModuleLoader = (_dec$1 = core_1.Injectable(), _dec$1(_class$1 = function () 
         }
     }]);
     return ModuleLoader;
-}()) || _class$1);
+}()) || _class$2$1);
 Reflect.defineMetadata('design:paramtypes', [core_1.Compiler], ModuleLoader);
 
 var ModuleLoaderProvider = {
@@ -3514,31 +4049,31 @@ var ModuleLoaderProvider = {
     useClass: ModuleLoader
 };
 
-var _dec$2;
-var _class$2;
+var _dec$3$1;
+var _class$3$1;
 
 var primengModules = Object.values(vendor.primengExports).filter(function (func) {
     return func.name && func.name.endsWith('Module');
 });
 
-var PrimengModule = (_dec$2 = core_1.NgModule({
+var PrimengModule = (_dec$3$1 = core_1.NgModule({
     imports: primengModules,
     exports: primengModules
-}), _dec$2(_class$2 = function PrimengModule() {
-    classCallCheck(this, PrimengModule);
-}) || _class$2);
+}), _dec$3$1(_class$3$1 = function PrimengModule() {
+    classCallCheck$1(this, PrimengModule);
+}) || _class$3$1);
 
-var html = "<ng-container *ngIf=\"control.dirty && !control.valid\">\r\n  <p *ngFor=\"let error of getErrors()\" class=\"tn-validation--error\">\r\n    {{error}}\r\n  </p>\r\n</ng-container>\r\n";
+var html$5 = "<ng-container *ngIf=\"control.dirty && !control.valid\">\r\n  <p *ngFor=\"let error of getErrors()\" class=\"tn-validation--error\">\r\n    {{error}}\r\n  </p>\r\n</ng-container>\r\n";
 
 __$styleInject$1(".tn-validation--error{color:red;font-size:12px;font-size:.75rem;margin-bottom:8px}", undefined);
 
-var _dec$3;
-var _dec2;
-var _class$3;
-var _class2;
-var _descriptor;
+var _dec$4$1;
+var _dec2$2;
+var _class$4$1;
+var _class2$2;
+var _descriptor$2;
 
-function _initDefineProp(target, property, descriptor, context) {
+function _initDefineProp$2(target, property, descriptor, context) {
     if (!descriptor) return;
     Object.defineProperty(target, property, {
         enumerable: descriptor.enumerable,
@@ -3548,7 +4083,7 @@ function _initDefineProp(target, property, descriptor, context) {
     });
 }
 
-function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) {
+function _applyDecoratedDescriptor$2(target, property, decorators, descriptor, context) {
     var desc = {};
     Object['ke' + 'ys'](descriptor).forEach(function (key) {
         desc[key] = descriptor[key];
@@ -3577,37 +4112,37 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
     return desc;
 }
 
-var ValidationErrorComponent = (_dec$3 = core_1.Component({
+var ValidationErrorComponent = (_dec$4$1 = core_1.Component({
     selector: 'tn-validation-error',
-    template: html
-}), _dec2 = core_1.Input(), _dec$3(_class$3 = (_class2 = function () {
+    template: html$5
+}), _dec2$2 = core_1.Input(), _dec$4$1(_class$4$1 = (_class2$2 = function () {
     function ValidationErrorComponent() {
-        classCallCheck(this, ValidationErrorComponent);
+        classCallCheck$1(this, ValidationErrorComponent);
 
-        _initDefineProp(this, 'control', _descriptor, this);
+        _initDefineProp$2(this, 'control', _descriptor$2, this);
     }
 
-    createClass(ValidationErrorComponent, [{
+    createClass$1(ValidationErrorComponent, [{
         key: 'getErrors',
         value: function getErrors() {
             return Object.values(this.control && this.control.errors || {});
         }
     }]);
     return ValidationErrorComponent;
-}(), _descriptor = _applyDecoratedDescriptor(_class2.prototype, 'control', [_dec2], {
+}(), _descriptor$2 = _applyDecoratedDescriptor$2(_class2$2.prototype, 'control', [_dec2$2], {
     enumerable: true,
     initializer: function initializer() {
         return this.control;
     }
-}), _class2)) || _class$3);
+}), _class2$2)) || _class$4$1);
 
-var _dec$4;
-var _dec2$1;
-var _class$4;
-var _class2$1;
-var _descriptor$1;
+var _dec$5$1;
+var _dec2$1$1;
+var _class$5$1;
+var _class2$1$1;
+var _descriptor$1$1;
 
-function _initDefineProp$1(target, property, descriptor, context) {
+function _initDefineProp$1$1(target, property, descriptor, context) {
     if (!descriptor) return;
     Object.defineProperty(target, property, {
         enumerable: descriptor.enumerable,
@@ -3617,7 +4152,7 @@ function _initDefineProp$1(target, property, descriptor, context) {
     });
 }
 
-function _applyDecoratedDescriptor$1(target, property, decorators, descriptor, context) {
+function _applyDecoratedDescriptor$1$1(target, property, decorators, descriptor, context) {
     var desc = {};
     Object['ke' + 'ys'](descriptor).forEach(function (key) {
         desc[key] = descriptor[key];
@@ -3654,19 +4189,19 @@ var NG_VALIDATORS_PROVIDER = {
     multi: true
 };
 
-var Rule = (_dec$4 = core_1.Directive({
+var Rule = (_dec$5$1 = core_1.Directive({
     selector: '[rule][ngModel]',
     providers: [NG_VALIDATORS_PROVIDER]
-}), _dec2$1 = core_1.Input('rule'), _dec$4(_class$4 = (_class2$1 = function () {
+}), _dec2$1$1 = core_1.Input('rule'), _dec$5$1(_class$5$1 = (_class2$1$1 = function () {
     function Rule() {
-        classCallCheck(this, Rule);
+        classCallCheck$1(this, Rule);
 
-        _initDefineProp$1(this, 'path', _descriptor$1, this);
+        _initDefineProp$1$1(this, 'path', _descriptor$1$1, this);
 
         this._subscribersCache = [];
     }
 
-    createClass(Rule, [{
+    createClass$1(Rule, [{
         key: 'ngOnInit',
         value: function ngOnInit() {
             this.validationFunctions = this._getValidationFunctions();
@@ -3700,8 +4235,8 @@ var Rule = (_dec$4 = core_1.Directive({
             return function (control) {
                 var scope = {};
                 var modelValues = modelArgs[0] ? _this2._handleModelValues(modelArgs, control) : [];
-                var thisArgs = [control.value || ''].concat(toConsumableArray(args), toConsumableArray(modelValues));
-                return func.apply(scope, thisArgs) ? null : defineProperty({}, func.name, msg);
+                var thisArgs = [control.value || ''].concat(toConsumableArray$1(args), toConsumableArray$1(modelValues));
+                return func.apply(scope, thisArgs) ? null : defineProperty$1({}, func.name, msg);
             };
         }
     }, {
@@ -3769,12 +4304,12 @@ var Rule = (_dec$4 = core_1.Directive({
         }
     }]);
     return Rule;
-}(), _descriptor$1 = _applyDecoratedDescriptor$1(_class2$1.prototype, 'path', [_dec2$1], {
+}(), _descriptor$1$1 = _applyDecoratedDescriptor$1$1(_class2$1$1.prototype, 'path', [_dec2$1$1], {
     enumerable: true,
     initializer: function initializer() {
         return null;
     }
-}), _class2$1)) || _class$4);
+}), _class2$1$1)) || _class$5$1);
 
 "use strict";
 // CommonJS / Node have global context exposed as "global" variable.
@@ -4913,8 +5448,8 @@ var AnonymousSubject = function (_super) {
     return AnonymousSubject;
 }(Subject);
 
-var _dec$6;
-var _class$6;
+var _dec$7$1;
+var _class$7$1;
 
 var notificationTypes = {
     success: 'success',
@@ -4923,14 +5458,14 @@ var notificationTypes = {
     error: 'error'
 };
 
-var NotificationsService = (_dec$6 = core_1.Injectable(), _dec$6(_class$6 = function () {
+var NotificationsService = (_dec$7$1 = core_1.Injectable(), _dec$7$1(_class$7$1 = function () {
     function NotificationsService() {
-        classCallCheck(this, NotificationsService);
+        classCallCheck$1(this, NotificationsService);
 
         this.notificationChange = new Subject_2();
     }
 
-    createClass(NotificationsService, [{
+    createClass$1(NotificationsService, [{
         key: '_notify',
         value: function _notify(severity, summary, detail) {
             this.notificationChange.next({ severity: severity, summary: summary, detail: detail });
@@ -4957,26 +5492,26 @@ var NotificationsService = (_dec$6 = core_1.Injectable(), _dec$6(_class$6 = func
         }
     }]);
     return NotificationsService;
-}()) || _class$6);
+}()) || _class$7$1);
 
-var html$1 = "<p-growl [value]=\"msgs\"></p-growl>\r\n";
+var html$1$1 = "<p-growl [value]=\"msgs\"></p-growl>\r\n";
 
-var _dec$5;
-var _class$5;
+var _dec$6$1;
+var _class$6$1;
 
-var NotificationsComponent = (_dec$5 = core_1.Component({
+var NotificationsComponent = (_dec$6$1 = core_1.Component({
     selector: 'tn-notifications',
-    template: html$1
-}), _dec$5(_class$5 = function () {
+    template: html$1$1
+}), _dec$6$1(_class$6$1 = function () {
     function NotificationsComponent(notificationsService) {
-        classCallCheck(this, NotificationsComponent);
+        classCallCheck$1(this, NotificationsComponent);
         this.msgs = [];
 
         this._notificationsService = notificationsService;
         this._subscription = null;
     }
 
-    createClass(NotificationsComponent, [{
+    createClass$1(NotificationsComponent, [{
         key: 'ngOnInit',
         value: function ngOnInit() {
             this._subscribeToNotifications();
@@ -4997,7 +5532,7 @@ var NotificationsComponent = (_dec$5 = core_1.Component({
         }
     }]);
     return NotificationsComponent;
-}()) || _class$5);
+}()) || _class$6$1);
 Reflect.defineMetadata('design:paramtypes', [NotificationsService], NotificationsComponent);
 
 var moment = createCommonjsModule(function (module, exports) {
@@ -9939,705 +10474,19 @@ var moment_module = {
 
 var MomentModule = moment_module.MomentModule;
 
-var _dec$7;
-var _class$7;
+var _dec$8$1;
+var _class$8$1;
 
 var MODULES = [common.CommonModule, forms.FormsModule, PrimengModule, MomentModule];
-var ELEMENTS = [ValidationErrorComponent, Rule, NotificationsComponent];
+var ELEMENTS = [SafeHtmlPipe, ValidationErrorComponent, Rule, NotificationsComponent];
 
-var TuneUpCoreModule = (_dec$7 = core_1.NgModule({
+var TuneUpCoreModule = (_dec$8$1 = core_1.NgModule({
     imports: [].concat(MODULES),
     exports: [].concat(MODULES, ELEMENTS),
     declarations: [].concat(ELEMENTS)
-}), _dec$7(_class$7 = function TuneUpCoreModule() {
-    classCallCheck(this, TuneUpCoreModule);
-}) || _class$7);
-
-var _dec$2$1;
-var _class$2$1;
-
-var TOKEN_KEY = 'tnToken';
-
-var AuthService = (_dec$2$1 = core_1.Injectable(), _dec$2$1(_class$2$1 = function () {
-  function AuthService() {
-    classCallCheck$1(this, AuthService);
-  }
-
-  createClass$1(AuthService, [{
-    key: 'getToken',
-    value: function getToken() {
-      return sessionStorage.getItem(TOKEN_KEY);
-    }
-  }, {
-    key: 'setToken',
-    value: function setToken(token) {
-      sessionStorage.setItem(TOKEN_KEY, token);
-    }
-  }]);
-  return AuthService;
-}()) || _class$2$1);
-
-var _dec$3$1;
-var _class$3$1;
-
-var AgentService = (_dec$3$1 = core_1.Injectable(), _dec$3$1(_class$3$1 = function () {
-  function AgentService() {
-    classCallCheck$1(this, AgentService);
-
-    this._agent = this.getFromStorage();
-  }
-
-  createClass$1(AgentService, [{
-    key: 'getFromStorage',
-    value: function getFromStorage() {
-      var agent = sessionStorage.getItem('tnAgent') ? JSON.parse(sessionStorage.getItem('tnAgent')) : undefined;
-      return agent;
-    }
-  }, {
-    key: 'saveToStorage',
-    value: function saveToStorage(agent) {
-      sessionStorage.setItem('tnAgent', JSON.stringify(agent));
-    }
-  }, {
-    key: 'getSiteId',
-    value: function getSiteId() {
-      return this._agent.IdSitio;
-    }
-  }, {
-    key: 'isAdmin',
-    value: function isAdmin() {
-      return this._agent.Administrador;
-    }
-  }, {
-    key: 'agent',
-    get: function get$$1() {
-      return this._agent;
-    },
-    set: function set$$1(value) {
-      this._agent = value;
-      this.saveToStorage(value);
-    }
-  }]);
-  return AgentService;
-}()) || _class$3$1);
-
-var _dec$4$1;
-var _class$4$1;
-
-var AboutService = (_dec$4$1 = core_1.Injectable(), _dec$4$1(_class$4$1 = function () {
-  function AboutService() {
-    classCallCheck$1(this, AboutService);
-
-    this._about = null;
-  }
-
-  createClass$1(AboutService, [{
-    key: 'about',
-    get: function get$$1() {
-      return this._about;
-    },
-    set: function set$$1(value) {
-      this._about = value;
-    }
-  }]);
-  return AboutService;
-}()) || _class$4$1);
-
-var _dec$1$1;
-var _class$1$1;
-
-var AuthGuard = (_dec$1$1 = core_1.Injectable(), _dec$1$1(_class$1$1 = function () {
-  function AuthGuard(router$$1, authService) {
-    classCallCheck$1(this, AuthGuard);
-
-    this._router = router$$1;
-    this._authService = authService;
-  }
-
-  createClass$1(AuthGuard, [{
-    key: '_checkAndRedirect',
-    value: function _checkAndRedirect(route, state) {
-      if (this._authService.getToken()) {
-        return true;
-      }
-      var returnUrl = state && state.url;
-      this._router.navigate(['/login'], { queryParams: { returnUrl: returnUrl } });
-      return false;
-    }
-  }, {
-    key: 'canActivate',
-    value: function canActivate(route, state) {
-      return this._checkAndRedirect(route, state);
-    }
-  }]);
-  return AuthGuard;
-}()) || _class$1$1);
-Reflect.defineMetadata('design:paramtypes', [router.Router, AuthService], AuthGuard);
-
-var html$1$1 = "<div class=\"vertical\">\r\n  <tn-appbar class=\"tn-scene-appbar\"></tn-appbar>\r\n  <div class=\"horizontal\">\r\n    <tn-menu class=\"tn-scene-menu\"></tn-menu>\r\n    <tn-content class=\"tn-scene-content\"></tn-content>\r\n  </div>\r\n</div>\r\n";
-
-__$styleInject(".tn-scene-appbar{background-color:#20272a;display:block;padding:0;height:70px;box-sizing:border-box;position:fixed;top:0;left:0;width:100%;z-index:2;box-shadow:0 2px 5px 0 rgba(0,0,0,.3)}.tn-scene-menu{position:fixed;left:0;top:70px;height:100%;background-color:#fff;overflow:hidden;z-index:1;text-align:center}@media (min-width:960px){.tn-scene-menu{width:270px;box-shadow:0 0 5px 0 rgba(0,0,0,.3)}}.tn-scene-content{padding-top:70px;background-color:#fff;width:100%;height:100%}@media (min-width:960px){.tn-scene-content{margin-left:270px}}",undefined);
-
-var _dec$6$1;
-var _class$6$1;
-
-var mqlGtsm = window.matchMedia('(min-width: 960px)');
-
-var SceneService = (_dec$6$1 = core_1.Injectable(), _dec$6$1(_class$6$1 = function () {
-  function SceneService(ngZone) {
-    var _this = this;
-
-    classCallCheck$1(this, SceneService);
-
-    this._onWindowSizeChanged = function (_ref) {
-      var matches = _ref.matches;
-
-      _this._docked = matches;
-      if (matches) _this.open();else _this.close();
-    };
-
-    this._sidenav = null;
-    this._ngZone = ngZone;
-  }
-
-  createClass$1(SceneService, [{
-    key: 'close',
-    value: function close() {
-      if (this._sidenav && !this._docked) {
-        this._sidenav.visible = false;
-      }
-    }
-  }, {
-    key: 'closeStrong',
-    value: function closeStrong() {
-      if (this._sidenav) {
-        this._sidenav.visible = false;
-      }
-    }
-  }, {
-    key: 'open',
-    value: function open() {
-      if (this._sidenav) {
-        this._sidenav.visible = true;
-      }
-    }
-  }, {
-    key: '_initialize',
-    value: function _initialize() {
-      var _this2 = this;
-
-      mqlGtsm.addListener(function (result) {
-        return _this2._ngZone.run(function () {
-          return _this2._onWindowSizeChanged(result);
-        });
-      });
-      this._onWindowSizeChanged(mqlGtsm);
-    }
-  }, {
-    key: 'dispose',
-    value: function dispose() {
-      mqlGtsm.removeListener(this.onWindowSizeChanged);
-      this._sidenav = null;
-    }
-  }, {
-    key: 'isVisible',
-    value: function isVisible() {
-      return this._sidenav && this._sidenav.visible;
-    }
-  }, {
-    key: 'isDocked',
-    value: function isDocked() {
-      return this._docked;
-    }
-  }, {
-    key: 'sidenav',
-    set: function set$$1(value) {
-      this._sidenav = value;
-      this._initialize();
-    }
-  }]);
-  return SceneService;
-}()) || _class$6$1);
-Reflect.defineMetadata('design:paramtypes', [core_1.NgZone], SceneService);
-
-var _dec$5$1;
-var _class$5$1;
-
-var SceneComponent = (_dec$5$1 = core_1.Component({
-  selector: 'tn-scene',
-  template: html$1$1,
-  providers: [SceneService]
-}), _dec$5$1(_class$5$1 = function () {
-  function SceneComponent(sceneService) {
-    classCallCheck$1(this, SceneComponent);
-
-    this._sceneService = sceneService;
-  }
-
-  createClass$1(SceneComponent, [{
-    key: 'ngOnDestroy',
-    value: function ngOnDestroy() {
-      this._sceneService.dispose();
-    }
-  }]);
-  return SceneComponent;
-}()) || _class$5$1);
-Reflect.defineMetadata('design:paramtypes', [SceneService], SceneComponent);
-
-var _dec$8;
-var _class$8;
-
-var BreadcrumbService = (_dec$8 = core_1.Injectable(), _dec$8(_class$8 = function () {
-  function BreadcrumbService() {
-    classCallCheck$1(this, BreadcrumbService);
-    this._breadCrumbItems = [];
-  }
-
-  createClass$1(BreadcrumbService, [{
-    key: 'addItem',
-    value: function addItem(menuItem) {
-      this._breadCrumbItems.push(menuItem);
-    }
-  }, {
-    key: 'items',
-    get: function get$$1() {
-      return this._breadCrumbItems;
-    },
-    set: function set$$1(value) {
-      this._breadCrumbItems = value;
-    }
-  }]);
-  return BreadcrumbService;
-}()) || _class$8);
-
-var html$2 = "<!-- TODO: make functions to manage visibility, dont call the service directly -->\r\n<div class=\"horizontal tn-scene-appbar-wrapper\">\r\n    <div *ngIf=\"this._sceneService.isDocked()\" class=\"none tn-scene-appbar--topMenu\">TUNE-UP</div>\r\n    <div class =\"horizontal ten\">\r\n      <div class=\"tn-scene-appbar--button\" *ngIf=\"!this._sceneService.isDocked()\" >\r\n        <i *ngIf=\"this._sceneService.isVisible()\" (click)=\"onHideMenuClick()\" class=\"fa fa-2x fa-caret-square-o-left\"></i>                                \r\n        <i *ngIf=\"!this._sceneService.isVisible()\" (click)=\"onShowMenuClick()\" class=\"fa fa-2x fa-caret-square-o-right\"></i>                    \r\n      </div>\r\n      <p-breadcrumb class=\"tn-scene-appbar--breadcrumb\" [model]=\"breadcrumbItems\"></p-breadcrumb>    \r\n    </div>\r\n    <div class = \"horizontal one\">\r\n        <i class=\"tn-scene-appbar--button fa fa-2x fa-list\"></i>        \r\n    </div>\r\n</div>\r\n";
-
-__$styleInject(".tn-scene-appbar--button{color:#d3d3d3}.tn-scene-appbar--breadcrumb,.tn-scene-appbar--button{margin-left:10px;align-self:center}.tn-scene-appbar--topMenu{width:270px;height:70px;text-align:center;font-size:-webkit-xxx-large;border-right:1px solid;color:#d3d3d3}.tn-scene-appbar-wrapper{height:100%}",undefined);
-
-var _dec$7$1;
-var _class$7$1;
-
-var AppbarComponent = (_dec$7$1 = core_1.Component({
-  selector: 'tn-appbar',
-  template: html$2,
-  providers: [BreadcrumbService]
-}), _dec$7$1(_class$7$1 = function () {
-  function AppbarComponent(breadcrumbService, sceneService) {
-    classCallCheck$1(this, AppbarComponent);
-    this.menuOpen = true;
-    this.breadcrumbItems = [];
-
-    this._breadcrumbService = breadcrumbService;
-    this._sceneService = sceneService;
-    this._getBreadcrumbItems();
-  }
-
-  createClass$1(AppbarComponent, [{
-    key: '_getBreadcrumbItems',
-    value: function _getBreadcrumbItems() {
-      this.breadcrumbItems = this._breadcrumbService.items;
-    }
-  }, {
-    key: 'onHideMenuClick',
-    value: function onHideMenuClick() {
-      this.menuOpen = false;
-      this._sceneService.closeStrong();
-    }
-  }, {
-    key: 'onShowMenuClick',
-    value: function onShowMenuClick() {
-      this.menuOpen = true;
-      this._sceneService.open();
-    }
-  }]);
-  return AppbarComponent;
-}()) || _class$7$1);
-Reflect.defineMetadata('design:paramtypes', [BreadcrumbService, SceneService], AppbarComponent);
-
-var html$3 = "<router-outlet></router-outlet>\r\n";
-
-var _dec$9;
-var _class$9;
-
-var ContentComponent = (_dec$9 = core_1.Component({
-  selector: 'tn-content',
-  template: html$3
-}), _dec$9(_class$9 = function ContentComponent() {
-  classCallCheck$1(this, ContentComponent);
-}) || _class$9);
-
-var html$4 = "<p-sidebar #sidenav [ngStyle]=\"{width:'270px'}\">\r\n  <div>\r\n    <img class=\"tn-menu-sidebar--logo\" src=\"./assets/logo.png\">\r\n  </div>\r\n  <div class=\"tn-menu-sidebar\">\r\n    <div *ngFor=\"let item of items\">\r\n      <div *ngIf=\"mustPrint(item)\">\r\n        <tn-menuitem [text]=\"item.text\" [path]=\"item.path\" [icon]=\"item.icon\" [adminOnly]=\"item.adminOnly\"></tn-menuitem>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</p-sidebar>\r\n";
-
-__$styleInject(".tn-menu-sidebar--logo{width:180px;height:180px;margin-top:80px;margin-bottom:20px}.ui-sidebar-left{width:270px}.tn-menu-sidebar{background:#2399e5;height:100%}",undefined);
-
-var _dec$10;
-var _dec2$1$1;
-var _class$10;
-var _class2$1$1;
-var _descriptor$1$1;
-
-function _initDefineProp$1$1(target, property, descriptor, context) {
-  if (!descriptor) return;
-  Object.defineProperty(target, property, {
-    enumerable: descriptor.enumerable,
-    configurable: descriptor.configurable,
-    writable: descriptor.writable,
-    value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
-  });
-}
-
-function _applyDecoratedDescriptor$1$1(target, property, decorators, descriptor, context) {
-  var desc = {};
-  Object['ke' + 'ys'](descriptor).forEach(function (key) {
-    desc[key] = descriptor[key];
-  });
-  desc.enumerable = !!desc.enumerable;
-  desc.configurable = !!desc.configurable;
-
-  if ('value' in desc || desc.initializer) {
-    desc.writable = true;
-  }
-
-  desc = decorators.slice().reverse().reduce(function (desc, decorator) {
-    return decorator(target, property, desc) || desc;
-  }, desc);
-
-  if (context && desc.initializer !== void 0) {
-    desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
-    desc.initializer = undefined;
-  }
-
-  if (desc.initializer === void 0) {
-    Object['define' + 'Property'](target, property, desc);
-    desc = null;
-  }
-
-  return desc;
-}
-
-var MenuComponent = (_dec$10 = core_1.Component({
-  selector: 'tn-menu',
-  template: html$4
-}), _dec2$1$1 = core_1.ViewChild('sidenav'), _dec$10(_class$10 = (_class2$1$1 = function () {
-  function MenuComponent(agentService, sceneService) {
-    classCallCheck$1(this, MenuComponent);
-
-    _initDefineProp$1$1(this, 'sidenav', _descriptor$1$1, this);
-
-    this.items = configService.menuItems;
-
-    this._agentService = agentService;
-    this._sceneService = sceneService;
-  }
-
-  createClass$1(MenuComponent, [{
-    key: 'mustPrint',
-    value: function mustPrint(item) {
-      // TODO: fix when needed
-      // return this._agentService.isAdmin();
-      return true;
-    }
-  }, {
-    key: 'ngAfterContentInit',
-    value: function ngAfterContentInit() {
-      this._sceneService.sidenav = this.sidenav;
-    }
-  }, {
-    key: 'ngAfterViewInit',
-    value: function ngAfterViewInit() {
-      this._tuneSidenav();
-    }
-  }, {
-    key: '_tuneSidenav',
-    value: function _tuneSidenav() {
-      document.getElementsByClassName('ui-sidebar-mask')[0].hidden = true;
-      document.getElementsByClassName('ui-sidebar-close')[0].remove();
-      document.getElementsByClassName('ui-sidebar')[0].style.padding = '0px';
-    }
-  }]);
-  return MenuComponent;
-}(), (_descriptor$1$1 = _applyDecoratedDescriptor$1$1(_class2$1$1.prototype, 'sidenav', [_dec2$1$1], {
-  enumerable: true,
-  initializer: function initializer() {
-    return null;
-  }
-})), _class2$1$1)) || _class$10);
-Reflect.defineMetadata('design:paramtypes', [AgentService, SceneService], MenuComponent);
-
-var html$5 = "<button pButton type=\"button\" class=\"tn-menuitem-layout\" label= {{text}} icon= {{icon}} routerLink={{path}}></button>\r\n";
-
-__$styleInject(".tn-menuitem-layout{width:100%;border-bottom:1px solid #fff!important}",undefined);
-
-var _dec$11;
-var _dec2$2;
-var _dec3;
-var _dec4;
-var _dec5;
-var _class$11;
-var _class2$2;
-var _descriptor$2;
-var _descriptor2;
-var _descriptor3;
-var _descriptor4;
-
-function _initDefineProp$2(target, property, descriptor, context) {
-  if (!descriptor) return;
-  Object.defineProperty(target, property, {
-    enumerable: descriptor.enumerable,
-    configurable: descriptor.configurable,
-    writable: descriptor.writable,
-    value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
-  });
-}
-
-function _applyDecoratedDescriptor$2(target, property, decorators, descriptor, context) {
-  var desc = {};
-  Object['ke' + 'ys'](descriptor).forEach(function (key) {
-    desc[key] = descriptor[key];
-  });
-  desc.enumerable = !!desc.enumerable;
-  desc.configurable = !!desc.configurable;
-
-  if ('value' in desc || desc.initializer) {
-    desc.writable = true;
-  }
-
-  desc = decorators.slice().reverse().reduce(function (desc, decorator) {
-    return decorator(target, property, desc) || desc;
-  }, desc);
-
-  if (context && desc.initializer !== void 0) {
-    desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
-    desc.initializer = undefined;
-  }
-
-  if (desc.initializer === void 0) {
-    Object['define' + 'Property'](target, property, desc);
-    desc = null;
-  }
-
-  return desc;
-}
-
-var MenuItemComponent = (_dec$11 = core_1.Component({
-  selector: 'tn-menuitem',
-  template: html$5
-}), _dec2$2 = core_1.Input(), _dec3 = core_1.Input(), _dec4 = core_1.Input(), _dec5 = core_1.Input(), _dec$11(_class$11 = (_class2$2 = function MenuItemComponent() {
-  classCallCheck$1(this, MenuItemComponent);
-
-  _initDefineProp$2(this, 'path', _descriptor$2, this);
-
-  _initDefineProp$2(this, 'text', _descriptor2, this);
-
-  _initDefineProp$2(this, 'icon', _descriptor3, this);
-
-  _initDefineProp$2(this, 'adminOnly', _descriptor4, this);
-}, (_descriptor$2 = _applyDecoratedDescriptor$2(_class2$2.prototype, 'path', [_dec2$2], {
-  enumerable: true,
-  initializer: function initializer() {
-    return this.path;
-  }
-}), _descriptor2 = _applyDecoratedDescriptor$2(_class2$2.prototype, 'text', [_dec3], {
-  enumerable: true,
-  initializer: function initializer() {
-    return this.text;
-  }
-}), _descriptor3 = _applyDecoratedDescriptor$2(_class2$2.prototype, 'icon', [_dec4], {
-  enumerable: true,
-  initializer: function initializer() {
-    return this.icon;
-  }
-}), _descriptor4 = _applyDecoratedDescriptor$2(_class2$2.prototype, 'adminOnly', [_dec5], {
-  enumerable: true,
-  initializer: function initializer() {
-    return this.adminOnly;
-  }
-})), _class2$2)) || _class$11);
-
-// TODO: change route system, we define them here not throug config
-var mainRoute = {
-  path: '',
-  component: SceneComponent,
-  canActivate: [AuthGuard],
-  children: []
-};
-var mainRedirectRoute = {
-  path: '**',
-  redirectTo: 'home',
-  pathMatch: 'full'
-};
-var loginRoute = {
-  path: 'login',
-  loadChildren: 'src/app/modules/login/dist/tune-up.login.umd.js#login#LoginModule'
-};
-
-var appRoutes = {
-  mainRoute: mainRoute,
-  loginRoute: loginRoute,
-  mainRedirectRoute: mainRedirectRoute
-};
-
-var homeRoute = {
-  path: 'home',
-  loadChildren: 'src/app/modules/home/dist/tune-up.home.umd.js#home#HomeModule'
-};
-
-var utRoute = {
-  path: 'uts',
-  loadChildren: 'src/app/modules/ut/dist/tune-up.ut.umd.js#ut#UtModule'
-};
-
-// TODO: remove
-
-
-var childRoutes = Object.freeze({
-	homeRoute: homeRoute,
-	utRoute: utRoute
-});
-
-var homeMenuItem = {
-  path: 'home',
-  text: 'Inicio',
-  icon: 'fa fa-home',
-  adminOnly: false
-};
-
-// TODO: remove
-
-
-var menuItems = Object.freeze({
-	homeMenuItem: homeMenuItem
-});
-
-var menuItemsMock = [
-  // {
-  //   path: 'comunicaciones',
-  //   text: 'Comunicaciones',
-  //   icon: 'fa fa-bandcamp',
-  //   adminOnly: false,
-  // },
-  // {
-  //   path: 'comunicaciones',
-  //   text: 'No mostrar esto',
-  //   icon: 'fa fa-bandcamp',
-  //   adminOnly: true,
-  // },
-  // {
-  //   path: 'comunicaciones',
-  //   text: 'Comunicaciones',
-  //   icon: 'fa fa-bandcamp',
-  //   adminOnly: false,
-  // },
-  // {
-  //   path: 'comunicaciones',
-  //   text: 'Comunicaciones',
-  //   icon: 'fa fa-bandcamp',
-  //   adminOnly: false,
-  // },
-];
-
-// TODO: add menuItems manually
-configService.init({
-  routes: appRoutes,
-  menuItems: [].concat(toConsumableArray$1(Object.values(menuItems)), toConsumableArray$1(menuItemsMock))
-});
-configService.addRoutesWithAuth(Object.values(childRoutes));
-
-var _dec$13;
-var _class$13;
-
-// TODO: move this to app.routing and register routes manually
-
-var RoutingModule = (_dec$13 = core_1.NgModule({
-  imports: [router.RouterModule.forRoot(configService.getRouteObjects(), {
-    useHash: true,
-    enableTracing: "development" !== 'production'
-  })],
-  exports: [router.RouterModule],
-  providers: [AuthGuard]
-}), _dec$13(_class$13 = function RoutingModule() {
-  classCallCheck$1(this, RoutingModule);
-}) || _class$13);
-
-var _dec$14;
-var _class$14;
-
-var ResponseInterceptor = (_dec$14 = core_1.Injectable(), _dec$14(_class$14 = function () {
-  function ResponseInterceptor() {
-    classCallCheck$1(this, ResponseInterceptor);
-  }
-
-  createClass$1(ResponseInterceptor, [{
-    key: 'intercept',
-    value: function intercept(req, next) {
-      var _this = this;
-
-      return next.handle(req).map(function (event) {
-        if (event instanceof http.HttpResponse) {
-          if (!event.body.Resultado) {
-            return event;
-          }
-          _this._checkInvalid(event);
-          return event = _this._serializeBody(event);
-        }
-      });
-    }
-  }, {
-    key: '_serializeBody',
-    value: function _serializeBody(response) {
-      var result = response.body.Resultado;
-      return response.clone({ body: result });
-    }
-  }, {
-    key: '_checkInvalid',
-    value: function _checkInvalid(response) {
-      if (!response.body.Exito) {
-        throw new Error(response.body.Mensaje);
-      }
-    }
-  }]);
-  return ResponseInterceptor;
-}()) || _class$14);
-
-var ResponseInterceptorProvider = {
-  provide: http.HTTP_INTERCEPTORS,
-  useClass: ResponseInterceptor,
-  multi: true
-};
-
-var _dec$15;
-var _class$15;
-
-var TokenInterceptor = (_dec$15 = core_1.Injectable(), _dec$15(_class$15 = function () {
-  function TokenInterceptor(authService) {
-    classCallCheck$1(this, TokenInterceptor);
-
-    this._authService = authService;
-  }
-
-  createClass$1(TokenInterceptor, [{
-    key: 'intercept',
-    value: function intercept(req, next) {
-      if (!this._authService.getToken()) {
-        return next.handle(req);
-      }
-      var tokenReq = req.clone({
-        setHeaders: {
-          token: this._authService.getToken()
-        }
-      });
-      return next.handle(tokenReq);
-    }
-  }]);
-  return TokenInterceptor;
-}()) || _class$15);
-Reflect.defineMetadata('design:paramtypes', [AuthService], TokenInterceptor);
-
-var TokenInterceptorProvider = {
-  provide: http.HTTP_INTERCEPTORS,
-  useClass: TokenInterceptor,
-  multi: true
-};
+}), _dec$8$1(_class$8$1 = function TuneUpCoreModule() {
+    classCallCheck$1(this, TuneUpCoreModule);
+}) || _class$8$1);
 
 var html$6 = "<tn-notifications></tn-notifications>\n<router-outlet></router-outlet>\n";
 
@@ -10650,25 +10499,26 @@ var AppComponent = (_dec$16 = core_1.Component({
   selector: 'tn-app',
   template: html$6
 }), _dec$16(_class$16 = function AppComponent() {
-  classCallCheck$1(this, AppComponent);
+  classCallCheck(this, AppComponent);
 }) || _class$16);
 
-var _dec$12;
-var _class$12;
+var _dec;
+var _class;
 
-var AppModule = (_dec$12 = core_1.NgModule({
-  imports: [TuneUpCoreModule, platformBrowser.BrowserModule, animations.BrowserAnimationsModule, http.HttpClientModule, RoutingModule],
+var AppModule = (_dec = core_1.NgModule({
+  imports: [TuneUpCoreModule, platformBrowser.BrowserModule, animations.BrowserAnimationsModule, http.HttpClientModule, AppRoutingModule],
   declarations: [AppComponent, SceneComponent, AppbarComponent, MenuComponent, ContentComponent, MenuItemComponent],
   providers: [ModuleLoaderProvider, APIInterceptorProvider, TokenInterceptorProvider, ResponseInterceptorProvider, AuthService, AgentService, AboutService, NotificationsService],
   bootstrap: [AppComponent]
-}), _dec$12(_class$12 = function AppModule() {
-  classCallCheck$1(this, AppModule);
-}) || _class$12);
+}), _dec(_class = function AppModule() {
+  classCallCheck(this, AppModule);
+}) || _class);
 
 platformBrowserDynamic.platformBrowserDynamic().bootstrapModule(AppModule);
 
 exports.configService = configService;
 exports.APIInterceptorProvider = APIInterceptorProvider;
+exports.SafeHtmlPipe = SafeHtmlPipe;
 exports.ModuleLoaderProvider = ModuleLoaderProvider;
 exports.PrimengModule = PrimengModule;
 exports.ValidationErrorComponent = ValidationErrorComponent;

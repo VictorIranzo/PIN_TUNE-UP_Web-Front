@@ -1,20 +1,5 @@
-/* DO NOT USE THIS COLORS, PRIMENG DOES IT FOR US */
 :root {
-  --color-light: #FFFFFF;
-  --color-dark: #676A6C;
-
-  --color-primary: #00AA8D;
-  --color-primary--light: #00BF9A;
-  --color-primary--dark: #008975;
-
-  --color-secondary: #455A64;
-  --color-secondary--light: #90A4AE;
-  --color-secondary-dark: #263238;
-
-  --color-background: #FAFAFA;    
-  --color-background--strong: #E0E0E0;
-  --color-background--dark: #F5F5F5;
-  --color-background--light: #FFFFFF;
+  --color-primary: #7e57c2;
 
   --color-info__text: #FFFFFF;
   --color-info__background: #0288D1;

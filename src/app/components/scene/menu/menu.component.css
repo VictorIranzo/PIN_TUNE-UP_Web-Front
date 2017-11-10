@@ -1,17 +1,17 @@
 @import "../scene.variables.css";
+@import "styleguide";
 
 .tn-menu-sidebar--logo{
   width: 180px;
   height: 180px;
   margin-top: 80px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 .ui-sidebar-left{
   width: var(--tn-scene-menu--width);
 }
 .tn-menu-sidebar{
-  /* TODO: poner color como variable en guía de estilos */
-  background:#2399e5;
+  background: var(--color-primary);
   height: 100%;
 }
 

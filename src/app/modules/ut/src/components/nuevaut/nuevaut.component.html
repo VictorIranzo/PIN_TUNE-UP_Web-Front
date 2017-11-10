@@ -4,6 +4,7 @@
     <label for="nombre-ut-textfield">Nombre UT</label>
   </span>
   
-  <p-dropdown [options]="productos" [(ngModel)]="ut.IdProducto" optionLabel="Nombre"></p-dropdown>
+  <p-dropdown [options]="productos" optionLabel="Nombre" onchange="onProductChanged($event.value)"></p-dropdown>
+  <p-dropdown [options]="workflows" optionLabel="Nombre"></p-dropdown>
   
 </div>

@@ -1,32 +1,36 @@
 import {Component} from '@angular/core';
 import {NotificationsService} from '@tune-up/core';
-import {CreateUTService, GetProductosService} from './services';
+import {CreateUTService, GetProductosService, GetWorkflowsService} from './services';
 import html from './nuevaut.component.html';
 import './nuevaut.component.css';
 
 @Component({
   selector: 'tn-ut-nuevaut',
   template: html,
-  providers: [CreateUTService, GetProductosService],
+  providers: [CreateUTService, GetProductosService, GetWorkflowsService],
 })
 export class NuevaUTComponent {
   ut = {
     Nombre: null,
     IdVersion: null,
-    IdProducto: null,
-    IdWorkflow: null,
+    Producto: null,
+    Workflow: null,
     IdTipoUT: null,
     IdProyecto: null,
  };
   productos = [];
+  workflows = [];
+  workflowsCache = [];
 
   constructor(
     createUTService: CreateUTService,
     getProductosService : GetProductosService,
+    getWorkflowsService : GetWorkflowsService,
     notificationsService: NotificationsService,
   ) {
     this._createUTService = createUTService;
     this._getProductosService = getProductosService;
+    this._getWorkflowsService = getWorkflowsService;
     this._notificationService = notificationsService;
     this._getProductos();
   }
@@ -42,6 +46,21 @@ export class NuevaUTComponent {
           error
         )
     );
+  }
+
+  onProductChanged(nuevoProducto) {
+      this.workflows = _getWorkflows(nuevoProducto.IdProducto);
+  }
+
+  _getWorkflows(idProducto) {
+    if(!this.workflowsCache[idProducto]) {
+      this.workflowsCache[idProducto] = _getWorkflowsService.get(idProducto).subscribe(
+        (data) => {
+          this.workflowsCache[idProducto] = data;
+        }
+      );
+    }
+    return this.workflowsCache[idProducto];
   }
 
   _crearUT() {

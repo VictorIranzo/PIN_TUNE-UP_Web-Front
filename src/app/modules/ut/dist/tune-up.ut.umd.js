@@ -22,9 +22,9 @@ function __$styleInject(css, returnValue) {
   return returnValue;
 }
 
-var html = "<form class=\"vertical\" #frm=\"ngForm\" (ngSubmit)=\"onSubmit()\">\n  <input class=\"tn-example-form--input one\" type=\"text\" [(ngModel)]=\"foo.email\" rule=\"foo.email\" name=\"email\" #emailCtrl=\"ngModel\" pInputText>\n  <tn-validation-error [control]=\"emailCtrl\"></tn-validation-error>\n  <input class=\"tn-example-form--input one\" type=\"password\" [(ngModel)]=\"foo.password\" rule=\"foo.password\" name=\"password\" pInputText>\n  <div class=\"horizontal\">\n    <div class=\"one\"></div>\n    <button class=\"none\" pButton type=\"submit\" label=\"Submit\"></button>\n  </div>\n  <tn-ut-details>UT!</tn-ut-details>\n</form>\n";
+var html = "";
 
-__$styleInject(".tn-example-form--input{margin-bottom:8px;margin-top:8px}", undefined);
+__$styleInject("",undefined);
 
 var asyncGenerator = function () {
   function AwaitValue(value) {
@@ -168,56 +168,12 @@ var createClass = function () {
 }();
 
 var _dec$2;
-var _dec2;
 var _class$2;
-var _class2;
-var _descriptor;
-
-function _initDefineProp(target, property, descriptor, context) {
-  if (!descriptor) return;
-  Object.defineProperty(target, property, {
-    enumerable: descriptor.enumerable,
-    configurable: descriptor.configurable,
-    writable: descriptor.writable,
-    value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
-  });
-}
-
-function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) {
-  var desc = {};
-  Object['ke' + 'ys'](descriptor).forEach(function (key) {
-    desc[key] = descriptor[key];
-  });
-  desc.enumerable = !!desc.enumerable;
-  desc.configurable = !!desc.configurable;
-
-  if ('value' in desc || desc.initializer) {
-    desc.writable = true;
-  }
-
-  desc = decorators.slice().reverse().reduce(function (desc, decorator) {
-    return decorator(target, property, desc) || desc;
-  }, desc);
-
-  if (context && desc.initializer !== void 0) {
-    desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
-    desc.initializer = undefined;
-  }
-
-  if (desc.initializer === void 0) {
-    Object['define' + 'Property'](target, property, desc);
-    desc = null;
-  }
-
-  return desc;
-}
 
 var UtComponent = (_dec$2 = core.Component({
   selector: 'tn-ut',
   template: html
-}), _dec2 = core.ViewChild('frm'), _dec$2(_class$2 = (_class2 = function UtComponent() {
-  var _this = this;
-
+}), _dec$2(_class$2 = function UtComponent() {
   classCallCheck(this, UtComponent);
 
   _initDefineProp(this, 'form', _descriptor, this);
@@ -267,6 +223,10 @@ var DetailsService = (_dec$4 = core.Injectable(), _dec$4(_class$4 = function () 
   return DetailsService;
 }()) || _class$4);
 Reflect.defineMetadata('design:paramtypes', [http.HttpClient], DetailsService);
+
+var html$1 = "<!--\nTODO \nhacer un form, en el submit llamas a onGuardar y el boton onGuardar le pones type = submit y le\nquitas el onclick. Si no hay form no hay validations.\nusar ng-template para poner iconos en los dropdowns, y añadirles busqueda https://www.primefaces.org/primeng/#/dropdown\nlos iconos los puedes ver en el onclick.\nsi consigues hacer el layout con flex te quedará mejor, si no puedes al menos pon el width en % no en absoluto\nseguramente tendría sentido agrupar los distintos elementos del form en divs para hacer agrupaciones lógicas\nhacer orden input de tipo numerico, ver si puedes hacer incrementos y decrementos de 10 en 10 con los tipicos botones\ny si cambias todos los !editingModel por algo que no tengas que negar 9 veces?\nY DEJA DE PONER ESPACIOS EN EL HTML PORFAVOR\n -->\n<div class=\"ui-g\">\n  <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n    Código\n  </div>\n  <div class=\"ui-g-3 ui-md-2 ui-lg-1\">\n    <input id=\"disabled-input\" type=\"text\" size=\"4\" pInputText [(ngModel)]= \"codigoUT\" [disabled]=\"true\" />\n  </div>\n  <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n    Nombre\n  </div>\n  <div class=\"ui-g-20 ui-md-10 ui-lg-5\">\n    <input id=\"input\" type=\"text\" size=\"50\" pInputText [(ngModel)]=\"nombreUT\" [disabled]= \"!editingMode\"> \n  </div>\n  <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\n      <button *ngIf=\"!editingMode\" pButton type=\"button\" label=\"Editar\" (click)=\"onEditar()\"></button>\n      <button *ngIf=\"editingMode\" pButton type=\"button\" label=\"Guardar\" (click)=\"onGuardar()\"></button>\n      <button *ngIf=\"editingMode\" pButton type=\"button\" label=\"Cancelar\" (click)=\"onCancelar()\"></button>\n  </div>\n</div>\n<div class=\"ui-g\">\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n        Producto\n    </div>\n    <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\n        <p-dropdown [options]=\"productosDisponibles\" [(ngModel)]=\"producto\" optionLabel= \"IdProducto\" [disabled]= \"!editingMode\" [style]=\"{'width':'250px'}\"></p-dropdown>\n    </div>\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n        Sprint\n    </div>\n    <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\n        <p-dropdown [options]=\"sprintsDisponibles\" [(ngModel)]=\"sprint\" [disabled]= \"!editingMode\" [style]=\"{'width':'200px'}\"></p-dropdown>\n    </div>\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n        Orden\n      </div>\n      <div class=\"ui-g-6 ui-md-4 ui-lg-2\">\n        <input id=\"input\" type=\"text\" size=\"4\" pInputText [(ngModel)]=\"orden\" [disabled]= \"!editingMode\"> \n    </div>\n</div>\n<div class=\"ui-g\">\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n      Workflow\n    </div>\n    <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\n        <p-dropdown [options]=\"workflowsDisponibles\" [(ngModel)]=\"workflow\" [disabled]= \"!editingMode\" [style]=\"{'width':'250px'}\"></p-dropdown>\n    </div>\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n        Tipo\n    </div>\n    <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\n        <p-dropdown [options]=\"tiposDisponibles\" [(ngModel)]=\"tipo\" [disabled]= \"!editingMode\" [style]=\"{'width':'200px'}\"></p-dropdown>\n    </div>\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n        Proyecto\n      </div>\n      <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\n          <p-dropdown [options]=\"proyectosDisponibles\" [(ngModel)]=\"proyecto\" [disabled]= \"!editingMode\" [style]=\"{'width':'250px'}\"></p-dropdown>\n    </div>\n</div>\n<div class=\"ui-g\">\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n        Descripción\n      </div>\n      <div class=\"ui-g-30 ui-md-20 ui-lg-10\">\n          <textarea rows=\"5\"  pInputTextarea  [(ngModel)]=\"descripcion\" [disabled]= \"!editingMode\" cols=\"120\"></textarea>\n      </div>\n\n</div>\n\n";
+
+__$styleInject("",undefined);
 
 var _dec$3;
 var _dec2$1;
@@ -363,6 +323,11 @@ var DetailsComponent = (_dec$3 = core.Component({
     value: function onGuardar() {
       this.editingMode = false;
     }
+    // TODO: var a = 'hola', label: a === label: `${a}`
+    // las template strings solo valen si vas a escribir más.
+    // TODO, en vez de almacenar todo esto en this, llama a las funciones desde el html y ya esta,
+    // que solo se van a llamar una vez
+
   }, {
     key: '_parseSprints',
     value: function _parseSprints(sprints) {
@@ -433,7 +398,7 @@ var _dec$1;
 var _class$1;
 
 var UtRoutingModule = (_dec$1 = core.NgModule({
-  imports: [router.RouterModule.forChild([{ path: '', component: UtComponent }, { path: ':id', component: DetailsComponent }])],
+  imports: [router.RouterModule.forChild([{ path: '', component: UtComponent }, { path: 'add', component: NuevaUTComponent }, { path: ':id', component: DetailsComponent }])],
   exports: [router.RouterModule]
 }), _dec$1(_class$1 = function UtRoutingModule() {
   classCallCheck(this, UtRoutingModule);
@@ -444,7 +409,7 @@ var _class;
 
 var UtModule = (_dec = core.NgModule({
   imports: [core$1.TuneUpCoreModule, UtRoutingModule],
-  declarations: [UtComponent, DetailsComponent],
+  declarations: [UtComponent, DetailsComponent, NuevaUTComponent],
   providers: [DetailsService]
 }), _dec(_class = function UtModule() {
   classCallCheck(this, UtModule);
@@ -453,6 +418,9 @@ var UtModule = (_dec = core.NgModule({
 exports.UtModule = UtModule;
 exports.DetailsComponent = DetailsComponent;
 exports.DetailsService = DetailsService;
+exports.NuevaUTComponent = NuevaUTComponent;
+exports.CreateUTService = CreateUTService;
+exports.GetProductosService = GetProductosService;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

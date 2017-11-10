@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientModule} from '@angular/common/http';
-import {RoutingModule} from './routing';
+import {AppRoutingModule} from './app.routing';
 import {TokenInterceptorProvider, ResponseInterceptorProvider} from './http';
 import {AuthService, AgentService, AboutService} from './services';
 
@@ -27,7 +27,7 @@ import {
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    RoutingModule,
+    AppRoutingModule,
   ],
   declarations: [
     AppComponent,

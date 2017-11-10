@@ -5,13 +5,13 @@
   overflow-x: overlay;
   text-align: center;
   @media(--gt-sm){
-    width:75%;
+    width:65%;
   }
 }
 .tn-home__kanbanresume{
   margin: var(--margin-medium);
   @media(--gt-sm){
-    width: 25%;
+    width: 35%;
     height: fit-content;
     position: sticky;
     top: 85px;

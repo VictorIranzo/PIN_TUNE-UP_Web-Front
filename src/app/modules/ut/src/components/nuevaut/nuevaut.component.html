@@ -1,0 +1,10 @@
+<div class="horizontal">
+  <span class="ui-float-label">
+    <input id="nombre-ut-textfield" type="text" size="30" [(ngModel)]="ut.Nombre" pInputText> 
+    <label for="nombre-ut-textfield">Nombre UT</label>
+  </span>
+  
+  <p-dropdown [options]="productos" optionLabel="Nombre" onchange="onProductChanged($event.value)"></p-dropdown>
+  <p-dropdown [options]="workflows" optionLabel="Nombre"></p-dropdown>
+  
+</div>

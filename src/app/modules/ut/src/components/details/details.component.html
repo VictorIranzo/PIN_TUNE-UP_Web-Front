@@ -3,13 +3,13 @@
     Código
   </div>
   <div class="ui-g-3 ui-md-2 ui-lg-1">
-    <input id="disabled-input" type="text" size= "4" pInputText [(ngModel)]= "codigoUT" [disabled]="true" />
+    <input id="disabled-input" type="text" size= "4" pInputText [(ngModel)]= "model.codigoUT" [disabled]="true" />
   </div>
   <div class="ui-g-4 ui-md-2 ui-lg-1">
     Nombre
   </div>
   <div class="ui-g-20 ui-md-10 ui-lg-5">
-    <input id="input" type="text" size="50" pInputText [(ngModel)]="nombreUT" [disabled]= "!editingMode"> 
+    <input id="input" type="text" size="50" pInputText [(ngModel)]="model.nombreUT" [disabled]= "!editingMode"> 
   </div>
   <div class="ui-g-12 ui-md-6 ui-lg-3">
       <button *ngIf="!editingMode" pButton type="button" label="Editar" (click)="onEditar()"></button>
@@ -34,7 +34,7 @@
         Orden
       </div>
       <div class="ui-g-6 ui-md-4 ui-lg-2">
-        <input id="input" type="text" size="4" pInputText [(ngModel)]="orden" [disabled]= "!editingMode"> 
+        <input id="input" type="text" size="4" pInputText [(ngModel)]="model.orden" [disabled]= "!editingMode"> 
     </div>
 </div>
 <div class="ui-g">
@@ -62,7 +62,7 @@
         Descripción
       </div>
       <div class="ui-g-30 ui-md-20 ui-lg-10">
-          <textarea rows="5"  pInputTextarea  [(ngModel)]="descripcion" [disabled]= "!editingMode" cols="120"></textarea>
+          <textarea rows="5"  pInputTextarea  [(ngModel)]="model.descripcion" [disabled]= "!editingMode" cols="120"></textarea>
       </div>
 </div>
 

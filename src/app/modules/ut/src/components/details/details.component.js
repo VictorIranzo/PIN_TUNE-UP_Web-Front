@@ -12,7 +12,8 @@ import {DetailsService} from './services';
 })
 export class DetailsComponent {
   editingMode = false;
-  model = {producto: null, sprint: null, workflow: null, tipo: null, proyecto: null};
+  model = {codigoUT: null, nombreUT: null, orden: null, producto: null, sprint: null, workflow: null, 
+          tipo: null, proyecto: null, descripcion: null};
 
   @ViewChild('combo') combo = null;
 
@@ -20,18 +21,17 @@ export class DetailsComponent {
               detailsService: DetailsService) {
         this._route = route;
         this._detailsService = detailsService;
-        this.codigoUT= parseInt(this._route.params._value.id);
+        this.model.codigoUT= parseInt(this._route.params._value.id);
 
-        this._detailsService.getUt(this.codigoUT).subscribe((data) => {
+        this._detailsService.getUt(this.model.codigoUT).subscribe((data) => {
               this.ut = data;
-              this.nombreUT = this.ut.UT.Nombre;
-              this.orden = this.ut.UT.Orden;
-              this.producto = this.ut.ProductoUT;
+              this.model.nombreUT = this.ut.UT.Nombre;
+              this.model.orden = this.ut.UT.Orden;
               this._parseSprints(this.ut.listaVersionesUT);
               this._parseWorkflows(this.ut.listaWorkflowsDisponibles);
               this._parseTipos(this.ut.listaTiposUT);
               this._parseProyectos(this.ut.listaProyectos);
-              this.descripcion = this.ut.UT.Definicion;
+              this.model.descripcion = this.ut.UT.Definicion;
               this._mapSelected(data, this.model);
             });
 

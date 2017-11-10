@@ -22,13 +22,13 @@
         Producto
     </div>
     <div class="ui-g-12 ui-md-6 ui-lg-3">
-        <p-dropdown [options]="productosDisponibles" [(ngModel)]="producto" optionLabel= "IdProducto" [disabled]= "!editingMode" [style]="{'width':'250px'}"></p-dropdown>
+        <p-dropdown [options]="productosDisponibles" [(ngModel)]="model.producto" optionLabel= "IdProducto" [disabled]= "!editingMode" [style]="{'width':'250px'}"></p-dropdown>
     </div>
     <div class="ui-g-4 ui-md-2 ui-lg-1">
         Sprint
     </div>
     <div class="ui-g-12 ui-md-6 ui-lg-3">
-        <p-dropdown #combo [options]="sprintsDisponibles" [(ngModel)]="sprint" [disabled]= "!editingMode" [style]="{'width':'200px'}"></p-dropdown>
+        <p-dropdown #combo [options]="sprintsDisponibles" [(ngModel)]="model.sprint" [disabled]= "!editingMode" [style]="{'width':'200px'}"></p-dropdown>
     </div>
     <div class="ui-g-4 ui-md-2 ui-lg-1">
         Orden
@@ -42,19 +42,19 @@
       Workflow
     </div>
     <div class="ui-g-12 ui-md-6 ui-lg-3">
-        <p-dropdown [options]="workflowsDisponibles" [(ngModel)]="workflow" [disabled]= "!editingMode" [style]="{'width':'250px'}"></p-dropdown>
+        <p-dropdown [options]="workflowsDisponibles" [(ngModel)]="model.workflow" [disabled]= "!editingMode" [style]="{'width':'250px'}"></p-dropdown>
     </div>
     <div class="ui-g-4 ui-md-2 ui-lg-1">
         Tipo
     </div>
     <div class="ui-g-12 ui-md-6 ui-lg-3">
-        <p-dropdown [options]="tiposDisponibles" [(ngModel)]="tipo" [disabled]= "!editingMode" [style]="{'width':'200px'}"></p-dropdown>
+        <p-dropdown [options]="tiposDisponibles" [(ngModel)]="model.tipo" [disabled]= "!editingMode" [style]="{'width':'200px'}"></p-dropdown>
     </div>
     <div class="ui-g-4 ui-md-2 ui-lg-1">
         Proyecto
       </div>
       <div class="ui-g-12 ui-md-6 ui-lg-3">
-          <p-dropdown [options]="proyectosDisponibles" [(ngModel)]="proyecto" [disabled]= "!editingMode" [style]="{'width':'250px'}"></p-dropdown>
+          <p-dropdown [options]="proyectosDisponibles" [(ngModel)]="model.proyecto" [disabled]= "!editingMode" [style]="{'width':'250px'}"></p-dropdown>
     </div>
 </div>
 <div class="ui-g">
@@ -64,6 +64,5 @@
       <div class="ui-g-30 ui-md-20 ui-lg-10">
           <textarea rows="5"  pInputTextarea  [(ngModel)]="descripcion" [disabled]= "!editingMode" cols="120"></textarea>
       </div>
-
 </div>
 

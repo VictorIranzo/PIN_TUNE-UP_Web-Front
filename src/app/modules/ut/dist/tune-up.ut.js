@@ -18,8 +18,6 @@ function __$styleInject(css, returnValue) {
 
 import { Component, Injectable, NgModule, ViewChild } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { Location } from '@angular/common';
-import 'rxjs/add/operator/switchMap';
 import { HttpClient } from '@angular/common/http';
 import { TuneUpCoreModule } from '@tune-up/core';
 
@@ -238,7 +236,7 @@ var UtComponent = (_dec$2 = Component({
   }
 })), _class2)) || _class$2);
 
-var html$1 = "<div class=\"ui-g\">\n  <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n    Código\n  </div>\n  <div class=\"ui-g-3 ui-md-2 ui-lg-1\">\n    <input id=\"disabled-input\" type=\"text\" size= \"4\" pInputText [(ngModel)]= \"codigoUT\" [disabled]=\"true\" />\n  </div>\n  <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n    Nombre\n  </div>\n  <div class=\"ui-g-20 ui-md-10 ui-lg-5\">\n    <input id=\"input\" type=\"text\" size=\"50\" pInputText [(ngModel)]=\"nombreUT\" [disabled]= \"!editingMode\"> \n  </div>\n  <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\n      <button *ngIf=\"!editingMode\" pButton type=\"button\" label=\"Editar\" (click)=\"onEditar()\"></button>\n      <button *ngIf=\"editingMode\" pButton type=\"button\" label=\"Guardar\" (click)=\"onGuardar()\"></button>\n      <button *ngIf=\"editingMode\" pButton type=\"button\" label=\"Cancelar\" (click)=\"onCancelar()\"></button>\n  </div>\n</div>\n<div class=\"ui-g\">\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n        Producto\n    </div>\n    <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\n        <p-dropdown [options]=\"productosDisponibles\" [(ngModel)]=\"producto\" optionLabel= \"IdProducto\" [disabled]= \"!editingMode\" [style]=\"{'width':'250px'}\"></p-dropdown>\n    </div>\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n        Sprint\n    </div>\n    <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\n        <p-dropdown #combo [options]=\"sprintsDisponibles\" [(ngModel)]=\"sprint\" [disabled]= \"!editingMode\" [style]=\"{'width':'200px'}\"></p-dropdown>\n    </div>\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n        Orden\n      </div>\n      <div class=\"ui-g-6 ui-md-4 ui-lg-2\">\n        <input id=\"input\" type=\"text\" size=\"4\" pInputText [(ngModel)]=\"orden\" [disabled]= \"!editingMode\"> \n    </div>\n</div>\n<div class=\"ui-g\">\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n      Workflow\n    </div>\n    <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\n        <p-dropdown [options]=\"workflowsDisponibles\" [(ngModel)]=\"workflow\" [disabled]= \"!editingMode\" [style]=\"{'width':'250px'}\"></p-dropdown>\n    </div>\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n        Tipo\n    </div>\n    <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\n        <p-dropdown [options]=\"tiposDisponibles\" [(ngModel)]=\"tipo\" [disabled]= \"!editingMode\" [style]=\"{'width':'200px'}\"></p-dropdown>\n    </div>\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n        Proyecto\n      </div>\n      <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\n          <p-dropdown [options]=\"proyectosDisponibles\" [(ngModel)]=\"proyecto\" [disabled]= \"!editingMode\" [style]=\"{'width':'250px'}\"></p-dropdown>\n    </div>\n</div>\n<div class=\"ui-g\">\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n        Descripción\n      </div>\n      <div class=\"ui-g-30 ui-md-20 ui-lg-10\">\n          <textarea rows=\"5\"  pInputTextarea  [(ngModel)]=\"descripcion\" [disabled]= \"!editingMode\" cols=\"120\"></textarea>\n      </div>\n\n</div>\n\n";
+var html$1 = "<div class=\"ui-g\">\n  <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n    Código\n  </div>\n  <div class=\"ui-g-3 ui-md-2 ui-lg-1\">\n    <input id=\"disabled-input\" type=\"text\" size= \"4\" pInputText [(ngModel)]= \"codigoUT\" [disabled]=\"true\" />\n  </div>\n  <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n    Nombre\n  </div>\n  <div class=\"ui-g-20 ui-md-10 ui-lg-5\">\n    <input id=\"input\" type=\"text\" size=\"50\" pInputText [(ngModel)]=\"nombreUT\" [disabled]= \"!editingMode\"> \n  </div>\n  <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\n      <button *ngIf=\"!editingMode\" pButton type=\"button\" label=\"Editar\" (click)=\"onEditar()\"></button>\n      <button *ngIf=\"editingMode\" pButton type=\"button\" label=\"Guardar\" (click)=\"onGuardar()\"></button>\n      <button *ngIf=\"editingMode\" pButton type=\"button\" label=\"Cancelar\" (click)=\"onCancelar()\"></button>\n  </div>\n</div>\n<div class=\"ui-g\">\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n        Producto\n    </div>\n    <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\n        <p-dropdown [options]=\"productosDisponibles\" [(ngModel)]=\"model.producto\" optionLabel= \"IdProducto\" [disabled]= \"!editingMode\" [style]=\"{'width':'250px'}\"></p-dropdown>\n    </div>\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n        Sprint\n    </div>\n    <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\n        <p-dropdown #combo [options]=\"sprintsDisponibles\" [(ngModel)]=\"model.sprint\" [disabled]= \"!editingMode\" [style]=\"{'width':'200px'}\"></p-dropdown>\n    </div>\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n        Orden\n      </div>\n      <div class=\"ui-g-6 ui-md-4 ui-lg-2\">\n        <input id=\"input\" type=\"text\" size=\"4\" pInputText [(ngModel)]=\"orden\" [disabled]= \"!editingMode\"> \n    </div>\n</div>\n<div class=\"ui-g\">\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n      Workflow\n    </div>\n    <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\n        <p-dropdown [options]=\"workflowsDisponibles\" [(ngModel)]=\"model.workflow\" [disabled]= \"!editingMode\" [style]=\"{'width':'250px'}\"></p-dropdown>\n    </div>\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n        Tipo\n    </div>\n    <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\n        <p-dropdown [options]=\"tiposDisponibles\" [(ngModel)]=\"model.tipo\" [disabled]= \"!editingMode\" [style]=\"{'width':'200px'}\"></p-dropdown>\n    </div>\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n        Proyecto\n      </div>\n      <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\n          <p-dropdown [options]=\"proyectosDisponibles\" [(ngModel)]=\"model.proyecto\" [disabled]= \"!editingMode\" [style]=\"{'width':'250px'}\"></p-dropdown>\n    </div>\n</div>\n<div class=\"ui-g\">\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n        Descripción\n      </div>\n      <div class=\"ui-g-30 ui-md-20 ui-lg-10\">\n          <textarea rows=\"5\"  pInputTextarea  [(ngModel)]=\"descripcion\" [disabled]= \"!editingMode\" cols=\"120\"></textarea>\n      </div>\n</div>\n\n";
 
 __$styleInject("", undefined);
 
@@ -318,19 +316,17 @@ var DetailsComponent = (_dec$3 = Component({
   selector: 'tn-ut-details',
   template: html$1
 }), _dec2$1 = ViewChild('combo'), _dec$3(_class$3 = (_class2$1 = function () {
-  function DetailsComponent(route, location, detailsService) {
+  function DetailsComponent(route, detailsService) {
     var _this = this;
 
     classCallCheck(this, DetailsComponent);
-    this.codigoUT = null;
     this.editingMode = false;
-    this.sprint = null;
+    this.model = { producto: null, sprint: null, workflow: null, tipo: null, proyecto: null };
 
     _initDefineProp$1(this, 'combo', _descriptor$1, this);
 
     this._route = route;
     this._detailsService = detailsService;
-
     this.codigoUT = parseInt(this._route.params._value.id);
 
     this._detailsService.getUt(this.codigoUT).subscribe(function (data) {
@@ -343,8 +339,7 @@ var DetailsComponent = (_dec$3 = Component({
       _this._parseTipos(_this.ut.listaTiposUT);
       _this._parseProyectos(_this.ut.listaProyectos);
       _this.descripcion = _this.ut.UT.Definicion;
-      _this._mapSelected(data);
-      _this.sprint = 177;
+      _this._mapSelected(data, _this.model);
     });
 
     this._detailsService.getProductosDisponibles().subscribe(function (data) {
@@ -353,9 +348,6 @@ var DetailsComponent = (_dec$3 = Component({
   }
 
   createClass(DetailsComponent, [{
-    key: 'ngOnInit',
-    value: function ngOnInit() {}
-  }, {
     key: 'onEditar',
     value: function onEditar() {
       this.editingMode = true;
@@ -398,6 +390,7 @@ var DetailsComponent = (_dec$3 = Component({
       this.proyectosDisponibles = proyectos.map(function (proy) {
         return { label: '' + proy.Nombre, value: proy.IdProyecto };
       });
+      this.proyectosDisponibles.push({ label: '<Sin proyecto>', value: null });
     }
   }, {
     key: '_parseProductos',
@@ -408,9 +401,21 @@ var DetailsComponent = (_dec$3 = Component({
     }
   }, {
     key: '_mapSelected',
-    value: function _mapSelected(ut) {
+    value: function _mapSelected(ut, model) {
       this.sprintsDisponibles.forEach(function (element) {
-        if (element.value == ut.UT.IdVersion) this.sprint = element.value;
+        if (element.value == ut.UT.IdVersion) model.sprint = element.value;
+      });
+      this.workflowsDisponibles.forEach(function (element) {
+        if (element.value == ut.UT.IdWorkflow) model.workflow = element.value;
+      });
+      this.tiposDisponibles.forEach(function (element) {
+        if (element.value == ut.UT.IdTipoUT) model.tipo = element.value;
+      });
+      this.proyectosDisponibles.forEach(function (element) {
+        if (element.value == ut.UT.IdProyecto) model.proyecto = element.value;
+      });
+      this.productosDisponibles.forEach(function (element) {
+        if (element.value == ut.UT.IdProducto) model.producto = element.value;
       });
     }
   }]);
@@ -421,7 +426,7 @@ var DetailsComponent = (_dec$3 = Component({
     return null;
   }
 })), _class2$1)) || _class$3);
-Reflect.defineMetadata('design:paramtypes', [ActivatedRoute, Location, DetailsService], DetailsComponent);
+Reflect.defineMetadata('design:paramtypes', [ActivatedRoute, DetailsService], DetailsComponent);
 
 var _dec$1;
 var _class$1;

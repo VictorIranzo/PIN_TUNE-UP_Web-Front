@@ -1,11 +1,8 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute, ParamMap} from '@angular/router';
-import {Location} from '@angular/common';
+import {Component, ViewChild} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 
 import html from './details.component.html';
 import './details.component.css';
-
-import 'rxjs/add/operator/switchMap';
 
 import {DetailsService} from './services';
 
@@ -14,18 +11,15 @@ import {DetailsService} from './services';
   template: html,
 })
 export class DetailsComponent {
-  codigoUT = null;
   editingMode = false;
-  sprint = null;
+  model = {producto: null, sprint: null, workflow: null, tipo: null, proyecto: null};
 
   @ViewChild('combo') combo = null;
 
   constructor(route: ActivatedRoute,
-              location: Location,
               detailsService: DetailsService) {
         this._route = route;
         this._detailsService = detailsService;
-
         this.codigoUT= parseInt(this._route.params._value.id);
 
         this._detailsService.getUt(this.codigoUT).subscribe((data) => {
@@ -38,17 +32,12 @@ export class DetailsComponent {
               this._parseTipos(this.ut.listaTiposUT);
               this._parseProyectos(this.ut.listaProyectos);
               this.descripcion = this.ut.UT.Definicion;
-              this._mapSelected(data);
-              this.sprint = 177;
+              this._mapSelected(data, this.model);
             });
 
         this._detailsService.getProductosDisponibles().subscribe((data) => {
               this._parseProductos(data);
             });
-  }
-
-  ngOnInit() {
-
   }
 
   onEditar() {
@@ -85,6 +74,7 @@ export class DetailsComponent {
     this.proyectosDisponibles = proyectos.map((proy) => {
       return {label: `${proy.Nombre}`, value: proy.IdProyecto};
     });
+    this.proyectosDisponibles.push({label: '<Sin proyecto>', value: null});
   }
 
   _parseProductos(productos) {
@@ -93,9 +83,21 @@ export class DetailsComponent {
     });
   }
 
-  _mapSelected(ut) {
+  _mapSelected(ut, model) {
     this.sprintsDisponibles.forEach(function(element) {
-      if (element.value == ut.UT.IdVersion) this.sprint = element.value;
+      if (element.value == ut.UT.IdVersion) model.sprint = element.value;
+    });
+    this.workflowsDisponibles.forEach(function(element) {
+      if (element.value == ut.UT.IdWorkflow) model.workflow = element.value;
+    });
+    this.tiposDisponibles.forEach(function(element) {
+      if (element.value == ut.UT.IdTipoUT) model.tipo = element.value;
+    });
+    this.proyectosDisponibles.forEach(function(element) {
+      if (element.value == ut.UT.IdProyecto) model.proyecto = element.value;
+    });
+    this.productosDisponibles.forEach(function(element) {
+      if (element.value == ut.UT.IdProducto) model.producto = element.value;
     });
   }
 }

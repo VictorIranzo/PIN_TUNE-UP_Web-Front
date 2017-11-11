@@ -21,6 +21,11 @@ import {AuthGuard} from './routing';
             loadChildren:
             'src/app/modules/ut/dist/tune-up.ut.umd.js#ut#UtModule',
           },
+          {
+            path: '**',
+            redirectTo: 'home',
+            pathMatch: 'full',
+          },
         ],
       },
       {

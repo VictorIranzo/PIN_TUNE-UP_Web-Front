@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {DetailsService} from './services';
 import {NotificationsService} from '@tune-up/core';
+import {BreadcrumbService} from '@tune-up/app';
 import html from './details.component.html';
 import './details.component.css';
 
@@ -21,19 +22,22 @@ export class DetailsComponent {
   model = {IdUT: undefined, Nombre: undefined, Orden: undefined,
           IdProducto: undefined, IdVersion: undefined, IdWorkflow: undefined,
           IdTipoUT: undefined, IdProyecto: undefined, Descripcion: undefined};
-  ut = undefined;
+  ut;
 
   // TODO: utiliza destructuring para que quede más claro, ej
   // const {Nombre, Orden} = data.UT; const {listaVersiones,...} = data
 
   constructor(route: ActivatedRoute,
               detailsService: DetailsService,
-              notificationsService: NotificationsService) {
+              notificationsService: NotificationsService,
+               breadcrumbService:BreadcrumbService ) {
         this._route = route;
         this._detailsService = detailsService;
         this._notificationsService = notificationsService;
+        this._breadcrumbService = breadcrumbService;
 
         this.model.IdUT= parseInt(this._route.params._value.id);
+        this._breadcrumbService.addItems({label: this.model.IdUT, routerLink: `/uts/${this.model.IdUT}`});
 
         this._detailsService.getProductosDisponibles().subscribe((data) => {
           this._parseProductos(data);
@@ -52,6 +56,8 @@ export class DetailsComponent {
             });
   }
   ngOnDestroy() {
+    // TODO: provisional
+    this._breadcrumbService.removeItems(1);
     this._getUtSub &&
     !this._getUtSub.closed &&
     this._getUtSub.unsubscribe();
@@ -90,10 +96,10 @@ export class DetailsComponent {
   // las template strings solo valen si vas a escribir más.
   // TODO, en vez de almacenar todo esto en this, llama a las funciones desde el html y ya esta,
   // que solo se van a llamar una vez
-  
+
   _parseSprints(sprints) {
     this.sprintsDisponibles = sprints.map((sprint) => {
-      return {label: `${sprint.Nombre}`, value: sprint.IdVersion};
+      return {label: sprint.Nombre, value: sprint.IdVersion};
     });
     this.sprintsDisponibles.push({label: 'Backlog', value: null});
   }

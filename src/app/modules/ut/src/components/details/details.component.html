@@ -1,5 +1,5 @@
 <form class="vertical" #frm="ngForm" (ngSubmit)="frm.valid && onGuardar()">
-<div class="ui-g">
+  <div class="ui-g">
   <div class="ui-g-4 ui-md-2 ui-lg-1">
     Código
   </div>
@@ -49,8 +49,15 @@
         Tipo
     </div>
     <div class="ui-g-12 ui-md-6 ui-lg-3">
-        <p-dropdown [options]="tiposDisponibles" [(ngModel)]="model.IdTipoUT" name="tipo" #tipoCtrl="ngModel" [disabled]= "!editingMode" filter="true" [style]="{'width':'200px'}"></p-dropdown>
-    </div>
+        <p-dropdown [options]="tiposDisponibles" [(ngModel)]="model.IdTipoUT" name="tipo" #tipoCtrl="ngModel" [disabled]= "!editingMode" filter="true" [style]="{'width':'200px'}">
+          <ng-template let-tipoUT pTemplate="item">
+            <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                <i [ngClass]="getUtTypeIcon(tipoUT.value)"></i>
+                <div style="font-size:14px;float:right;margin-top:4px">{{tipoUT.label}}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+      </div>
     <div class="ui-g-4 ui-md-2 ui-lg-1">
         Proyecto
       </div>

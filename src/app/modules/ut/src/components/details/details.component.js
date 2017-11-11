@@ -5,6 +5,13 @@ import {NotificationsService} from '@tune-up/core';
 import html from './details.component.html';
 import './details.component.css';
 
+const utTypesIcons = {
+  1: 'fa fa-star',
+  2: 'fa fa-bug',
+  3: 'fa fa-plus-circle',
+  4: 'fa fa-puzzle-piece',
+};
+
 @Component({
   selector: 'tn-ut-details',
   template: html,
@@ -129,6 +136,10 @@ export class DetailsComponent {
       if (element.value == ut.UT.IdProducto) model.IdProducto = element.value;
     });
   }
+
+  getUtTypeIcon = (tipo) => {
+    return utTypesIcons[tipo];
+  };
 
   ngOnDestroy() {
     this._saveDetailsSubscription &&

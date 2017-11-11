@@ -702,10 +702,6 @@ var AppRoutingModule = (_dec$1 = core_1.NgModule({
     }, {
       path: 'uts',
       loadChildren: 'src/app/modules/ut/dist/tune-up.ut.umd.js#ut#UtModule'
-    }, {
-      path: '**',
-      redirectTo: 'home',
-      pathMatch: 'full'
     }]
   }, {
     path: 'login',

@@ -55,14 +55,6 @@ export class DetailsComponent {
               this._mapSelected(data, this.model);
             });
   }
-  ngOnDestroy() {
-    // TODO: provisional
-    this._breadcrumbService.removeItems(1);
-    this._getUtSub &&
-    !this._getUtSub.closed &&
-    this._getUtSub.unsubscribe();
-  }
-
   onEditar() {
     this.editingMode = true;
   }
@@ -148,8 +140,14 @@ export class DetailsComponent {
   };
 
   ngOnDestroy() {
+    this._breadcrumbService.removeItems(1);
+
     this._saveDetailsSubscription &&
     !this._saveDetailsSubscription.closed &&
     this._saveDetailsSubscription.unsubscribe();
+
+    this._getUtSub &&
+    !this._getUtSub.closed &&
+    this._getUtSub.unsubscribe();
   }
 }

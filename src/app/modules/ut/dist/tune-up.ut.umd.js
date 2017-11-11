@@ -184,8 +184,10 @@ var UtComponent = (_dec$2 = core.Component({
   createClass(UtComponent, [{
     key: 'ngOnDestroy',
     value: function ngOnDestroy() {
-      // TODO: determine when to reset breadcrumbService
-      // this._breadcrumbService.removeItems(1);
+      // guarrada para que funcione ahora, hay que cambiar la estrategia del breadcrum
+      if (window.location.hash.indexOf('home') === -1) {
+        this._breadcrumbService.removeItems(1);
+      }
     }
   }]);
   return UtComponent;
@@ -295,13 +297,6 @@ var DetailsComponent = (_dec$3 = core.Component({
   }
 
   createClass(DetailsComponent, [{
-    key: 'ngOnDestroy',
-    value: function ngOnDestroy() {
-      // TODO: provisional
-      this._breadcrumbService.removeItems(1);
-      this._getUtSub && !this._getUtSub.closed && this._getUtSub.unsubscribe();
-    }
-  }, {
     key: 'onEditar',
     value: function onEditar() {
       this.editingMode = true;
@@ -387,7 +382,11 @@ var DetailsComponent = (_dec$3 = core.Component({
   }, {
     key: 'ngOnDestroy',
     value: function ngOnDestroy() {
+      this._breadcrumbService.removeItems(1);
+
       this._saveDetailsSubscription && !this._saveDetailsSubscription.closed && this._saveDetailsSubscription.unsubscribe();
+
+      this._getUtSub && !this._getUtSub.closed && this._getUtSub.unsubscribe();
     }
   }]);
   return DetailsComponent;

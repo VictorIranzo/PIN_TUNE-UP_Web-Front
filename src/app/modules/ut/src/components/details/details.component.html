@@ -1,31 +1,20 @@
-<!--
-TODO 
-hacer un form, en el submit llamas a onGuardar y el boton onGuardar le pones type = submit y le
-quitas el onclick. Si no hay form no hay validations.
-usar ng-template para poner iconos en los dropdowns, y añadirles busqueda https://www.primefaces.org/primeng/#/dropdown
-los iconos los puedes ver en el onclick.
-si consigues hacer el layout con flex te quedará mejor, si no puedes al menos pon el width en % no en absoluto
-seguramente tendría sentido agrupar los distintos elementos del form en divs para hacer agrupaciones lógicas
-hacer orden input de tipo numerico, ver si puedes hacer incrementos y decrementos de 10 en 10 con los tipicos botones
-y si cambias todos los !editingModel por algo que no tengas que negar 9 veces?
-Y DEJA DE PONER ESPACIOS EN EL HTML PORFAVOR
- -->
+<form class="vertical" #frm="ngForm" (ngSubmit)="frm.valid && onGuardar()">
 <div class="ui-g">
   <div class="ui-g-4 ui-md-2 ui-lg-1">
     Código
   </div>
   <div class="ui-g-3 ui-md-2 ui-lg-1">
-    <input id="disabled-input" type="text" size= "4" pInputText [(ngModel)]= "model.codigoUT" [disabled]="true" />
+    <input id="disabled-input" type="text" size= "4" pInputText [(ngModel)]= "model.IdUT" name="codigo" #codigoCtrl="ngModel" [disabled]="true" />
   </div>
   <div class="ui-g-4 ui-md-2 ui-lg-1">
     Nombre
   </div>
   <div class="ui-g-20 ui-md-10 ui-lg-5">
-    <input id="input" type="text" size="50" pInputText [(ngModel)]="model.nombreUT" [disabled]= "!editingMode"> 
+    <input id="input" type="text" size="50" pInputText [(ngModel)]="model.Nombre" name="nombre" #nombreCtrl="ngModel" [disabled]= "!editingMode"> 
   </div>
   <div class="ui-g-12 ui-md-6 ui-lg-3">
       <button *ngIf="!editingMode" pButton type="button" label="Editar" (click)="onEditar()"></button>
-      <button *ngIf="editingMode" pButton type="button" label="Guardar" (click)="onGuardar()"></button>
+      <button *ngIf="editingMode" pButton type="submit" label="Guardar"></button>
       <button *ngIf="editingMode" pButton type="button" label="Cancelar" (click)="onCancelar()"></button>
   </div>
 </div>
@@ -34,19 +23,19 @@ Y DEJA DE PONER ESPACIOS EN EL HTML PORFAVOR
         Producto
     </div>
     <div class="ui-g-12 ui-md-6 ui-lg-3">
-        <p-dropdown [options]="productosDisponibles" [(ngModel)]="model.producto" optionLabel= "IdProducto" [disabled]= "!editingMode" [style]="{'width':'250px'}"></p-dropdown>
+        <p-dropdown [options]="productosDisponibles" [(ngModel)]="model.IdProducto" name="producto" #productoCtrl="ngModel" optionLabel= "IdProducto" [disabled]= "!editingMode" filter="true" [style]="{'width':'250px'}"></p-dropdown>
     </div>
     <div class="ui-g-4 ui-md-2 ui-lg-1">
         Sprint
     </div>
     <div class="ui-g-12 ui-md-6 ui-lg-3">
-        <p-dropdown [options]="sprintsDisponibles" [(ngModel)]="model.sprint" [disabled]= "!editingMode" [style]="{'width':'200px'}"></p-dropdown>
+        <p-dropdown [options]="sprintsDisponibles" [(ngModel)]="model.IdVersion" name="sprint" #sprintCtrl="ngModel" [disabled]= "!editingMode" filter="true" [style]="{'width':'200px'}"></p-dropdown>
     </div>
     <div class="ui-g-4 ui-md-2 ui-lg-1">
         Orden
       </div>
       <div class="ui-g-6 ui-md-4 ui-lg-2">
-        <input id="input" type="text" size="4" pInputText [(ngModel)]="model.orden" [disabled]= "!editingMode"> 
+        <input id="input" type="text" size="4" pInputText [(ngModel)]="model.Orden" name="orden" #ordenCtrl="ngModel" [disabled]= "!editingMode"> 
     </div>
 </div>
 <div class="ui-g">
@@ -54,19 +43,19 @@ Y DEJA DE PONER ESPACIOS EN EL HTML PORFAVOR
       Workflow
     </div>
     <div class="ui-g-12 ui-md-6 ui-lg-3">
-        <p-dropdown [options]="workflowsDisponibles" [(ngModel)]="model.workflow" [disabled]= "!editingMode" [style]="{'width':'250px'}"></p-dropdown>
+        <p-dropdown [options]="workflowsDisponibles" [(ngModel)]="model.IdWorkflow" name="workflow" #workflowCtrl="ngModel" [disabled]= "!editingMode" filter="true" [style]="{'width':'250px'}"></p-dropdown>
     </div>
     <div class="ui-g-4 ui-md-2 ui-lg-1">
         Tipo
     </div>
     <div class="ui-g-12 ui-md-6 ui-lg-3">
-        <p-dropdown [options]="tiposDisponibles" [(ngModel)]="model.tipo" [disabled]= "!editingMode" [style]="{'width':'200px'}"></p-dropdown>
+        <p-dropdown [options]="tiposDisponibles" [(ngModel)]="model.IdTipoUT" name="tipo" #tipoCtrl="ngModel" [disabled]= "!editingMode" filter="true" [style]="{'width':'200px'}"></p-dropdown>
     </div>
     <div class="ui-g-4 ui-md-2 ui-lg-1">
         Proyecto
       </div>
       <div class="ui-g-12 ui-md-6 ui-lg-3">
-          <p-dropdown [options]="proyectosDisponibles" [(ngModel)]="model.proyecto" [disabled]= "!editingMode" [style]="{'width':'250px'}"></p-dropdown>
+          <p-dropdown [options]="proyectosDisponibles" [(ngModel)]="model.IdProyecto" name="proyecto" #proyectoCtrl="ngModel" [disabled]= "!editingMode" filter="true" [style]="{'width':'250px'}"></p-dropdown>
     </div>
 </div>
 <div class="ui-g">
@@ -74,7 +63,8 @@ Y DEJA DE PONER ESPACIOS EN EL HTML PORFAVOR
         Descripción
       </div>
       <div class="ui-g-30 ui-md-20 ui-lg-10">
-          <textarea rows="5"  pInputTextarea  [(ngModel)]="model.descripcion" [disabled]= "!editingMode" cols="120"></textarea>
+          <textarea rows="5"  pInputTextarea  [(ngModel)]="model.Descripcion" name="descripcion" #descripcionCtrl="ngModel" [disabled]= "!editingMode" cols="120"></textarea>
       </div>
 </div>
+</form>
 

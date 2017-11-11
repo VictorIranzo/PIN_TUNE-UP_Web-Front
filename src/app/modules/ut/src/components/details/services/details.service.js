@@ -7,6 +7,7 @@ export class DetailsService {
     this._http = http;
     this._urlUT = 'FichaUT2';
     this._urlProductos = 'Productos2';
+    this._urlUTs = 'UTs2';
   }
 
   getUt(id) {
@@ -15,6 +16,10 @@ export class DetailsService {
 
   getProductosDisponibles() {
     return this._http.get(`${this._urlProductos}`);
+  }
+
+  submitChangesDetails(model) {
+    return this._http.post(this._urlUTs, model);
   }
 }
 

@@ -1,11 +1,12 @@
 import {Component} from '@angular/core';
 import {NotificationsService} from '@tune-up/core';
-import {CreateUTService, GetProductosService, GetProyectosService, GetTiposUTProductoService, GetWorkflowsService} from './services';
+import {CreateUTService, GetProductosService, GetProyectosService, GetSprintsProductoService, GetTiposUTProductoService, GetWorkflowsService} from './services';
 import html from './nuevaut.component.html';
 import './nuevaut.component.css';
 
 
 const proyectosCache = [];
+const sprintsCache = [];
 const tiposUTCache = [];
 const workflowsCache = [];
 
@@ -16,6 +17,7 @@ const workflowsCache = [];
     CreateUTService,
     GetProductosService,
     GetProyectosService,
+    GetSprintsProductoService,
     GetTiposUTProductoService,
     GetWorkflowsService
   ],
@@ -35,6 +37,7 @@ export class NuevaUTComponent {
     createUTService: CreateUTService,
     getProductosService : GetProductosService,
     getProyectosService : GetProyectosService,
+    getSprintsProductoService : GetSprintsProductoService,
     getTiposUTService : GetTiposUTProductoService,
     getWorkflowsService : GetWorkflowsService,
     notificationsService: NotificationsService,
@@ -42,13 +45,15 @@ export class NuevaUTComponent {
     this._createUTService = createUTService;
     this._getProductosService = getProductosService;
     this._getProyectosService = getProyectosService;
+    this._getSprintsService = getSprintsProductoService;
     this._getWorkflowsService = getWorkflowsService;
     this._getTiposUTService = getTiposUTService;
     this._notificationService = notificationsService;
     this.productos = [];
-    this.workflows = [];
     this.proyectos = [];
+    this.sprints = [];
     this.tiposUT = [];
+    this.workflows = [];
   }
 
   ngOnInit() {
@@ -79,7 +84,8 @@ export class NuevaUTComponent {
 
   _getDatosProducto(idProducto) {
     this._getWorkflows(idProducto);    
-    this._getProyectos(idProducto);   
+    this._getProyectos(idProducto);
+    this._getSprints(idProducto);   
     this._getTiposUT(idProducto); 
   }
 
@@ -142,6 +148,30 @@ export class NuevaUTComponent {
   _parseTiposUT(tipos) {
     return tipos.map((t) => {
       return {label: `${t.Nombre}`, value: t.IdTipoUT}
+    })
+  }
+
+  _getSprints(idProducto) {
+    if(!sprintsCache[idProducto]) {
+      this._getSprintsService.get(idProducto).subscribe(
+        (data) => {
+          sprintsCache[idProducto] = this._parseSprints(data);
+          this.sprints = sprintsCache[idProducto];
+        },
+        (error) => {
+          this._notificationService.error(
+            'No se han podido obtener los Sprints del producto',
+            error
+          )
+        }
+      )
+    }
+    return sprintsCache[idProducto];
+  }
+
+  _parseSprints(sprints) {
+    return sprints.map((sp) => {
+      return {label: `${sp.Nombre}`, value: sp.IdVersion}
     })
   }
   

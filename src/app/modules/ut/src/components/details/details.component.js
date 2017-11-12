@@ -77,6 +77,17 @@ export class DetailsComponent {
     this._saveDetailsSubscription = this._detailsService.submitChangesDetails(this.model).subscribe(
       (data) => {
         this.editingMode = false;
+
+        //TODO: The service must return the UT modified. Meanwhile...
+        this.ut.UT.IdUT = this.model.IdUT;
+        this.ut.UT.Nombre = this.model.Nombre;
+        this.ut.UT.Orden = this.model.Orden;
+        this.ut.UT.IdProducto = this.model.IdProducto;
+        this.ut.UT.IdVersion = this.model.IdVersion;
+        this.ut.UT.IdWorkflow = this.model.IdWorkflow;
+        this.ut.UT.IdTipoUT = this.model.IdTipoUT;
+        this.ut.UT.IdProyecto = this.model.IdProyecto;
+        this.ut.UT.Descripcion = this.model.Descripcion;
       },
       (error) => {
         this._notificationsService.error('Error al guardar los cambios', error);

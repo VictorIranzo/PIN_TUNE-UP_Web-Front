@@ -165,7 +165,7 @@ export class NuevaUTComponent {
         (data) => {
           sprintsCache[idProducto] = this._parseSprints(data);
           this.sprints = sprintsCache[idProducto];
-          this.ut.IdVersion = this.sprints? this.sprints[0].value : null;
+          this.ut.IdVersion = this.sprints[0]? this.sprints[0].value : null;
         },
         (error) => {
           this._notificationService.error(

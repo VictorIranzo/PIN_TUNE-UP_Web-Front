@@ -65,6 +65,7 @@ export class NuevaUTComponent {
       (data) => {
         this.productos = this._parseProductos(data);
         if(this.productos.length > 0) {
+          this.ut.IdProducto = this.productos[0].value;
           this._getDatosProducto(this.productos[0].value);
         }
       },
@@ -96,6 +97,7 @@ export class NuevaUTComponent {
           (data) => {
             workflowsCache[idProducto] = this._parseWorkflows(data);
             this.workflows = workflowsCache[idProducto];
+            this.ut.IdVersion = this.workflows[0]? this.workflows[0].value : null;
           }
         );
     }
@@ -115,6 +117,7 @@ export class NuevaUTComponent {
         (data) => {
           proyectosCache[idProducto] = this._parseProyectos(data);
           this.proyectos = proyectosCache[idProducto];
+          this.ut.IdProyecto = this.proyectos[0]? this.proyectos[0].value : null;          
         },
         (error) => 
           this._notificationService.error(
@@ -138,6 +141,7 @@ export class NuevaUTComponent {
           (data) => {
             tiposUTCache[idProducto] = this._parseTiposUT(data); 
             this.tiposUT = tiposUTCache[idProducto];
+            this.ut.IdTipoUT = this.tiposUT[0]? this.tiposUT[0].value : null;
           },
           (error) => 
             this._notificationService.error(
@@ -161,6 +165,7 @@ export class NuevaUTComponent {
         (data) => {
           sprintsCache[idProducto] = this._parseSprints(data);
           this.sprints = sprintsCache[idProducto];
+          this.ut.IdVersion = this.sprints[0]? this.sprints[0].value : null;
         },
         (error) => {
           this._notificationService.error(
@@ -184,16 +189,25 @@ export class NuevaUTComponent {
   }
 
   onCrearNuevaUTClick() {
-    this._crearUT()
-  }
-
-  onCrearYAbrirUTClick() {
-    
-  }
-  _crearUT() {
     this._crearUTSubscription = 
     this._createUTService.put(this.ut).subscribe(
       (data) => {
+      },
+      (error) => {
+        this._notificationService.error(
+          'No se pudo crear la UT especficada',
+          error
+        );
+      }
+    );  
+  }
+
+  onCrearYAbrirUTClick() {
+    this._crearUTSubscription = 
+    this._createUTService.put(this.ut).subscribe(
+      (data) => {
+        this.idUt = data;
+        //TODO: Redirigir
       },
       (error) => {
         this._notificationService.error(

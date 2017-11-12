@@ -3,8 +3,7 @@
     <input id="nombre-ut-textfield" type="text" size="30" [(ngModel)]="ut.Nombre" pInputText> 
     <label for="nombre-ut-textfield">Nombre UT</label>
   </span>
-  
-  <p-dropdown [options]="productos" optionLabel="Nombre" onchange="onProductChanged($event.value)"></p-dropdown>
-  <p-dropdown [options]="workflows" optionLabel="Nombre"></p-dropdown>
+  <p-dropdown [options]="productos" optionLabel="name" [(ngModel)]="ut.IdProducto" filter="true" [style]="{'width':'250px'}" (onChange)="onProductChanged($event.value)"></p-dropdown>
+  <p-dropdown [options]="workflows" optionLabel="name" [(ngModel)]="ut.IdWorkflow" filter="true" [style]="{'width':'250px'}"></p-dropdown>
   
 </div>

@@ -13,14 +13,12 @@ export class NuevaUTComponent {
   ut = {
     Nombre: null,
     IdVersion: null,
-    Producto: null,
-    Workflow: null,
+    IdProducto: null,
+    IdWorkflow: null,
     IdTipoUT: null,
     IdProyecto: null,
   };
-  productos = [];
-  workflows = [];
-  workflowsCache = [];
+ 
 
   constructor(
     createUTService: CreateUTService,
@@ -32,13 +30,20 @@ export class NuevaUTComponent {
     this._getProductosService = getProductosService;
     this._getWorkflowsService = getWorkflowsService;
     this._notificationService = notificationsService;
+    this.productos = [];
+    this.workflows = [];
+    this.workflowsCache = [];
+  }
+
+  ngOnInit() {
     this._getProductos();
   }
 
   _getProductos() {
     this._getProductosSubscription = this._getProductosService.get().subscribe(
       (data) => {
-        this.productos = data;
+        this.productos = this._parseProductos(data);
+        this._getWorkflows(this.productos[0].value);        
       },
       (error) =>
         this._notificationService.error(
@@ -48,19 +53,31 @@ export class NuevaUTComponent {
     );
   }
 
-  onProductChanged(nuevoProducto) {
-      this.workflows = _getWorkflows(nuevoProducto.IdProducto);
+  _parseProductos(productos) {
+    return productos.map((prod) => {
+      return {label: `${prod.Nombre}`, value: prod.IdProducto};
+    });
+  }
+  onProductChanged(idNuevoProducto) {
+      this.workflows = this._getWorkflows(idNuevoProducto);
   }
 
   _getWorkflows(idProducto) {
     if (!this.workflowsCache[idProducto]) {
-      this.workflowsCache[idProducto] = _getWorkflowsService.get(idProducto).subscribe(
+      this._getWorkflowsService.get(idProducto).subscribe(
         (data) => {
-          this.workflowsCache[idProducto] = data;
+          this.workflowsCache[idProducto] = this._parseWorkflows(data);
+          this.workflows = this.workflowsCache[idProducto];
         }
       );
     }
     return this.workflowsCache[idProducto];
+  }
+
+  _parseWorkflows(workflows) {
+    return workflows.map((wf) =>  {
+      return {label: `${wf.Nombre}`, value: wf.IdWorkflow};
+    });
   }
 
   _crearUT() {

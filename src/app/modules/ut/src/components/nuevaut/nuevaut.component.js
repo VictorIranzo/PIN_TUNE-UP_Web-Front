@@ -1,16 +1,17 @@
 import {Component} from '@angular/core';
 import {NotificationsService} from '@tune-up/core';
-import {CreateUTService, GetProductosService, GetWorkflowsService} from './services';
+import {CreateUTService, GetProductosService, GetProyectosService, GetWorkflowsService} from './services';
 import html from './nuevaut.component.html';
 import './nuevaut.component.css';
 
 const workflowsCache = [];
+const proyectosCache = [];
 
 
 @Component({
   selector: 'tn-ut-nuevaut',
   template: html,
-  providers: [CreateUTService, GetProductosService, GetWorkflowsService],
+  providers: [CreateUTService, GetProductosService, GetProyectosService, GetWorkflowsService],
 })
 export class NuevaUTComponent {
   ut = {
@@ -26,15 +27,18 @@ export class NuevaUTComponent {
   constructor(
     createUTService: CreateUTService,
     getProductosService : GetProductosService,
+    getProyectosService : GetProyectosService,
     getWorkflowsService : GetWorkflowsService,
     notificationsService: NotificationsService,
   ) {
     this._createUTService = createUTService;
     this._getProductosService = getProductosService;
+    this._getProyectosService = getProyectosService;
     this._getWorkflowsService = getWorkflowsService;
     this._notificationService = notificationsService;
     this.productos = [];
     this.workflows = [];
+    this.proyectos = [];
   }
 
   ngOnInit() {
@@ -45,7 +49,8 @@ export class NuevaUTComponent {
     this._getProductosSubscription = this._getProductosService.get().subscribe(
       (data) => {
         this.productos = this._parseProductos(data);
-        this._getWorkflows(this.productos[0].value);        
+        this._getWorkflows(this.productos[0].value);    
+        this._getProyectos(this.productos[0].value);    
       },
       (error) =>
         this._notificationService.error(
@@ -62,6 +67,7 @@ export class NuevaUTComponent {
   }
   onProductChanged(idNuevoProducto) {
       this.workflows = this._getWorkflows(idNuevoProducto);
+      this.proyectos = this._getProyectos(idNuevoProducto);
   }
 
   _getWorkflows(idProducto) {
@@ -80,6 +86,28 @@ export class NuevaUTComponent {
     return workflows.map((wf) =>  {
       return {label: `${wf.Nombre}`, value: wf.IdWorkflow};
     });
+  }
+
+  _getProyectos(idProducto) {
+    if(!proyectosCache[idProducto]) {
+      this._getProyectosService.get(idProducto).subscribe(
+        (data) => {
+          proyectosCache[idProducto] = this._parseProyectos(data);
+          this.proyectos = proyectosCache[idProducto];
+        },
+        (error) => 
+          this._notificationService.error(
+            'No se han podido obtener los proyectos del producto',
+          error  
+        ));
+    }
+    return proyectosCache[idProducto];
+  }
+
+  _parseProyectos(proyectos) {
+    return proyectos.map((pr) => {
+      return {label: `${pr.Nombre}`, value: pr.IdProyecto}
+    })
   }
 
   _crearUT() {

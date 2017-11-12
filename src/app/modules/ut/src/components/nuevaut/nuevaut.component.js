@@ -91,12 +91,13 @@ export class NuevaUTComponent {
 
   _getWorkflows(idProducto) {
     if (!workflowsCache[idProducto]) {
-      this._getWorkflowsService.get(idProducto).subscribe(
-        (data) => {
-          workflowsCache[idProducto] = this._parseWorkflows(data);
-          this.workflows = workflowsCache[idProducto];
-        }
-      );
+      this._getWorkflowsSubscription = 
+        this._getWorkflowsService.get(idProducto).subscribe(
+          (data) => {
+            workflowsCache[idProducto] = this._parseWorkflows(data);
+            this.workflows = workflowsCache[idProducto];
+          }
+        );
     }
     return workflowsCache[idProducto];
   }
@@ -109,6 +110,7 @@ export class NuevaUTComponent {
 
   _getProyectos(idProducto) {
     if(!proyectosCache[idProducto]) {
+      this._getProyectoSubscription =
       this._getProyectosService.get(idProducto).subscribe(
         (data) => {
           proyectosCache[idProducto] = this._parseProyectos(data);
@@ -131,16 +133,17 @@ export class NuevaUTComponent {
 
   _getTiposUT(idProducto) {
     if(!tiposUTCache[idProducto]) {
-      this._getTiposUTService.get(idProducto).subscribe(
-        (data) => {
-          tiposUTCache[idProducto] = this._parseTiposUT(data); 
-          this.tiposUT = tiposUTCache[idProducto];
-        },
-        (error) => 
-          this._notificationService.error(
-            'No se han podido obtener los tipos de UT',
-            error
-          ));
+      this._getTiposUTSubscription =
+        this._getTiposUTService.get(idProducto).subscribe(
+          (data) => {
+            tiposUTCache[idProducto] = this._parseTiposUT(data); 
+            this.tiposUT = tiposUTCache[idProducto];
+          },
+          (error) => 
+            this._notificationService.error(
+              'No se han podido obtener los tipos de UT',
+              error
+        ));
     }
     return tiposUTCache[idProducto];
   }
@@ -153,7 +156,8 @@ export class NuevaUTComponent {
 
   _getSprints(idProducto) {
     if(!sprintsCache[idProducto]) {
-      this._getSprintsService.get(idProducto).subscribe(
+      this._getSprintsSubscription = 
+       this._getSprintsService.get(idProducto).subscribe(
         (data) => {
           sprintsCache[idProducto] = this._parseSprints(data);
           this.sprints = sprintsCache[idProducto];
@@ -187,6 +191,7 @@ export class NuevaUTComponent {
     
   }
   _crearUT() {
+    this._crearUTSubscription = 
     this._createUTService.put(this.ut).subscribe(
       (data) => {
       },
@@ -204,8 +209,29 @@ export class NuevaUTComponent {
   }
 
   ngOnDestroy() {
+
+    this._crearUTSubscription &&
+      !this._crearUTSubscription.closed &&
+      this._crearUTSubscription.unsubscribe();
+
     this._getProductosSubscription &&
       !this._getProductosSubscription.closed &&
       this._getProductosSubscription.unsubscribe();
+      
+    this._getProyectoSubscription &&
+      !this._getProyectoSubscription.closed &&
+      this._getProyectoSubscription.unsubscribe();
+
+    this._getSprintsSubscription &&
+      !this._getSprintsSubscription.closed &&
+      this._getSprintsSubscription.unsubscribe();
+
+    this._getTiposUTSubscription &&
+      !this._getTiposUTSubscription.closed &&
+      this._getTiposUTSubscription.unsubscribe();
+
+    this._getWorkflowsSubscription &&
+      !this._getWorkflowsSubscription.closed &&
+      this._getWorkflowsSubscription.unsubscribe();      
   }
 }

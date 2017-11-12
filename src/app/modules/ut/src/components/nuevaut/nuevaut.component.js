@@ -4,6 +4,9 @@ import {CreateUTService, GetProductosService, GetWorkflowsService} from './servi
 import html from './nuevaut.component.html';
 import './nuevaut.component.css';
 
+const workflowsCache = [];
+
+
 @Component({
   selector: 'tn-ut-nuevaut',
   template: html,
@@ -32,7 +35,6 @@ export class NuevaUTComponent {
     this._notificationService = notificationsService;
     this.productos = [];
     this.workflows = [];
-    this.workflowsCache = [];
   }
 
   ngOnInit() {
@@ -63,15 +65,15 @@ export class NuevaUTComponent {
   }
 
   _getWorkflows(idProducto) {
-    if (!this.workflowsCache[idProducto]) {
+    if (!workflowsCache[idProducto]) {
       this._getWorkflowsService.get(idProducto).subscribe(
         (data) => {
-          this.workflowsCache[idProducto] = this._parseWorkflows(data);
-          this.workflows = this.workflowsCache[idProducto];
+          workflowsCache[idProducto] = this._parseWorkflows(data);
+          this.workflows = workflowsCache[idProducto];
         }
       );
     }
-    return this.workflowsCache[idProducto];
+    return workflowsCache[idProducto];
   }
 
   _parseWorkflows(workflows) {

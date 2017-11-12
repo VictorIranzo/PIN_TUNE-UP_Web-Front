@@ -84,10 +84,10 @@ export class NuevaUTComponent {
   }
 
   _getDatosProducto(idProducto) {
-    this._getWorkflows(idProducto);    
-    this._getProyectos(idProducto);
-    this._getSprints(idProducto);   
-    this._getTiposUT(idProducto); 
+    this.workflows = this._getWorkflows(idProducto);    
+    this.proyectos = this._getProyectos(idProducto);
+    this.sprints = this._getSprints(idProducto);   
+    this.tiposUT = this._getTiposUT(idProducto); 
   }
 
   _getWorkflows(idProducto) {
@@ -165,7 +165,7 @@ export class NuevaUTComponent {
         (data) => {
           sprintsCache[idProducto] = this._parseSprints(data);
           this.sprints = sprintsCache[idProducto];
-          this.ut.IdVersion = this.sprints[0]? this.sprints[0].value : null;
+          this.ut.IdVersion = this.sprints? this.sprints[0].value : null;
         },
         (error) => {
           this._notificationService.error(

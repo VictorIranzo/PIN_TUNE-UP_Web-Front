@@ -9,13 +9,13 @@ plugins[0] = replace({
   exclude: 'node_modules/**',
   ENVIRONMENT: JSON.stringify('development'),
 });
-// plugins.unshift(
-//   serve({
-//     contentBase: '',
-//     port: 8080,
-//   }),
-//   livereload({
-//     watch: ['dist', 'src/app/modules/**/dist/**'],
-//   })
-// );
+plugins.unshift(
+  serve({
+    contentBase: '',
+    port: 8080,
+  }),
+  livereload({
+    watch: ['dist', 'src/app/modules/**/dist/**'],
+  })
+);
 export default config;

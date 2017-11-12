@@ -6,5 +6,6 @@
   <p-dropdown [options]="productos" optionLabel="name" [(ngModel)]="ut.IdProducto" filter="true" [style]="{'width':'250px'}" (onChange)="onProductChanged($event.value)"></p-dropdown>
   <p-dropdown [options]="workflows" optionLabel="name" [(ngModel)]="ut.IdWorkflow" filter="true" [style]="{'width':'250px'}"></p-dropdown>
   <p-dropdown [options]="proyectos" optionLabel="name" [(ngModel)]="ut.IdProyecto" filter="true" [style]="{'width':'250px'}"></p-dropdown>
+  <p-dropdown [options]="tiposUT" optionLabel="name" [(ngModel)]="ut.IdTipoUT" filter="true" [style]="{'width':'250px'}"></p-dropdown>
   
 </div>

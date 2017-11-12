@@ -1,17 +1,24 @@
 import {Component} from '@angular/core';
 import {NotificationsService} from '@tune-up/core';
-import {CreateUTService, GetProductosService, GetProyectosService, GetWorkflowsService} from './services';
+import {CreateUTService, GetProductosService, GetProyectosService, GetTiposUTProductoService, GetWorkflowsService} from './services';
 import html from './nuevaut.component.html';
 import './nuevaut.component.css';
 
-const workflowsCache = [];
-const proyectosCache = [];
 
+const proyectosCache = [];
+const tiposUTCache = [];
+const workflowsCache = [];
 
 @Component({
   selector: 'tn-ut-nuevaut',
   template: html,
-  providers: [CreateUTService, GetProductosService, GetProyectosService, GetWorkflowsService],
+  providers: [
+    CreateUTService,
+    GetProductosService,
+    GetProyectosService,
+    GetTiposUTProductoService,
+    GetWorkflowsService
+  ],
 })
 export class NuevaUTComponent {
   ut = {
@@ -28,6 +35,7 @@ export class NuevaUTComponent {
     createUTService: CreateUTService,
     getProductosService : GetProductosService,
     getProyectosService : GetProyectosService,
+    getTiposUTService : GetTiposUTProductoService,
     getWorkflowsService : GetWorkflowsService,
     notificationsService: NotificationsService,
   ) {
@@ -35,10 +43,12 @@ export class NuevaUTComponent {
     this._getProductosService = getProductosService;
     this._getProyectosService = getProyectosService;
     this._getWorkflowsService = getWorkflowsService;
+    this._getTiposUTService = getTiposUTService;
     this._notificationService = notificationsService;
     this.productos = [];
     this.workflows = [];
     this.proyectos = [];
+    this.tiposUT = [];
   }
 
   ngOnInit() {
@@ -49,8 +59,9 @@ export class NuevaUTComponent {
     this._getProductosSubscription = this._getProductosService.get().subscribe(
       (data) => {
         this.productos = this._parseProductos(data);
-        this._getWorkflows(this.productos[0].value);    
-        this._getProyectos(this.productos[0].value);    
+        if(this.productos.length > 0) {
+          this._getDatosProducto(this.productos[0].value);
+        }
       },
       (error) =>
         this._notificationService.error(
@@ -65,9 +76,11 @@ export class NuevaUTComponent {
       return {label: `${prod.Nombre}`, value: prod.IdProducto};
     });
   }
-  onProductChanged(idNuevoProducto) {
-      this.workflows = this._getWorkflows(idNuevoProducto);
-      this.proyectos = this._getProyectos(idNuevoProducto);
+
+  _getDatosProducto(idProducto) {
+    this._getWorkflows(idProducto);    
+    this._getProyectos(idProducto);   
+    this._getTiposUT(idProducto); 
   }
 
   _getWorkflows(idProducto) {
@@ -109,6 +122,32 @@ export class NuevaUTComponent {
       return {label: `${pr.Nombre}`, value: pr.IdProyecto}
     })
   }
+
+  _getTiposUT(idProducto) {
+    if(!tiposUTCache[idProducto]) {
+      this._getTiposUTService.get(idProducto).subscribe(
+        (data) => {
+          tiposUTCache[idProducto] = this._parseTiposUT(data); 
+          this.tiposUT = tiposUTCache[idProducto];
+        },
+        (error) => 
+          this._notificationService.error(
+            'No se han podido obtener los tipos de UT',
+            error
+          ));
+    }
+    return tiposUTCache[idProducto];
+  }
+  
+  _parseTiposUT(tipos) {
+    return tipos.map((t) => {
+      return {label: `${t.Nombre}`, value: t.IdTipoUT}
+    })
+  }
+  
+  onProductChanged(idNuevoProducto) {
+    _getDatosProducto(idNuevoProducto);
+}
 
   _crearUT() {
     idUT = 0;

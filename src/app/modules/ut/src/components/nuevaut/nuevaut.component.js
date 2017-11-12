@@ -176,14 +176,19 @@ export class NuevaUTComponent {
   }
   
   onProductChanged(idNuevoProducto) {
-    _getDatosProducto(idNuevoProducto);
-}
+    this._getDatosProducto(idNuevoProducto);
+  }
 
+  onCrearNuevaUTClick() {
+    this._crearUT()
+  }
+
+  onCrearYAbrirUTClick() {
+    
+  }
   _crearUT() {
-    idUT = 0;
-    this.createUTService.put(this.ut).subscribe(
+    this._createUTService.put(this.ut).subscribe(
       (data) => {
-        this.idUT = data.Resultado;
       },
       (error) => {
         this._notificationService.error(
@@ -192,7 +197,10 @@ export class NuevaUTComponent {
         );
       }
     );
-    return idUT;
+  }
+
+  isNombreEmpty() {
+    return this.ut.Nombre == null || this.ut.Nombre.length === 0;
   }
 
   ngOnDestroy() {

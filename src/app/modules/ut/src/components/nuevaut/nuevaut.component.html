@@ -1,12 +1,24 @@
-<div class="horizontal">
-  <span class="ui-float-label">
-    <input id="nombre-ut-textfield" type="text" size="30" [(ngModel)]="ut.Nombre" pInputText> 
-    <label for="nombre-ut-textfield">Nombre UT</label>
-  </span>
-  <p-dropdown [options]="productos" optionLabel="name" [(ngModel)]="ut.IdProducto" filter="true" [style]="{'width':'250px'}" (onChange)="onProductChanged($event.value)"></p-dropdown>
-  <p-dropdown [options]="workflows" optionLabel="name" [(ngModel)]="ut.IdWorkflow" filter="true" [style]="{'width':'250px'}"></p-dropdown>
-  <p-dropdown [options]="proyectos" optionLabel="name" [(ngModel)]="ut.IdProyecto" filter="true" [style]="{'width':'250px'}"></p-dropdown>
-  <p-dropdown [options]="tiposUT" optionLabel="name" [(ngModel)]="ut.IdTipoUT" filter="true" [style]="{'width':'250px'}"></p-dropdown>
-  <p-dropdown [options]="sprints" optionLabel="name" [(ngModel)]="ut.IdVersion" filter="true" [style]="{'width':'250px'}"></p-dropdown>
-  
+<div class="vertical">
+  <div class ="horizontal">
+    <label for="nombre-ut-textfield">Nombre</label>    
+    <input id="nombre-ut-textfield" type="text" size="30" [(ngModel)]="ut.Nombre" pInputText>           
+    <label for="sprint-dropdown">Sprint</label>  
+    <p-dropdown id="sprint-dropdown" [options]="sprints" optionLabel="name" [(ngModel)]="ut.IdVersion" filter="true"></p-dropdown>          
+  </div>
+  <div class="horizontal">
+    <label for="productos-dropdown">Producto</label>
+    <p-dropdown class="five" id="productos-dropdown" [options]="productos" optionLabel="name" [(ngModel)]="ut.IdProducto" filter="true" (onChange)="onProductChanged($event.value)"></p-dropdown>
+    <label for="tipo-dropdown">Tipo</label>
+    <p-dropdown class="four" id="tipo-dropdown" [options]="tiposUT" optionLabel="name" [(ngModel)]="ut.IdTipoUT" filter="true"></p-dropdown>    
+  </div>
+  <div class="horizontal">
+    <label for="proyecto-dropdown">Proyecto</label>
+    <p-dropdown class="five" id="proyecto-dropdown" [options]="proyectos" optionLabel="name" [(ngModel)]="ut.IdProyecto" filter="true"></p-dropdown>
+    <label for="workflow-dropdown">Workflow</label>
+    <p-dropdown class="five" id="workflow-dropdown" [options]="workflows" optionLabel="name" [(ngModel)]="ut.IdWorkflow" filter="true"></p-dropdown>        
+  </div>
+  <div class ="horizontal">
+    <button pButton type="button" label="Crear & Nueva" [disabled]="isNombreEmpty()" (click)="onCrearNuevaUTClick()" ></button>
+    <button pButton type="button" label="Crear & Abrir" [disabled]="isNombreEmpty()" (click)="onCrearYAbrirUTClick()" ></button>      
+  </div>
 </div>

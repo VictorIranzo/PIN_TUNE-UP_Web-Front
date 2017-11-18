@@ -1,10 +1,36 @@
-<div class="horizontal">
-  <span class="ui-float-label">
-    <input id="nombre-ut-textfield" type="text" size="30" [(ngModel)]="ut.Nombre" pInputText> 
-    <label for="nombre-ut-textfield">Nombre UT</label>
-  </span>
-  
-  <p-dropdown [options]="productos" optionLabel="Nombre" onchange="onProductChanged($event.value)"></p-dropdown>
-  <p-dropdown [options]="workflows" optionLabel="Nombre"></p-dropdown>
-  
+<div class="vertical">
+  <div class ="horizontal">
+    <div class="vertical six">
+      <label for="nombre-ut-textfield">Nombre</label>    
+      <input id="nombre-ut-textfield" type="text" size="30" [(ngModel)]="ut.Nombre" pInputText>           
+    </div>
+    <div class="vertical four">
+      <label for="sprint-dropdown">Sprint</label>  
+      <p-dropdown id="sprint-dropdown" [styleClass]="tn-ut-nuevaut--dropdown" [options]="sprints" optionLabel="name" [(ngModel)]="ut.IdVersion" filter="true"></p-dropdown>          
+    </div>
+  </div>
+  <div class="horizontal">
+    <div class="vertical five">
+      <label for="productos-dropdown">Producto</label>
+      <p-dropdown id="productos-dropdown" [options]="productos" optionLabel="name" [(ngModel)]="ut.IdProducto" filter="true" (onChange)="onProductChanged($event.value)"></p-dropdown>  
+    </div>
+    <div class="vertical three">
+      <label for="tipo-dropdown">Tipo</label>
+      <p-dropdown id="tipo-dropdown" [options]="tiposUT" optionLabel="name" [(ngModel)]="ut.IdTipoUT" filter="true"></p-dropdown>    
+    </div>
+  </div>
+  <div class="horizontal five">
+    <div class="vertical">      
+      <label for="proyecto-dropdown">Proyecto</label>
+      <p-dropdown id="proyecto-dropdown" [options]="proyectos" optionLabel="name" [(ngModel)]="ut.IdProyecto" filter="true"></p-dropdown>
+    </div>
+    <div class="vertical five">        
+      <label for="workflow-dropdown">Workflow</label>
+      <p-dropdown id="workflow-dropdown" [options]="workflows" optionLabel="name" [(ngModel)]="ut.IdWorkflow" filter="true"></p-dropdown>        
+    </div>
+  </div>
+  <div class ="horizontal">
+    <button pButton type="button" label="Crear & Nueva" [disabled]="isNombreEmpty()" (click)="onCrearNuevaUTClick()" ></button>
+    <button pButton type="button" label="Crear & Abrir" [disabled]="isNombreEmpty()" (click)="onCrearYAbrirUTClick()" ></button>      
+  </div>
 </div>

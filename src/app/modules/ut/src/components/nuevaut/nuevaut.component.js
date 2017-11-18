@@ -19,7 +19,7 @@ const workflowsCache = [];
     GetProyectosService,
     GetSprintsProductoService,
     GetTiposUTProductoService,
-    GetWorkflowsService
+    GetWorkflowsService,
   ],
 })
 export class NuevaUTComponent {
@@ -31,7 +31,7 @@ export class NuevaUTComponent {
     IdTipoUT: null,
     IdProyecto: null,
   };
- 
+
 
   constructor(
     createUTService: CreateUTService,
@@ -64,7 +64,7 @@ export class NuevaUTComponent {
     this._getProductosSubscription = this._getProductosService.get().subscribe(
       (data) => {
         this.productos = this._parseProductos(data);
-        if(this.productos.length > 0) {
+        if (this.productos.length > 0) {
           this.ut.IdProducto = this.productos[0].value;
           this._getDatosProducto(this.productos[0].value);
         }
@@ -84,15 +84,15 @@ export class NuevaUTComponent {
   }
 
   _getDatosProducto(idProducto) {
-    this.workflows = this._getWorkflows(idProducto);    
+    this.workflows = this._getWorkflows(idProducto);
     this.proyectos = this._getProyectos(idProducto);
-    this.sprints = this._getSprints(idProducto);   
-    this.tiposUT = this._getTiposUT(idProducto); 
+    this.sprints = this._getSprints(idProducto);
+    this.tiposUT = this._getTiposUT(idProducto);
   }
 
   _getWorkflows(idProducto) {
     if (!workflowsCache[idProducto]) {
-      this._getWorkflowsSubscription = 
+      this._getWorkflowsSubscription =
         this._getWorkflowsService.get(idProducto).subscribe(
           (data) => {
             workflowsCache[idProducto] = this._parseWorkflows(data);
@@ -105,24 +105,24 @@ export class NuevaUTComponent {
   }
 
   _parseWorkflows(workflows) {
-    return workflows.map((wf) =>  {
+    return workflows.map((wf) => {
       return {label: `${wf.Nombre}`, value: wf.IdWorkflow};
     });
   }
 
   _getProyectos(idProducto) {
-    if(!proyectosCache[idProducto]) {
+    if (!proyectosCache[idProducto]) {
       this._getProyectoSubscription =
       this._getProyectosService.get(idProducto).subscribe(
         (data) => {
           proyectosCache[idProducto] = this._parseProyectos(data);
           this.proyectos = proyectosCache[idProducto];
-          this.ut.IdProyecto = this.proyectos[0]? this.proyectos[0].value : null;          
+          this.ut.IdProyecto = this.proyectos[0]? this.proyectos[0].value : null;
         },
-        (error) => 
+        (error) =>
           this._notificationService.error(
             'No se han podido obtener los proyectos del producto',
-          error  
+          error
         ));
     }
     return proyectosCache[idProducto];
@@ -130,20 +130,20 @@ export class NuevaUTComponent {
 
   _parseProyectos(proyectos) {
     return proyectos.map((pr) => {
-      return {label: `${pr.Nombre}`, value: pr.IdProyecto}
-    })
+      return {label: `${pr.Nombre}`, value: pr.IdProyecto};
+    });
   }
 
   _getTiposUT(idProducto) {
-    if(!tiposUTCache[idProducto]) {
+    if (!tiposUTCache[idProducto]) {
       this._getTiposUTSubscription =
         this._getTiposUTService.get(idProducto).subscribe(
           (data) => {
-            tiposUTCache[idProducto] = this._parseTiposUT(data); 
+            tiposUTCache[idProducto] = this._parseTiposUT(data);
             this.tiposUT = tiposUTCache[idProducto];
             this.ut.IdTipoUT = this.tiposUT[0]? this.tiposUT[0].value : null;
           },
-          (error) => 
+          (error) =>
             this._notificationService.error(
               'No se han podido obtener los tipos de UT',
               error
@@ -151,16 +151,16 @@ export class NuevaUTComponent {
     }
     return tiposUTCache[idProducto];
   }
-  
+
   _parseTiposUT(tipos) {
     return tipos.map((t) => {
-      return {label: `${t.Nombre}`, value: t.IdTipoUT}
-    })
+      return {label: `${t.Nombre}`, value: t.IdTipoUT};
+    });
   }
 
   _getSprints(idProducto) {
-    if(!sprintsCache[idProducto]) {
-      this._getSprintsSubscription = 
+    if (!sprintsCache[idProducto]) {
+      this._getSprintsSubscription =
        this._getSprintsService.get(idProducto).subscribe(
         (data) => {
           sprintsCache[idProducto] = this._parseSprints(data);
@@ -171,25 +171,25 @@ export class NuevaUTComponent {
           this._notificationService.error(
             'No se han podido obtener los Sprints del producto',
             error
-          )
+          );
         }
-      )
+      );
     }
     return sprintsCache[idProducto];
   }
 
   _parseSprints(sprints) {
     return sprints.map((sp) => {
-      return {label: `${sp.Nombre}`, value: sp.IdVersion}
-    })
+      return {label: `${sp.Nombre}`, value: sp.IdVersion};
+    });
   }
-  
+
   onProductChanged(idNuevoProducto) {
     this._getDatosProducto(idNuevoProducto);
   }
 
   onCrearNuevaUTClick() {
-    this._crearUTSubscription = 
+    this._crearUTSubscription =
     this._createUTService.put(this.ut).subscribe(
       (data) => {
       },
@@ -199,15 +199,15 @@ export class NuevaUTComponent {
           error
         );
       }
-    );  
+    );
   }
 
   onCrearYAbrirUTClick() {
-    this._crearUTSubscription = 
+    this._crearUTSubscription =
     this._createUTService.put(this.ut).subscribe(
       (data) => {
         this.idUt = data;
-        //TODO: Redirigir
+        // TODO: Redirigir
       },
       (error) => {
         this._notificationService.error(
@@ -223,7 +223,6 @@ export class NuevaUTComponent {
   }
 
   ngOnDestroy() {
-
     this._crearUTSubscription &&
       !this._crearUTSubscription.closed &&
       this._crearUTSubscription.unsubscribe();
@@ -231,7 +230,7 @@ export class NuevaUTComponent {
     this._getProductosSubscription &&
       !this._getProductosSubscription.closed &&
       this._getProductosSubscription.unsubscribe();
-      
+
     this._getProyectoSubscription &&
       !this._getProyectoSubscription.closed &&
       this._getProyectoSubscription.unsubscribe();
@@ -246,6 +245,6 @@ export class NuevaUTComponent {
 
     this._getWorkflowsSubscription &&
       !this._getWorkflowsSubscription.closed &&
-      this._getWorkflowsSubscription.unsubscribe();      
+      this._getWorkflowsSubscription.unsubscribe();
   }
 }

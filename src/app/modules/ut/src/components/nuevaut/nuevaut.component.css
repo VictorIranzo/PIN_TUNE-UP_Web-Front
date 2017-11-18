@@ -1,0 +1,12 @@
+@import 'styleguide';
+
+.tn-ut__form{
+  padding: var(--padding-medium);
+}
+.tn-ut__form__section{
+  padding: var(--padding-small);
+}
+.tn-ut__form__dropdown{
+  width: 100%;
+}
+

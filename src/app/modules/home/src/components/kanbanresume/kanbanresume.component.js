@@ -44,6 +44,7 @@ export class KanbanResumeComponent {
   }
 
   filterKanbanActivies(idActivity = 'ALL', status = 'ALL') {
+    if (idActivity == -1) idActivity = 'ALL';
     this.filterUts(idActivity, status);
   }
 }

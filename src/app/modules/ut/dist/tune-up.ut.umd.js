@@ -1,8 +1,8 @@
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/router'), require('@angular/common/http'), require('@tune-up/core')) :
-	typeof define === 'function' && define.amd ? define(['exports', '@angular/core', '@angular/router', '@angular/common/http', '@tune-up/core'], factory) :
-	(factory((global.tuneUp = global.tuneUp || {}, global.tuneUp.ut = {}),global.tuneUp.vendor.ngCore,global.tuneUp.vendor.ngRouter,global.tuneUp.vendor.ngCommonHttp,global.tuneUp.app));
-}(this, (function (exports,core,router,http,core$1) { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/router'), require('@tune-up/app'), require('@angular/common/http'), require('@tune-up/core')) :
+	typeof define === 'function' && define.amd ? define(['exports', '@angular/core', '@angular/router', '@tune-up/app', '@angular/common/http', '@tune-up/core'], factory) :
+	(factory((global.tuneUp = global.tuneUp || {}, global.tuneUp.ut = {}),global.tuneUp.vendor.ngCore,global.tuneUp.vendor.ngRouter,global.tuneUp.app,global.tuneUp.vendor.ngCommonHttp,global.tuneUp.app));
+}(this, (function (exports,core,router,app,http,core$1) { 'use strict';
 
 function __$styleInject(css, returnValue) {
   if (typeof document === 'undefined') {
@@ -22,7 +22,7 @@ function __$styleInject(css, returnValue) {
   return returnValue;
 }
 
-var html = "";
+var html = "<div>Este será el módulo para la gestión global de UTs</div>\r\n";
 
 __$styleInject("",undefined);
 
@@ -173,9 +173,24 @@ var _class$2;
 var UtComponent = (_dec$2 = core.Component({
   selector: 'tn-ut',
   template: html
-}), _dec$2(_class$2 = function UtComponent() {
-  classCallCheck(this, UtComponent);
-}) || _class$2);
+}), _dec$2(_class$2 = function () {
+  function UtComponent(breadcrumbService) {
+    classCallCheck(this, UtComponent);
+
+    this._breadcrumbService = breadcrumbService;
+    this._breadcrumbService.addItems({ label: 'UTs', routerLink: '/uts' });
+  }
+
+  createClass(UtComponent, [{
+    key: 'ngOnDestroy',
+    value: function ngOnDestroy() {
+      // TODO: determine when to reset breadcrumbService
+      // this._breadcrumbService.removeItems(1);
+    }
+  }]);
+  return UtComponent;
+}()) || _class$2);
+Reflect.defineMetadata('design:paramtypes', [app.BreadcrumbService], UtComponent);
 
 var _dec$4;
 var _class$4;
@@ -187,6 +202,7 @@ var DetailsService = (_dec$4 = core.Injectable(), _dec$4(_class$4 = function () 
     this._http = http$$1;
     this._urlUT = 'FichaUT2';
     this._urlProductos = 'Productos2';
+    this._urlUTs = 'UTs2';
   }
 
   createClass(DetailsService, [{
@@ -199,66 +215,97 @@ var DetailsService = (_dec$4 = core.Injectable(), _dec$4(_class$4 = function () 
     value: function getProductosDisponibles() {
       return this._http.get('' + this._urlProductos);
     }
+  }, {
+    key: 'submitChangesDetails',
+    value: function submitChangesDetails(model) {
+      return this._http.post(this._urlUTs, model);
+    }
   }]);
   return DetailsService;
 }()) || _class$4);
 Reflect.defineMetadata('design:paramtypes', [http.HttpClient], DetailsService);
 
-var html$1 = "<!--\r\nTODO \r\nhacer un form, en el submit llamas a onGuardar y el boton onGuardar le pones type = submit y le\r\nquitas el onclick. Si no hay form no hay validations.\r\nusar ng-template para poner iconos en los dropdowns, y añadirles busqueda https://www.primefaces.org/primeng/#/dropdown\r\nlos iconos los puedes ver en el onclick.\r\nsi consigues hacer el layout con flex te quedará mejor, si no puedes al menos pon el width en % no en absoluto\r\nseguramente tendría sentido agrupar los distintos elementos del form en divs para hacer agrupaciones lógicas\r\nhacer orden input de tipo numerico, ver si puedes hacer incrementos y decrementos de 10 en 10 con los tipicos botones\r\ny si cambias todos los !editingModel por algo que no tengas que negar 9 veces?\r\nY DEJA DE PONER ESPACIOS EN EL HTML PORFAVOR\r\n -->\r\n<div class=\"ui-g\">\r\n  <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\r\n    Código\r\n  </div>\r\n  <div class=\"ui-g-3 ui-md-2 ui-lg-1\">\r\n    <input id=\"disabled-input\" type=\"text\" size=\"4\" pInputText [(ngModel)]= \"codigoUT\" [disabled]=\"true\" />\r\n  </div>\r\n  <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\r\n    Nombre\r\n  </div>\r\n  <div class=\"ui-g-20 ui-md-10 ui-lg-5\">\r\n    <input id=\"input\" type=\"text\" size=\"50\" pInputText [(ngModel)]=\"nombreUT\" [disabled]= \"!editingMode\"> \r\n  </div>\r\n  <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\r\n      <button *ngIf=\"!editingMode\" pButton type=\"button\" label=\"Editar\" (click)=\"onEditar()\"></button>\r\n      <button *ngIf=\"editingMode\" pButton type=\"button\" label=\"Guardar\" (click)=\"onGuardar()\"></button>\r\n      <button *ngIf=\"editingMode\" pButton type=\"button\" label=\"Cancelar\" (click)=\"onCancelar()\"></button>\r\n  </div>\r\n</div>\r\n<div class=\"ui-g\">\r\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\r\n        Producto\r\n    </div>\r\n    <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\r\n        <p-dropdown [options]=\"productosDisponibles\" [(ngModel)]=\"producto\" optionLabel= \"IdProducto\" [disabled]= \"!editingMode\" [style]=\"{'width':'250px'}\"></p-dropdown>\r\n    </div>\r\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\r\n        Sprint\r\n    </div>\r\n    <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\r\n        <p-dropdown [options]=\"sprintsDisponibles\" [(ngModel)]=\"sprint\" [disabled]= \"!editingMode\" [style]=\"{'width':'200px'}\"></p-dropdown>\r\n    </div>\r\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\r\n        Orden\r\n      </div>\r\n      <div class=\"ui-g-6 ui-md-4 ui-lg-2\">\r\n        <input id=\"input\" type=\"text\" size=\"4\" pInputText [(ngModel)]=\"orden\" [disabled]= \"!editingMode\"> \r\n    </div>\r\n</div>\r\n<div class=\"ui-g\">\r\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\r\n      Workflow\r\n    </div>\r\n    <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\r\n        <p-dropdown [options]=\"workflowsDisponibles\" [(ngModel)]=\"workflow\" [disabled]= \"!editingMode\" [style]=\"{'width':'250px'}\"></p-dropdown>\r\n    </div>\r\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\r\n        Tipo\r\n    </div>\r\n    <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\r\n        <p-dropdown [options]=\"tiposDisponibles\" [(ngModel)]=\"tipo\" [disabled]= \"!editingMode\" [style]=\"{'width':'200px'}\"></p-dropdown>\r\n    </div>\r\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\r\n        Proyecto\r\n      </div>\r\n      <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\r\n          <p-dropdown [options]=\"proyectosDisponibles\" [(ngModel)]=\"proyecto\" [disabled]= \"!editingMode\" [style]=\"{'width':'250px'}\"></p-dropdown>\r\n    </div>\r\n</div>\r\n<div class=\"ui-g\">\r\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\r\n        Descripción\r\n      </div>\r\n      <div class=\"ui-g-30 ui-md-20 ui-lg-10\">\r\n          <textarea rows=\"5\"  pInputTextarea  [(ngModel)]=\"descripcion\" [disabled]= \"!editingMode\" cols=\"120\"></textarea>\r\n      </div>\r\n\r\n</div>\r\n\r\n";
+var html$1 = "<form class=\"vertical\" #frm=\"ngForm\" (ngSubmit)=\"frm.valid && onGuardar()\">\n  <div class=\"ui-g\">\n  <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n    Código\n  </div>\n  <div class=\"ui-g-3 ui-md-2 ui-lg-1\">\n    <input id=\"disabled-input\" type=\"text\" size= \"4\" pInputText [(ngModel)]= \"model.IdUT\" name=\"codigo\" #codigoCtrl=\"ngModel\" [disabled]=\"true\" />\n  </div>\n  <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n    Nombre\n  </div>\n  <div class=\"ui-g-20 ui-md-10 ui-lg-5\">\n    <input id=\"input\" type=\"text\" size=\"50\" pInputText [(ngModel)]=\"model.Nombre\" name=\"nombre\" #nombreCtrl=\"ngModel\" [disabled]= \"!editingMode\"> \n  </div>\n  <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\n      <button *ngIf=\"!editingMode\" pButton type=\"button\" label=\"Editar\" (click)=\"onEditar()\"></button>\n      <button *ngIf=\"editingMode\" pButton type=\"submit\" label=\"Guardar\"></button>\n      <button *ngIf=\"editingMode\" pButton type=\"button\" label=\"Cancelar\" (click)=\"onCancelar()\"></button>\n  </div>\n</div>\n<div class=\"ui-g\">\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n        Producto\n    </div>\n    <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\n        <p-dropdown [options]=\"productosDisponibles\" [(ngModel)]=\"model.IdProducto\" name=\"producto\" #productoCtrl=\"ngModel\" optionLabel= \"IdProducto\" [disabled]= \"!editingMode\" filter=\"true\" [style]=\"{'width':'250px'}\"></p-dropdown>\n    </div>\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n        Sprint\n    </div>\n    <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\n        <p-dropdown [options]=\"sprintsDisponibles\" [(ngModel)]=\"model.IdVersion\" name=\"sprint\" #sprintCtrl=\"ngModel\" [disabled]= \"!editingMode\" filter=\"true\" [style]=\"{'width':'200px'}\"></p-dropdown>\n    </div>\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n        Orden\n      </div>\n      <div class=\"ui-g-6 ui-md-4 ui-lg-2\">\n        <input id=\"input\" type=\"number\" size=\"4\" pInputText [(ngModel)]=\"model.Orden\" name=\"orden\" #ordenCtrl=\"ngModel\" [disabled]= \"!editingMode\"> \n    </div>\n</div>\n<div class=\"ui-g\">\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n      Workflow\n    </div>\n    <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\n        <p-dropdown [options]=\"workflowsDisponibles\" [(ngModel)]=\"model.IdWorkflow\" name=\"workflow\" #workflowCtrl=\"ngModel\" [disabled]= \"!editingMode\" filter=\"true\" [style]=\"{'width':'250px'}\"></p-dropdown>\n    </div>\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n        Tipo\n    </div>\n    <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\n        <p-dropdown [options]=\"tiposDisponibles\" [(ngModel)]=\"model.IdTipoUT\" name=\"tipo\" #tipoCtrl=\"ngModel\" [disabled]= \"!editingMode\" filter=\"true\" [style]=\"{'width':'200px'}\">\n          <ng-template let-tipoUT pTemplate=\"item\">\n            <div class=\"ui-helper-clearfix\" style=\"position: relative;height: 25px;\">\n                <i [ngClass]=\"getUtTypeIcon(tipoUT.value)\"></i>\n                <div style=\"font-size:14px;float:right;margin-top:4px\">{{tipoUT.label}}</div>\n            </div>\n          </ng-template>\n        </p-dropdown>\n      </div>\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n        Proyecto\n      </div>\n      <div class=\"ui-g-12 ui-md-6 ui-lg-3\">\n          <p-dropdown [options]=\"proyectosDisponibles\" [(ngModel)]=\"model.IdProyecto\" name=\"proyecto\" #proyectoCtrl=\"ngModel\" [disabled]= \"!editingMode\" filter=\"true\" [style]=\"{'width':'250px'}\"></p-dropdown>\n    </div>\n</div>\n<div class=\"ui-g\">\n    <div class=\"ui-g-4 ui-md-2 ui-lg-1\">\n        Descripción\n      </div>\n      <div class=\"ui-g-30 ui-md-20 ui-lg-10\">\n          <textarea rows=\"5\"  pInputTextarea  [(ngModel)]=\"model.Descripcion\" name=\"descripcion\" #descripcionCtrl=\"ngModel\" [disabled]= \"!editingMode\" cols=\"120\"></textarea>\n      </div>\n</div>\n</form>\n<ut-followup [utId]=\"model.IdUT\"></ut-followup>\n\n";
 
 __$styleInject("",undefined);
 
 var _dec$3;
 var _class$3;
 
+var utTypesIcons = {
+  1: 'fa fa-star',
+  2: 'fa fa-bug',
+  3: 'fa fa-plus-circle',
+  4: 'fa fa-puzzle-piece'
+};
+
 var DetailsComponent = (_dec$3 = core.Component({
   selector: 'tn-ut-details',
   template: html$1
 }), _dec$3(_class$3 = function () {
-  function DetailsComponent(route, detailsService) {
+
+  // TODO: utiliza destructuring para que quede más claro, ej
+  // const {Nombre, Orden} = data.UT; const {listaVersiones,...} = data
+
+  function DetailsComponent(route, detailsService, notificationsService, breadcrumbService) {
+    var _this = this;
+
     classCallCheck(this, DetailsComponent);
-    this.codigoUT = null;
     this.editingMode = false;
+    this.model = { IdUT: undefined, Nombre: undefined, Orden: undefined,
+      IdProducto: undefined, IdVersion: undefined, IdWorkflow: undefined,
+      IdTipoUT: undefined, IdProyecto: undefined, Descripcion: undefined };
     this.ut = this.ut;
+
+    this.onGuardar = function () {
+      _this._saveDetailsSubscription = _this._detailsService.submitChangesDetails(_this.model).subscribe(function (data) {
+        _this.editingMode = false;
+
+        //TODO: The service must return the UT modified. Meanwhile...
+        _this.ut.UT.IdUT = _this.model.IdUT;
+        _this.ut.UT.Nombre = _this.model.Nombre;
+        _this.ut.UT.Orden = _this.model.Orden;
+        _this.ut.UT.IdProducto = _this.model.IdProducto;
+        _this.ut.UT.IdVersion = _this.model.IdVersion;
+        _this.ut.UT.IdWorkflow = _this.model.IdWorkflow;
+        _this.ut.UT.IdTipoUT = _this.model.IdTipoUT;
+        _this.ut.UT.IdProyecto = _this.model.IdProyecto;
+        _this.ut.UT.Descripcion = _this.model.Descripcion;
+      }, function (error) {
+        _this._notificationsService.error('Error al guardar los cambios', error);
+      });
+    };
+
+    this.getUtTypeIcon = function (tipo) {
+      return utTypesIcons[tipo];
+    };
 
     this._route = route;
     this._detailsService = detailsService;
+    this._notificationsService = notificationsService;
+    this._breadcrumbService = breadcrumbService;
+
+    this.model.IdUT = parseInt(this._route.params._value.id);
+    this._breadcrumbService.addItems({ label: this.model.IdUT, routerLink: '/uts/' + this.model.IdUT });
+
+    this._detailsService.getProductosDisponibles().subscribe(function (data) {
+      _this._parseProductos(data);
+    });
+
+    this._detailsService.getUt(this.model.IdUT).subscribe(function (data) {
+      _this.ut = data;
+      _this.model.Nombre = data.UT.Nombre;
+      _this.model.Orden = data.UT.Orden;
+      _this._parseSprints(data.listaVersionesUT);
+      _this._parseWorkflows(data.listaWorkflowsDisponibles);
+      _this._parseTipos(data.listaTiposUT);
+      _this._parseProyectos(data.listaProyectos);
+      _this.model.Descripcion = data.UT.Descripcion;
+      _this._mapSelected(data, _this.model);
+    });
   }
 
   createClass(DetailsComponent, [{
-    key: 'ngOnInit',
-    value: function ngOnInit() {
-      var _this = this;
-
-      this.codigoUT = this._route.params._value.id;
-      this._getUtSub = this._detailsService.getUt(this.codigoUT).subscribe(function (data) {
-        // TODO: si no vas a usar this.ut luego, no la guardes
-        // TODO: utiliza destructuring para que quede más claro, ej
-        // const {Nombre, Orden} = data.UT; const {listaVersiones,...} = data
-        // TODO: seguramente sería mejor tener un solo objeto en el this
-        // en plan ut, y en el html bindear a ut.prop y así no tener mil cosas 
-        // en el scope
-        _this.ut = data;
-        _this.nombreUT = _this.ut.UT.Nombre;
-        _this.orden = _this.ut.UT.Orden;
-        _this.producto = _this.ut.ProductoUT;
-        _this._parseSprints(_this.ut.listaVersionesUT);
-        _this._parseWorkflows(_this.ut.listaWorkflowsDisponibles);
-        _this._parseTipos(_this.ut.listaTiposUT);
-        _this._parseProyectos(_this.ut.listaProyectos);
-        _this.descripcion = _this.ut.UT.Definicion;
-        _this.sprint = 177;
-      });
-      this._detailsService.getProductosDisponibles().subscribe(function (data) {
-        _this._parseProductos(data);
-      });
-    }
-  }, {
-    key: 'ngOnDestroy',
-    value: function ngOnDestroy() {
-      this._getUtSub && !this._getUtSub.closed && this._getUtSub.unsubscribe();
-    }
-  }, {
     key: 'onEditar',
     value: function onEditar() {
       this.editingMode = true;
@@ -267,22 +314,29 @@ var DetailsComponent = (_dec$3 = core.Component({
     key: 'onCancelar',
     value: function onCancelar() {
       this.editingMode = false;
+
+      this.model.IdUT = this.ut.UT.IdUT;
+      this.model.Nombre = this.ut.UT.Nombre;
+      this.model.Orden = this.ut.UT.Orden;
+      this.model.IdProducto = this.ut.UT.IdProducto;
+      this.model.IdVersion = this.ut.UT.IdVersion;
+      this.model.IdWorkflow = this.ut.UT.IdWorkflow;
+      this.model.IdTipoUT = this.ut.UT.IdTipoUT;
+      this.model.IdProyecto = this.ut.UT.IdProyecto;
+      this.model.Descripcion = this.ut.UT.Descripcion;
     }
   }, {
-    key: 'onGuardar',
-    value: function onGuardar() {
-      this.editingMode = false;
-    }
+    key: '_parseSprints',
+
+
     // TODO: var a = 'hola', label: a === label: `${a}`
     // las template strings solo valen si vas a escribir más.
     // TODO, en vez de almacenar todo esto en this, llama a las funciones desde el html y ya esta,
     // que solo se van a llamar una vez
 
-  }, {
-    key: '_parseSprints',
     value: function _parseSprints(sprints) {
       this.sprintsDisponibles = sprints.map(function (sprint) {
-        return { label: '' + sprint.Nombre, value: sprint.IdVersion };
+        return { label: sprint.Nombre, value: sprint.IdVersion };
       });
       this.sprintsDisponibles.push({ label: 'Backlog', value: null });
     }
@@ -306,6 +360,7 @@ var DetailsComponent = (_dec$3 = core.Component({
       this.proyectosDisponibles = proyectos.map(function (proy) {
         return { label: '' + proy.Nombre, value: proy.IdProyecto };
       });
+      this.proyectosDisponibles.push({ label: '<Sin Proyecto>', value: null });
     }
   }, {
     key: '_parseProductos',
@@ -314,10 +369,38 @@ var DetailsComponent = (_dec$3 = core.Component({
         return { label: '' + prod.Nombre, value: prod.IdProducto };
       });
     }
+  }, {
+    key: '_mapSelected',
+    value: function _mapSelected(ut, model) {
+      this.sprintsDisponibles.forEach(function (element) {
+        if (element.value == ut.UT.IdVersion) model.IdVersion = element.value;
+      });
+      this.workflowsDisponibles.forEach(function (element) {
+        if (element.value == ut.UT.IdWorkflow) model.IdWorkflow = element.value;
+      });
+      this.tiposDisponibles.forEach(function (element) {
+        if (element.value == ut.UT.IdTipoUT) model.IdTipoUT = element.value;
+      });
+      this.proyectosDisponibles.forEach(function (element) {
+        if (element.value == ut.UT.IdProyecto) model.IdProyecto = element.value;
+      });
+      this.productosDisponibles.forEach(function (element) {
+        if (element.value == ut.UT.IdProducto) model.IdProducto = element.value;
+      });
+    }
+  }, {
+    key: 'ngOnDestroy',
+    value: function ngOnDestroy() {
+      this._breadcrumbService.removeItems(1);
+
+      this._saveDetailsSubscription && !this._saveDetailsSubscription.closed && this._saveDetailsSubscription.unsubscribe();
+
+      this._getUtSub && !this._getUtSub.closed && this._getUtSub.unsubscribe();
+    }
   }]);
   return DetailsComponent;
 }()) || _class$3);
-Reflect.defineMetadata('design:paramtypes', [router.ActivatedRoute, DetailsService], DetailsComponent);
+Reflect.defineMetadata('design:paramtypes', [router.ActivatedRoute, DetailsService, core$1.NotificationsService, app.BreadcrumbService], DetailsComponent);
 
 var _dec$6;
 var _class$6;
@@ -445,7 +528,7 @@ var GetWorkflowsService = (_dec$11 = core.Injectable(), _dec$11(_class$11 = func
 }()) || _class$11);
 Reflect.defineMetadata('design:paramtypes', [http.HttpClient], GetWorkflowsService);
 
-var html$2 = "<form class=\"tn-ut__form vertical\">\n  <div class=\"horizontal\">\n    <div class=\"vertical seven tn-ut__form__section\">\n      <label>Nombre</label>\n      <input type=\"text\" size=\"30\" [(ngModel)]=\"ut.Nombre\" name=\"nombre\" pInputText>\n    </div>\n    <div class=\"vertical five tn-ut__form__section\">\n      <label>Sprint</label>\n      <p-dropdown [options]=\"sprints\" optionLabel=\"name\" [(ngModel)]=\"ut.IdVersion\" [style]=\"{'width':'100%'}\" filter=\"true\" name=\"sprint\"></p-dropdown>\n    </div>\n  </div>\n  <div class=\"horizontal\">\n    <div class=\"vertical five tn-ut__form__section\">\n      <label>Producto</label>\n      <p-dropdown [options]=\"productos\" optionLabel=\"name\" [(ngModel)]=\"ut.IdProducto\" [style]=\"{'width':'100%'}\" filter=\"true\" name=\"producto\" (onChange)=\"onProductChanged($event.value)\"></p-dropdown>\n    </div>\n    <div class=\"vertical three tn-ut__form__section\">\n      <label>Tipo</label>\n      <p-dropdown [options]=\"tiposUT\" optionLabel=\"name\" [(ngModel)]=\"ut.IdTipoUT\" [style]=\"{'width':'100%'}\" name=\"tipo\" filter=\"true\"></p-dropdown>\n    </div>\n  </div>\n  <div class=\"horizontal\">\n    <div class=\"vertical seven tn-ut__form__section\">\n      <label>Proyecto</label>\n      <p-dropdown [options]=\"proyectos\" optionLabel=\"name\" [(ngModel)]=\"ut.IdProyecto\" [style]=\"{'width':'100%'}\" name=\"idproyecto\" filter=\"true\"></p-dropdown>\n    </div>\n    <div class=\"vertical five tn-ut__form__section\">\n      <label>Workflow</label>\n      <p-dropdown [options]=\"workflows\" optionLabel=\"name\" [(ngModel)]=\"ut.IdWorkflow\" [style]=\"{'width':'100%'}\" name=\"idworkflow\" filter=\"true\"></p-dropdown>\n    </div>\n  </div>\n  <div class=\"horizontal tn-ut__form__section\">\n    <button pButton type=\"button\" label=\"Crear & Nueva\" [disabled]=\"isNombreEmpty()\" (click)=\"onCrearNuevaUTClick()\"></button>\n    <button pButton type=\"button\" label=\"Crear & Abrir\" [disabled]=\"isNombreEmpty()\" (click)=\"onCrearYAbrirUTClick()\"></button>\n  </div>\n</form>\n";
+var html$2 = "<form class=\"tn-ut__form vertical\">\r\n  <div class=\"horizontal\">\r\n    <div class=\"vertical seven tn-ut__form__section\">\r\n      <label>Nombre</label>\r\n      <input type=\"text\" size=\"30\" [(ngModel)]=\"ut.Nombre\" name=\"nombre\" pInputText>\r\n    </div>\r\n    <div class=\"vertical five tn-ut__form__section\">\r\n      <label>Sprint</label>\r\n      <p-dropdown [options]=\"sprints\" optionLabel=\"name\" [(ngModel)]=\"ut.IdVersion\" [style]=\"{'width':'100%'}\" filter=\"true\" name=\"sprint\"></p-dropdown>\r\n    </div>\r\n  </div>\r\n  <div class=\"horizontal\">\r\n    <div class=\"vertical five tn-ut__form__section\">\r\n      <label>Producto</label>\r\n      <p-dropdown [options]=\"productos\" optionLabel=\"name\" [(ngModel)]=\"ut.IdProducto\" [style]=\"{'width':'100%'}\" filter=\"true\" name=\"producto\" (onChange)=\"onProductChanged($event.value)\"></p-dropdown>\r\n    </div>\r\n    <div class=\"vertical three tn-ut__form__section\">\r\n      <label>Tipo</label>\r\n      <p-dropdown [options]=\"tiposUT\" optionLabel=\"name\" [(ngModel)]=\"ut.IdTipoUT\" [style]=\"{'width':'100%'}\" name=\"tipo\" filter=\"true\"></p-dropdown>\r\n    </div>\r\n  </div>\r\n  <div class=\"horizontal\">\r\n    <div class=\"vertical seven tn-ut__form__section\">\r\n      <label>Proyecto</label>\r\n      <p-dropdown [options]=\"proyectos\" optionLabel=\"name\" [(ngModel)]=\"ut.IdProyecto\" [style]=\"{'width':'100%'}\" name=\"idproyecto\" filter=\"true\"></p-dropdown>\r\n    </div>\r\n    <div class=\"vertical five tn-ut__form__section\">\r\n      <label>Workflow</label>\r\n      <p-dropdown [options]=\"workflows\" optionLabel=\"name\" [(ngModel)]=\"ut.IdWorkflow\" [style]=\"{'width':'100%'}\" name=\"idworkflow\" filter=\"true\"></p-dropdown>\r\n    </div>\r\n  </div>\r\n  <div class=\"horizontal tn-ut__form__section\">\r\n    <button pButton type=\"button\" label=\"Crear & Nueva\" [disabled]=\"isNombreEmpty()\" (click)=\"onCrearNuevaUTClick()\"></button>\r\n    <button pButton type=\"button\" label=\"Crear & Abrir\" [disabled]=\"isNombreEmpty()\" (click)=\"onCrearYAbrirUTClick()\"></button>\r\n  </div>\r\n</form>\r\n";
 
 __$styleInject(".tn-ut__form{padding:16px}.tn-ut__form__section{padding:8px}.tn-ut__form__dropdown{width:100%}",undefined);
 
@@ -663,6 +746,181 @@ var NuevaUTComponent = (_dec$5 = core.Component({
 }()) || _class$5);
 Reflect.defineMetadata('design:paramtypes', [CreateUTService, GetProductosService, GetProyectosService, GetSprintsProductoService, GetTiposUTProductoService, GetWorkflowsService, core$1.NotificationsService], NuevaUTComponent);
 
+var _dec$13;
+var _class$13;
+
+var FollowupsService = (_dec$13 = core.Injectable(), _dec$13(_class$13 = function () {
+  function FollowupsService(http$$1) {
+    classCallCheck(this, FollowupsService);
+
+    this._http = http$$1;
+  }
+
+  createClass(FollowupsService, [{
+    key: 'getSeguimientos',
+    value: function getSeguimientos(idUt) {
+      return this._http.get('UTs/' + idUt + '/Seguimientos');
+    }
+  }, {
+    key: 'pausarSeguimiento',
+    value: function pausarSeguimiento(idSeguimiento) {
+      return this._http.post('FinalizarRegistroTiempo?idSeguimiento=' + idSeguimiento);
+    }
+  }, {
+    key: 'empezarSeguimiento',
+    value: function empezarSeguimiento(idSeguimiento) {
+      return this._http.post('EmpezarRegistroTiempo?idSeguimiento=' + idSeguimiento);
+    }
+  }, {
+    key: 'finalizarSeguimiento',
+    value: function finalizarSeguimiento(idSeguimiento) {
+      var adelante = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+
+      return this._http.post('FinalizarSeguimiento?idSeguimiento=' + idSeguimiento + '&adelante=' + adelante);
+    }
+  }]);
+  return FollowupsService;
+}()) || _class$13);
+Reflect.defineMetadata('design:paramtypes', [http.HttpClient], FollowupsService);
+
+var html$3 = "<div class=\"vertical\">\n  <div class=\"horizontal tn-ut__followups__controls\">\n    <button pButton label=\"Iniciar\" (click)=\"iniciar()\" icon=\"fa fa-play-circle\" [disabled]=\"puedeFinalizar\" *ngIf=\"puedeIniciar() || !puedeFinalizar()\"></button>\n    <button pButton label=\"Continuar\" (click)=\"continuar()\" icon=\"fa fa-play-circle\" *ngIf=\"puedeContinuar()\"></button>\n    <button pButton label=\"Pausar\" (click)=\"pausar()\" icon=\"fa fa-pause-circle\" *ngIf=\"puedePausar()\"></button>    \n    <button pButton label=\"Finalizar\" (click)=\"finalizar()\" icon=\"fa fa-stop-circle\" [disabled]=\"!puedeFinalizar()\"></button>    \n    <button pButton label=\"Asignar Agente\" (click)=\"asignarAgente()\" icon=\"fa fa-user-plus\" [disabled]=\"true\"></button>        \n    <button pButton label=\"Trabajar en Paralelo\" (click)=\"trabajarEnParalelo()\" icon=\"fa fa-users\" [disabled]=\"true\"></button>            \n  </div>\n</div>\n";
+
+__$styleInject("",undefined);
+
+var _dec$12;
+var _dec2;
+var _class$12;
+var _class2;
+var _descriptor;
+
+function _initDefineProp(target, property, descriptor, context) {
+  if (!descriptor) return;
+  Object.defineProperty(target, property, {
+    enumerable: descriptor.enumerable,
+    configurable: descriptor.configurable,
+    writable: descriptor.writable,
+    value: descriptor.initializer ? descriptor.initializer.call(context) : void 0
+  });
+}
+
+function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) {
+  var desc = {};
+  Object['ke' + 'ys'](descriptor).forEach(function (key) {
+    desc[key] = descriptor[key];
+  });
+  desc.enumerable = !!desc.enumerable;
+  desc.configurable = !!desc.configurable;
+
+  if ('value' in desc || desc.initializer) {
+    desc.writable = true;
+  }
+
+  desc = decorators.slice().reverse().reduce(function (desc, decorator) {
+    return decorator(target, property, desc) || desc;
+  }, desc);
+
+  if (context && desc.initializer !== void 0) {
+    desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
+    desc.initializer = undefined;
+  }
+
+  if (desc.initializer === void 0) {
+    Object['define' + 'Property'](target, property, desc);
+    desc = null;
+  }
+
+  return desc;
+}
+
+var FollowupsComponent = (_dec$12 = core.Component({
+  selector: 'ut-followup',
+  template: html$3,
+  providers: [FollowupsService]
+}), _dec2 = core.Input(), _dec$12(_class$12 = (_class2 = function () {
+  function FollowupsComponent(followupsService) {
+    var _this = this;
+
+    classCallCheck(this, FollowupsComponent);
+
+    _initDefineProp(this, 'utId', _descriptor, this);
+
+    this.seguimientos = [];
+
+    this.puedeIniciar = function () {
+      return _this.seguimiento && _this.seguimiento.Estado === 'TO DO';
+    };
+
+    this.iniciar = function () {
+      _this._followupsService.empezarSeguimiento(_this.idSeguimiento);
+    };
+
+    this.puedeContinuar = function () {
+      return _this.seguimiento && _this.seguimiento.Estado === 'DOING';
+    };
+
+    this.continuar = function () {
+      _this._followupsService.empezarSeguimiento(_this.idSeguimiento);
+    };
+
+    this.puedePausar = function () {
+      return _this.seguimiento && _this.seguimiento.Estado === 'ACTIVE';
+    };
+
+    this.pausar = function () {
+      _this._followupsService.pausarSeguimiento(_this.idSeguimiento);
+    };
+
+    this.puedeFinalizar = function () {
+      return _this.seguimiento && _this.seguimiento.Estado !== 'DONE';
+    };
+
+    this.finalizar = function () {
+      _this._followupsService.finalizarSeguimiento(_this.idSeguimiento);
+    };
+
+    this.asignarAgente = function () {
+      // TODO
+    };
+
+    this.trabajarEnParalelo = function () {
+      // TODO
+    };
+
+    this._followupsService = followupsService;
+  }
+
+  createClass(FollowupsComponent, [{
+    key: 'ngOnInit',
+    value: function ngOnInit() {
+      var _this2 = this;
+
+      this._getFollowupsSub = this._followupsService.getSeguimientos(this.utId).subscribe(function (data) {
+        _this2.seguimientos = data;
+      }, function (error) {
+        // TODO
+        console.error(error);
+      });
+    }
+  }, {
+    key: 'idSeguimiento',
+    get: function get$$1() {
+      return this.seguimientos[0].IdSeguimiento;
+    }
+  }, {
+    key: 'seguimiento',
+    get: function get$$1() {
+      return this.seguimientos[0];
+    }
+  }]);
+  return FollowupsComponent;
+}(), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, 'utId', [_dec2], {
+  enumerable: true,
+  initializer: function initializer() {
+    return this.utId;
+  }
+})), _class2)) || _class$12);
+Reflect.defineMetadata('design:paramtypes', [FollowupsService], FollowupsComponent);
+
 var _dec$1;
 var _class$1;
 
@@ -678,22 +936,13 @@ var _class;
 
 var UtModule = (_dec = core.NgModule({
   imports: [core$1.TuneUpCoreModule, UtRoutingModule],
-  declarations: [UtComponent, DetailsComponent, NuevaUTComponent],
+  declarations: [UtComponent, DetailsComponent, NuevaUTComponent, FollowupsComponent],
   providers: [DetailsService]
 }), _dec(_class = function UtModule() {
   classCallCheck(this, UtModule);
 }) || _class);
 
 exports.UtModule = UtModule;
-exports.DetailsComponent = DetailsComponent;
-exports.DetailsService = DetailsService;
-exports.NuevaUTComponent = NuevaUTComponent;
-exports.CreateUTService = CreateUTService;
-exports.GetProductosService = GetProductosService;
-exports.GetProyectosService = GetProyectosService;
-exports.GetSprintsProductoService = GetSprintsProductoService;
-exports.GetTiposUTProductoService = GetTiposUTProductoService;
-exports.GetWorkflowsService = GetWorkflowsService;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

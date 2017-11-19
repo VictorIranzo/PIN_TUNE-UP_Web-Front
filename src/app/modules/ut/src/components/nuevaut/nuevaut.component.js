@@ -192,6 +192,10 @@ export class NuevaUTComponent {
     this._crearUTSubscription =
     this._createUTService.put(this.ut).subscribe(
       (data) => {
+          this._notificationService.success(
+            'La UT se ha creado con exito',
+            `UT: ${this.ut.Nombre}`
+          );
       },
       (error) => {
         this._notificationService.error(

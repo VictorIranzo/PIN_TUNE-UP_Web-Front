@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {DetailsService} from './services';
 import {NotificationsService} from '@tune-up/core';
 import {BreadcrumbService} from '@tune-up/app';
@@ -28,32 +28,42 @@ export class DetailsComponent {
   // const {Nombre, Orden} = data.UT; const {listaVersiones,...} = data
 
   constructor(route: ActivatedRoute,
+              router: Router,
               detailsService: DetailsService,
               notificationsService: NotificationsService,
                breadcrumbService:BreadcrumbService ) {
         this._route = route;
+        this._router = router;
         this._detailsService = detailsService;
         this._notificationsService = notificationsService;
         this._breadcrumbService = breadcrumbService;
 
         this.model.IdUT= parseInt(this._route.params._value.id);
 
-        this._detailsService.getProductosDisponibles().subscribe((data) => {
+        this._getProductosDisponibles = this._detailsService.getProductosDisponibles().subscribe((data) => {
           this._parseProductos(data);
         });
 
-        this._detailsService.getUt(this.model.IdUT).subscribe((data) => {
-              this.ut = data;
-              this.model.Nombre = data.UT.Nombre;
-              this.model.Orden = data.UT.Orden;
-              this._parseSprints(data.listaVersionesUT);
-              this._parseWorkflows(data.listaWorkflowsDisponibles);
-              this._parseTipos(data.listaTiposUT);
-              this._parseProyectos(data.listaProyectos);
-              this.model.Descripcion = data.UT.Descripcion;
-              this._mapSelected(data, this.model);
-              this._breadcrumbService.addItems({label: `${this.model.IdUT}: ${this.model.Nombre}`, routerLink: `/uts/${this.model.IdUT}`});              
-            });
+        this._getUt = this._detailsService.getUt(this.model.IdUT).subscribe((data) => {
+              if (data.UT == undefined) {
+                this.showErrorAndBackHome();
+              } else {
+                this.ut = data;
+                this.model.Nombre = data.UT.Nombre;
+                this.model.Orden = data.UT.Orden;
+                this._parseSprints(data.listaVersionesUT);
+                this._parseWorkflows(data.listaWorkflowsDisponibles);
+                this._parseTipos(data.listaTiposUT);
+                this._parseProyectos(data.listaProyectos);
+                this.model.Descripcion = data.UT.Descripcion;
+                this._mapSelected(data, this.model);
+                this._breadcrumbService.addItems({label: `${this.model.IdUT}: ${this.model.Nombre}`, routerLink: `/uts/${this.model.IdUT}`});
+              }
+            },
+            (error) => {
+              this.showErrorAndBackHome();
+            }
+          );
   }
   onEditar() {
     this.editingMode = true;
@@ -74,11 +84,11 @@ export class DetailsComponent {
   }
 
   onGuardar = () => {
-    this._saveDetailsSubscription = this._detailsService.submitChangesDetails(this.model).subscribe(
+   this._saveDetailsSubscription = this._detailsService.submitChangesDetails(this.model).subscribe(
       (data) => {
         this.editingMode = false;
 
-        //TODO: The service must return the UT modified. Meanwhile...
+        // TODO: The service must return the UT modified. Meanwhile...
         this.ut.UT.IdUT = this.model.IdUT;
         this.ut.UT.Nombre = this.model.Nombre;
         this.ut.UT.Orden = this.model.Orden;
@@ -150,6 +160,11 @@ export class DetailsComponent {
     return utTypesIcons[tipo];
   };
 
+  showErrorAndBackHome() {
+    this._notificationsService.error('Error al obtener la UT', 'UT no encontrada');
+    this._router.navigateByUrl('/home');
+  }
+
   ngOnDestroy() {
     this._breadcrumbService.removeItems(1);
 
@@ -160,5 +175,13 @@ export class DetailsComponent {
     this._getUtSub &&
     !this._getUtSub.closed &&
     this._getUtSub.unsubscribe();
+
+    this._getProductosDisponibles &&
+    !this._getProductosDisponibles.closed &&
+    this._getProductosDisponibles.unsubscribe();
+
+    this._getUt &&
+    !this._getUt.closed &&
+    this._getUt.unsubscribe();
   }
 }

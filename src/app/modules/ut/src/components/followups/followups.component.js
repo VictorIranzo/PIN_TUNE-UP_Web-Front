@@ -34,25 +34,45 @@ export class FollowupsComponent {
     return this.seguimiento && this.seguimiento.Estado === 'TO DO';
   }
   iniciar = () => {
-    this._followupsService.empezarSeguimiento(this.idSeguimiento);
+    this._followupsService.empezarSeguimiento(this.idSeguimiento).subscribe(
+      (data) => { },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
   puedeContinuar = () => {
     return this.seguimiento && this.seguimiento.Estado === 'DOING';
   }
   continuar = () => {
-    this._followupsService.empezarSeguimiento(this.idSeguimiento);
+    this._followupsService.empezarSeguimiento(this.idSeguimiento).subscribe(
+      (data) => { },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
   puedePausar = () => {
     return this.seguimiento && this.seguimiento.Estado === 'ACTIVE';
   }
   pausar = () => {
-    this._followupsService.pausarSeguimiento(this.idSeguimiento);
+    this._followupsService.pausarSeguimiento(this.idSeguimiento).subscribe(
+      (data) => { },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
   puedeFinalizar = () => {
     return this.seguimiento && this.seguimiento.Estado !== 'DONE';
   }
   finalizar = () => {
-    this._followupsService.finalizarSeguimiento(this.idSeguimiento);
+    this._followupsService.finalizarSeguimiento(this.idSeguimiento).subscribe(
+      (data) => { },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
   asignarAgente = () => {
     // TODO

@@ -21,7 +21,7 @@ export class FollowupsService {
   }
   finalizarSeguimiento(idSeguimiento, adelante = true) {
     return this._http.post(
-      `FinalizarSeguimiento?idSeguimiento=${idSeguimiento}&adelante=${adelante}`
+      `FinalizarSeguimiento?idSeguimiento=${idSeguimiento}&adelante=${adelante}&avisarEmail=false`
     );
   }
 }

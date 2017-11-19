@@ -759,7 +759,7 @@ var ResponseInterceptor = (_dec$14 = core_1.Injectable(), _dec$14(_class$14 = fu
 
       return next.handle(req).map(function (event) {
         if (event instanceof http.HttpResponse) {
-          if (!event.body.Resultado) {
+          if (!event.body || !event.body.Resultado) {
             return event;
           }
           _this._checkInvalid(event);
@@ -770,13 +770,14 @@ var ResponseInterceptor = (_dec$14 = core_1.Injectable(), _dec$14(_class$14 = fu
   }, {
     key: '_serializeBody',
     value: function _serializeBody(response) {
-      var result = response.body.Resultado;
+      var result = response && response.body && response.body.Resultado;
       return response.clone({ body: result });
     }
   }, {
     key: '_checkInvalid',
     value: function _checkInvalid(response) {
-      if (!response.body.Exito) {
+      var success = response && response.body && response.body.Exito;
+      if (!success) {
         throw new Error(response.body.Mensaje);
       }
     }

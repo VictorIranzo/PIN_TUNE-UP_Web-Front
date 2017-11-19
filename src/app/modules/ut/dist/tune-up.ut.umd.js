@@ -528,7 +528,7 @@ var GetWorkflowsService = (_dec$11 = core.Injectable(), _dec$11(_class$11 = func
 }()) || _class$11);
 Reflect.defineMetadata('design:paramtypes', [http.HttpClient], GetWorkflowsService);
 
-var html$2 = "<form class=\"tn-ut__form vertical\">\r\n  <div class=\"horizontal\">\r\n    <div class=\"vertical seven tn-ut__form__section\">\r\n      <label>Nombre</label>\r\n      <input type=\"text\" size=\"30\" [(ngModel)]=\"ut.Nombre\" name=\"nombre\" pInputText>\r\n    </div>\r\n    <div class=\"vertical five tn-ut__form__section\">\r\n      <label>Sprint</label>\r\n      <p-dropdown [options]=\"sprints\" optionLabel=\"name\" [(ngModel)]=\"ut.IdVersion\" [style]=\"{'width':'100%'}\" filter=\"true\" name=\"sprint\"></p-dropdown>\r\n    </div>\r\n  </div>\r\n  <div class=\"horizontal\">\r\n    <div class=\"vertical five tn-ut__form__section\">\r\n      <label>Producto</label>\r\n      <p-dropdown [options]=\"productos\" optionLabel=\"name\" [(ngModel)]=\"ut.IdProducto\" [style]=\"{'width':'100%'}\" filter=\"true\" name=\"producto\" (onChange)=\"onProductChanged($event.value)\"></p-dropdown>\r\n    </div>\r\n    <div class=\"vertical three tn-ut__form__section\">\r\n      <label>Tipo</label>\r\n      <p-dropdown [options]=\"tiposUT\" optionLabel=\"name\" [(ngModel)]=\"ut.IdTipoUT\" [style]=\"{'width':'100%'}\" name=\"tipo\" filter=\"true\">\r\n          <ng-template let-tipoUT pTemplate=\"item\">\r\n            <div class=\"ui-helper-clearfix\" style=\"position: relative;height: 25px;\">\r\n                <i [ngClass]=\"getUtTypeIcon(tipoUT.value)\"></i>\r\n                <div style=\"float:right;margin-top:4px\">{{tipoUT.label}}</div>\r\n            </div>\r\n          </ng-template>\r\n      </p-dropdown>\r\n    </div>\r\n  </div>\r\n  <div class=\"horizontal\">\r\n    <div class=\"vertical seven tn-ut__form__section\">\r\n      <label>Proyecto</label>\r\n      <p-dropdown [options]=\"proyectos\" optionLabel=\"name\" [(ngModel)]=\"ut.IdProyecto\" [style]=\"{'width':'100%'}\" name=\"idproyecto\" filter=\"true\"></p-dropdown>\r\n    </div>\r\n    <div class=\"vertical five tn-ut__form__section\">\r\n      <label>Workflow</label>\r\n      <p-dropdown [options]=\"workflows\" optionLabel=\"name\" [(ngModel)]=\"ut.IdWorkflow\" [style]=\"{'width':'100%'}\" name=\"idworkflow\" filter=\"true\"></p-dropdown>\r\n    </div>\r\n  </div>\r\n  <div class=\"horizontal tn-ut__form__section\">\r\n    <button pButton type=\"button\" label=\"Crear & Nueva\" [disabled]=\"isNombreEmpty()\" (click)=\"onCrearNuevaUTClick()\"></button>\r\n    <button pButton type=\"button\" label=\"Crear & Abrir\" [disabled]=\"isNombreEmpty()\" (click)=\"onCrearYAbrirUTClick()\"></button>\r\n  </div>\r\n</form>\r\n";
+var html$2 = "<form class=\"tn-ut__form vertical\">\n  <div class=\"horizontal\">\n    <div class=\"vertical seven tn-ut__form__section\">\n      <label>Nombre</label>\n      <input type=\"text\" size=\"30\" [(ngModel)]=\"ut.Nombre\" name=\"nombre\" pInputText>\n    </div>\n    <div class=\"vertical five tn-ut__form__section\">\n      <label>Sprint</label>\n      <p-dropdown [options]=\"sprints\" optionLabel=\"name\" [(ngModel)]=\"ut.IdVersion\" [style]=\"{'width':'100%'}\" filter=\"true\" name=\"sprint\"></p-dropdown>\n    </div>\n  </div>\n  <div class=\"horizontal\">\n    <div class=\"vertical five tn-ut__form__section\">\n      <label>Producto</label>\n      <p-dropdown [options]=\"productos\" optionLabel=\"name\" [(ngModel)]=\"ut.IdProducto\" [style]=\"{'width':'100%'}\" filter=\"true\" name=\"producto\" (onChange)=\"onProductChanged($event.value)\"></p-dropdown>\n    </div>\n    <div class=\"vertical three tn-ut__form__section\">\n      <label>Tipo</label>\n      <p-dropdown [options]=\"tiposUT\" optionLabel=\"name\" [(ngModel)]=\"ut.IdTipoUT\" [style]=\"{'width':'100%'}\" name=\"tipo\" filter=\"true\">\n          <ng-template let-tipoUT pTemplate=\"item\">\n            <div class=\"ui-helper-clearfix\" style=\"position: relative;height: 25px;\">\n                <i [ngClass]=\"getUtTypeIcon(tipoUT.value)\"></i>\n                <div style=\"float:right;margin-top:4px\">{{tipoUT.label}}</div>\n            </div>\n          </ng-template>\n      </p-dropdown>\n    </div>\n  </div>\n  <div class=\"horizontal\">\n    <div class=\"vertical seven tn-ut__form__section\">\n      <label>Proyecto</label>\n      <p-dropdown [options]=\"proyectos\" optionLabel=\"name\" [(ngModel)]=\"ut.IdProyecto\" [style]=\"{'width':'100%'}\" name=\"idproyecto\" filter=\"true\"></p-dropdown>\n    </div>\n    <div class=\"vertical five tn-ut__form__section\">\n      <label>Workflow</label>\n      <p-dropdown [options]=\"workflows\" optionLabel=\"name\" [(ngModel)]=\"ut.IdWorkflow\" [style]=\"{'width':'100%'}\" name=\"idworkflow\" filter=\"true\"></p-dropdown>\n    </div>\n  </div>\n  <div class=\"horizontal tn-ut__form__section\">\n    <button pButton type=\"button\" label=\"Crear & Nueva\" icon=\"fa fa-refresh\" [disabled]=\"isNombreEmpty()\" (click)=\"onCrearNuevaUTClick()\"></button>\n    <button pButton type=\"button\" label=\"Crear & Abrir\" icon=\"fa fa-forward\" [disabled]=\"isNombreEmpty()\" (click)=\"onCrearYAbrirUTClick()\"></button>\n  </div>\n</form>\n";
 
 __$styleInject(".tn-ut__form{padding:16px}.tn-ut__form__section{padding:8px}.tn-ut__form__dropdown{width:100%}",undefined);
 
@@ -552,7 +552,7 @@ var NuevaUTComponent = (_dec$5 = core.Component({
   template: html$2,
   providers: [CreateUTService, GetProductosService, GetProyectosService, GetSprintsProductoService, GetTiposUTProductoService, GetWorkflowsService]
 }), _dec$5(_class$5 = function () {
-  function NuevaUTComponent(createUTService, getProductosService, getProyectosService, getSprintsProductoService, getTiposUTService, getWorkflowsService, notificationsService) {
+  function NuevaUTComponent(createUTService, getProductosService, getProyectosService, getSprintsProductoService, getTiposUTService, getWorkflowsService, notificationsService, router$$1) {
     classCallCheck(this, NuevaUTComponent);
     this.ut = {
       Nombre: null,
@@ -574,6 +574,7 @@ var NuevaUTComponent = (_dec$5 = core.Component({
     this._getWorkflowsService = getWorkflowsService;
     this._getTiposUTService = getTiposUTService;
     this._notificationService = notificationsService;
+    this._router = router$$1;
     this.productos = [];
     this.proyectos = [];
     this.sprints = [];
@@ -744,11 +745,15 @@ var NuevaUTComponent = (_dec$5 = core.Component({
       var _this7 = this;
 
       this._crearUTSubscription = this._createUTService.put(this.ut).subscribe(function (data) {
-        _this7.idUt = data;
-        // TODO: Redirigir
+        _this7._redirect(data);
       }, function (error) {
         _this7._notificationService.error('No se pudo crear la UT especficada', error);
       });
+    }
+  }, {
+    key: '_redirect',
+    value: function _redirect(idUT) {
+      this._router.navigateByUrl('/uts/' + idUT);
     }
   }, {
     key: 'isNombreEmpty',
@@ -773,7 +778,7 @@ var NuevaUTComponent = (_dec$5 = core.Component({
   }]);
   return NuevaUTComponent;
 }()) || _class$5);
-Reflect.defineMetadata('design:paramtypes', [CreateUTService, GetProductosService, GetProyectosService, GetSprintsProductoService, GetTiposUTProductoService, GetWorkflowsService, core$1.NotificationsService], NuevaUTComponent);
+Reflect.defineMetadata('design:paramtypes', [CreateUTService, GetProductosService, GetProyectosService, GetSprintsProductoService, GetTiposUTProductoService, GetWorkflowsService, core$1.NotificationsService, router.Router], NuevaUTComponent);
 
 var _dec$13;
 var _class$13;

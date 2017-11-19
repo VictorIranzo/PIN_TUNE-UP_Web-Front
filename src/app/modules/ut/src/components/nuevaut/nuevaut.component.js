@@ -108,7 +108,7 @@ export class NuevaUTComponent {
           (data) => {
             workflowsCache[idProducto] = this._parseWorkflows(data);
             this.workflows = workflowsCache[idProducto];
-            this.ut.IdWorkflow = this.workflows[0]? this.workflows[0].value : null;            
+            this.ut.IdWorkflow = this.workflows[0]? this.workflows[0].value : null;
           }
         );
     }
@@ -233,8 +233,7 @@ export class NuevaUTComponent {
     this._crearUTSubscription =
     this._createUTService.put(this.ut).subscribe(
       (data) => {
-        this.idUt = data;
-        this._redirect(idUt);
+        this._redirect(data);
       },
       (error) => {
         this._notificationService.error(

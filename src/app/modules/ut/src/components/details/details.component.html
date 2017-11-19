@@ -1,7 +1,7 @@
 <p-accordion [multiple]="true">
   <p-accordionTab header="Detalles" [selected]="true">
     <form class="tn-ut__form vertical" #frm="ngForm" (ngSubmit)="frm.valid && onGuardar()">
-      <div class="horizontal">
+      <div class="horizontal tn-ut__form__row">
         <div class="vertical one tn-ut__form__section">
           <label>Código</label>
           <input id="disabled-input" type="text" pInputText [(ngModel)]="model.IdUT" name="codigo" #codigoCtrl="ngModel" [disabled]="true"
@@ -17,7 +17,7 @@
           <button *ngIf="editingMode" pButton type="button" class="tn-ut__form__detail_button" icon="fa fa-times" label="Cancelar" (click)="onCancelar()"></button>
         </div>
       </div>
-      <div class="horizontal">
+      <div class="horizontal tn-ut__form__row">
         <div class="vertical two tn-ut__form__section">
           <label>Producto</label>
           <p-dropdown [options]="productosDisponibles" [(ngModel)]="model.IdProducto" name="producto" #productoCtrl="ngModel" optionLabel="IdProducto"
@@ -33,7 +33,7 @@
           <p-spinner [step]=10 [min]=0 [(ngModel)]="model.Orden" name="orden" #ordenCtrl="ngModel" [disabled]="!editingMode"></p-spinner>
         </div>
       </div>
-      <div class="horizontal" flex-wrap="wrap">
+      <div class="horizontal tn-ut__form__row">
         <div class="vertical five tn-ut__form__section">
           <label>Workflow</label>
           <p-dropdown [options]="workflowsDisponibles" [(ngModel)]="model.IdWorkflow" name="workflow" #workflowCtrl="ngModel" [disabled]="!editingMode"
@@ -57,7 +57,7 @@
             filter="true" [style]="{'width':'100%'}"></p-dropdown>
         </div>
       </div>
-      <div class="vertical tn-ut__form__section" flex-wrap="wrap">
+      <div class="vertical tn-ut__form__section tn-ut__form__row">
         <label>Descripción</label>
         <textarea rows="5" pInputTextarea [(ngModel)]="model.Descripcion" name="descripcion" #descripcionCtrl="ngModel" [disabled]="!editingMode"
           [style]="{'width':'100%'}"></textarea>

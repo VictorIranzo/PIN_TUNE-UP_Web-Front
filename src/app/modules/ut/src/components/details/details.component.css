@@ -17,3 +17,7 @@
     height: 60%;
     text-align: center;
 }
+
+.tn-ut__form__row{
+  flex-wrap: wrap;
+}

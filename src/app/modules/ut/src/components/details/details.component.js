@@ -37,7 +37,6 @@ export class DetailsComponent {
         this._breadcrumbService = breadcrumbService;
 
         this.model.IdUT= parseInt(this._route.params._value.id);
-        this._breadcrumbService.addItems({label: this.model.IdUT, routerLink: `/uts/${this.model.IdUT}`});
 
         this._detailsService.getProductosDisponibles().subscribe((data) => {
           this._parseProductos(data);
@@ -53,6 +52,7 @@ export class DetailsComponent {
               this._parseProyectos(data.listaProyectos);
               this.model.Descripcion = data.UT.Descripcion;
               this._mapSelected(data, this.model);
+              this._breadcrumbService.addItems({label: `${this.model.IdUT}: ${this.model.Nombre}`, routerLink: `/uts/${this.model.IdUT}`});              
             });
   }
   onEditar() {

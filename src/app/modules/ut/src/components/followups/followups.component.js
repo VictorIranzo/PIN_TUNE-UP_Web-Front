@@ -15,14 +15,17 @@ export class FollowupsComponent {
     this._followupsService = followupsService;
   }
   ngOnInit() {
+   this._getFollowUps();
+  }
+  _getFollowUps() {
     this._getFollowupsSub = this._followupsService.getSeguimientos(this.utId)
-      .subscribe(
-      (data) => {
-        this.seguimientos = data;
-      }, (error) => {
-        // TODO
-        console.error(error);
-      });
+    .subscribe(
+    (data) => {
+      this.seguimientos = data;
+    }, (error) => {
+      // TODO
+      console.error(error);
+    });
   }
   get idSeguimiento() {
     return this.seguimientos[0].IdSeguimiento;
@@ -35,7 +38,9 @@ export class FollowupsComponent {
   }
   iniciar = () => {
     this._followupsService.empezarSeguimiento(this.idSeguimiento).subscribe(
-      (data) => { },
+      (data) => {
+        this.seguimiento.Estado = 'ACTIVE';
+       },
       (error) => {
         console.log(error);
       }
@@ -46,7 +51,9 @@ export class FollowupsComponent {
   }
   continuar = () => {
     this._followupsService.empezarSeguimiento(this.idSeguimiento).subscribe(
-      (data) => { },
+      (data) => {
+        this.seguimiento.Estado = 'ACTIVE';
+      },
       (error) => {
         console.log(error);
       }
@@ -57,7 +64,9 @@ export class FollowupsComponent {
   }
   pausar = () => {
     this._followupsService.pausarSeguimiento(this.idSeguimiento).subscribe(
-      (data) => { },
+      (data) => {
+        this.seguimiento.Estado = 'DOING';
+       },
       (error) => {
         console.log(error);
       }
@@ -68,7 +77,9 @@ export class FollowupsComponent {
   }
   finalizar = () => {
     this._followupsService.finalizarSeguimiento(this.idSeguimiento).subscribe(
-      (data) => { },
+      (data) => {
+        this._getFollowUps();
+       },
       (error) => {
         console.log(error);
       }

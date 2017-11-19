@@ -225,9 +225,9 @@ var DetailsService = (_dec$4 = core.Injectable(), _dec$4(_class$4 = function () 
 }()) || _class$4);
 Reflect.defineMetadata('design:paramtypes', [http.HttpClient], DetailsService);
 
-var html$1 = "<form class=\"tn-ut__form vertical\" #frm=\"ngForm\" (ngSubmit)=\"frm.valid && onGuardar()\">\n  <div class=\"horizontal\" flex-wrap=\"wrap\">\n    <div class=\"vertical one tn-ut__form__section\">\n      <label>Código</label>\n      <input id=\"disabled-input\" type=\"text\" pInputText [(ngModel)]= \"model.IdUT\" name=\"codigo\" #codigoCtrl=\"ngModel\" [disabled]=\"true\"/>\n    </div>\n    <div class=\"vertical seven tn-ut__form__section\">\n        <label>Nombre</label>\n        <input id=\"input\" type=\"text\" pInputText [(ngModel)]=\"model.Nombre\" name=\"nombre\" #nombreCtrl=\"ngModel\" [disabled]= \"!editingMode\"> \n    </div>\n    <div class=\"horizontal two tn-ut__form__buttons\">\n        <button *ngIf=\"!editingMode\" pButton type=\"button\" class=\"tn-ut__form__detail_button\" label=\"Editar\" (click)=\"onEditar()\"></button>\n        <button *ngIf=\"editingMode\" pButton type=\"submit\" class=\"tn-ut__form__detail_button\" label=\"Guardar\"></button>\n        <button *ngIf=\"editingMode\" pButton type=\"button\" class=\"tn-ut__form__detail_button\" label=\"Cancelar\" (click)=\"onCancelar()\"></button>\n    </div>\n  </div>\n  <div class=\"horizontal\" flex-wrap=\"wrap\">\n    <div class=\"vertical five tn-ut__form__section\">\n      <label>Producto</label>\n      <p-dropdown [options]=\"productosDisponibles\" [(ngModel)]=\"model.IdProducto\" name=\"producto\" #productoCtrl=\"ngModel\" optionLabel= \"IdProducto\" [disabled]= \"!editingMode\" filter=\"true\" [style]=\"{'width':'100%', 'height':'50%'}\"></p-dropdown>\n    </div>\n    <div class=\"vertical five tn-ut__form__section\">\n      <label>Sprint</label>\n      <p-dropdown [options]=\"sprintsDisponibles\" [(ngModel)]=\"model.IdVersion\" name=\"sprint\" #sprintCtrl=\"ngModel\" [disabled]= \"!editingMode\" filter=\"true\" [style]=\"{'width':'100%'}\"></p-dropdown>    \n    </div>\n    <div class=\"vertical three tn-ut__form__section\">\n        <label>Orden</label>\n        <p-spinner [step]=10 [min]=0 [(ngModel)]=\"model.Orden\" name=\"orden\" #ordenCtrl=\"ngModel\" [disabled]= \"!editingMode\"></p-spinner> \n    </div>\n  </div>\n  <div class=\"horizontal\" flex-wrap=\"wrap\">\n    <div class=\"vertical five tn-ut__form__section\">\n      <label>Workflow</label>\n      <p-dropdown [options]=\"workflowsDisponibles\" [(ngModel)]=\"model.IdWorkflow\" name=\"workflow\" #workflowCtrl=\"ngModel\" [disabled]= \"!editingMode\" filter=\"true\" [style]=\"{'width':'100%'}\"></p-dropdown>      \n    </div>  \n    <div class=\"vertical three tn-ut__form__section\">\n        <label>Tipo</label>\n        <p-dropdown [options]=\"tiposDisponibles\" [(ngModel)]=\"model.IdTipoUT\" name=\"tipo\" #tipoCtrl=\"ngModel\" [disabled]= \"!editingMode\" filter=\"true\" [style]=\"{'width':'100%'}\">\n          <ng-template let-tipoUT pTemplate=\"item\">\n            <div class=\"ui-helper-clearfix\" style=\"position: relative;height: 25px;\">\n                <i [ngClass]=\"getUtTypeIcon(tipoUT.value)\"></i>\n                <div style=\"font-size:14px;float:right;margin-top:4px\">{{tipoUT.label}}</div>\n            </div>\n          </ng-template>\n        </p-dropdown>\n    </div>\n    <div class=\"vertical five tn-ut__form__section\">\n      <label>Proyecto</label>\n      <p-dropdown [options]=\"proyectosDisponibles\" [(ngModel)]=\"model.IdProyecto\" name=\"proyecto\" #proyectoCtrl=\"ngModel\" [disabled]= \"!editingMode\" filter=\"true\" [style]=\"{'width':'100%'}\"></p-dropdown>      \n    </div>\n  </div>\n  <div class=\"vertical tn-ut__form__section\" flex-wrap=\"wrap\">\n      <label>Descripción</label>\n      <textarea rows=\"5\"  pInputTextarea  [(ngModel)]=\"model.Descripcion\" name=\"descripcion\" #descripcionCtrl=\"ngModel\" [disabled]= \"!editingMode\" [style]=\"{'width':'100%'}\"></textarea>      \n  </div>\n</form>\n<ut-followup [utId]=\"model.IdUT\"></ut-followup>\n\n";
+var html$1 = "<p-accordion [multiple]=\"true\">\n  <p-accordionTab header=\"Detalles\" [selected]=\"true\">\n    <form class=\"tn-ut__form vertical\" #frm=\"ngForm\" (ngSubmit)=\"frm.valid && onGuardar()\">\n      <div class=\"horizontal\">\n        <div class=\"vertical one tn-ut__form__section\">\n          <label>Código</label>\n          <input id=\"disabled-input\" type=\"text\" pInputText [(ngModel)]=\"model.IdUT\" name=\"codigo\" #codigoCtrl=\"ngModel\" [disabled]=\"true\"\n          />\n        </div>\n        <div class=\"vertical seven tn-ut__form__section\">\n          <label>Nombre</label>\n          <input id=\"input\" type=\"text\" pInputText [(ngModel)]=\"model.Nombre\" name=\"nombre\" #nombreCtrl=\"ngModel\" [disabled]=\"!editingMode\">\n        </div>\n        <div class=\"horizontal none tn-ut__form__buttons\">\n          <button *ngIf=\"!editingMode\" pButton type=\"button\" class=\"tn-ut__form__detail_button\" icon=\"fa fa-pencil-square-o\" label=\"Editar\" (click)=\"onEditar()\"></button>\n          <button *ngIf=\"editingMode\" pButton type=\"submit\" class=\"tn-ut__form__detail_button\" icon=\"fa fa-floppy-o\" label=\"Guardar\"></button>\n          <button *ngIf=\"editingMode\" pButton type=\"button\" class=\"tn-ut__form__detail_button\" icon=\"fa fa-times\" label=\"Cancelar\" (click)=\"onCancelar()\"></button>\n        </div>\n      </div>\n      <div class=\"horizontal\">\n        <div class=\"vertical two tn-ut__form__section\">\n          <label>Producto</label>\n          <p-dropdown [options]=\"productosDisponibles\" [(ngModel)]=\"model.IdProducto\" name=\"producto\" #productoCtrl=\"ngModel\" optionLabel=\"IdProducto\"\n            [disabled]=\"!editingMode\" filter=\"true\" [style]=\"{'width':'100%', 'height':'50%'}\"></p-dropdown>\n        </div>\n        <div class=\"vertical two tn-ut__form__section\">\n          <label>Sprint</label>\n          <p-dropdown [options]=\"sprintsDisponibles\" [(ngModel)]=\"model.IdVersion\" name=\"sprint\" #sprintCtrl=\"ngModel\" [disabled]=\"!editingMode\"\n            filter=\"true\" [style]=\"{'width':'100%'}\"></p-dropdown>\n        </div>\n        <div class=\"vertical none tn-ut__form__section\">\n          <label>Orden</label>\n          <p-spinner [step]=10 [min]=0 [(ngModel)]=\"model.Orden\" name=\"orden\" #ordenCtrl=\"ngModel\" [disabled]=\"!editingMode\"></p-spinner>\n        </div>\n      </div>\n      <div class=\"horizontal\" flex-wrap=\"wrap\">\n        <div class=\"vertical five tn-ut__form__section\">\n          <label>Workflow</label>\n          <p-dropdown [options]=\"workflowsDisponibles\" [(ngModel)]=\"model.IdWorkflow\" name=\"workflow\" #workflowCtrl=\"ngModel\" [disabled]=\"!editingMode\"\n            filter=\"true\" [style]=\"{'width':'100%'}\"></p-dropdown>\n        </div>\n        <div class=\"vertical three tn-ut__form__section\">\n          <label>Tipo</label>\n          <p-dropdown [options]=\"tiposDisponibles\" [(ngModel)]=\"model.IdTipoUT\" name=\"tipo\" #tipoCtrl=\"ngModel\" [disabled]=\"!editingMode\"\n            filter=\"true\" [style]=\"{'width':'100%'}\">\n            <ng-template let-tipoUT pTemplate=\"item\">\n              <div class=\"ui-helper-clearfix\" style=\"position: relative;height: 25px;\">\n                <i [ngClass]=\"getUtTypeIcon(tipoUT.value)\"></i>\n                <div style=\"font-size:14px;float:right;margin-top:4px\">{{tipoUT.label}}</div>\n              </div>\n            </ng-template>\n          </p-dropdown>\n        </div>\n        <div class=\"vertical five tn-ut__form__section\">\n          <label>Proyecto</label>\n          <p-dropdown [options]=\"proyectosDisponibles\" [(ngModel)]=\"model.IdProyecto\" name=\"proyecto\" #proyectoCtrl=\"ngModel\" [disabled]=\"!editingMode\"\n            filter=\"true\" [style]=\"{'width':'100%'}\"></p-dropdown>\n        </div>\n      </div>\n      <div class=\"vertical tn-ut__form__section\" flex-wrap=\"wrap\">\n        <label>Descripción</label>\n        <textarea rows=\"5\" pInputTextarea [(ngModel)]=\"model.Descripcion\" name=\"descripcion\" #descripcionCtrl=\"ngModel\" [disabled]=\"!editingMode\"\n          [style]=\"{'width':'100%'}\"></textarea>\n      </div>\n    </form>\n  </p-accordionTab>\n  <p-accordionTab header=\"Actividades\" [selected]=\"true\">\n    <ut-followup [utId]=\"model.IdUT\"></ut-followup>\n  </p-accordionTab>\n</p-accordion>\n";
 
-__$styleInject(".tn-ut__form{padding:16px}.tn-ut__form__section{padding:8px}.tn-ut__form__buttons{padding:8px;align-items:flex-end}.tn-ut__form__detail_button{height:60%}",undefined);
+__$styleInject(".tn-ut__form{padding:16px}.tn-ut__form__section{padding:8px}.tn-ut__form__buttons{padding:8px;align-items:flex-end}.tn-ut__form__detail_button{height:60%;text-align:center}",undefined);
 
 var _dec$3;
 var _class$3;
@@ -812,9 +812,9 @@ var FollowupsService = (_dec$13 = core.Injectable(), _dec$13(_class$13 = functio
 }()) || _class$13);
 Reflect.defineMetadata('design:paramtypes', [http.HttpClient], FollowupsService);
 
-var html$3 = "<div class=\"vertical\">\n  <div class=\"horizontal tn-ut__followups__controls\">\n    <button pButton label=\"Iniciar\" icon=\"fa fa-play-circle\" [disabled]=\"true\" *ngIf=\"!puedeIniciar() && !puedeContinuar() && !puedePausar()\"></button>\n    <button pButton label=\"Iniciar\" (click)=\"iniciar()\" icon=\"fa fa-play-circle\" *ngIf=\"puedeIniciar()\"></button>\n    <button pButton label=\"Continuar\" (click)=\"continuar()\" icon=\"fa fa-play-circle\" *ngIf=\"puedeContinuar()\"></button>\n    <button pButton label=\"Pausar\" (click)=\"pausar()\" icon=\"fa fa-pause-circle\" *ngIf=\"puedePausar()\"></button>\n    <button pButton label=\"Finalizar\" (click)=\"finalizar()\" icon=\"fa fa-stop-circle\" [disabled]=\"!puedeFinalizar()\"></button>\n    <button pButton label=\"Asignar Agente\" (click)=\"asignarAgente()\" icon=\"fa fa-user-plus\" [disabled]=\"true\"></button>\n    <button pButton label=\"Trabajar en Paralelo\" (click)=\"trabajarEnParalelo()\" icon=\"fa fa-users\" [disabled]=\"true\"></button>\n  </div>\n</div>\n";
+var html$3 = "<div class=\"vertical tn-ut__followups\">\n  <div class=\"horizontal tn-ut__followups__controls\">\n    <button pButton label=\"Iniciar\" icon=\"fa fa-play-circle\" [disabled]=\"true\" *ngIf=\"!puedeIniciar() && !puedeContinuar() && !puedePausar()\"></button>\n    <button pButton label=\"Iniciar\" (click)=\"iniciar()\" icon=\"fa fa-play-circle\" *ngIf=\"puedeIniciar()\"></button>\n    <button pButton label=\"Continuar\" (click)=\"continuar()\" icon=\"fa fa-play-circle\" *ngIf=\"puedeContinuar()\"></button>\n    <button pButton label=\"Pausar\" (click)=\"pausar()\" icon=\"fa fa-pause-circle\" *ngIf=\"puedePausar()\"></button>\n    <button pButton label=\"Finalizar\" (click)=\"finalizar()\" icon=\"fa fa-stop-circle\" [disabled]=\"!puedeFinalizar()\"></button>\n    <button pButton label=\"Asignar Agente\" (click)=\"asignarAgente()\" icon=\"fa fa-user-plus\" [disabled]=\"true\"></button>\n    <button pButton label=\"Trabajar en Paralelo\" (click)=\"trabajarEnParalelo()\" icon=\"fa fa-users\" [disabled]=\"true\"></button>\n  </div>\n  <p-dataTable [value]=\"seguimientos\">\n    <p-column field=\"Estado\" header=\"Estado\" [sortable]=\"true\" [style]=\"{'width':'15%'}\"></p-column>\n    <p-column field=\"NombreActividad\" header=\"Actividad\" [sortable]=\"true\" [style]=\"{'width':'25%'}\"></p-column>\n    <p-column field=\"NombreAgente\" header=\"Agente\" [sortable]=\"true\" [style]=\"{'width':'20%'}\" ></p-column>\n    <p-column field=\"FechaCreacion\" header=\"Generada\" [sortable]=\"true\" [style]=\"{'width':'20%'}\">\n      <ng-template let-activity=\"rowData\" pTemplate=\"body\">\n        <span class=\"ui-cell-data\">{{activity.FechaCreacion | amLocale:'es' | amDateFormat: 'DD-MM-YYYY HH:mm'}}</span>\n      </ng-template>\n    </p-column>\n    <p-column field=\"FechaFinalizacion\" header=\"Finalizada\" [sortable]=\"true\" [style]=\"{'width':'20%'}\">\n      <ng-template let-activity=\"rowData\" pTemplate=\"body\">\n        <span class=\"ui-cell-data\" *ngIf=\"activity.FechaFinalizacion\">{{activity.FechaFinalizacion | amLocale:'es' | amDateFormat: 'DD-MM-YYYY HH:mm'}}</span>\n      </ng-template>\n    </p-column>\n  </p-dataTable>\n</div>\n";
 
-__$styleInject("",undefined);
+__$styleInject(".tn-ut__followups{padding:16px}.tn-ut__followups__controls{padding-bottom:8px}",undefined);
 
 var _dec$12;
 var _dec2;
@@ -880,7 +880,9 @@ var FollowupsComponent = (_dec$12 = core.Component({
     };
 
     this.iniciar = function () {
-      _this._followupsService.empezarSeguimiento(_this.idSeguimiento).subscribe(function (data) {}, function (error) {
+      _this._followupsService.empezarSeguimiento(_this.idSeguimiento).subscribe(function (data) {
+        _this.seguimiento.Estado = 'ACTIVE';
+      }, function (error) {
         console.log(error);
       });
     };
@@ -890,7 +892,9 @@ var FollowupsComponent = (_dec$12 = core.Component({
     };
 
     this.continuar = function () {
-      _this._followupsService.empezarSeguimiento(_this.idSeguimiento).subscribe(function (data) {}, function (error) {
+      _this._followupsService.empezarSeguimiento(_this.idSeguimiento).subscribe(function (data) {
+        _this.seguimiento.Estado = 'ACTIVE';
+      }, function (error) {
         console.log(error);
       });
     };
@@ -900,7 +904,9 @@ var FollowupsComponent = (_dec$12 = core.Component({
     };
 
     this.pausar = function () {
-      _this._followupsService.pausarSeguimiento(_this.idSeguimiento).subscribe(function (data) {}, function (error) {
+      _this._followupsService.pausarSeguimiento(_this.idSeguimiento).subscribe(function (data) {
+        _this.seguimiento.Estado = 'DOING';
+      }, function (error) {
         console.log(error);
       });
     };
@@ -910,7 +916,9 @@ var FollowupsComponent = (_dec$12 = core.Component({
     };
 
     this.finalizar = function () {
-      _this._followupsService.finalizarSeguimiento(_this.idSeguimiento).subscribe(function (data) {}, function (error) {
+      _this._followupsService.finalizarSeguimiento(_this.idSeguimiento).subscribe(function (data) {
+        _this._getFollowUps();
+      }, function (error) {
         console.log(error);
       });
     };
@@ -929,6 +937,11 @@ var FollowupsComponent = (_dec$12 = core.Component({
   createClass(FollowupsComponent, [{
     key: 'ngOnInit',
     value: function ngOnInit() {
+      this._getFollowUps();
+    }
+  }, {
+    key: '_getFollowUps',
+    value: function _getFollowUps() {
       var _this2 = this;
 
       this._getFollowupsSub = this._followupsService.getSeguimientos(this.utId).subscribe(function (data) {

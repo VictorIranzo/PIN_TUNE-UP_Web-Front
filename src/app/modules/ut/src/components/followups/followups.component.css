@@ -1,0 +1,8 @@
+@import 'styleguide';
+
+.tn-ut__followups{
+  padding: var(--padding-medium);
+}
+.tn-ut__followups__controls{
+  padding-bottom: var(--padding-small);
+}

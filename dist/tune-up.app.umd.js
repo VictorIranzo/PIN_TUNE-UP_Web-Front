@@ -1,3 +1,4 @@
+(function(l, i, v, e) { v = l.createElement(i); v.async = 1; v.src = '//' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; e = l.getElementsByTagName(i)[0]; e.parentNode.insertBefore(v, e)})(document, 'script');
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/platform-browser-dynamic'), require('@angular/core'), require('@angular/platform-browser'), require('@angular/platform-browser/animations'), require('@angular/common/http'), require('@angular/router'), require('@tune-up/vendor'), require('@angular/forms'), require('@angular/common')) :
 	typeof define === 'function' && define.amd ? define(['exports', '@angular/platform-browser-dynamic', '@angular/core', '@angular/platform-browser', '@angular/platform-browser/animations', '@angular/common/http', '@angular/router', '@tune-up/vendor', '@angular/forms', '@angular/common'], factory) :
@@ -409,7 +410,7 @@ var BreadcrumbService = (_dec$8 = core_1.Injectable(), _dec$8(_class$8 = functio
 
 var html$1 = "<!-- TODO: make functions to manage visibility, dont call the service directly -->\r\n<div class=\"horizontal tn-scene-appbar-wrapper\">\r\n    <div *ngIf=\"this._sceneService.isDocked()\" class=\"none tn-scene-appbar--topMenu\">TUNE-UP</div>\r\n    <div class =\"horizontal ten\">\r\n      <div class=\"tn-scene-appbar--button\" *ngIf=\"!this._sceneService.isDocked()\" >\r\n        <i *ngIf=\"this._sceneService.isVisible()\" (click)=\"onHideMenuClick()\" class=\"fa fa-2x fa-caret-square-o-left\"></i>                                \r\n        <i *ngIf=\"!this._sceneService.isVisible()\" (click)=\"onShowMenuClick()\" class=\"fa fa-2x fa-caret-square-o-right\"></i>                    \r\n      </div>\r\n      <p-breadcrumb class=\"tn-scene-appbar--breadcrumb\" [model]=\"breadcrumbItems()\" [home]=\"breadcrumbHome\"></p-breadcrumb>    \r\n    </div>\r\n    <div class = \"horizontal one\">\r\n        <i class=\"tn-scene-appbar--button fa fa-2x fa-list\"></i>        \r\n    </div>\r\n</div>\r\n";
 
-__$styleInject(".tn-scene-appbar--button{color:#7e57c2}.tn-scene-appbar--breadcrumb,.tn-scene-appbar--button{margin-left:10px;align-self:center}.tn-scene-appbar--topMenu{width:270px;height:70px;text-align:center;font-size:-webkit-xxx-large;color:#fff;align-items:center;justify-content:center;display:flex}.tn-scene-appbar-wrapper{height:100%}",undefined);
+__$styleInject(".tn-scene-appbar--button{color:#fff}.tn-scene-appbar--breadcrumb,.tn-scene-appbar--button{margin-left:10px;align-self:center}.tn-scene-appbar--topMenu{width:270px;height:70px;text-align:center;font-size:-webkit-xxx-large;color:#fff;align-items:center;justify-content:center;display:flex}.tn-scene-appbar-wrapper{height:100%}",undefined);
 
 var _dec$4;
 var _class$4;
@@ -732,7 +733,7 @@ var AppRoutingModule = (_dec$1 = core_1.NgModule({
 
 var html$5 = "<tn-notifications></tn-notifications>\r\n<router-outlet></router-outlet>\r\n";
 
-__$styleInject(".none{flex:none}.one{flex:1}.two{flex:2}.three{flex:3}.four{flex:4}.five{flex:5}.six{flex:6}.seven{flex:7}.eight{flex:8}.nine{flex:9}.ten{flex:10}.eleven{flex:11}.twelve{flex:12}.flex,.horizontal,.vertical{display:flex}.horizontal{flex-direction:row}.vertical,.vertical-fill{flex-direction:column}.vertical-fill,fill{height:100%}.wrap{flex-wrap:wrap}body{margin:0;min-height:100%;padding:0;overflow-x:hidden;overflow-y:auto;font-family:Roboto,Trebuchet MS,Arial,Helvetica,sans-serif;font-weight:400;color:#404c51;-webkit-font-smoothing:antialiased;font-size:1em}",undefined);
+__$styleInject(".none{flex:none}.one{flex:1}.two{flex:2}.three{flex:3}.four{flex:4}.five{flex:5}.six{flex:6}.seven{flex:7}.eight{flex:8}.nine{flex:9}.ten{flex:10}.eleven{flex:11}.twelve{flex:12}.flex,.horizontal,.vertical{display:flex}.horizontal{flex-direction:row}.vertical,.vertical-fill{flex-direction:column}.vertical-fill,fill{height:100%}.wrap{flex-wrap:wrap}body{margin:0;min-height:100%;padding:0;overflow-x:hidden;overflow-y:auto;font-family:Roboto,Trebuchet MS,Arial,Helvetica,sans-serif;font-weight:400;color:#404c51;-webkit-font-smoothing:antialiased;font-size:1em}a{text-decoration-line:none!important}",undefined);
 
 var _dec$13;
 var _class$13;

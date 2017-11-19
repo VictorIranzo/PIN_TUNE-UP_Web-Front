@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
+import {Router} from '@angular/router';
 import {NotificationsService} from '@tune-up/core';
 import {CreateUTService, GetProductosService, GetProyectosService, GetSprintsProductoService, GetTiposUTProductoService, GetWorkflowsService} from './services';
 import html from './nuevaut.component.html';
 import './nuevaut.component.css';
-
 
 const proyectosCache = [];
 const sprintsCache = [];
@@ -48,6 +48,7 @@ export class NuevaUTComponent {
     getTiposUTService : GetTiposUTProductoService,
     getWorkflowsService : GetWorkflowsService,
     notificationsService: NotificationsService,
+    router : Router
   ) {
     this._createUTService = createUTService;
     this._getProductosService = getProductosService;
@@ -56,6 +57,7 @@ export class NuevaUTComponent {
     this._getWorkflowsService = getWorkflowsService;
     this._getTiposUTService = getTiposUTService;
     this._notificationService = notificationsService;
+    this._router = router;
     this.productos = [];
     this.proyectos = [];
     this.sprints = [];
@@ -232,7 +234,7 @@ export class NuevaUTComponent {
     this._createUTService.put(this.ut).subscribe(
       (data) => {
         this.idUt = data;
-        // TODO: Redirigir
+        this._redirect(idUt);
       },
       (error) => {
         this._notificationService.error(
@@ -241,6 +243,9 @@ export class NuevaUTComponent {
         );
       }
     );
+  }
+  _redirect(idUT) {
+    this._router.navigateByUrl(`/uts/${idUT}`);
   }
 
   getUtTypeIcon = (tipo) => {

@@ -1,4 +1,3 @@
-(function(l, i, v, e) { v = l.createElement(i); v.async = 1; v.src = '//' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; e = l.getElementsByTagName(i)[0]; e.parentNode.insertBefore(v, e)})(document, 'script');
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/platform-browser-dynamic'), require('@angular/core'), require('@angular/platform-browser'), require('@angular/platform-browser/animations'), require('@angular/common/http'), require('@angular/router'), require('@tune-up/vendor'), require('@angular/forms'), require('@angular/common')) :
 	typeof define === 'function' && define.amd ? define(['exports', '@angular/platform-browser-dynamic', '@angular/core', '@angular/platform-browser', '@angular/platform-browser/animations', '@angular/common/http', '@angular/router', '@tune-up/vendor', '@angular/forms', '@angular/common'], factory) :
@@ -463,9 +462,19 @@ var ContentComponent = (_dec$9 = core_1.Component({
 }) || _class$9);
 
 var menuItems = [{
-  path: 'home',
+  path: '/home',
   text: 'Inicio',
   icon: 'fa fa-home',
+  adminOnly: false
+}, {
+  path: '/uts',
+  text: 'UTs',
+  icon: 'fa fa-tasks',
+  adminOnly: false
+}, {
+  path: '/uts/add',
+  text: 'Crear UT',
+  icon: 'fa fa-plus-circle',
   adminOnly: false
 }];
 

@@ -16,7 +16,14 @@
     </div>
     <div class="vertical three tn-ut__form__section">
       <label>Tipo</label>
-      <p-dropdown [options]="tiposUT" optionLabel="name" [(ngModel)]="ut.IdTipoUT" [style]="{'width':'100%'}" name="tipo" filter="true"></p-dropdown>
+      <p-dropdown [options]="tiposUT" optionLabel="name" [(ngModel)]="ut.IdTipoUT" [style]="{'width':'100%'}" name="tipo" filter="true">
+          <ng-template let-tipoUT pTemplate="item">
+            <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                <i [ngClass]="getUtTypeIcon(tipoUT.value)"></i>
+                <div style="float:right;margin-top:4px">{{tipoUT.label}}</div>
+            </div>
+          </ng-template>
+      </p-dropdown>
     </div>
   </div>
   <div class="horizontal">

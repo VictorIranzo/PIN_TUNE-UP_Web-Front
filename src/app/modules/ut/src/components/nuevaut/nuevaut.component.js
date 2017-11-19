@@ -10,6 +10,13 @@ const sprintsCache = [];
 const tiposUTCache = [];
 const workflowsCache = [];
 
+const utTypesIcons = {
+  1: 'fa fa-star',
+  2: 'fa fa-bug',
+  3: 'fa fa-plus-circle',
+  4: 'fa fa-puzzle-piece',
+};
+
 @Component({
   selector: 'tn-ut-nuevaut',
   template: html,
@@ -235,6 +242,10 @@ export class NuevaUTComponent {
       }
     );
   }
+
+  getUtTypeIcon = (tipo) => {
+    return utTypesIcons[tipo];
+  };
 
   isNombreEmpty() {
     return this.ut.Nombre == null || this.ut.Nombre.length === 0;

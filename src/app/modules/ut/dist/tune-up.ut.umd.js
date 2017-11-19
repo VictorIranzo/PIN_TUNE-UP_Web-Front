@@ -286,7 +286,6 @@ var DetailsComponent = (_dec$3 = core.Component({
     this._breadcrumbService = breadcrumbService;
 
     this.model.IdUT = parseInt(this._route.params._value.id);
-    this._breadcrumbService.addItems({ label: this.model.IdUT, routerLink: '/uts/' + this.model.IdUT });
 
     this._detailsService.getProductosDisponibles().subscribe(function (data) {
       _this._parseProductos(data);
@@ -302,6 +301,7 @@ var DetailsComponent = (_dec$3 = core.Component({
       _this._parseProyectos(data.listaProyectos);
       _this.model.Descripcion = data.UT.Descripcion;
       _this._mapSelected(data, _this.model);
+      _this._breadcrumbService.addItems({ label: _this.model.IdUT + ': ' + _this.model.Nombre, routerLink: '/uts/' + _this.model.IdUT });
     });
   }
 
@@ -528,7 +528,7 @@ var GetWorkflowsService = (_dec$11 = core.Injectable(), _dec$11(_class$11 = func
 }()) || _class$11);
 Reflect.defineMetadata('design:paramtypes', [http.HttpClient], GetWorkflowsService);
 
-var html$2 = "<form class=\"tn-ut__form vertical\">\r\n  <div class=\"horizontal\">\r\n    <div class=\"vertical seven tn-ut__form__section\">\r\n      <label>Nombre</label>\r\n      <input type=\"text\" size=\"30\" [(ngModel)]=\"ut.Nombre\" name=\"nombre\" pInputText>\r\n    </div>\r\n    <div class=\"vertical five tn-ut__form__section\">\r\n      <label>Sprint</label>\r\n      <p-dropdown [options]=\"sprints\" optionLabel=\"name\" [(ngModel)]=\"ut.IdVersion\" [style]=\"{'width':'100%'}\" filter=\"true\" name=\"sprint\"></p-dropdown>\r\n    </div>\r\n  </div>\r\n  <div class=\"horizontal\">\r\n    <div class=\"vertical five tn-ut__form__section\">\r\n      <label>Producto</label>\r\n      <p-dropdown [options]=\"productos\" optionLabel=\"name\" [(ngModel)]=\"ut.IdProducto\" [style]=\"{'width':'100%'}\" filter=\"true\" name=\"producto\" (onChange)=\"onProductChanged($event.value)\"></p-dropdown>\r\n    </div>\r\n    <div class=\"vertical three tn-ut__form__section\">\r\n      <label>Tipo</label>\r\n      <p-dropdown [options]=\"tiposUT\" optionLabel=\"name\" [(ngModel)]=\"ut.IdTipoUT\" [style]=\"{'width':'100%'}\" name=\"tipo\" filter=\"true\"></p-dropdown>\r\n    </div>\r\n  </div>\r\n  <div class=\"horizontal\">\r\n    <div class=\"vertical seven tn-ut__form__section\">\r\n      <label>Proyecto</label>\r\n      <p-dropdown [options]=\"proyectos\" optionLabel=\"name\" [(ngModel)]=\"ut.IdProyecto\" [style]=\"{'width':'100%'}\" name=\"idproyecto\" filter=\"true\"></p-dropdown>\r\n    </div>\r\n    <div class=\"vertical five tn-ut__form__section\">\r\n      <label>Workflow</label>\r\n      <p-dropdown [options]=\"workflows\" optionLabel=\"name\" [(ngModel)]=\"ut.IdWorkflow\" [style]=\"{'width':'100%'}\" name=\"idworkflow\" filter=\"true\"></p-dropdown>\r\n    </div>\r\n  </div>\r\n  <div class=\"horizontal tn-ut__form__section\">\r\n    <button pButton type=\"button\" label=\"Crear & Nueva\" [disabled]=\"isNombreEmpty()\" (click)=\"onCrearNuevaUTClick()\"></button>\r\n    <button pButton type=\"button\" label=\"Crear & Abrir\" [disabled]=\"isNombreEmpty()\" (click)=\"onCrearYAbrirUTClick()\"></button>\r\n  </div>\r\n</form>\r\n";
+var html$2 = "<form class=\"tn-ut__form vertical\">\r\n  <div class=\"horizontal\">\r\n    <div class=\"vertical seven tn-ut__form__section\">\r\n      <label>Nombre</label>\r\n      <input type=\"text\" size=\"30\" [(ngModel)]=\"ut.Nombre\" name=\"nombre\" pInputText>\r\n    </div>\r\n    <div class=\"vertical five tn-ut__form__section\">\r\n      <label>Sprint</label>\r\n      <p-dropdown [options]=\"sprints\" optionLabel=\"name\" [(ngModel)]=\"ut.IdVersion\" [style]=\"{'width':'100%'}\" filter=\"true\" name=\"sprint\"></p-dropdown>\r\n    </div>\r\n  </div>\r\n  <div class=\"horizontal\">\r\n    <div class=\"vertical five tn-ut__form__section\">\r\n      <label>Producto</label>\r\n      <p-dropdown [options]=\"productos\" optionLabel=\"name\" [(ngModel)]=\"ut.IdProducto\" [style]=\"{'width':'100%'}\" filter=\"true\" name=\"producto\" (onChange)=\"onProductChanged($event.value)\"></p-dropdown>\r\n    </div>\r\n    <div class=\"vertical three tn-ut__form__section\">\r\n      <label>Tipo</label>\r\n      <p-dropdown [options]=\"tiposUT\" optionLabel=\"name\" [(ngModel)]=\"ut.IdTipoUT\" [style]=\"{'width':'100%'}\" name=\"tipo\" filter=\"true\">\r\n          <ng-template let-tipoUT pTemplate=\"item\">\r\n            <div class=\"ui-helper-clearfix\" style=\"position: relative;height: 25px;\">\r\n                <i [ngClass]=\"getUtTypeIcon(tipoUT.value)\"></i>\r\n                <div style=\"float:right;margin-top:4px\">{{tipoUT.label}}</div>\r\n            </div>\r\n          </ng-template>\r\n      </p-dropdown>\r\n    </div>\r\n  </div>\r\n  <div class=\"horizontal\">\r\n    <div class=\"vertical seven tn-ut__form__section\">\r\n      <label>Proyecto</label>\r\n      <p-dropdown [options]=\"proyectos\" optionLabel=\"name\" [(ngModel)]=\"ut.IdProyecto\" [style]=\"{'width':'100%'}\" name=\"idproyecto\" filter=\"true\"></p-dropdown>\r\n    </div>\r\n    <div class=\"vertical five tn-ut__form__section\">\r\n      <label>Workflow</label>\r\n      <p-dropdown [options]=\"workflows\" optionLabel=\"name\" [(ngModel)]=\"ut.IdWorkflow\" [style]=\"{'width':'100%'}\" name=\"idworkflow\" filter=\"true\"></p-dropdown>\r\n    </div>\r\n  </div>\r\n  <div class=\"horizontal tn-ut__form__section\">\r\n    <button pButton type=\"button\" label=\"Crear & Nueva\" [disabled]=\"isNombreEmpty()\" (click)=\"onCrearNuevaUTClick()\"></button>\r\n    <button pButton type=\"button\" label=\"Crear & Abrir\" [disabled]=\"isNombreEmpty()\" (click)=\"onCrearYAbrirUTClick()\"></button>\r\n  </div>\r\n</form>\r\n";
 
 __$styleInject(".tn-ut__form{padding:16px}.tn-ut__form__section{padding:8px}.tn-ut__form__dropdown{width:100%}",undefined);
 
@@ -539,6 +539,13 @@ var proyectosCache = [];
 var sprintsCache = [];
 var tiposUTCache = [];
 var workflowsCache = [];
+
+var utTypesIcons$1 = {
+  1: 'fa fa-star',
+  2: 'fa fa-bug',
+  3: 'fa fa-plus-circle',
+  4: 'fa fa-puzzle-piece'
+};
 
 var NuevaUTComponent = (_dec$5 = core.Component({
   selector: 'tn-ut-nuevaut',
@@ -554,6 +561,10 @@ var NuevaUTComponent = (_dec$5 = core.Component({
       IdWorkflow: null,
       IdTipoUT: null,
       IdProyecto: null
+    };
+
+    this.getUtTypeIcon = function (tipo) {
+      return utTypesIcons$1[tipo];
     };
 
     this._createUTService = createUTService;
@@ -604,6 +615,8 @@ var NuevaUTComponent = (_dec$5 = core.Component({
       this.proyectos = this._getProyectos(idProducto);
       this.sprints = this._getSprints(idProducto);
       this.tiposUT = this._getTiposUT(idProducto);
+
+      this._seleccionarValoresPorDefecto();
     }
   }, {
     key: '_getWorkflows',
@@ -614,7 +627,7 @@ var NuevaUTComponent = (_dec$5 = core.Component({
         this._getWorkflowsSubscription = this._getWorkflowsService.get(idProducto).subscribe(function (data) {
           workflowsCache[idProducto] = _this2._parseWorkflows(data);
           _this2.workflows = workflowsCache[idProducto];
-          _this2.ut.IdVersion = _this2.workflows[0] ? _this2.workflows[0].value : null;
+          _this2.ut.IdWorkflow = _this2.workflows[0] ? _this2.workflows[0].value : null;
         });
       }
       return workflowsCache[idProducto];
@@ -696,6 +709,14 @@ var NuevaUTComponent = (_dec$5 = core.Component({
       });
     }
   }, {
+    key: '_seleccionarValoresPorDefecto',
+    value: function _seleccionarValoresPorDefecto() {
+      this.ut.IdWorkflow = this.workflows && this.workflows[0] ? this.workflows[0].value : null;
+      this.ut.IdProyecto = this.proyectos && this.proyectos[0] ? this.proyectos[0].value : null;
+      this.ut.IdVersion = this.IdVersion && this.sprints[0] ? this.sprints[0].value : null;
+      this.ut.IdTipoUT = this.tiposUT && this.tiposUT[0] ? this.tiposUT[0].value : null;
+    }
+  }, {
     key: 'onProductChanged',
     value: function onProductChanged(idNuevoProducto) {
       this._getDatosProducto(idNuevoProducto);
@@ -705,9 +726,17 @@ var NuevaUTComponent = (_dec$5 = core.Component({
     value: function onCrearNuevaUTClick() {
       var _this6 = this;
 
-      this._crearUTSubscription = this._createUTService.put(this.ut).subscribe(function (data) {}, function (error) {
+      this._crearUTSubscription = this._createUTService.put(this.ut).subscribe(function (data) {
+        _this6._notificationService.success('La UT se ha creado con exito', 'UT: ' + _this6.ut.Nombre);
+        _this6._clearFields();
+      }, function (error) {
         _this6._notificationService.error('No se pudo crear la UT especficada', error);
       });
+    }
+  }, {
+    key: '_clearFields',
+    value: function _clearFields() {
+      this.ut.Nombre = '';
     }
   }, {
     key: 'onCrearYAbrirUTClick',
@@ -776,14 +805,14 @@ var FollowupsService = (_dec$13 = core.Injectable(), _dec$13(_class$13 = functio
     value: function finalizarSeguimiento(idSeguimiento) {
       var adelante = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
 
-      return this._http.post('FinalizarSeguimiento?idSeguimiento=' + idSeguimiento + '&adelante=' + adelante);
+      return this._http.post('FinalizarSeguimiento?idSeguimiento=' + idSeguimiento + '&adelante=' + adelante + '&avisarEmail=false');
     }
   }]);
   return FollowupsService;
 }()) || _class$13);
 Reflect.defineMetadata('design:paramtypes', [http.HttpClient], FollowupsService);
 
-var html$3 = "<div class=\"vertical\">\n  <div class=\"horizontal tn-ut__followups__controls\">\n    <button pButton label=\"Iniciar\" (click)=\"iniciar()\" icon=\"fa fa-play-circle\" [disabled]=\"puedeFinalizar\" *ngIf=\"puedeIniciar() || !puedeFinalizar()\"></button>\n    <button pButton label=\"Continuar\" (click)=\"continuar()\" icon=\"fa fa-play-circle\" *ngIf=\"puedeContinuar()\"></button>\n    <button pButton label=\"Pausar\" (click)=\"pausar()\" icon=\"fa fa-pause-circle\" *ngIf=\"puedePausar()\"></button>    \n    <button pButton label=\"Finalizar\" (click)=\"finalizar()\" icon=\"fa fa-stop-circle\" [disabled]=\"!puedeFinalizar()\"></button>    \n    <button pButton label=\"Asignar Agente\" (click)=\"asignarAgente()\" icon=\"fa fa-user-plus\" [disabled]=\"true\"></button>        \n    <button pButton label=\"Trabajar en Paralelo\" (click)=\"trabajarEnParalelo()\" icon=\"fa fa-users\" [disabled]=\"true\"></button>            \n  </div>\n</div>\n";
+var html$3 = "<div class=\"vertical\">\n  <div class=\"horizontal tn-ut__followups__controls\">\n    <button pButton label=\"Iniciar\" icon=\"fa fa-play-circle\" [disabled]=\"true\" *ngIf=\"!puedeIniciar() && !puedeContinuar() && !puedePausar()\"></button>\n    <button pButton label=\"Iniciar\" (click)=\"iniciar()\" icon=\"fa fa-play-circle\" *ngIf=\"puedeIniciar()\"></button>\n    <button pButton label=\"Continuar\" (click)=\"continuar()\" icon=\"fa fa-play-circle\" *ngIf=\"puedeContinuar()\"></button>\n    <button pButton label=\"Pausar\" (click)=\"pausar()\" icon=\"fa fa-pause-circle\" *ngIf=\"puedePausar()\"></button>\n    <button pButton label=\"Finalizar\" (click)=\"finalizar()\" icon=\"fa fa-stop-circle\" [disabled]=\"!puedeFinalizar()\"></button>\n    <button pButton label=\"Asignar Agente\" (click)=\"asignarAgente()\" icon=\"fa fa-user-plus\" [disabled]=\"true\"></button>\n    <button pButton label=\"Trabajar en Paralelo\" (click)=\"trabajarEnParalelo()\" icon=\"fa fa-users\" [disabled]=\"true\"></button>\n  </div>\n</div>\n";
 
 __$styleInject("",undefined);
 
@@ -851,7 +880,9 @@ var FollowupsComponent = (_dec$12 = core.Component({
     };
 
     this.iniciar = function () {
-      _this._followupsService.empezarSeguimiento(_this.idSeguimiento);
+      _this._followupsService.empezarSeguimiento(_this.idSeguimiento).subscribe(function (data) {}, function (error) {
+        console.log(error);
+      });
     };
 
     this.puedeContinuar = function () {
@@ -859,7 +890,9 @@ var FollowupsComponent = (_dec$12 = core.Component({
     };
 
     this.continuar = function () {
-      _this._followupsService.empezarSeguimiento(_this.idSeguimiento);
+      _this._followupsService.empezarSeguimiento(_this.idSeguimiento).subscribe(function (data) {}, function (error) {
+        console.log(error);
+      });
     };
 
     this.puedePausar = function () {
@@ -867,7 +900,9 @@ var FollowupsComponent = (_dec$12 = core.Component({
     };
 
     this.pausar = function () {
-      _this._followupsService.pausarSeguimiento(_this.idSeguimiento);
+      _this._followupsService.pausarSeguimiento(_this.idSeguimiento).subscribe(function (data) {}, function (error) {
+        console.log(error);
+      });
     };
 
     this.puedeFinalizar = function () {
@@ -875,7 +910,9 @@ var FollowupsComponent = (_dec$12 = core.Component({
     };
 
     this.finalizar = function () {
-      _this._followupsService.finalizarSeguimiento(_this.idSeguimiento);
+      _this._followupsService.finalizarSeguimiento(_this.idSeguimiento).subscribe(function (data) {}, function (error) {
+        console.log(error);
+      });
     };
 
     this.asignarAgente = function () {

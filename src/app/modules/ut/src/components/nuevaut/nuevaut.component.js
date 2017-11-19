@@ -88,6 +88,8 @@ export class NuevaUTComponent {
     this.proyectos = this._getProyectos(idProducto);
     this.sprints = this._getSprints(idProducto);
     this.tiposUT = this._getTiposUT(idProducto);
+
+    this._seleccionarValoresPorDefecto();
   }
 
   _getWorkflows(idProducto) {
@@ -97,7 +99,7 @@ export class NuevaUTComponent {
           (data) => {
             workflowsCache[idProducto] = this._parseWorkflows(data);
             this.workflows = workflowsCache[idProducto];
-            this.ut.IdVersion = this.workflows[0]? this.workflows[0].value : null;
+            this.ut.IdWorkflow = this.workflows[0]? this.workflows[0].value : null;            
           }
         );
     }
@@ -184,6 +186,13 @@ export class NuevaUTComponent {
     });
   }
 
+  _seleccionarValoresPorDefecto() {
+    this.ut.IdWorkflow = this.workflows && this.workflows[0]? this.workflows[0].value : null;
+    this.ut.IdProyecto = this.proyectos && this.proyectos[0]? this.proyectos[0].value : null;
+    this.ut.IdVersion = this.IdVersion && this.sprints[0]? this.sprints[0].value : null;
+    this.ut.IdTipoUT = this.tiposUT && this.tiposUT[0]? this.tiposUT[0].value : null;
+  }
+
   onProductChanged(idNuevoProducto) {
     this._getDatosProducto(idNuevoProducto);
   }
@@ -196,6 +205,7 @@ export class NuevaUTComponent {
             'La UT se ha creado con exito',
             `UT: ${this.ut.Nombre}`
           );
+          this._clearFields();
       },
       (error) => {
         this._notificationService.error(
@@ -204,6 +214,10 @@ export class NuevaUTComponent {
         );
       }
     );
+  }
+
+  _clearFields() {
+    this.ut.Nombre = '';
   }
 
   onCrearYAbrirUTClick() {

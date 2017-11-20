@@ -342,6 +342,11 @@ var AgentService = (_dec$6 = core_1.Injectable(), _dec$6(_class$6 = function () 
       return this._agent.Administrador;
     }
   }, {
+    key: 'getAgentId',
+    value: function getAgentId() {
+      return this._agent.IdAgente;
+    }
+  }, {
     key: 'agent',
     get: function get$$1() {
       return this._agent;

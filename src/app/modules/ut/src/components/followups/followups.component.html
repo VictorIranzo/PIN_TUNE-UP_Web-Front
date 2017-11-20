@@ -1,9 +1,9 @@
 <div class="vertical tn-ut__followups">
   <div class="horizontal tn-ut__followups__controls">
     <button pButton label="Iniciar" icon="fa fa-play-circle" [disabled]="true" *ngIf="!puedeIniciar() && !puedeContinuar() && !puedePausar()"></button>
-    <button pButton label="Iniciar" (click)="iniciar()" icon="fa fa-play-circle" *ngIf="puedeIniciar()"></button>
-    <button pButton label="Continuar" (click)="continuar()" icon="fa fa-play-circle" *ngIf="puedeContinuar()"></button>
-    <button pButton label="Pausar" (click)="pausar()" icon="fa fa-pause-circle" *ngIf="puedePausar()"></button>
+    <button pButton label="Iniciar" (click)="iniciar()" icon="fa fa-play-circle" [disabled]="!isSameAgent()" *ngIf="puedeIniciar()"></button>
+    <button pButton label="Continuar" (click)="continuar()" icon="fa fa-play-circle" [disabled]="!isSameAgent()" *ngIf="puedeContinuar()"></button>
+    <button pButton label="Pausar" (click)="pausar()" icon="fa fa-pause-circle" [disabled]="!isSameAgent()" *ngIf="puedePausar()"></button>
     <button pButton label="Finalizar" (click)="finalizar()" icon="fa fa-stop-circle" [disabled]="!puedeFinalizar()"></button>
     <button pButton label="Asignar Agente" (click)="asignarAgente()" icon="fa fa-user-plus" [disabled]="true"></button>
     <button pButton label="Trabajar en Paralelo" (click)="trabajarEnParalelo()" icon="fa fa-users" [disabled]="true"></button>

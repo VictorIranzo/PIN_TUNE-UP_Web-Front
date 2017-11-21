@@ -233,7 +233,9 @@ export class NuevaUTComponent {
     this._crearUTSubscription =
     this._createUTService.put(this.ut).subscribe(
       (data) => {
-        this._redirect(data);
+        setTimeout(function() {
+          this._redirect(data);
+        }, 3000);
       },
       (error) => {
         this._notificationService.error(

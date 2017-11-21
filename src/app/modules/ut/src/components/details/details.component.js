@@ -55,7 +55,7 @@ export class DetailsComponent {
                 this._parseWorkflows(data.listaWorkflowsDisponibles);
                 this._parseTipos(data.listaTiposUT);
                 this._parseProyectos(data.listaProyectos);
-                this.model.Descripcion = data.UT.Descripcion;
+                this.model.Descripcion = data.UT.Definicion;
                 this._mapSelected(data, this.model);
                 this._breadcrumbService.addItems({label: `${this.model.IdUT}: ${this.model.Nombre}`, routerLink: `/uts/${this.model.IdUT}`});
               }

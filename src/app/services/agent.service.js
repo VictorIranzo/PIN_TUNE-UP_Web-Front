@@ -27,4 +27,7 @@ export class AgentService {
   isAdmin() {
     return this._agent.Administrador;
   }
+  getAgentId() {
+    return this._agent.IdAgente;
+  }
 }

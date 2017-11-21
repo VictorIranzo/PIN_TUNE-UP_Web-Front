@@ -1,4 +1,5 @@
 import {Component, Input} from '@angular/core';
+import {AgentService} from '@tune-up/app';
 import {FollowupsService} from './followups.service';
 import html from './followups.component.html';
 import './followups.component.css';
@@ -11,11 +12,15 @@ import './followups.component.css';
 export class FollowupsComponent {
   @Input() utId;
   seguimientos = [];
-  constructor(followupsService: FollowupsService) {
+  constructor(followupsService: FollowupsService, agentService: AgentService) {
     this._followupsService = followupsService;
+    this._agentService = agentService;
   }
   ngOnInit() {
    this._getFollowUps();
+  }
+  isSameAgent() {
+    return this.seguimiento.IdAgente === this._agentService.getAgentId();
   }
   _getFollowUps() {
     this._getFollowupsSub = this._followupsService.getSeguimientos(this.utId)

@@ -6,7 +6,7 @@ export class ResponseInterceptor {
   intercept(req, next) {
     return next.handle(req).map((event) => {
       if (event instanceof HttpResponse) {
-        if ( !event.body || !event.body.Resultado) {
+        if ( !event.body || (event.body.Exito && !event.body.Resultado)) {
           return event;
         }
         this._checkInvalid(event);

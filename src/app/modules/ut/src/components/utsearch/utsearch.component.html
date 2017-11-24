@@ -1,0 +1,46 @@
+<div class="tn-ut__search">
+  <div class="tn-ut__results">
+    <p-dataTable [value]="uts" [rows]="20" [paginator]="true"  [pageLinks]="5" [sortMode]="multiple" [globalFilter]="gb"
+    reorderableColumns="true" [responsive]="true">
+      <p-column [style]="{'width':'5%'}" field="Tipo" header="Tipo" [sortable]="true">
+        <ng-template let-ut="rowData" pTemplate="body">
+          <span class="ui-button-icon" [ngClass]="getUtTypeIcon(ut)"></span>
+        </ng-template>
+      </p-column>
+      <p-column [style]="{'width':'10%'}" field="IdUT" header="Código" [sortable]="true">
+        <ng-template let-ut="rowData" pTemplate="body">
+          <a class="ui-cell-data" [routerLink]="getUtLink(ut)">{{ut.IdUT}}</a>
+        </ng-template>
+      </p-column>
+      <p-column [style]="{'width':'15%'}" field="NombreProducto" header="Producto" [sortable]="true"></p-column>
+      <p-column [style]="{'width':'20%'}" field="NombreProyecto" header="Proyecto" [sortable]="true"></p-column>
+      <p-column [style]="{'width':'10%'}" field="NombreVersion" header="Sprint" [sortable]="true"></p-column>
+      <p-column [style]="{'width':'25%'}" field="NombreUT" header="Nombre" [sortable]="true"></p-column>
+      <p-column [style]="{'width':'15%'}" field="ActividadActual" header="Actividad actual" [sortable]="true"></p-column>
+    </p-dataTable>
+  </div>
+  <div class="vertical tn-ut__fields">
+    <div class="tn-ut__field">
+      <label>Nombre UT</label>
+      <input id="input" type="text" pInputText [(ngModel)]="searchName">
+    </div>
+    <label>Producto</label>
+    <p-dropdown [options]="productosDisponibles" [(ngModel)]="searchProduct" filter="true" [style]="{'width':'100%'}"></p-dropdown>
+    <label>Proyecto</label>
+    <p-dropdown [options]="proyectosDisponibles" [(ngModel)]="searchProject" filter="true" [style]="{'width':'100%'}"></p-dropdown>
+    <label>Sprint</label>
+    <p-dropdown [options]="sprintsDisponibles" [(ngModel)]="searchSprint" filter="true" [style]="{'width':'100%'}"></p-dropdown>
+    <label>Tipo UT</label>
+    <p-dropdown [options]="tiposDisponibles" [(ngModel)]="searchType" filter="true" [style]="{'width':'100%'}">
+      <ng-template let-tipoUT pTemplate="item">
+          <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+            <i [ngClass]="getUtTypeIcon(tipoUT.value)"></i>
+            <div style="font-size:14px;float:right;margin-top:4px">{{tipoUT.label}}</div>
+          </div>
+        </ng-template>
+    </p-dropdown>
+    <label>Estado</label>
+    <p-dropdown [options]="estadosDisponibles" [(ngModel)]="searchState" filter="true" [style]="{'width':'100%'}"></p-dropdown>
+    <button pButton type="button" label="Buscar" (click)="onSearch()"></button>
+  </div>
+</div>

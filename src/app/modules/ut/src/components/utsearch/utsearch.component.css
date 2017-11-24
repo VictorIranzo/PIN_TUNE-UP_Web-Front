@@ -1,0 +1,26 @@
+@import 'styleguide';
+
+.tn-ut__search{
+  display: flex;
+  flex-direction: column-reverse;
+  @media(--gt-sm){
+    flex-direction: row;
+  }
+}
+
+.tn-ut__fields{
+  margin: var(--margin-medium);
+  @media(--gt-sm){
+    box-shadow: 0 0 0 5px rgba(0,0,0,.3);
+  }
+
+.tn-ut__field{
+  @media(--gt-sm){
+    padding: 0 0 20px 0 !important;
+  }
+}
+  
+.tn-ut__results{
+  margin: var(--margin-medium);
+}
+}

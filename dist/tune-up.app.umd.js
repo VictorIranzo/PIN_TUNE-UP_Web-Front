@@ -1,4 +1,3 @@
-(function(l, i, v, e) { v = l.createElement(i); v.async = 1; v.src = '//' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; e = l.getElementsByTagName(i)[0]; e.parentNode.insertBefore(v, e)})(document, 'script');
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/platform-browser-dynamic'), require('@angular/core'), require('@angular/platform-browser'), require('@angular/platform-browser/animations'), require('@angular/common/http'), require('@angular/router'), require('@tune-up/vendor'), require('@angular/forms'), require('@angular/common')) :
 	typeof define === 'function' && define.amd ? define(['exports', '@angular/platform-browser-dynamic', '@angular/core', '@angular/platform-browser', '@angular/platform-browser/animations', '@angular/common/http', '@angular/router', '@tune-up/vendor', '@angular/forms', '@angular/common'], factory) :
@@ -486,7 +485,7 @@ var menuItems = [{
 
 var html$3 = "<p-sidebar #sidenav [ngStyle]=\"{width:'270px'}\">\r\n  <div>\r\n    <img class=\"tn-menu-sidebar--logo\" src=\"./assets/logo.png\">\r\n  </div>\r\n  <div class=\"tn-menu-sidebar\">\r\n    <div *ngFor=\"let item of items\">\r\n      <div *ngIf=\"mustPrint(item)\">\r\n        <tn-menuitem [text]=\"item.text\" [path]=\"item.path\" [icon]=\"item.icon\" [adminOnly]=\"item.adminOnly\"></tn-menuitem>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</p-sidebar>\r\n";
 
-__$styleInject(".tn-menu-sidebar--logo{width:180px;height:180px;margin-top:80px;margin-bottom:10px}.ui-sidebar-left{width:270px}.tn-menu-sidebar{background:#7e57c2;height:100%}",undefined);
+__$styleInject(".tn-menu-sidebar--logo{width:180px;height:180px;margin-top:80px;margin-bottom:10px}.ui-sidebar-left{width:270px}.tn-menu-sidebar{background:#5e35b1;height:100%}",undefined);
 
 var _dec$10;
 var _dec2;
@@ -765,13 +764,18 @@ var ResponseInterceptor = (_dec$14 = core_1.Injectable(), _dec$14(_class$14 = fu
 
       return next.handle(req).map(function (event) {
         if (event instanceof http.HttpResponse) {
-          if (!event.body || event.body.Exito && !event.body.Resultado) {
+          if (_this._isNoContent(event) || !event.body.Resultado) {
             return event;
           }
           _this._checkInvalid(event);
           return event = _this._serializeBody(event);
         }
       });
+    }
+  }, {
+    key: '_isNoContent',
+    value: function _isNoContent(response) {
+      return !response.body;
     }
   }, {
     key: '_serializeBody',

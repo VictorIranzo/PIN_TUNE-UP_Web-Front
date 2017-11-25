@@ -6,7 +6,7 @@ export class ResponseInterceptor {
   intercept(req, next) {
     return next.handle(req).map((event) => {
       if (event instanceof HttpResponse) {
-        if ( !event.body || (event.body.Exito && !event.body.Resultado)) {
+        if ( this._isNoContent(event) || (!event.body.Resultado)) {
           return event;
         }
         this._checkInvalid(event);
@@ -14,6 +14,11 @@ export class ResponseInterceptor {
       }
     });
   }
+  _isNoContent(response) {
+    return !response.body;
+  }
+
+
   _serializeBody(response) {
     const result = response && response.body &&
       response.body.Resultado;

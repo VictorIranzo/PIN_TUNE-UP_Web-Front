@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {BreadcrumbService} from './services/breadcrumb.service';
+import {BreadcrumbService} from '../../../services';
 import {SceneService} from '../scene.service';
 import html from './appbar.component.html';
 import './appbar.component.css';
@@ -7,19 +7,16 @@ import './appbar.component.css';
 @Component({
   selector: 'tn-appbar',
   template: html,
-  providers: [BreadcrumbService],
 })
 export class AppbarComponent {
   menuOpen = true;
-  breadcrumbItems = [];
-
+  breadcrumbHome = {icon: 'fa fa-home', routerLink: '/home'}
   constructor(breadcrumbService: BreadcrumbService, sceneService: SceneService) {
     this._breadcrumbService = breadcrumbService;
     this._sceneService = sceneService;
-    this._getBreadcrumbItems();
   }
-  _getBreadcrumbItems() {
-    this.breadcrumbItems = this._breadcrumbService.items;
+  breadcrumbItems() {
+    return this._breadcrumbService.items;
   }
   onHideMenuClick() {
     this.menuOpen = false;

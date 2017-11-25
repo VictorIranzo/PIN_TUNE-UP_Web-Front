@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {HomeRoutingModule} from './home.routing';
 import {HomeComponent} from './home.component';
 import {TuneUpCoreModule} from '@tune-up/core';
-import {KanbanResumeComponent, UtListComponent, SafeHtml} from './components';
+import {KanbanResumeComponent, UtListComponent} from './components';
 
 @NgModule({
   imports: [TuneUpCoreModule, HomeRoutingModule],
@@ -10,8 +10,6 @@ import {KanbanResumeComponent, UtListComponent, SafeHtml} from './components';
     HomeComponent,
     KanbanResumeComponent,
     UtListComponent,
-    // TODO: move SafeHtml to core
-    SafeHtml,
   ],
 })
 export class HomeModule {}

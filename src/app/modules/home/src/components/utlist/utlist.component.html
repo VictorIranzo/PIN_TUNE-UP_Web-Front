@@ -3,7 +3,7 @@
   <i class="fa fa-search none tn_home__utlist__searchbar__icon"></i>
   <input #gb type="text" pInputText size="50" class="tn-home__utlist__searchbar__input" placeholder="Búsqueda global">
 </div>
-<p-dataTable [value]="uts" [rows]="20" [paginator]="true" [pageLinks]="5" [sortMode]="multiple" [globalFilter]="gb"
+<p-dataTable [value]="uts" [rows]="20" [paginator]="true"  [pageLinks]="5" [sortMode]="multiple" [globalFilter]="gb"
   reorderableColumns="true" [responsive]="true">
   <p-column [style]="{'width':'10%'}" field="Estado" header="Estado" [sortable]="true">
     <ng-template let-ut="rowData" pTemplate="body">
@@ -21,7 +21,7 @@
   <p-column [style]="{'width':'10%'}" field="NombreVersion" header="Sprint" [sortable]="true"></p-column>
   <p-column [style]="{'width':'10%'}" field="IdUT" header="Código" [sortable]="true">
     <ng-template let-ut="rowData" pTemplate="body">
-      <span class="ui-cell-data" [routerLink]="getUtLink(ut)">{{ut.IdUT}}</span>
+      <a class="ui-cell-data" [routerLink]="getUtLink(ut)">{{ut.IdUT}}</a>
     </ng-template>
   </p-column>
   <p-column [style]="{'width':'30%'}" field="NombreUT" header="Nombre" [sortable]="true"></p-column>

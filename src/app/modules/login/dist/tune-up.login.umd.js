@@ -226,7 +226,7 @@ var SitesService = (_dec$4 = core$1.Injectable(), _dec$4(_class$4 = function () 
 }()) || _class$4);
 Reflect.defineMetadata('design:paramtypes', [http.HttpClient], SitesService);
 
-var html = "<div class=\"tn-login-background\">\r\n  <form class=\"vertical tn-login-form\" #frm=\"ngForm\" (ngSubmit)=\"frm.valid && login()\">\r\n    <img class=\"tn-login--header\" src=\"assets/logo.png\">\r\n    <div class=\"tn-login-form-wrapper\">\r\n     \r\n      <div class=\"tn-login-form-inputgroup\">\r\n        <span class=\"ui-float-label\">\r\n          <input class=\"tn-login-form-inputgroup--input\" type=\"text\" [(ngModel)]=\"model.email\" rule=\"login.email\" name=\"email\" #emailCtrl=\"ngModel\" (focusout)=\"onEmailFocusLost()\"\r\n          pInputText>\r\n          <label>Email *</label>\r\n        </span>\r\n        <tn-validation-error [control]=\"emailCtrl\"></tn-validation-error>\r\n      </div>\r\n\r\n      <div class=\"tn-login-form-inputgroup\">\r\n        <span class=\"ui-float-label\">\r\n          <input class=\"tn-login-form-inputgroup--input\" type=\"password\" [(ngModel)]=\"model.password\" rule=\"login.password\" name=\"password\" #passwordCtrl=\"ngModel\" pInputText>\r\n          <label>Contraseña *</label>\r\n        </span>\r\n        <tn-validation-error [control]=\"passwordCtrl\"></tn-validation-error>\r\n      </div>\r\n\r\n      <div class=\"horizontal\">\r\n        <div class=\"one tn-login-form--siteselector\">\r\n          <tn-site-selector [sites]=\"sites\" *ngIf=\"showSelector()\" (onSiteSelected)=\"setIdSitio($event)\"></tn-site-selector>\r\n        </div>\r\n        <button class=\"none tn-login-form--submitbtn\" pButton type=\"submit\" label=\"Login\"></button>\r\n      </div>\r\n    </div>\r\n  </form>\r\n</div>\r\n";
+var html = "<div class=\"tn-login-background\">\n  <form class=\"vertical tn-login-form\" #frm=\"ngForm\" (ngSubmit)=\"frm.valid && login()\">\n    <img class=\"tn-login--header\" src=\"assets/logo.png\">\n    <div class=\"tn-login-form-wrapper\">\n     \n      <div class=\"tn-login-form-inputgroup\">\n        <span class=\"ui-float-label\">\n          <input class=\"tn-login-form-inputgroup--input\" type=\"text\" [(ngModel)]=\"model.email\" rule=\"login.email\" name=\"email\" #emailCtrl=\"ngModel\" (focusout)=\"onEmailFocusLost()\"\n          pInputText>\n          <label>Email *</label>\n        </span>\n        <tn-validation-error [control]=\"emailCtrl\"></tn-validation-error>\n      </div>\n\n      <div class=\"tn-login-form-inputgroup\">\n        <span class=\"ui-float-label\">\n          <input class=\"tn-login-form-inputgroup--input\" type=\"password\" [(ngModel)]=\"model.password\" rule=\"login.password\" name=\"password\" #passwordCtrl=\"ngModel\" pInputText>\n          <label>Contraseña *</label>\n        </span>\n        <tn-validation-error [control]=\"passwordCtrl\"></tn-validation-error>\n      </div>\n\n      <div class=\"horizontal\">\n        <div class=\"one tn-login-form--siteselector\">\n          <tn-site-selector [sites]=\"sites\" *ngIf=\"showSelector()\" (onSiteSelected)=\"setIdSitio($event)\"></tn-site-selector>\n        </div>\n        <button class=\"none tn-login-form--submitbtn\" pButton type=\"submit\" label=\"Login\"></button>\n      </div>\n    </div>\n  </form>\n</div>\n";
 
 __$styleInject(".tn-login-background{background:url(assets/bg.jpg);background-size:cover;background-color:#1976d2;background-repeat:no-repeat;color:#fff}.tn-login-background,.tn-login-form{position:absolute;top:0;right:0;width:100%;height:100%}.tn-login-form{align-items:center;padding:100px 50px;box-shadow:0 5px 7px 5px rgba(0,0,0,.1);box-sizing:border-box;background-color:#fff;overflow:auto}@media (min-width:960px){.tn-login-form{width:fit-content}}.tn-login--header{width:180px;height:180px;padding-bottom:32px}.tn-login-form-wrapper{width:270px}.tn-login-form-inputgroup{padding-bottom:32px}.tn-login-form-inputgroup--input{width:100%}.tn-login-form--siteselector{margin-right:8px}.tn-login-form--submitbtn{height:100%}",undefined);
 
@@ -373,7 +373,7 @@ var LoginComponent = (_dec$2 = core$1.Component({
     key: '_parseSites',
     value: function _parseSites(sites) {
       this.sites = sites.map(function (site) {
-        return { label: site.Id + ': ' + site.Nombre + ' ', value: site.Id };
+        return { label: site.Nombre, value: site.Id };
       });
       this.model.idsitio = sites[0] && sites[0].Id;
     }
@@ -403,7 +403,7 @@ var LoginRoutingModule = (_dec$1 = core$1.NgModule({
   classCallCheck(this, LoginRoutingModule);
 }) || _class$1);
 
-var html$1 = "<p-dropdown [options]=\"sites\" [filter]=\"true\" (onChange)=\"selectSite($event)\"></p-dropdown>\r\n";
+var html$1 = "<p-dropdown [options]=\"sites\" [filter]=\"true\" (onChange)=\"selectSite($event)\"></p-dropdown>\n";
 
 var _dec$5;
 var _dec2$1;

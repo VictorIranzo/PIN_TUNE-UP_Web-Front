@@ -1,0 +1,43 @@
+<form class="tn-ut__form vertical">
+  <div class="horizontal">
+    <div class="vertical seven tn-ut__form__section">
+      <label>Nombre</label>
+      <input type="text" size="30" [(ngModel)]="ut.Nombre" name="nombre" pInputText>
+    </div>
+    <div class="vertical five tn-ut__form__section">
+      <label>Sprint</label>
+      <p-dropdown [options]="sprints" optionLabel="name" [(ngModel)]="ut.IdVersion" [style]="{'width':'100%'}" filter="true" name="sprint"></p-dropdown>
+    </div>
+  </div>
+  <div class="horizontal">
+    <div class="vertical five tn-ut__form__section">
+      <label>Producto</label>
+      <p-dropdown [options]="productos" optionLabel="name" [(ngModel)]="ut.IdProducto" [style]="{'width':'100%'}" filter="true" name="producto" (onChange)="onProductChanged($event.value)"></p-dropdown>
+    </div>
+    <div class="vertical three tn-ut__form__section">
+      <label>Tipo</label>
+      <p-dropdown [options]="tiposUT" optionLabel="name" [(ngModel)]="ut.IdTipoUT" [style]="{'width':'100%'}" name="tipo" filter="true">
+          <ng-template let-tipoUT pTemplate="item">
+            <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                <i [ngClass]="getUtTypeIcon(tipoUT.value)"></i>
+                <div style="float:right;margin-top:4px">{{tipoUT.label}}</div>
+            </div>
+          </ng-template>
+      </p-dropdown>
+    </div>
+  </div>
+  <div class="horizontal">
+    <div class="vertical seven tn-ut__form__section">
+      <label>Proyecto</label>
+      <p-dropdown [options]="proyectos" optionLabel="name" [(ngModel)]="ut.IdProyecto" [style]="{'width':'100%'}" name="idproyecto" filter="true"></p-dropdown>
+    </div>
+    <div class="vertical five tn-ut__form__section">
+      <label>Workflow</label>
+      <p-dropdown [options]="workflows" optionLabel="name" [(ngModel)]="ut.IdWorkflow" [style]="{'width':'100%'}" name="idworkflow" filter="true"></p-dropdown>
+    </div>
+  </div>
+  <div class="horizontal tn-ut__form__section">
+    <button pButton type="button" label="Crear & Nueva" icon="fa fa-refresh" [disabled]="isNombreEmpty()" (click)="onCrearNuevaUTClick()"></button>
+    <button pButton type="button" label="Crear & Abrir" icon="fa fa-forward" [disabled]="isNombreEmpty()" (click)="onCrearYAbrirUTClick()"></button>
+  </div>
+</form>

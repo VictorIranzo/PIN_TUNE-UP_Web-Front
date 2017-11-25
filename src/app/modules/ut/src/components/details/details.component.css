@@ -1,0 +1,23 @@
+@import 'styleguide';
+
+.tn-ut__form{
+    padding: var(--padding-medium);
+}
+
+.tn-ut__form__section{
+    padding: var(--padding-small);
+}
+
+.tn-ut__form__buttons{
+    padding: var(--padding-small);
+    align-items: flex-end;
+}
+
+.tn-ut__form__detail_button{
+    height: 60%;
+    text-align: center;
+}
+
+.tn-ut__form__row{
+  flex-wrap: wrap;
+}

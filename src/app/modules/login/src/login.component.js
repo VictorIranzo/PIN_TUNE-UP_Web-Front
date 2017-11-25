@@ -83,7 +83,7 @@ export class LoginComponent {
   }
   _parseSites(sites) {
     this.sites = sites.map((site) => {
-      return {label: `${site.Id}: ${site.Nombre} `, value: site.Id};
+      return {label: site.Nombre, value: site.Id};
     });
     this.model.idsitio = sites[0] && sites[0].Id;
   }

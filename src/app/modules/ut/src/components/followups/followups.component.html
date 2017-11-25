@@ -1,0 +1,26 @@
+<div class="vertical tn-ut__followups">
+  <div class="horizontal tn-ut__followups__controls">
+    <button pButton label="Iniciar" icon="fa fa-play-circle" [disabled]="true" *ngIf="!puedeIniciar() && !puedeContinuar() && !puedePausar()"></button>
+    <button pButton label="Iniciar" (click)="iniciar()" icon="fa fa-play-circle" [disabled]="!isSameAgent()" *ngIf="puedeIniciar()"></button>
+    <button pButton label="Continuar" (click)="continuar()" icon="fa fa-play-circle" [disabled]="!isSameAgent()" *ngIf="puedeContinuar()"></button>
+    <button pButton label="Pausar" (click)="pausar()" icon="fa fa-pause-circle" [disabled]="!isSameAgent()" *ngIf="puedePausar()"></button>
+    <button pButton label="Finalizar" (click)="finalizar()" icon="fa fa-stop-circle" [disabled]="!puedeFinalizar()"></button>
+    <button pButton label="Asignar Agente" (click)="asignarAgente()" icon="fa fa-user-plus" [disabled]="true"></button>
+    <button pButton label="Trabajar en Paralelo" (click)="trabajarEnParalelo()" icon="fa fa-users" [disabled]="true"></button>
+  </div>
+  <p-dataTable [value]="seguimientos">
+    <p-column field="Estado" header="Estado" [sortable]="true" [style]="{'width':'15%'}"></p-column>
+    <p-column field="NombreActividad" header="Actividad" [sortable]="true" [style]="{'width':'25%'}"></p-column>
+    <p-column field="NombreAgente" header="Agente" [sortable]="true" [style]="{'width':'20%'}" ></p-column>
+    <p-column field="FechaCreacion" header="Generada" [sortable]="true" [style]="{'width':'20%'}">
+      <ng-template let-activity="rowData" pTemplate="body">
+        <span class="ui-cell-data">{{activity.FechaCreacion | amLocale:'es' | amDateFormat: 'DD-MM-YYYY HH:mm'}}</span>
+      </ng-template>
+    </p-column>
+    <p-column field="FechaFinalizacion" header="Finalizada" [sortable]="true" [style]="{'width':'20%'}">
+      <ng-template let-activity="rowData" pTemplate="body">
+        <span class="ui-cell-data" *ngIf="activity.FechaFinalizacion">{{activity.FechaFinalizacion | amLocale:'es' | amDateFormat: 'DD-MM-YYYY HH:mm'}}</span>
+      </ng-template>
+    </p-column>
+  </p-dataTable>
+</div>

@@ -2,17 +2,21 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientModule} from '@angular/common/http';
-import {RoutingModule} from './routing';
+import {AppRoutingModule} from './app.routing';
+import {AppComponent} from './app.component';
 import {TokenInterceptorProvider, ResponseInterceptorProvider} from './http';
-import {AuthService, AgentService, AboutService} from './services';
-
+import {
+  AuthService,
+  AgentService,
+  AboutService,
+  BreadcrumbService,
+} from './services';
 import {
   APIInterceptorProvider,
   ModuleLoaderProvider,
   TuneUpCoreModule,
   NotificationsService,
 } from '@tune-up/core';
-import {AppComponent} from './app.component';
 import {
   SceneComponent,
   AppbarComponent,
@@ -27,7 +31,7 @@ import {
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    RoutingModule,
+    AppRoutingModule,
   ],
   declarations: [
     AppComponent,
@@ -46,7 +50,8 @@ import {
     AgentService,
     AboutService,
     NotificationsService,
+    BreadcrumbService,
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 
-import {UtSearchService} from './services';
+import {UtSearchService, ActivitiesService} from './services';
 import {BreadcrumbService} from '@tune-up/app';
 import {GetProductosService, GetProyectosService, GetSprintsProductoService,
         GetTiposUTProductoService} from '../nuevaut';
@@ -25,27 +25,31 @@ const estados = [
 const proyectosCache = [];
 const sprintsCache = [];
 const tiposUTCache = [];
+const actividades = [];
 
 @Component({
   selector: 'tn-ut-search',
   template: html,
-  providers: [UtSearchService],
+  providers: [UtSearchService, ActivitiesService],
 })
 export class UtSearchComponent {
   model = {NombreUT: '', IdProducto: undefined, IdSprint: undefined,
            IdProyecto: undefined, IdTipoUT: undefined, Estado: undefined};
   selectableFields = false;
+  uts = undefined;
 
-  constructor(breadCrumbService: BreadcrumbService,
+  constructor(breadcrumbService: BreadcrumbService,
               utSearchService: UtSearchService,
+              activitiesService: ActivitiesService,
               getProductosService: GetProductosService,
               getProyectosService: GetProyectosService,
               getSprintsProductoService: GetSprintsProductoService,
               getTiposUTProductoService: GetTiposUTProductoService,
-              notificationsService: NotificationsService
+              notificationsService: NotificationsService,
             ) {
     this._utSearchService = utSearchService;
-    this._breadCrumbService = BreadcrumbService;
+    this._activitiesService = activitiesService;
+    this._breadcrumbService = breadcrumbService;
     this._getProductosService = getProductosService;
     this._getProyectosService = getProyectosService;
     this._getSprintsService = getSprintsProductoService;
@@ -55,6 +59,7 @@ export class UtSearchComponent {
 
   ngOnInit() {
     this._getProductos();
+    this._getActividades();
     this._parseEstados();
   }
 
@@ -62,6 +67,7 @@ export class UtSearchComponent {
     this._utSearchSubscription = this._utSearchService.search(this.model).subscribe(
       (data) => {
         // TODO: Update table.
+        this.uts = data;
       },
       (error) => {
         this._notificationsService.error('Error al buscar', error);
@@ -210,12 +216,38 @@ export class UtSearchComponent {
     return utTypesIcons[tipo];
   };
 
+  getUtLink = (ut) => {
+    return `/uts/${ut.IdUT}`;
+  };
+
+  _getActividades() {
+    this._getActividadesSubscription = this._activitiesService.getActivities().subscribe(
+      (data) => {
+        data.map((actividad)=>{
+            actividades[actividad.IdActividad] = actividad.Nombre;
+        });
+      },
+      (error) =>
+        this._notificationService.error(
+          'No se han podido obtener las actividades',
+          error)
+    );
+  }
+
+  getActividad = (IdActividad) => {
+    return actividades[IdActividad];
+  };
+
   ngOnDestroy() {
     this._breadcrumbService.removeItems(1);
 
     this._utSearchSubscription &&
     !this._utSearchSubscription.closed &&
     this._utSearchSubscription.unsubscribe();
+
+    this._getActividadesSubscription &&
+    !this._getActividadesSubscription.closed &&
+    this._getActividadesSubscription.unsubscribe();
 
     this._getProductosSubscription &&
       !this._getProductosSubscription.closed &&

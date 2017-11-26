@@ -4,7 +4,7 @@
     reorderableColumns="true" [responsive]="true">
       <p-column [style]="{'width':'5%'}" field="Tipo" header="Tipo" [sortable]="true">
         <ng-template let-ut="rowData" pTemplate="body">
-          <span class="ui-button-icon" [ngClass]="getUtTypeIcon(ut)"></span>
+          <span class="ui-button-icon" [ngClass]="getUtTypeIcon(ut.IdTipoUT)"></span>
         </ng-template>
       </p-column>
       <p-column [style]="{'width':'10%'}" field="IdUT" header="Código" [sortable]="true">
@@ -16,7 +16,12 @@
       <p-column [style]="{'width':'20%'}" field="NombreProyecto" header="Proyecto" [sortable]="true"></p-column>
       <p-column [style]="{'width':'10%'}" field="NombreVersion" header="Sprint" [sortable]="true"></p-column>
       <p-column [style]="{'width':'25%'}" field="NombreUT" header="Nombre" [sortable]="true"></p-column>
-      <p-column [style]="{'width':'15%'}" field="ActividadActual" header="Actividad actual" [sortable]="true"></p-column>
+      <p-column [style]="{'width':'15%'}" field="ActividadActual" header="Actividad actual" [sortable]="true">
+        <ng-template let-ut="rowData" pTemplate="body">
+          <span [ngClass]="getActividad(ut.IdActividad)"></span>
+        </ng-template>
+      </p-column>
+      
     </p-dataTable>
   </div>
   <div class="vertical one tn-ut__fields">

@@ -142,7 +142,7 @@ export class UtSearchComponent {
             'No se han podido obtener los proyectos del producto', error)
       );
     } else {
-      this.productosDisponibles = proyectosCache[idProducto];
+      this.proyectosDisponibles = proyectosCache[idProducto];
     }
   }
 
@@ -150,7 +150,7 @@ export class UtSearchComponent {
     this.proyectosDisponibles = proyectos.map((proy) => {
       return {label: `${proy.Nombre}`, value: proy.IdProyecto};
     });
-    this.proyectosDisponibles.push({label: '<Sin Proyecto>', value: null});
+    this.proyectosDisponibles.push({label: '<Sin Proyecto>', value: 0});
     this.proyectosDisponibles.push({label: 'ALL', value: 'ALL'});
   }
 
@@ -176,9 +176,12 @@ export class UtSearchComponent {
 
   _parseSprints(sprints) {
     this.sprintsDisponibles = sprints.map((sprint) => {
-      return {label: sprint.Nombre, value: sprint.IdVersion};
+      if (sprint.IdVersion == -1) {
+        return {label: 'Backlog', value: 0}; // TODO: Refactor backend service.
+      } else {
+        return {label: sprint.Nombre, value: sprint.IdVersion};
+      }
     });
-    this.sprintsDisponibles.push({label: 'Backlog', value: null});
     this.sprintsDisponibles.push({label: 'ALL', value: 'ALL'});
   }
 

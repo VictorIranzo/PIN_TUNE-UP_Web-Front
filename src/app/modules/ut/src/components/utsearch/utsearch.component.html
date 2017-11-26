@@ -16,9 +16,9 @@
       <p-column [style]="{'width':'20%'}" field="NombreProyecto" header="Proyecto" [sortable]="true"></p-column>
       <p-column [style]="{'width':'10%'}" field="NombreVersion" header="Sprint" [sortable]="true"></p-column>
       <p-column [style]="{'width':'25%'}" field="NombreUT" header="Nombre" [sortable]="true"></p-column>
-      <p-column [style]="{'width':'15%'}" field="ActividadActual" header="Actividad actual" [sortable]="true">
+      <p-column [style]="{'width':'15%'}" field="IdActividad" header="Actividad actual" [sortable]="true">
         <ng-template let-ut="rowData" pTemplate="body">
-          <span [ngClass]="getActividad(ut.IdActividad)"></span>
+          <a>{{getActividad(ut.IdActividad)}}</a>
         </ng-template>
       </p-column>
       

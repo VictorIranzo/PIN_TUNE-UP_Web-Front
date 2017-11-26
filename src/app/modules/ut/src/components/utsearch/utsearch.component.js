@@ -232,6 +232,7 @@ export class UtSearchComponent {
           'No se han podido obtener las actividades',
           error)
     );
+    actividades[0]='Terminar';
   }
 
   getActividad = (IdActividad) => {

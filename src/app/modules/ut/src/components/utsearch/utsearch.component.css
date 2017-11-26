@@ -20,10 +20,22 @@
   @media(--gt-sm){
     padding: 0 0 20px 0;
   }
+}  
 
-}
-  
 .tn-ut__results{
   margin: var(--margin-medium);
 }
 
+.tn-search__utlist__searchbar{
+  padding: var(--padding-medium);
+  border-bottom: 0;
+}
+
+.tn_search__utlist__searchbar__icon{
+  margin-top: var(--margin-tiny);
+  margin-right:var(--margin-small);
+}
+
+.tn-search__utlist__searchbar__input{
+  width:100%;
+}

@@ -6,12 +6,12 @@
     </div>
       <p-dataTable [value]="uts" [rows]="20" [paginator]="true"  [pageLinks]="5" [sortMode]="multiple" [globalFilter]="gb"
       reorderableColumns="true" [responsive]="true">
-        <p-column [style]="{'width':'5%'}" field="Tipo" header="Tipo" [sortable]="true">
+        <p-column [style]="{'width':'5%', 'text-align':'center'}" field="Tipo" header="Tipo" [sortable]="true">
           <ng-template let-ut="rowData" pTemplate="body">
             <span class="ui-button-icon" [ngClass]="getUtTypeIcon(ut.IdTipoUT)"></span>
           </ng-template>
         </p-column>
-        <p-column [style]="{'width':'10%'}" field="IdUT" header="Código" [sortable]="true">
+        <p-column [style]="{'width':'10%', 'text-align':'center'}" field="IdUT" header="Código" [sortable]="true">
           <ng-template let-ut="rowData" pTemplate="body">
             <a class="ui-cell-data" [routerLink]="getUtLink(ut)">{{ut.IdUT}}</a>
           </ng-template>

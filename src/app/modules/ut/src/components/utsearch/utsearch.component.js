@@ -176,7 +176,7 @@ export class UtSearchComponent {
 
   _parseSprints(sprints) {
     this.sprintsDisponibles = sprints.map((sprint) => {
-      if (sprint.IdVersion == -1) {
+      if (sprint.IdVersion === -1) {
         return {label: 'Backlog', value: 0}; // TODO: Refactor backend service.
       } else {
         return {label: sprint.Nombre, value: sprint.IdVersion};

@@ -22,10 +22,6 @@ const utTypesIcons = {
   template: html,
   providers: [
     CreateUTService,
-    GetProductosService,
-    GetProyectosService,
-    GetSprintsProductoService,
-    GetTiposUTProductoService,
     GetWorkflowsService,
   ],
 })

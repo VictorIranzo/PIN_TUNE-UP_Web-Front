@@ -31,7 +31,7 @@ export class DetailsComponent {
               router: Router,
               detailsService: DetailsService,
               notificationsService: NotificationsService,
-               breadcrumbService:BreadcrumbService ) {
+              breadcrumbService:BreadcrumbService) {
         this._route = route;
         this._router = router;
         this._detailsService = detailsService;

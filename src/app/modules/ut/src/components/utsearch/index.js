@@ -1,2 +1,2 @@
 export * from './utsearch.component';
-//export * from './services';
+export * from './services';

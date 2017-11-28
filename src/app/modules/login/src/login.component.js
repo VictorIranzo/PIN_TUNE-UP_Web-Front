@@ -18,6 +18,7 @@ export class LoginComponent {
     idsitio: undefined,
   };
   sites = [];
+  loginInProgress = false;
   _returnUrl = '/home';
   @ViewChild('emailCtrl') emailCtrl;
   constructor(
@@ -66,7 +67,6 @@ export class LoginComponent {
     }
     this._getSitesSubscription = this._sitesService.get(this.model.email).subscribe(
       (data) => {
-        this._handleNoSites(data);
         data.length > 0 && this._parseSites(data);
       },
       (error) => {
@@ -74,13 +74,7 @@ export class LoginComponent {
       }
     );
   };
-  _handleNoSites(sites) {
-    sites.length === 0 &&
-      this._notificationsService.error(
-        'No hay sitios disponibles',
-        'No existen sitios asociados con este email.'
-      );
-  }
+
   _parseSites(sites) {
     this.sites = sites.map((site) => {
       return {label: site.Nombre, value: site.Id};
@@ -88,8 +82,10 @@ export class LoginComponent {
     this.model.idsitio = sites[0] && sites[0].Id;
   }
   login = () => {
+    this.loginInProgress = true;
     this._loginSubscription = this._loginService.login(this.model).subscribe(
       (data) => {
+        this.loginInProgress = false;
         let {Token, Agente, Configuracion} = data;
         Agente.IdSitio = this.model.idsitio;
         this._authService.setToken(Token);
@@ -98,10 +94,16 @@ export class LoginComponent {
         this._redirect();
       },
       (error) => {
-        this._notificationsService.error('Error de login', error);
+        this.loginInProgress = false;
+        this._handleInvalidLogin();
       }
     );
   };
+  _handleInvalidLogin() {
+    this._notificationsService.error('Error de login',
+      'El email o la contraseña es inválido'
+    );
+  }
   setIdSitio = (idSitio) => {
     this.model.idsitio = idSitio;
   };

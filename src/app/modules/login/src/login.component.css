@@ -53,3 +53,6 @@
 .tn-login-form--submitbtn{
   height:100%;
 }
+.tn-login-form--loadingbar{
+  width: 100%;
+}

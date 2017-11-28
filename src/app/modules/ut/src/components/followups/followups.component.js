@@ -11,6 +11,8 @@ import './followups.component.css';
 })
 export class FollowupsComponent {
   @Input() utId;
+  seguimientoSelected;
+
   seguimientos = [];
   constructor(followupsService: FollowupsService, agentService: AgentService) {
     this._followupsService = followupsService;
@@ -33,10 +35,10 @@ export class FollowupsComponent {
     });
   }
   get idSeguimiento() {
-    return this.seguimientos[0].IdSeguimiento;
+    return this.seguimientoSelected.IdSeguimiento;
   }
   get seguimiento() {
-    return this.seguimientos[0];
+    return this.seguimientoSelected;
   }
   puedeIniciar = () => {
     return this.seguimiento && this.seguimiento.Estado === 'TO DO';

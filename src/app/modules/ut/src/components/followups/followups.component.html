@@ -8,7 +8,7 @@
     <button pButton label="Asignar Agente" (click)="asignarAgente()" icon="fa fa-user-plus" [disabled]="!puedeAsignarAgente()"></button>
     <button pButton label="Trabajar en Paralelo" (click)="trabajarEnParalelo()" icon="fa fa-users" [disabled]="true"></button>
   </div>
-  <div class="horizontal five tn-ut__followups__controls" *ngIf="assigningAgent">
+  <div class="horizontal five tn-ut__followups__controls" *ngIf="assigningAgent && puedeAsignarAgente()">
     <p-dropdown [options]="agentesDisponibles" [(ngModel)]="selectedAgent" filter="true" [style]="{'width':'150px'}"></p-dropdown>        
     <button pButton label="Cancelar" (click)="cancelarAsignar()"></button>
     <button pButton label="Aceptar" (click)="aceptarAsignar()" [disabled]="selectedAgent === null"></button>

@@ -120,10 +120,22 @@ export class FollowupsComponent {
     this._getAgentes();
   }
   aceptarAsignar = () => {
-    // TODO
+    this.assigningAgent = false;
+    this._followupsService.asignarAgente(this.seguimiento.IdSeguimiento, this.selectedAgent).subscribe(
+      (data) => {
+        // TODO: This can be replace to the invocation of getFollowUps
+        this.seguimiento.IdAgente = this.selectedAgent;
+        this.seguimiento.NombreAgente = this.agentesDisponibles.find((agente) =>{
+          return agente.value === this.selectedAgent;
+        }).label;
+       },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
   cancelarAsignar = () => {
-    // TODO 
+    this.assigningAgent = false;
   }
   trabajarEnParalelo = () => {
     // TODO

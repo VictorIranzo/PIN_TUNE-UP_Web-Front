@@ -10,4 +10,7 @@ export class AuthService {
   setToken(token) {
     sessionStorage.setItem(TOKEN_KEY, token);
   }
+  clear() {
+    sessionStorage.getItem(TOKEN_KEY) && sessionStorage.removeItem(TOKEN_KEY);
+  }
 }

@@ -1,6 +1,6 @@
 import {RouterModule} from '@angular/router';
 import {NgModule} from '@angular/core';
-import {SceneComponent} from './components';
+import {SceneComponent, LogoutComponent} from './components';
 import {AuthGuard} from './routing';
 
 @NgModule({
@@ -15,18 +15,22 @@ import {AuthGuard} from './routing';
           {
             path: 'home',
             loadChildren:
-            `src/app/modules/home/dist/tune-up.home.umd.js#home#HomeModule`,
+              `src/app/modules/home/dist/tune-up.home.umd.js#home#HomeModule`,
           }, {
             path: 'uts',
             loadChildren:
-            'src/app/modules/ut/dist/tune-up.ut.umd.js#ut#UtModule',
+              'src/app/modules/ut/dist/tune-up.ut.umd.js#ut#UtModule',
           },
         ],
       },
       {
         path: 'login',
         loadChildren:
-        'src/app/modules/login/dist/tune-up.login.umd.js#login#LoginModule',
+          'src/app/modules/login/dist/tune-up.login.umd.js#login#LoginModule',
+      },
+      {
+        path: 'logout',
+        component: LogoutComponent,
       },
       {
         path: '**',

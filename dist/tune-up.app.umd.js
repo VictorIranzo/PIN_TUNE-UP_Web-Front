@@ -305,6 +305,11 @@ var AuthService = (_dec$5 = core_1.Injectable(), _dec$5(_class$5 = function () {
     value: function setToken(token) {
       sessionStorage.setItem(TOKEN_KEY, token);
     }
+  }, {
+    key: 'clear',
+    value: function clear() {
+      sessionStorage.getItem(TOKEN_KEY) && sessionStorage.removeItem(TOKEN_KEY);
+    }
   }]);
   return AuthService;
 }()) || _class$5);
@@ -324,6 +329,11 @@ var AgentService = (_dec$6 = core_1.Injectable(), _dec$6(_class$6 = function () 
     value: function getFromStorage() {
       var agent = sessionStorage.getItem('tnAgent') ? JSON.parse(sessionStorage.getItem('tnAgent')) : undefined;
       return agent;
+    }
+  }, {
+    key: 'clear',
+    value: function clear() {
+      sessionStorage.getItem('tnAgent') && sessionStorage.removeItem('tnAgent');
     }
   }, {
     key: 'saveToStorage',
@@ -480,6 +490,11 @@ var menuItems = [{
   path: '/uts/add',
   text: 'Crear UT',
   icon: 'fa fa-plus-circle',
+  adminOnly: false
+}, {
+  path: '/logout',
+  text: 'Logout',
+  icon: 'fa fa-sign-out',
   adminOnly: false
 }];
 
@@ -674,7 +689,44 @@ var MenuItemComponent = (_dec$11 = core_1.Component({
 var _dec$12;
 var _class$12;
 
-var AuthGuard = (_dec$12 = core_1.Injectable(), _dec$12(_class$12 = function () {
+var LogoutComponent = (_dec$12 = core_1.Component({
+  selector: 'tn-logout',
+  template: ''
+}), _dec$12(_class$12 = function () {
+  function LogoutComponent(router$$1, agentService, authService) {
+    classCallCheck(this, LogoutComponent);
+
+    this._router = router$$1;
+    this._agentService = agentService;
+    this._authService = authService;
+    this._returnUrl = '/login';
+  }
+
+  createClass(LogoutComponent, [{
+    key: 'ngOnInit',
+    value: function ngOnInit() {
+      this._clearStorage();
+      this._goToLogin();
+    }
+  }, {
+    key: '_clearStorage',
+    value: function _clearStorage() {
+      this._agentService.clear();
+      this._authService.clear();
+    }
+  }, {
+    key: '_goToLogin',
+    value: function _goToLogin() {
+      this._router.navigateByUrl(this._returnUrl);
+    }
+  }]);
+  return LogoutComponent;
+}()) || _class$12);Reflect.defineMetadata('design:paramtypes', [router.Router, AgentService, AuthService], LogoutComponent);
+
+var _dec$13;
+var _class$13;
+
+var AuthGuard = (_dec$13 = core_1.Injectable(), _dec$13(_class$13 = function () {
   function AuthGuard(router$$1, authService) {
     classCallCheck(this, AuthGuard);
 
@@ -699,7 +751,7 @@ var AuthGuard = (_dec$12 = core_1.Injectable(), _dec$12(_class$12 = function () 
     }
   }]);
   return AuthGuard;
-}()) || _class$12);
+}()) || _class$13);
 Reflect.defineMetadata('design:paramtypes', [router.Router, AuthService], AuthGuard);
 
 var _dec$1;
@@ -722,6 +774,9 @@ var AppRoutingModule = (_dec$1 = core_1.NgModule({
     path: 'login',
     loadChildren: 'src/app/modules/login/dist/tune-up.login.umd.js#login#LoginModule'
   }, {
+    path: 'logout',
+    component: LogoutComponent
+  }, {
     path: '**',
     redirectTo: 'home',
     pathMatch: 'full'
@@ -739,20 +794,20 @@ var html$5 = "<tn-notifications></tn-notifications>\r\n<router-outlet></router-o
 
 __$styleInject(".none{flex:none}.one{flex:1}.two{flex:2}.three{flex:3}.four{flex:4}.five{flex:5}.six{flex:6}.seven{flex:7}.eight{flex:8}.nine{flex:9}.ten{flex:10}.eleven{flex:11}.twelve{flex:12}.flex,.horizontal,.vertical{display:flex}.horizontal{flex-direction:row}.vertical,.vertical-fill{flex-direction:column}.vertical-fill,fill{height:100%}.wrap{flex-wrap:wrap}body{margin:0;min-height:100%;padding:0;overflow-x:hidden;overflow-y:auto;font-family:Roboto,Trebuchet MS,Arial,Helvetica,sans-serif;font-weight:400;color:#404c51;-webkit-font-smoothing:antialiased;font-size:1em}a{text-decoration-line:none!important}",undefined);
 
-var _dec$13;
-var _class$13;
-
-var AppComponent = (_dec$13 = core_1.Component({
-  selector: 'tn-app',
-  template: html$5
-}), _dec$13(_class$13 = function AppComponent() {
-  classCallCheck(this, AppComponent);
-}) || _class$13);
-
 var _dec$14;
 var _class$14;
 
-var ResponseInterceptor = (_dec$14 = core_1.Injectable(), _dec$14(_class$14 = function () {
+var AppComponent = (_dec$14 = core_1.Component({
+  selector: 'tn-app',
+  template: html$5
+}), _dec$14(_class$14 = function AppComponent() {
+  classCallCheck(this, AppComponent);
+}) || _class$14);
+
+var _dec$15;
+var _class$15;
+
+var ResponseInterceptor = (_dec$15 = core_1.Injectable(), _dec$15(_class$15 = function () {
   function ResponseInterceptor() {
     classCallCheck(this, ResponseInterceptor);
   }
@@ -793,7 +848,7 @@ var ResponseInterceptor = (_dec$14 = core_1.Injectable(), _dec$14(_class$14 = fu
     }
   }]);
   return ResponseInterceptor;
-}()) || _class$14);
+}()) || _class$15);
 
 var ResponseInterceptorProvider = {
   provide: http.HTTP_INTERCEPTORS,
@@ -801,10 +856,10 @@ var ResponseInterceptorProvider = {
   multi: true
 };
 
-var _dec$15;
-var _class$15;
+var _dec$16;
+var _class$16;
 
-var TokenInterceptor = (_dec$15 = core_1.Injectable(), _dec$15(_class$15 = function () {
+var TokenInterceptor = (_dec$16 = core_1.Injectable(), _dec$16(_class$16 = function () {
   function TokenInterceptor(authService) {
     classCallCheck(this, TokenInterceptor);
 
@@ -826,7 +881,7 @@ var TokenInterceptor = (_dec$15 = core_1.Injectable(), _dec$15(_class$15 = funct
     }
   }]);
   return TokenInterceptor;
-}()) || _class$15);
+}()) || _class$16);
 Reflect.defineMetadata('design:paramtypes', [AuthService], TokenInterceptor);
 
 var TokenInterceptorProvider = {
@@ -3973,12 +4028,12 @@ var ConfigService = function () {
 
 var configService = new ConfigService();
 
-var _dec$16;
-var _class$16;
+var _dec$17;
+var _class$17;
 
 //import {BASE_URL} from './baseurl';
 
-var APIInterceptor = (_dec$16 = core_1.Injectable(), _dec$16(_class$16 = function () {
+var APIInterceptor = (_dec$17 = core_1.Injectable(), _dec$17(_class$17 = function () {
     function APIInterceptor() {
         classCallCheck$1(this, APIInterceptor);
     }
@@ -3991,7 +4046,7 @@ var APIInterceptor = (_dec$16 = core_1.Injectable(), _dec$16(_class$16 = functio
         }
     }]);
     return APIInterceptor;
-}()) || _class$16);
+}()) || _class$17);
 
 var APIInterceptorProvider = {
     provide: http.HTTP_INTERCEPTORS,
@@ -4101,7 +4156,7 @@ var PrimengModule = (_dec$3$1 = core_1.NgModule({
     classCallCheck$1(this, PrimengModule);
 }) || _class$3$1);
 
-var html$6 = "<ng-container *ngIf=\"control.dirty && !control.valid\">\r\n  <p *ngFor=\"let error of getErrors()\" class=\"tn-validation--error\">\r\n    {{error}}\r\n  </p>\r\n</ng-container>\r\n";
+var html$6 = "<ng-container *ngIf=\"control.dirty && control.touched && !control.valid\">\n  <p *ngFor=\"let error of getErrors()\" class=\"tn-validation--error\">\n    {{error}}\n  </p>\n</ng-container>\n";
 
 __$styleInject$1(".tn-validation--error{color:red;font-size:12px;font-size:.75rem;margin-bottom:8px}", undefined);
 
@@ -10527,7 +10582,7 @@ var _class;
 
 var AppModule = (_dec = core_1.NgModule({
   imports: [TuneUpCoreModule, platformBrowser.BrowserModule, animations.BrowserAnimationsModule, http.HttpClientModule, AppRoutingModule],
-  declarations: [AppComponent, SceneComponent, AppbarComponent, MenuComponent, ContentComponent, MenuItemComponent],
+  declarations: [AppComponent, SceneComponent, AppbarComponent, MenuComponent, ContentComponent, MenuItemComponent, LogoutComponent],
   providers: [ModuleLoaderProvider, APIInterceptorProvider, TokenInterceptorProvider, ResponseInterceptorProvider, AuthService, AgentService, AboutService, NotificationsService, BreadcrumbService],
   bootstrap: [AppComponent]
 }), _dec(_class = function AppModule() {

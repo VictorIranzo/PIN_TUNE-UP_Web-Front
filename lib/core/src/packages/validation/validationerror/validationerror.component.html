@@ -1,4 +1,4 @@
-<ng-container *ngIf="control.dirty && !control.valid">
+<ng-container *ngIf="control.dirty && control.touched && !control.valid">
   <p *ngFor="let error of getErrors()" class="tn-validation--error">
     {{error}}
   </p>

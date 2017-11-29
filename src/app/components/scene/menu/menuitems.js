@@ -17,4 +17,10 @@ export const menuItems = [
     icon: 'fa fa-plus-circle',
     adminOnly: false,
   },
+  {
+    path: '/logout',
+    text: 'Logout',
+    icon: 'fa fa-sign-out',
+    adminOnly: false,
+  },
 ];

@@ -18,6 +18,9 @@ export class AgentService {
       : undefined;
     return agent;
   }
+  clear() {
+    sessionStorage.getItem('tnAgent') && sessionStorage.removeItem('tnAgent');
+  }
   saveToStorage(agent) {
     sessionStorage.setItem('tnAgent', JSON.stringify(agent));
   }

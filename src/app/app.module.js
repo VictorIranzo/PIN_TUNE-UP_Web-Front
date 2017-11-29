@@ -23,6 +23,7 @@ import {
   MenuComponent,
   ContentComponent,
   MenuItemComponent,
+  LogoutComponent,
 } from './components';
 
 @NgModule({
@@ -40,6 +41,7 @@ import {
     MenuComponent,
     ContentComponent,
     MenuItemComponent,
+    LogoutComponent,
   ],
   providers: [
     ModuleLoaderProvider,

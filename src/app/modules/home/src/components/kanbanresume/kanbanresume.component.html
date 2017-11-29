@@ -1,6 +1,5 @@
-<!-- TODO: Change color on click -->
 <div class ="horizontal">
-    <p-dataTable [value]="kanbanActivities" [responsive]="true">
+    <p-dataTable [value]="kanbanActivities" [responsive]="true" selectionMode="single">
         <p-column header="Actividad">            
                 <ng-template let-activity="rowData" let-i="rowIndex" pTemplate="body">
                     <span (click)="filterKanbanActivies(activity.IdActividad, 'ALL')" class="tn-home-kanban_resume--span">{{activity.NombreActividad}}</span>

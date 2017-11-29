@@ -33,12 +33,13 @@ export class HomeComponent {
         )
     );
   }
-  filterUts = (idActivity, status) => {
+  filterUts = (idActivity/* , status*/) => {
     this.utsToShow = this.allUts.filter(
       (ut) =>
-        (idActivity === 'ALL' || ut.IdActividad === idActivity) &&
-        (status === 'ALL' || ut.Estado === status ||
-          (ut.Estado === 'ACTIVE' && status === 'DOING'))
+        idActivity === 'ALL' || ut.IdActividad === idActivity
+        // &&
+        // (status === 'ALL' || ut.Estado === status ||
+        //   (ut.Estado === 'ACTIVE' && status === 'DOING'))
     );
   };
   ngOnDestroy() {

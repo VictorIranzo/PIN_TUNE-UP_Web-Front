@@ -10,7 +10,7 @@
   </div>
   <div class="horizontal tn-ut__followups__controls" *ngIf="assigningAgent && puedeAsignarAgente()">
     <p-dropdown class="two tn-ut__followups__agentes" [options]="agentesDisponibles" [(ngModel)]="selectedAgent" filter="true" [style]="{'width':'100%'}"></p-dropdown>        
-    <button pButton label="Aceptar" (click)="aceptarAsignar()" [disabled]="selectedAgent === null"></button>
+    <button pButton label="Aceptar" (click)="aceptarAsignar()"></button>
     <button pButton label="Cancelar" (click)="cancelarAsignar()"></button>
     <div class="five"></div>
   </div>

@@ -1,0 +1,11 @@
+@import 'styleguide';
+
+.tn-home__form{
+  padding: var(--padding-medium);
+}
+.tn-home__form__section{
+  padding: var(--padding-small);
+}
+.tn-home__form__dropdown{
+  width: 100%;
+}

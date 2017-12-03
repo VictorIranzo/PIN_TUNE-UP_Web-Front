@@ -1,3 +1,23 @@
-<div class ="horizontal">
-    
-</div>
+<form class="tn-home__form horizontal">
+  <div class="vertical two tn-home__form__section">
+    <label>Agente</label>
+    <p-dropdown [options]="agentes" optionLabel="name" [(ngModel)]="filtro.IdAgente" [style]="{'width':'100%'}" filter="true" name="agente"></p-dropdown>
+  </div>
+  <div class="vertical two tn-home__form__section">
+    <label>Producto</label>
+    <p-dropdown [options]="productos" optionLabel="name" [(ngModel)]="filtro.IdProducto" [style]="{'width':'100%'}" filter="true" name="producto"></p-dropdown>
+  </div>
+  <div class="vertical two tn-home__form__section">
+    <label>Sprint</label>
+    <p-dropdown [options]="sprints" optionLabel="name" [(ngModel)]="filtro.IdVersion" [style]="{'width':'100%'}" filter="true" name="sprint"></p-dropdown>
+  </div>
+  <div class="vertical two tn-home__form__section">
+    <label>Proyecto</label>
+    <p-dropdown [options]="proyectos" optionLabel="name" [(ngModel)]="filtro.IdProyecto" [style]="{'width':'100%'}" filter="true" name="proyecto"></p-dropdown>
+  </div>
+  <div class="vertical tn-home__form__section">
+    <label>Ir a...</label>
+    <input type="text" pInputText [(ngModel)]="filtro.IdUT" name="IdUT"/>
+  </div>
+  <button pButton type="button" label="Ir" [disabled]="isIrAEmpty()"></button>  
+</form>

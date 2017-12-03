@@ -19,7 +19,7 @@ export const menuItems = [
   },
   {
     path: '/logout',
-    text: 'Logout',
+    text: 'Cerrar sesión',
     icon: 'fa fa-sign-out',
     adminOnly: false,
   },

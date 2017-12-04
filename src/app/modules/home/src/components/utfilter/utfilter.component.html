@@ -5,19 +5,19 @@
   </div>
   <div class="vertical two tn-home__form__section">
     <label>Producto</label>
-    <p-dropdown [options]="productos" optionLabel="name" [(ngModel)]="filtro.IdProducto" [style]="{'width':'100%'}" filter="true" name="producto"></p-dropdown>
+    <p-dropdown [options]="productos" optionLabel="name" [(ngModel)]="filtro.IdProducto" [style]="{'width':'100%'}" filter="true" name="producto" (onChange)="onProductChanged($event.value)"></p-dropdown>
   </div>
   <div class="vertical two tn-home__form__section">
     <label>Sprint</label>
-    <p-dropdown [options]="sprints" optionLabel="name" [(ngModel)]="filtro.IdVersion" [style]="{'width':'100%'}" filter="true" name="sprint"></p-dropdown>
+    <p-dropdown [options]="sprints" optionLabel="name" [(ngModel)]="filtro.IdVersion" [disabled]="noProductoSelected" [style]="{'width':'100%'}" filter="true" name="sprint"></p-dropdown>
   </div>
   <div class="vertical two tn-home__form__section">
     <label>Proyecto</label>
-    <p-dropdown [options]="proyectos" optionLabel="name" [(ngModel)]="filtro.IdProyecto" [style]="{'width':'100%'}" filter="true" name="proyecto"></p-dropdown>
+    <p-dropdown [options]="proyectos" optionLabel="name" [(ngModel)]="filtro.IdProyecto" [disabled]="noProductoSelected" [style]="{'width':'100%'}" filter="true" name="proyecto"></p-dropdown>
   </div>
-  <div class="vertical tn-home__form__section">
+  <div class="vertical one tn-home__form__section">
     <label>Ir a...</label>
-    <input type="text" pInputText [(ngModel)]="filtro.IdUT" name="IdUT"/>
+    <input type="number" pInputText [(ngModel)]="filtro.IdUT" name="IdUT"/>
   </div>
-  <button pButton type="button" label="Ir" [disabled]="isIrAEmpty()"></button>  
+  <button pButton type="button" label="Ir" [disabled]="isIrAEmpty()" (click)="irAUT()"></button>  
 </form>

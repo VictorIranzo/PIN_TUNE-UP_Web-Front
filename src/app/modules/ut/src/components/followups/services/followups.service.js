@@ -24,4 +24,9 @@ export class FollowupsService {
       `FinalizarSeguimiento?idSeguimiento=${idSeguimiento}&adelante=${adelante}&avisarEmail=false`
     );
   }
+  asignarAgente(idSeguimiento, idAgente) {
+    return this._http.post(
+      `Seguimientos/${idSeguimiento}/AsignarAgente/${idAgente}`
+    );
+  }
 }

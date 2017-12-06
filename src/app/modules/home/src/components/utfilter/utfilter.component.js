@@ -22,17 +22,10 @@ const agentesCache = [];
 })
 export class UTFilterComponent {
   @Input() filterUts;
-
-  filtro = {
-      IdUT: '',
-      IdAgente: 'ALL',
-      IdProducto: 'ALL',
-      IdVersion: 'ALL',
-      IdProyecto: 'ALL',
-  }
+  @Input() filtro;
 
   noProductoSelected = true;
-
+  idUT = '';
   constructor(
     getColaboradoresService : GetColaboradoresService,
     getProductosService : GetProductosService,
@@ -58,6 +51,7 @@ export class UTFilterComponent {
   ngOnInit() {
     this._getProductos();
     this._getColaboradoresSitio(this._agentService.getAgentId());
+    this._seleccionarValoresPorDefecto();
   }
 
   _getProductos() {
@@ -177,34 +171,29 @@ export class UTFilterComponent {
     this.filtro.IdAgente = 'ALL';
     this.filtro.IdProyecto = 'ALL';
     this.filtro.IdVersion = 'ALL';
-    this.filtro.idUT = '';
   }
 
   onProductChanged(idNuevoProducto) {
     if (idNuevoProducto != 'ALL') {
       this.noProductoSelected = false;
-      this.filterUts('ALL', idNuevoProducto, 'ALL', 'ALL');
       this._getDatosProducto(idNuevoProducto);
     } else {
       this.noProductoSelected = true;
-      this._seleccionarValoresPorDefecto();
     }
+    this._seleccionarValoresPorDefecto();
+    this.filterUts();
   }
 
   onFilterChange() {
-    this.filterUts(this.filtro.IdAgente,
-              this.filtro.IdProducto,
-              this.filtro.IdVersion,
-              this.filtro.IdProyecto
-            );
+    this.filterUts();
   }
 
   isIrAEmpty() {
-    return this.filtro.idUT === null || this.filtro.IdUT <= 0;
+    return this.idUT === null || this.IdUT <= 0;
   }
 
   irAUT() {
-    this._router.navigateByUrl(`/uts/${this.filtro.IdUT}`);
+    this._router.navigateByUrl(`/uts/${this.IdUT}`);
   }
 
   ngOnDestroy() {

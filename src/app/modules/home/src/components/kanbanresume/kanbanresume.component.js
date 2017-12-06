@@ -13,6 +13,7 @@ export class KanbanResumeComponent {
   kanbanActivities = [];
   selectedActivity = undefined;
   @Input() filterUts;
+  @Input() filtro;
   constructor(
     activitiesService: KanbanActivitiesService,
     notificationsService: NotificationsService
@@ -35,7 +36,8 @@ export class KanbanResumeComponent {
   }
   filterKanbanActivies(idActivity = 'ALL', status = 'ALL') {
     if (idActivity == -1) idActivity = 'ALL';
-    this.filterUts(idActivity, status);
+    this.filtro.IdActividad = idActivity;
+    this.filterUts();
   }
   ngOnDestroy() {
     this._getActivitiesSubscription &&

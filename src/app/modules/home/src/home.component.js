@@ -42,6 +42,20 @@ export class HomeComponent {
         //   (ut.Estado === 'ACTIVE' && status === 'DOING'))
     );
   };
+  filterUtsKanbanList = (IdAgente, IdProducto, IdVersion, IdProyecto) => {
+    this.utsToShow = this.allUts.filter(
+      (ut) => {
+        let isAgente = IdAgente === 'ALL' || ut.IdAgente == IdAgente;
+        let isProducto = IdProducto === 'ALL' || ut.IdProducto === IdProducto;
+        let isVersion = IdVersion === 'ALL' || ut.IdVersion === IdVersion;
+        let isProyecto = IdProyecto === 'ALL' || ut.IdProyecto === IdProyecto;
+
+        return isAgente && isProducto && isVersion && isProyecto;
+      }
+    );
+  }
+
+
   ngOnDestroy() {
     this._getUtsSubscription &&
       !this._getUtsSubscription.closed &&

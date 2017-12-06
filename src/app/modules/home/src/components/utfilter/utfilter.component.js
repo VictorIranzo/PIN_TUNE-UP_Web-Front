@@ -1,8 +1,8 @@
 import {Component, Input} from '@angular/core';
 import {Router} from '@angular/router';
 import {NotificationsService} from '@tune-up/core';
+import {AgentService} from '@tune-up/app';
 import {GetColaboradoresService, GetProductosService, GetProyectosService, GetSprintsProductoService} from './services';
-import {AgentService} from '../../../../../services';
 import html from './utfilter.component.html';
 import './utfilter.component.css';
 
@@ -94,7 +94,7 @@ export class UTFilterComponent {
 
   _parseAgentes(agentes) {
     let agentesMap = agentes.map((ag) => {
-        return {label: `${ag.Nombre}`, value: ag.IdAgente};
+        return {label: `${ag.Nombre}`, value: ag.Id};
       }
     );
     agentesMap.push({label: 'ALL', value: 'ALL'});
@@ -175,7 +175,6 @@ export class UTFilterComponent {
 
   _seleccionarValoresPorDefecto() {
     this.filtro.IdAgente = 'ALL';
-    this.filtro.idProducto = 'ALL';
     this.filtro.IdProyecto = 'ALL';
     this.filtro.IdVersion = 'ALL';
     this.filtro.idUT = '';
@@ -184,11 +183,20 @@ export class UTFilterComponent {
   onProductChanged(idNuevoProducto) {
     if (idNuevoProducto != 'ALL') {
       this.noProductoSelected = false;
+      this.filterUts('ALL', idNuevoProducto, 'ALL', 'ALL');
       this._getDatosProducto(idNuevoProducto);
     } else {
       this.noProductoSelected = true;
       this._seleccionarValoresPorDefecto();
     }
+  }
+
+  onFilterChange() {
+    this.filterUts(this.filtro.IdAgente,
+              this.filtro.IdProducto,
+              this.filtro.IdVersion,
+              this.filtro.IdProyecto
+            );
   }
 
   isIrAEmpty() {

@@ -17,7 +17,19 @@
     top: 85px;
   }
 }
+.tn-home__utfilter{
+  margin: var(--margin-medium);
+  @media(--gt-sm){
+    height: fit-content;
+    position: sticky;
+    top: 85px;
+  }
+}
+
 .tn-home{
+  display: flex;
+}
+.tn-home__kanban{
   display: flex;
   flex-direction: column;
   @media(--gt-sm){

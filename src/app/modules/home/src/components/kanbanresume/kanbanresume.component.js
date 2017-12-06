@@ -34,7 +34,7 @@ export class KanbanResumeComponent {
         )
     );
   }
-  filterKanbanActivies(idActivity = 'ALL', status = 'ALL') {
+  filterKanbanActivies(idActivity = 'ALL') {
     if (idActivity == -1) idActivity = 'ALL';
     this.filtro.IdActividad = idActivity;
     this.filterUts();

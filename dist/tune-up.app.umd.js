@@ -25,7 +25,7 @@ function __$styleInject(css, returnValue) {
 
 var core_1__default = 'default' in core_1 ? core_1['default'] : core_1;
 
-var html = "<div class=\"vertical\">\r\n  <tn-appbar class=\"tn-scene-appbar\"></tn-appbar>\r\n  <div class=\"horizontal\">\r\n    <tn-menu class=\"tn-scene-menu\"></tn-menu>\r\n    <tn-content class=\"tn-scene-content\"></tn-content>\r\n  </div>\r\n</div>\r\n";
+var html = "<div class=\"vertical\">\n  <tn-appbar class=\"tn-scene-appbar\"></tn-appbar>\n  <div class=\"horizontal\">\n    <tn-menu class=\"tn-scene-menu\"></tn-menu>\n    <tn-content class=\"tn-scene-content\"></tn-content>\n  </div>\n</div>\n";
 
 __$styleInject(".tn-scene-appbar{background-color:#20272a;display:block;padding:0;height:70px;box-sizing:border-box;position:fixed;top:0;left:0;width:100%;z-index:2;box-shadow:0 2px 5px 0 rgba(0,0,0,.3)}.tn-scene-menu{position:fixed;left:0;top:70px;height:100%;background-color:#fff;overflow:hidden;z-index:1;text-align:center}@media (min-width:960px){.tn-scene-menu{width:270px;box-shadow:0 0 5px 0 rgba(0,0,0,.3)}}.tn-scene-content{padding-top:70px;background-color:#fff;width:100%;height:100%}@media (min-width:960px){.tn-scene-content{margin-left:270px}}",undefined);
 
@@ -221,6 +221,10 @@ var SceneService = (_dec$3 = core_1.Injectable(), _dec$3(_class$3 = function () 
     value: function open() {
       if (this._sidenav) {
         this._sidenav.visible = true;
+        var mask = document.getElementsByClassName('ui-sidebar-mask')[0];
+        mask && (mask.hidden = true);
+        var sidebar = document.getElementsByClassName('ui-sidebar')[0];
+        sidebar && (sidebar.style.padding = '0px');
       }
     }
   }, {
@@ -395,12 +399,105 @@ var _dec$8;
 var _class$8;
 
 var BreadcrumbService = (_dec$8 = core_1.Injectable(), _dec$8(_class$8 = function () {
-  function BreadcrumbService() {
+  function BreadcrumbService(activatedRoute, router$$1) {
     classCallCheck(this, BreadcrumbService);
     this._items = [];
+    this.params = {};
+
+    this._activatedRoute = activatedRoute;
+    this._router = router$$1;
+    this._subscribeToRouteChanges();
   }
 
   createClass(BreadcrumbService, [{
+    key: '_subscribeToRouteChanges',
+    value: function _subscribeToRouteChanges() {
+      var _this = this;
+
+      this._router.events.subscribe(function (event) {
+        if (event instanceof router.NavigationEnd) {
+          var root = _this._activatedRoute.root;
+          _this._items = _this._getItemsFromRoute(root);
+        }
+      });
+    }
+  }, {
+    key: '_getItemsFromRoute',
+    value: function _getItemsFromRoute(route) {
+      var _this2 = this;
+
+      var url = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+      var breadcrumbs = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
+
+      var ROUTE_DATA_BREADCRUMB = 'breadcrumb';
+      var children = route.children;
+      if (children.length === 0) {
+        return breadcrumbs;
+      }
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        var _loop = function _loop() {
+          var child = _step.value;
+
+          if (child.outlet !== router.PRIMARY_OUTLET) {
+            return {
+              v: void 0
+            };
+          }
+          if (!child.snapshot.data.hasOwnProperty(ROUTE_DATA_BREADCRUMB)) {
+            return {
+              v: _this2._getItemsFromRoute(child, url)
+            };
+          }
+          var routeURL = child.snapshot.url.map(function (segment) {
+            return segment.path;
+          }).join('/');
+          url += '/' + routeURL;
+          if (url.endsWith('/')) {
+            url = url.substring(0, url.length - 1);
+          }
+          var label = child.snapshot.data[ROUTE_DATA_BREADCRUMB];
+          label = label.startsWith('@') ? child.snapshot.params[label.slice(1)] : label;
+          var breadcrumb = {
+            label: label,
+            routerLink: url
+          };
+          if (!breadcrumbs.filter(function (bc) {
+            return JSON.stringify(breadcrumb) === JSON.stringify(bc);
+          })[0]) {
+            breadcrumbs.push(breadcrumb);
+          }
+          return {
+            v: _this2._getItemsFromRoute(child, url, breadcrumbs)
+          };
+        };
+
+        for (var _iterator = children[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var _ret = _loop();
+
+          if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator.return) {
+            _iterator.return();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+
+      return breadcrumbs;
+    }
+  }, {
     key: 'addItems',
     value: function addItems(menuItems) {
       menuItems = Array.isArray(menuItems) ? menuItems : [menuItems];
@@ -422,8 +519,9 @@ var BreadcrumbService = (_dec$8 = core_1.Injectable(), _dec$8(_class$8 = functio
   }]);
   return BreadcrumbService;
 }()) || _class$8);
+Reflect.defineMetadata('design:paramtypes', [router.ActivatedRoute, router.Router], BreadcrumbService);
 
-var html$1 = "<!-- TODO: make functions to manage visibility, dont call the service directly -->\r\n<div class=\"horizontal tn-scene-appbar-wrapper\">\r\n    <div *ngIf=\"this._sceneService.isDocked()\" class=\"none tn-scene-appbar--topMenu\">TUNE-UP</div>\r\n    <div class =\"horizontal ten\">\r\n      <div class=\"tn-scene-appbar--button\" *ngIf=\"!this._sceneService.isDocked()\" >\r\n        <i *ngIf=\"this._sceneService.isVisible()\" (click)=\"onHideMenuClick()\" class=\"fa fa-2x fa-caret-square-o-left\"></i>                                \r\n        <i *ngIf=\"!this._sceneService.isVisible()\" (click)=\"onShowMenuClick()\" class=\"fa fa-2x fa-caret-square-o-right\"></i>                    \r\n      </div>\r\n      <p-breadcrumb class=\"tn-scene-appbar--breadcrumb\" [model]=\"breadcrumbItems()\" [home]=\"breadcrumbHome\"></p-breadcrumb>    \r\n    </div>\r\n    <div class = \"horizontal one\">\r\n        <i class=\"tn-scene-appbar--button fa fa-2x fa-list\"></i>        \r\n    </div>\r\n</div>\r\n";
+var html$1 = "<!-- TODO: make functions to manage visibility, dont call the service directly -->\n<div class=\"horizontal tn-scene-appbar-wrapper\">\n    <div *ngIf=\"this._sceneService.isDocked()\" class=\"none tn-scene-appbar--topMenu\">TUNE-UP</div>\n    <div class =\"horizontal ten\">\n      <div class=\"tn-scene-appbar--button\" *ngIf=\"!this._sceneService.isDocked()\" >\n        <i *ngIf=\"this._sceneService.isVisible()\" (click)=\"onHideMenuClick()\" class=\"fa fa-2x fa-caret-square-o-left\"></i>                                \n        <i *ngIf=\"!this._sceneService.isVisible()\" (click)=\"onShowMenuClick()\" class=\"fa fa-2x fa-caret-square-o-right\"></i>                    \n      </div>\n      <p-breadcrumb class=\"tn-scene-appbar--breadcrumb\" [model]=\"breadcrumbItems()\" [home]=\"breadcrumbHome\"></p-breadcrumb>    \n    </div>\n    <div class = \"horizontal one\">\n        <i class=\"tn-scene-appbar--button fa fa-2x fa-list\"></i>        \n    </div>\n</div>\n";
 
 __$styleInject(".tn-scene-appbar--button{color:#fff}.tn-scene-appbar--breadcrumb,.tn-scene-appbar--button{margin-left:10px;align-self:center}.tn-scene-appbar--topMenu{width:270px;height:70px;text-align:center;font-size:-webkit-xxx-large;color:#fff;align-items:center;justify-content:center;display:flex}.tn-scene-appbar-wrapper{height:100%}",undefined);
 
@@ -446,7 +544,9 @@ var AppbarComponent = (_dec$4 = core_1.Component({
   createClass(AppbarComponent, [{
     key: 'breadcrumbItems',
     value: function breadcrumbItems() {
-      return this._breadcrumbService.items;
+      var items = this._breadcrumbService.items;
+      items = items.length === 0 ? undefined : items;
+      return items;
     }
   }, {
     key: 'onHideMenuClick',
@@ -465,7 +565,7 @@ var AppbarComponent = (_dec$4 = core_1.Component({
 }()) || _class$4);
 Reflect.defineMetadata('design:paramtypes', [BreadcrumbService, SceneService], AppbarComponent);
 
-var html$2 = "<router-outlet></router-outlet>\r\n";
+var html$2 = "<router-outlet></router-outlet>\n";
 
 var _dec$9;
 var _class$9;
@@ -499,7 +599,7 @@ var menuItems = [{
   adminOnly: false
 }];
 
-var html$3 = "<p-sidebar #sidenav [ngStyle]=\"{width:'270px'}\">\r\n  <div>\r\n    <img class=\"tn-menu-sidebar--logo\" src=\"./assets/logo.png\">\r\n  </div>\r\n  <div class=\"tn-menu-sidebar\">\r\n    <div *ngFor=\"let item of items\">\r\n      <div *ngIf=\"mustPrint(item)\">\r\n        <tn-menuitem [text]=\"item.text\" [path]=\"item.path\" [icon]=\"item.icon\" [adminOnly]=\"item.adminOnly\"></tn-menuitem>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</p-sidebar>\r\n";
+var html$3 = "<p-sidebar #sidenav [ngStyle]=\"{width:'270px'}\">\n  <div>\n    <img class=\"tn-menu-sidebar--logo\" src=\"./assets/logo.png\">\n  </div>\n  <div class=\"tn-menu-sidebar\">\n    <div *ngFor=\"let item of items\">\n      <div *ngIf=\"mustPrint(item)\">\n        <tn-menuitem [text]=\"item.text\" [path]=\"item.path\" [icon]=\"item.icon\" [adminOnly]=\"item.adminOnly\"></tn-menuitem>\n      </div>\n    </div>\n  </div>\n</p-sidebar>\n";
 
 __$styleInject(".tn-menu-sidebar--logo{width:180px;height:180px;margin-top:80px;margin-bottom:10px}.ui-sidebar-left{width:270px}.tn-menu-sidebar{background:#5e35b1;height:100%}",undefined);
 
@@ -583,8 +683,8 @@ var MenuComponent = (_dec$10 = core_1.Component({
   }, {
     key: '_tuneSidenav',
     value: function _tuneSidenav() {
-      document.getElementsByClassName('ui-sidebar-mask')[0].hidden = true;
       document.getElementsByClassName('ui-sidebar-close')[0].remove();
+      document.getElementsByClassName('ui-sidebar-mask')[0].hidden = true;
       document.getElementsByClassName('ui-sidebar')[0].style.padding = '0px';
     }
   }]);
@@ -597,7 +697,7 @@ var MenuComponent = (_dec$10 = core_1.Component({
 })), _class2)) || _class$10);
 Reflect.defineMetadata('design:paramtypes', [AgentService, SceneService], MenuComponent);
 
-var html$4 = "<button pButton type=\"button\" class=\"tn-menuitem-layout\" label= {{text}} icon= {{icon}} routerLink={{path}}></button>\r\n";
+var html$4 = "<button pButton type=\"button\" class=\"tn-menuitem-layout\" label= {{text}} icon= {{icon}} routerLink={{path}}></button>\n";
 
 __$styleInject(".tn-menuitem-layout{width:100%;border-bottom:1px solid #fff!important}",undefined);
 
@@ -769,7 +869,10 @@ var AppRoutingModule = (_dec$1 = core_1.NgModule({
       loadChildren: 'src/app/modules/home/dist/tune-up.home.umd.js#home#HomeModule'
     }, {
       path: 'uts',
-      loadChildren: 'src/app/modules/ut/dist/tune-up.ut.umd.js#ut#UtModule'
+      loadChildren: 'src/app/modules/ut/dist/tune-up.ut.umd.js#ut#UtModule',
+      data: {
+        breadcrumb: 'UTs'
+      }
     }]
   }, {
     path: 'login',
@@ -791,7 +894,7 @@ var AppRoutingModule = (_dec$1 = core_1.NgModule({
   classCallCheck(this, AppRoutingModule);
 }) || _class$1);
 
-var html$5 = "<tn-notifications></tn-notifications>\r\n<router-outlet></router-outlet>\r\n";
+var html$5 = "<tn-notifications></tn-notifications>\n<router-outlet></router-outlet>\n";
 
 __$styleInject(".none{flex:none}.one{flex:1}.two{flex:2}.three{flex:3}.four{flex:4}.five{flex:5}.six{flex:6}.seven{flex:7}.eight{flex:8}.nine{flex:9}.ten{flex:10}.eleven{flex:11}.twelve{flex:12}.flex,.horizontal,.vertical{display:flex}.horizontal{flex-direction:row}.vertical,.vertical-fill{flex-direction:column}.vertical-fill,fill{height:100%}.wrap{flex-wrap:wrap}body{margin:0;min-height:100%;padding:0;overflow-x:hidden;overflow-y:auto;font-family:Roboto,Trebuchet MS,Arial,Helvetica,sans-serif;font-weight:400;color:#404c51;-webkit-font-smoothing:antialiased;font-size:1em}a{text-decoration-line:none!important}",undefined);
 

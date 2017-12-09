@@ -16,7 +16,9 @@ export class AppbarComponent {
     this._sceneService = sceneService;
   }
   breadcrumbItems() {
-    return this._breadcrumbService.items;
+    let items = this._breadcrumbService.items;
+    items = items.length === 0 ? undefined : items;
+    return items;
   }
   onHideMenuClick() {
     this.menuOpen = false;

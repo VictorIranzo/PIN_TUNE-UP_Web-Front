@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 
 import {UtSearchService, ActivitiesService} from './services';
-import {BreadcrumbService} from '@tune-up/app';
 import {GetProductosService, GetProyectosService, GetSprintsProductoService,
         GetTiposUTProductoService} from '../nuevaut';
 import {NotificationsService} from '@tune-up/core';
@@ -38,8 +37,7 @@ export class UtSearchComponent {
   selectableFields = false;
   uts = undefined;
 
-  constructor(breadcrumbService: BreadcrumbService,
-              utSearchService: UtSearchService,
+  constructor(utSearchService: UtSearchService,
               activitiesService: ActivitiesService,
               getProductosService: GetProductosService,
               getProyectosService: GetProyectosService,
@@ -49,7 +47,6 @@ export class UtSearchComponent {
             ) {
     this._utSearchService = utSearchService;
     this._activitiesService = activitiesService;
-    this._breadcrumbService = breadcrumbService;
     this._getProductosService = getProductosService;
     this._getProyectosService = getProyectosService;
     this._getSprintsService = getSprintsProductoService;
@@ -243,8 +240,6 @@ export class UtSearchComponent {
   };
 
   ngOnDestroy() {
-    this._breadcrumbService.removeItems(1);
-
     this._utSearchSubscription &&
     !this._utSearchSubscription.closed &&
     this._utSearchSubscription.unsubscribe();

@@ -166,8 +166,6 @@ var createClass = function () {
 var _dec$3;
 var _class$3;
 
-// TODO: move to home
-
 var UtListService = (_dec$3 = core.Injectable(), _dec$3(_class$3 = function () {
   function UtListService(http$$1) {
     classCallCheck(this, UtListService);
@@ -215,7 +213,7 @@ var AgentPicService = (_dec$4 = core.Injectable(), _dec$4(_class$4 = function ()
 }()) || _class$4);
 Reflect.defineMetadata('design:paramtypes', [http.HttpClient], AgentPicService);
 
-var html = "<div class=\"tn-home\">\r\n  <tn-kanban-resume class=\"tn-home__kanbanresume\" [filterUts]=\"filterUts\"></tn-kanban-resume>\r\n  <tn-ut-list class=\"tn-home__utlist\" [uts]=\"utsToShow\"></tn-ut-list>\r\n</div>\r\n";
+var html = "<div class=\"tn-home\">\n  <tn-kanban-resume class=\"tn-home__kanbanresume\" [filterUts]=\"filterUts\"></tn-kanban-resume>\n  <tn-ut-list class=\"tn-home__utlist\" [uts]=\"utsToShow\"></tn-ut-list>\n</div>\n";
 
 __$styleInject(".tn-home__utlist{margin:16px;z-index:0;overflow-x:overlay;text-align:center}@media (min-width:960px){.tn-home__utlist{width:65%}}.tn-home__kanbanresume{margin:16px}@media (min-width:960px){.tn-home__kanbanresume{width:35%;height:fit-content;position:sticky;top:85px}}.tn-home{display:flex;flex-direction:column}@media (min-width:960px){.tn-home{flex-direction:row}}",undefined);
 
@@ -409,7 +407,7 @@ var KanbanResumeComponent = (_dec$5 = core.Component({
 })), _class2)) || _class$5);
 Reflect.defineMetadata('design:paramtypes', [KanbanActivitiesService, core$1.NotificationsService], KanbanResumeComponent);
 
-var html$2 = "<!-- TODO: add placeholders and make global filter work with strings in place of ids -->\r\n<div class=\"ui-widget-header none horizontal tn-home__utlist__searchbar\">\r\n  <i class=\"fa fa-search none tn_home__utlist__searchbar__icon\"></i>\r\n  <input #gb type=\"text\" pInputText size=\"50\" class=\"tn-home__utlist__searchbar__input\" placeholder=\"Búsqueda global\">\r\n</div>\r\n<p-dataTable [value]=\"uts\" [rows]=\"20\" [paginator]=\"true\"  [pageLinks]=\"5\" [sortMode]=\"multiple\" [globalFilter]=\"gb\"\r\n  reorderableColumns=\"true\" [responsive]=\"true\">\r\n  <p-column [style]=\"{'width':'10%'}\" field=\"Estado\" header=\"Estado\" [sortable]=\"true\">\r\n    <ng-template let-ut=\"rowData\" pTemplate=\"body\">\r\n      <span class=\"ui-button-icon\" [ngClass]=\"getUtTypeIcon(ut)\"></span>\r\n      <span class=\"ui-button-icon\" [ngClass]=\"getStateIcon(ut)\"></span>\r\n    </ng-template>\r\n  </p-column>\r\n  <p-column [style]=\"{'width':'10%'}\" field=\"IdAgente\" header=\"Agente\" [sortable]=\"true\">\r\n    <ng-template let-ut=\"rowData\" pTemplate=\"body\">\r\n      <img *ngIf=\"ut.IdAgente && ut.IdAgente !== -1\" class=\"tn-home__utlist__agent__pic\" [src]=\"getAgentPic(ut) | safeHtml\">\r\n      <i *ngIf=\"ut.IdAgente === -1\" class=\"fa fa-2x fa-users\"></i>\r\n    </ng-template>\r\n  </p-column>\r\n  <p-column [style]=\"{'width':'30%'}\" field=\"NombreProducto\" header=\"Producto/Servicio\" [sortable]=\"true\"></p-column>\r\n  <p-column [style]=\"{'width':'10%'}\" field=\"NombreVersion\" header=\"Sprint\" [sortable]=\"true\"></p-column>\r\n  <p-column [style]=\"{'width':'10%'}\" field=\"IdUT\" header=\"Código\" [sortable]=\"true\">\r\n    <ng-template let-ut=\"rowData\" pTemplate=\"body\">\r\n      <a class=\"ui-cell-data\" [routerLink]=\"getUtLink(ut)\">{{ut.IdUT}}</a>\r\n    </ng-template>\r\n  </p-column>\r\n  <p-column [style]=\"{'width':'30%'}\" field=\"NombreUT\" header=\"Nombre\" [sortable]=\"true\"></p-column>\r\n</p-dataTable>\r\n";
+var html$2 = "<!-- TODO: add placeholders and make global filter work with strings in place of ids -->\n<div class=\"ui-widget-header none horizontal tn-home__utlist__searchbar\">\n  <i class=\"fa fa-search none tn_home__utlist__searchbar__icon\"></i>\n  <input #gb type=\"text\" pInputText size=\"50\" class=\"tn-home__utlist__searchbar__input\" placeholder=\"Búsqueda global\">\n</div>\n<p-dataTable [value]=\"uts\" [rows]=\"20\" [paginator]=\"true\"  [pageLinks]=\"5\" [sortMode]=\"multiple\" [globalFilter]=\"gb\"\n  reorderableColumns=\"true\" [responsive]=\"true\">\n  <p-column [style]=\"{'width':'10%'}\" field=\"Estado\" header=\"Estado\" [sortable]=\"true\">\n    <ng-template let-ut=\"rowData\" pTemplate=\"body\">\n      <span class=\"ui-button-icon\" [ngClass]=\"getUtTypeIcon(ut)\"></span>\n      <span class=\"ui-button-icon\" [ngClass]=\"getStateIcon(ut)\"></span>\n    </ng-template>\n  </p-column>\n  <p-column [style]=\"{'width':'10%'}\" field=\"IdAgente\" header=\"Agente\" [sortable]=\"true\">\n    <ng-template let-ut=\"rowData\" pTemplate=\"body\">\n      <img *ngIf=\"ut.IdAgente && ut.IdAgente !== -1\" class=\"tn-home__utlist__agent__pic\" [src]=\"getAgentPic(ut) | safeHtml\">\n      <i *ngIf=\"ut.IdAgente === -1\" class=\"fa fa-2x fa-users\"></i>\n    </ng-template>\n  </p-column>\n  <p-column [style]=\"{'width':'30%'}\" field=\"NombreProducto\" header=\"Producto/Servicio\" [sortable]=\"true\"></p-column>\n  <p-column [style]=\"{'width':'10%'}\" field=\"NombreVersion\" header=\"Sprint\" [sortable]=\"true\"></p-column>\n  <p-column [style]=\"{'width':'10%'}\" field=\"IdUT\" header=\"Código\" [sortable]=\"true\">\n    <ng-template let-ut=\"rowData\" pTemplate=\"body\">\n      <a class=\"ui-cell-data\" [routerLink]=\"getUtLink(ut)\">{{ut.IdUT}}</a>\n    </ng-template>\n  </p-column>\n  <p-column [style]=\"{'width':'30%'}\" field=\"NombreUT\" header=\"Nombre\" [sortable]=\"true\"></p-column>\n</p-dataTable>\n";
 
 __$styleInject(".tn-home__utlist__searchbar{padding:16px;border-bottom:0}.tn_home__utlist__searchbar__icon{margin-top:4px;margin-right:8px}.tn-home__utlist__searchbar__input{width:100%}.tn-home__utlist__agent__pic{width:30px;height:30px}",undefined);
 
@@ -458,7 +456,6 @@ function _applyDecoratedDescriptor$1(target, property, decorators, descriptor, c
   return desc;
 }
 
-// TODO: extract to a config file
 var utTypesIcons = {
   1: 'fa fa-star',
   2: 'fa fa-bug',

@@ -2,7 +2,6 @@ import {Component} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DetailsService} from './services';
 import {NotificationsService} from '@tune-up/core';
-import {BreadcrumbService} from '@tune-up/app';
 import html from './details.component.html';
 import './details.component.css';
 
@@ -30,13 +29,12 @@ export class DetailsComponent {
   constructor(route: ActivatedRoute,
               router: Router,
               detailsService: DetailsService,
-              notificationsService: NotificationsService,
-              breadcrumbService:BreadcrumbService) {
+              notificationsService: NotificationsService
+             ) {
         this._route = route;
         this._router = router;
         this._detailsService = detailsService;
         this._notificationsService = notificationsService;
-        this._breadcrumbService = breadcrumbService;
 
         this.model.IdUT= parseInt(this._route.params._value.id);
 
@@ -57,7 +55,6 @@ export class DetailsComponent {
                 this._parseProyectos(data.listaProyectos);
                 this.model.Descripcion = data.UT.Definicion;
                 this._mapSelected(data, this.model);
-                this._breadcrumbService.addItems({label: `${this.model.IdUT}: ${this.model.Nombre}`, routerLink: `/uts/${this.model.IdUT}`});
               }
             },
             (error) => {
@@ -166,8 +163,6 @@ export class DetailsComponent {
   }
 
   ngOnDestroy() {
-    this._breadcrumbService.removeItems(1);
-
     this._saveDetailsSubscription &&
     !this._saveDetailsSubscription.closed &&
     this._saveDetailsSubscription.unsubscribe();

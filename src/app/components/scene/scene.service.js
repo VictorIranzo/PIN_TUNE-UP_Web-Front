@@ -25,6 +25,10 @@ export class SceneService {
   open() {
     if (this._sidenav) {
       this._sidenav.visible = true;
+      let mask =  document.getElementsByClassName('ui-sidebar-mask')[0];
+      mask && (mask.hidden = true); 
+      let sidebar = document.getElementsByClassName('ui-sidebar')[0];
+      sidebar && (sidebar.style.padding = '0px');      
     }
   }
   _initialize() {

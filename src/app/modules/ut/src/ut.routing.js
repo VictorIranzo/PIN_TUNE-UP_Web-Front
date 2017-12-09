@@ -6,8 +6,8 @@ import {DetailsComponent, NuevaUTComponent} from './components';
 @NgModule({
   imports: [RouterModule.forChild([
     {path: '', component: UtComponent},
-    {path: 'add', component: NuevaUTComponent},
-    {path: ':id', component: DetailsComponent},
+    {path: 'add', component: NuevaUTComponent, data: {breadcrumb: 'Nueva UT'}},
+    {path: ':id', component: DetailsComponent, data: {breadcrumb: '@id'}},
   ])],
   exports: [RouterModule],
 })

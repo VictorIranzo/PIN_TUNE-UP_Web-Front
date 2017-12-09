@@ -28,8 +28,8 @@ export class MenuComponent {
     this._tuneSidenav();
   }
   _tuneSidenav() {
-    document.getElementsByClassName('ui-sidebar-mask')[0].hidden = true;
     document.getElementsByClassName('ui-sidebar-close')[0].remove();
+    document.getElementsByClassName('ui-sidebar-mask')[0].hidden = true; 
     document.getElementsByClassName('ui-sidebar')[0].style.padding = '0px';
   }
 }

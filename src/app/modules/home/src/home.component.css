@@ -1,8 +1,8 @@
 @import 'styleguide';
 .tn-home__utlist{
   margin:var(--margin-medium);
-  z-index: 0;
-  overflow-x: overlay;
+  /* z-index: 0;
+  overflow-x: overlay; */
   text-align: center;
   @media(--gt-sm){
     width:65%;
@@ -12,12 +12,24 @@
   margin: var(--margin-medium);
   @media(--gt-sm){
     width: 35%;
-    height: fit-content;
+    /* height: fit-content;
     position: sticky;
-    top: 85px;
+    top: 85px; */
   }
 }
+.tn-home__utfilter{
+  margin: var(--margin-medium);
+  @media(--gt-sm){
+    /* height: fit-content;
+    position: sticky;
+    top: 85px; */
+  }
+}
+
 .tn-home{
+  display: flex;
+}
+.tn-home__kanban{
   display: flex;
   flex-direction: column;
   @media(--gt-sm){

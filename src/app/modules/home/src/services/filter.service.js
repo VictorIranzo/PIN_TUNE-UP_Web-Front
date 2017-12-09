@@ -6,7 +6,7 @@ export class FilterService {
     let filteredUts = uts.filter(
       (ut) => {
         let isActivity = filtro.IdActividad === 'ALL'|| ut.IdActividad === filtro.IdActividad;
-        let isAgente = filtro.IdAgente === 'ALL' || ut.IdAgente === filtro.IdAgente;
+        let isAgente = filtro.IdAgente === 'ALL' || ut.IdAgente === filtro.IdAgente || ut.IdAgente === null;
         let isProducto = filtro.IdProducto === 'ALL' || ut.IdProducto === filtro.IdProducto;
         let isVersion = filtro.IdVersion === 'ALL' || ut.IdVersion === filtro.IdVersion;
         let isProyecto = filtro.IdProyecto === 'ALL' || ut.IdProyecto === filtro.IdProyecto;

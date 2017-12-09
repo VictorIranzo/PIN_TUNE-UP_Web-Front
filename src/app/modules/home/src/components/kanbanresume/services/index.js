@@ -1,1 +1,2 @@
-export * from './kanbanactivities.service'
+export * from './kanbanactivities.service';
+export * from './updateKanban.service';

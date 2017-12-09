@@ -13,5 +13,5 @@
   width: 25%;
 }
 .tn-home__form__button{
-  height: 50%;
+  margin-left: var(--margin-small);
 }

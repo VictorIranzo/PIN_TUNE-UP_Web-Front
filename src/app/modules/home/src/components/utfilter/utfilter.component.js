@@ -2,7 +2,7 @@ import {Component, Input} from '@angular/core';
 import {Router} from '@angular/router';
 import {NotificationsService} from '@tune-up/core';
 import {AgentService} from '@tune-up/app';
-import {GetColaboradoresService, GetProductosService, GetProyectosService, GetSprintsProductoService} from './services';
+import {GetColaboradoresService, GetColaboradoresProductoService, GetProductosService, GetProyectosService, GetSprintsProductoService} from './services';
 import html from './utfilter.component.html';
 import './utfilter.component.css';
 
@@ -15,6 +15,7 @@ const agentesCache = [];
   template: html,
   providers: [
     GetColaboradoresService,
+    GetColaboradoresProductoService,
     GetProductosService,
     GetProyectosService,
     GetSprintsProductoService,
@@ -28,6 +29,7 @@ export class UTFilterComponent {
   idUT = '';
   constructor(
     getColaboradoresService : GetColaboradoresService,
+    getColaboradoresProductoService : GetColaboradoresProductoService,
     getProductosService : GetProductosService,
     getProyectosService : GetProyectosService,
     getSprintsProductoService : GetSprintsProductoService,
@@ -36,6 +38,7 @@ export class UTFilterComponent {
     router : Router
   ) {
     this._getColaboradoresService = getColaboradoresService;
+    this._getColaboradoresProductoService = getColaboradoresProductoService;
     this._getProductosService = getProductosService;
     this._getProyectosService = getProyectosService;
     this._getSprintsService = getSprintsProductoService;
@@ -50,7 +53,8 @@ export class UTFilterComponent {
 
   ngOnInit() {
     this._getProductos();
-    this._getColaboradoresSitio(this._agentService.getAgentId());
+    this._getColaboradores(this._agentService.getAgentId());
+    this.proyectos = this.sprints = [{label: 'ALL', value: 'ALL'}];
     this._seleccionarValoresPorDefecto();
   }
 
@@ -67,37 +71,10 @@ export class UTFilterComponent {
     );
   }
 
-  _getColaboradoresSitio(idAgente) {
-    if (!agentesCache['ALL']) {
-    this._getColaboradoresSubscription =
-      this._getColaboradoresService.get(idAgente).subscribe(
-        (data) => {
-          agentesCache['ALL'] = this._parseAgentes(data);
-          this.agentes = agentesCache['ALL'];
-          this.filtro.IdAgente = 'ALL';
-        },
-        (error) =>
-          this._notificationService.error(
-            'No se han podido obtener los colaboradores del agente',
-          error
-        ));
-    } else {
-      return agentesCache['ALL'];
-    }
-  }
-
-  _parseAgentes(agentes) {
-    let agentesMap = agentes.map((ag) => {
-        return {label: `${ag.Nombre}`, value: ag.Id};
-      }
-    );
-    agentesMap.push({label: 'ALL', value: 'ALL'});
-    return agentesMap;
-  }
-
   _getDatosProducto(idProducto) {
     this.proyectos = this._getProyectos(idProducto);
     this.sprints = this._getSprints(idProducto);
+    this.agentes = this._getColaboradores(this._agentService.getAgentId(), idProducto);
     this._seleccionarValoresPorDefecto();
   }
   _parseProductos(productos) {
@@ -167,6 +144,58 @@ export class UTFilterComponent {
     return sprintsMap;
   }
 
+  _getColaboradores(idAgente, idProducto = 'ALL') {
+    if (!agentesCache[idProducto]) {
+      if (idProducto == 'ALL') {
+        this._getColaboradoresSitio(idAgente);
+      } else {
+        this._getColaboradoresProducto(idProducto);
+      }
+    } else {
+      return agentesCache[idProducto];
+    }
+  }
+
+  _getColaboradoresSitio(idAgente) {
+    this._getColaboradoresSubscription =
+    this._getColaboradoresService.get(idAgente).subscribe(
+      (data) => {
+        agentesCache['ALL'] = this._parseAgentes(data);
+        this.agentes = agentesCache['ALL'];
+        this.filtro.IdAgente = 'ALL';
+      },
+      (error) =>
+        this._notificationService.error(
+          'No se han podido obtener los colaboradores del agente',
+        error
+      ));
+  }
+
+  _getColaboradoresProducto(idProducto) {
+    this._getColaboradoresProductoSubscription =
+    this._getColaboradoresProductoService.get(idProducto).subscribe(
+      (data) => {
+        agentesCache[idProducto] = this._parseAgentes(data);
+        this.agentes = agentesCache[idProducto];
+        this.filtro.IdAgente = 'ALL';
+      },
+      (error) =>
+        this._notificationService.error(
+          'No se han podido obtener los colaboradores del agente',
+        error
+      ));
+  }
+
+  _parseAgentes(agentes) {
+    let agentesMap = agentes
+                      .filter((ag) => ag.Id != -1)
+                      .map((ag) => {
+                        return {label: `${ag.Nombre}`, value: ag.Id};
+                      });
+    agentesMap.push({label: 'ALL', value: 'ALL'});
+    return agentesMap;
+  }
+
   _seleccionarValoresPorDefecto() {
     this.filtro.IdAgente = 'ALL';
     this.filtro.IdProyecto = 'ALL';
@@ -200,6 +229,10 @@ export class UTFilterComponent {
     this._getColaboradoresSubscription &&
       !this._getColaboradoresSubscription.closed &&
       this._getColaboradoresSubscription.unsubscribe();
+
+    this._getColaboradoresProductoSubscription &&
+      !this._getColaboradoresProductoSubscription.closed &&
+      this._getColaboradoresProductoSubscription.unsubscribe();
 
     this._getProductosSubscription &&
       !this._getProductosSubscription.closed &&

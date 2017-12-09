@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {FilterService} from './services';
 import {UtListService} from './components/utlist/services';
+import {UpdateKanbanResumeService} from './components/kanbanresume/services';
 import {NotificationsService} from '@tune-up/core';
 import html from './home.component.html';
 import './home.component.css';
@@ -11,6 +12,7 @@ import './home.component.css';
   providers: [
     UtListService,
     FilterService,
+    UpdateKanbanResumeService,
   ],
 })
 export class HomeComponent {
@@ -26,11 +28,13 @@ export class HomeComponent {
   constructor(
     filterService: FilterService,
     utListService: UtListService,
+    updateKanbanService: UpdateKanbanResumeService,
     notificationService: NotificationsService
   ) {
     this._filterService = filterService;
     this._utListService = utListService;
     this._notificationsService = notificationService;
+    this._updateKanbanService = updateKanbanService;
     this._getUts();
   }
   _getUts() {
@@ -47,7 +51,11 @@ export class HomeComponent {
     );
   }
 
-  filterUts = () => {
+  filterUts = (isActivityFilter = false) => {
+    if (!isActivityFilter) {
+      this.globalFilter.IdActividad = 'ALL';
+      this._updateKanbanService.update();
+    }
     this.utsToShow = this._filterService.filter(this.allUts, this.globalFilter);
   }
 

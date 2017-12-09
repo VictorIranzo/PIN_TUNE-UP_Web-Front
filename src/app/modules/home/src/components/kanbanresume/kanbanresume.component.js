@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {NotificationsService} from '@tune-up/core';
-import {KanbanActivitiesService} from './services';
+import {KanbanActivitiesService, UpdateKanbanResumeService} from './services';
 import html from './kanbanresume.component.html';
 import './kanbanresume.component.css';
 
@@ -16,14 +16,28 @@ export class KanbanResumeComponent {
   @Input() filtro;
   constructor(
     activitiesService: KanbanActivitiesService,
-    notificationsService: NotificationsService
+    notificationsService: NotificationsService,
+    updateKanbanResumeService : UpdateKanbanResumeService
   ) {
     this._activitiesService = activitiesService;
     this._notificationsService = notificationsService;
+    this._updateKanbanResumeService = updateKanbanResumeService;
+    this._updateKanbanResumeService.init = () => {
+      this._getKanbanActivities();
+    };
+  }
+
+  ngOnInit() {
     this._getKanbanActivities();
   }
   _getKanbanActivities() {
-    this._getActivitiesSubscription = this._activitiesService.get().subscribe(
+    this._getActivitiesSubscription = this._activitiesService.get(
+      'ALL',
+      this.filtro.IdAgente,
+      this.filtro.IdProducto,
+      this.filtro.IdVersion,
+      this.filtro.IdProyecto
+    ).subscribe(
       (data) => {
         this.kanbanActivities = data;
       },
@@ -37,7 +51,7 @@ export class KanbanResumeComponent {
   filterKanbanActivies(idActivity = 'ALL') {
     if (idActivity == -1) idActivity = 'ALL';
     this.filtro.IdActividad = idActivity;
-    this.filterUts();
+    this.filterUts(true);
   }
   ngOnDestroy() {
     this._getActivitiesSubscription &&

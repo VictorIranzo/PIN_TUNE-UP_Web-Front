@@ -53,8 +53,11 @@ export class UTFilterComponent {
 
   ngOnInit() {
     this._getProductos();
-    this._getColaboradores(this._agentService.getAgentId());
-    this.proyectos = this.sprints = [{label: 'ALL', value: 'ALL'}];
+    this.agentes = this._getColaboradores(this._agentService.getAgentId(), 'ALL');
+    this.proyectos = this.sprints
+                   = proyectosCache['ALL']
+                   = sprintsCache['ALL']
+                   = [{label: 'ALL', value: 'ALL'}];
     this._seleccionarValoresPorDefecto();
   }
 
@@ -146,22 +149,21 @@ export class UTFilterComponent {
 
   _getColaboradores(idAgente, idProducto = 'ALL') {
     if (!agentesCache[idProducto]) {
-      if (idProducto == 'ALL') {
-        this._getColaboradoresSitio(idAgente);
+      if (idProducto === 'ALL') {
+        this._getColaboradoresSitio(idProducto, idAgente);
       } else {
         this._getColaboradoresProducto(idProducto);
       }
-    } else {
-      return agentesCache[idProducto];
     }
+    return agentesCache[idProducto];
   }
 
-  _getColaboradoresSitio(idAgente) {
+  _getColaboradoresSitio(idProducto, idAgente) {
     this._getColaboradoresSubscription =
     this._getColaboradoresService.get(idAgente).subscribe(
       (data) => {
-        agentesCache['ALL'] = this._parseAgentes(data);
-        this.agentes = agentesCache['ALL'];
+        agentesCache[idProducto] = this._parseAgentes(data);
+        this.agentes = agentesCache[idProducto];
         this.filtro.IdAgente = 'ALL';
       },
       (error) =>
@@ -205,10 +207,10 @@ export class UTFilterComponent {
   onProductChanged(idNuevoProducto) {
     if (idNuevoProducto != 'ALL') {
       this.noProductoSelected = false;
-      this._getDatosProducto(idNuevoProducto);
     } else {
       this.noProductoSelected = true;
     }
+    this._getDatosProducto(idNuevoProducto);
     this._seleccionarValoresPorDefecto();
     this.filterUts();
   }

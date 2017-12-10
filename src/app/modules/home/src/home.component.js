@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {FilterService} from './services';
 import {UtListService} from './components/utlist/services';
 import {UpdateKanbanResumeService} from './components/kanbanresume/services';
 import {NotificationsService} from '@tune-up/core';
@@ -11,12 +10,10 @@ import './home.component.css';
   template: html,
   providers: [
     UtListService,
-    FilterService,
     UpdateKanbanResumeService,
   ],
 })
 export class HomeComponent {
-  allUts = [];
   utsToShow = [];
   globalFilter = {
       IdAgente: 'ALL',
@@ -25,23 +22,29 @@ export class HomeComponent {
       IdProyecto: 'ALL',
       IdActividad: 'ALL',
   }
+  isLoadingUTs = false;
   constructor(
-    filterService: FilterService,
     utListService: UtListService,
     updateKanbanService: UpdateKanbanResumeService,
     notificationService: NotificationsService
   ) {
-    this._filterService = filterService;
     this._utListService = utListService;
     this._notificationsService = notificationService;
     this._updateKanbanService = updateKanbanService;
     this._getUts();
   }
-  _getUts() {
-    this._getUtsSubscription = this._utListService.get().subscribe(
+  _getUts(IdActividad = 'ALL', IdAgente = 'ALL', IdProducto = 'ALL', IdVersion = 'ALL', IdProyecto = 'ALL') {
+    this.isLoadingUTs = true;
+    this._getUtsSubscription = this._utListService.get(
+      IdActividad,
+      IdAgente,
+      IdProducto,
+      IdVersion,
+      IdProyecto
+    ).subscribe(
       (data) => {
-        this.allUts = data;
         this.utsToShow = data;
+        this.isLoadingUTs = false;
       },
       (error) =>
         this._notificationsService.error(
@@ -56,7 +59,13 @@ export class HomeComponent {
       this.globalFilter.IdActividad = 'ALL';
       this._updateKanbanService.update();
     }
-    this.utsToShow = this._filterService.filter(this.allUts, this.globalFilter);
+    this._getUts(
+      this.globalFilter.IdActividad,
+      this.globalFilter.IdAgente,
+      this.globalFilter.IdProducto,
+      this.globalFilter.IdVersion,
+      this.IdProyecto
+    );
   }
 
   ngOnDestroy() {

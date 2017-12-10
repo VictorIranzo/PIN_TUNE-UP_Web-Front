@@ -6,3 +6,6 @@
 .tn-ut__followups__controls{
   padding-bottom: var(--padding-small);
 }
+.tn-ut__followups__agentes{
+  padding-right: var(--padding-small);
+}

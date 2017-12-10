@@ -20,6 +20,9 @@ import {AuthGuard} from './routing';
             path: 'uts',
             loadChildren:
               'src/app/modules/ut/dist/tune-up.ut.umd.js#ut#UtModule',
+              data: {
+                breadcrumb: 'UTs',
+              },
           },
         ],
       },

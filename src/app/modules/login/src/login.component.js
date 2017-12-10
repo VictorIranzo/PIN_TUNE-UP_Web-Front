@@ -82,22 +82,30 @@ export class LoginComponent {
     this.model.idsitio = sites[0] && sites[0].Id;
   }
   login = () => {
-    this.loginInProgress = true;
-    this._loginSubscription = this._loginService.login(this.model).subscribe(
-      (data) => {
-        this.loginInProgress = false;
-        let {Token, Agente, Configuracion} = data;
-        Agente.IdSitio = this.model.idsitio;
-        this._authService.setToken(Token);
-        this._agentService.agent = Agente;
-        this._aboutService.about = Configuracion;
-        this._redirect();
-      },
-      (error) => {
-        this.loginInProgress = false;
-        this._handleInvalidLogin();
-      }
-    );
+    if (this.model.email && this.model.password && this.model.idsitio) {
+      this.loginInProgress = true;
+      this._loginSubscription = this._loginService.login(this.model).subscribe(
+        (data) => {
+          if (data.Exito != false) { // TODO: This should be done by the interceptor.
+          this.loginInProgress = false;
+          let {Token, Agente, Configuracion} = data;
+          Agente.IdSitio = this.model.idsitio;
+          this._authService.setToken(Token);
+          this._agentService.agent = Agente;
+          this._aboutService.about = Configuracion;
+          this._redirect();
+          } else {
+            this._handleInvalidLogin();
+          }
+        },
+        (error) => {
+          this.loginInProgress = false;
+          this._handleInvalidLogin();
+        }
+      );
+    } else {
+      this._handleInvalidLogin();
+    }
   };
   _handleInvalidLogin() {
     this._notificationsService.error('Error de login',

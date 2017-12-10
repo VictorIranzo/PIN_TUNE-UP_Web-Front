@@ -2,6 +2,7 @@
 
 .tn-home__form{
   padding: var(--padding-medium);
+  flex-wrap: wrap;
 }
 .tn-home__form__section{
   padding: var(--padding-small);

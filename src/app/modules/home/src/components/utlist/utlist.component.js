@@ -27,6 +27,7 @@ const agentPics = {};
 })
 export class UtListComponent {
   @Input() uts;
+  @Input() isLoadingUTs;
   constructor(
     agentPicService: AgentPicService,
     notificationService: NotificationsService,

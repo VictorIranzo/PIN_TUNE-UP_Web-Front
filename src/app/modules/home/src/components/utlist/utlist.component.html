@@ -3,7 +3,7 @@
   <i class="fa fa-search none tn_home__utlist__searchbar__icon"></i>
   <input #gb type="text" pInputText size="50" class="tn-home__utlist__searchbar__input" placeholder="Búsqueda global">
 </div>
-<p-dataTable [value]="uts" [rows]="20" [paginator]="true" scrollable="true" scrollHeight="250%" [pageLinks]="5" [sortMode]="multiple" [globalFilter]="gb" reorderableColumns="true"
+<p-dataTable [value]="uts" [rows]="20" [paginator]="true" scrollable="true" scrollHeight="250%" [pageLinks]="5" [sortMode]="multiple" [loading]="isLoadingUTs" loadingIcon="fa-spinner" [globalFilter]="gb" reorderableColumns="true"
   [responsive]="true">
   <p-column [style]="{'width':'10%'}" field="Estado" header="Estado" [sortable]="true">
     <ng-template let-ut="rowData" pTemplate="body">

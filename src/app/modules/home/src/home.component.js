@@ -22,6 +22,7 @@ export class HomeComponent {
       IdProyecto: 'ALL',
       IdActividad: 'ALL',
   }
+  isLoadingUTs = false;
   constructor(
     utListService: UtListService,
     updateKanbanService: UpdateKanbanResumeService,
@@ -33,6 +34,7 @@ export class HomeComponent {
     this._getUts();
   }
   _getUts(IdActividad = 'ALL', IdAgente = 'ALL', IdProducto = 'ALL', IdVersion = 'ALL', IdProyecto = 'ALL') {
+    this.isLoadingUTs = true;
     this._getUtsSubscription = this._utListService.get(
       IdActividad,
       IdAgente,
@@ -42,6 +44,7 @@ export class HomeComponent {
     ).subscribe(
       (data) => {
         this.utsToShow = data;
+        this.isLoadingUTs = false;
       },
       (error) =>
         this._notificationsService.error(

@@ -136,9 +136,11 @@ export class NuevaUTComponent {
   }
 
   _parseProyectos(proyectos) {
-    return proyectos.map((pr) => {
+    let proyectosMapped = proyectos.map((pr) => {
       return {label: `${pr.Nombre}`, value: pr.IdProyecto};
     });
+    proyectosMapped.push({label: '<Sin Proyecto>', value: null});
+    return proyectosMapped;
   }
 
   _getTiposUT(idProducto) {
@@ -229,8 +231,9 @@ export class NuevaUTComponent {
     this._crearUTSubscription =
     this._createUTService.put(this.ut).subscribe(
       (data) => {
+        let that = this;
         setTimeout(function() {
-          this._redirect(data);
+          that._redirect(data);
         }, 3000);
       },
       (error) => {

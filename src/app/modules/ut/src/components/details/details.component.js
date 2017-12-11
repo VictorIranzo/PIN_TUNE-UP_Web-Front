@@ -53,7 +53,7 @@ export class DetailsComponent {
                 this._parseWorkflows(data.listaWorkflowsDisponibles);
                 this._parseTipos(data.listaTiposUT);
                 this._parseProyectos(data.listaProyectos);
-                this.model.Descripcion = data.UT.Definicion;
+                this.model.Descripcion = data.UT.Definicion || data.UT.Descripcion;
                 this._mapSelected(data, this.model);
               }
             },

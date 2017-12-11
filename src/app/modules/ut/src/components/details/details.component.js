@@ -77,7 +77,7 @@ export class DetailsComponent {
     this.model.IdWorkflow = this.ut.UT.IdWorkflow;
     this.model.IdTipoUT = this.ut.UT.IdTipoUT;
     this.model.IdProyecto = this.ut.UT.IdProyecto;
-    this.model.Descripcion = this.ut.UT.Descripcion;
+    this.model.Descripcion = this.ut.UT.Definicion || this.ut.UT.Descripcion;
   }
 
   onGuardar = () => {
@@ -95,6 +95,7 @@ export class DetailsComponent {
         this.ut.UT.IdTipoUT = this.model.IdTipoUT;
         this.ut.UT.IdProyecto = this.model.IdProyecto;
         this.ut.UT.Descripcion = this.model.Descripcion;
+        this.ut.UT.Definicion = this.model.Descripcion;
       },
       (error) => {
         this._notificationsService.error('Error al guardar los cambios', error);

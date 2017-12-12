@@ -14,7 +14,7 @@
     <button pButton label="Cancelar" (click)="cancelarAsignar()"></button>
     <div class="five"></div>
   </div>
-  <p-dataTable [value]="seguimientos" selectionMode="single" [(selection)]="seguimientoSelected">
+  <p-dataTable [value]="seguimientos" [rows]="10" [paginator]="true" selectionMode="single" [(selection)]="seguimientoSelected">
     <p-column field="Estado" header="Estado" [sortable]="true" [style]="{'width':'15%'}"></p-column>
     <p-column field="NombreActividad" header="Actividad" [sortable]="true" [style]="{'width':'25%'}"></p-column>
     <p-column field="NombreAgente" header="Agente" [sortable]="true" [style]="{'width':'20%'}" ></p-column>

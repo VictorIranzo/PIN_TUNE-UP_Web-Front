@@ -65,6 +65,7 @@ export class FollowupsComponent {
   iniciar = () => {
     this._followupsService.empezarSeguimiento(this.idSeguimiento).subscribe(
       (data) => {
+        this._quitActiveOfOtherFollowUpsOfAgent(this.seguimiento.IdAgente);
         this.seguimiento.Estado = 'ACTIVE';
        },
       (error) => {
@@ -78,6 +79,7 @@ export class FollowupsComponent {
   continuar = () => {
     this._followupsService.empezarSeguimiento(this.idSeguimiento).subscribe(
       (data) => {
+        this._quitActiveOfOtherFollowUpsOfAgent(this.seguimiento.IdAgente);
         this.seguimiento.Estado = 'ACTIVE';
       },
       (error) => {
@@ -133,6 +135,13 @@ export class FollowupsComponent {
         console.log(error);
       }
     );
+  }
+  _quitActiveOfOtherFollowUpsOfAgent(idAgente) {
+    this.seguimientos.forEach(function(seg) {
+      if (seg.IdAgente === idAgente && seg.Estado === 'ACTIVE') {
+        seg.Estado = 'DOING';
+      }
+    });
   }
   cancelarAsignar = () => {
     this.assigningAgent = false;
